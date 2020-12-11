@@ -42,7 +42,14 @@ class Creation extends Component{
             url: 'http://localhost:8080/api/user',
             data: {
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                userName: this.state.name,
+                gender: this.state.gender,
+                nationality: this.state.nationality,
+                birthDate: this.state.birthDate,
+                cityOfBirth: this.state.cityOfBirth,
+                phoneNumber: this.state.phoneNumber,
+                admin: this.state.admin
             }
             })
             .then(response => {   
@@ -76,20 +83,35 @@ class Creation extends Component{
                     </label>
                     <label>
                         <h4>Password:</h4>
-                        <input type="text" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                        <input type={false?'text':'password'} name="password" 
+                        value={this.state.password} onChange={this.handleChange}></input>
                     </label>
                     <label>
                         <h4>Name:</h4>
                         <input type="text" name="name" value={this.state.name} onChange={this.handleChange}></input>
                     </label>
                     <label>
-                        <h4>Birthdate (yyyy-MM-dd):</h4>
-                        <input type="text" name="birthDate" value={this.state.birthDate} onChange={this.handleChange}></input>
+                        <h4>Gender:</h4>
+                        <input type="text" name="gender"  value={this.state.gender} onChange={this.handleChange}></input>
+                    </label>
+                    <label>
+                        <h4>Nationality:</h4>
+                        <input type="text" name="nationality"  value={this.state.nationality} onChange={this.handleChange}></input>
                     </label>
                     <label>
                         <h4>Phone number:</h4>
                         <input type="text" name="phoneNumber"  value={this.state.phoneNumber} onChange={this.handleChange}></input>
                     </label>
+                    <label>
+                        <h4>City of birth:</h4>
+                        <input type="text" name="cityOfBirth"  value={this.state.cityOfBirth} onChange={this.handleChange}></input>
+                    </label>
+
+                    <label>
+                        <h4>Birthdate (yyyy-MM-dd):</h4>
+                        <input type="text" name="birthDate" value={this.state.birthDate} onChange={this.handleChange}></input>
+                    </label>
+            
                     {/* <Select
                         value={gender}
                         onChange={this.handleChangeGender()}
@@ -101,7 +123,7 @@ class Creation extends Component{
             );  
         }
         else
-            return (<Redirect to={'/profile/'+this.state.email}/>);
+            return (<Redirect to={'/login'}/>);
     }
 }
 

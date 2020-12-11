@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import localIpUrl from 'local-ip-url';
 
 const cookies = new Cookies();
 class Login extends Component{
@@ -10,48 +11,44 @@ class Login extends Component{
         this.state= {
             email:'',
             password: '',
+        
             accepted: false,
         };
-        this.handleChangeEmail = this.handleChangeEmail.bind(this);
-        this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    
-    handleChangeEmail(event){
-        this.setState({email: event.target.value});
-    
+    handleChange(event){
+        this.setState({[event.target.name]: event.target.value});
     }
-    handleChangePassword(event){
-        this.setState({password: event.target.value});
-    }
+  
 
     async handleSubmit(event){
+        const ip = require('local-ip-url');
+        
         await axios({
             method: 'post',
             url: 'http://localhost:8080/api/login',
             data: {
-                email: this.state.email,
-                password: this.state.password
+                userID: this.state.email,
+                password: this.state.password,
+                ip: localIpUrl('public')
             }
             })
             .then(response => {   
-            if(response.Unauthorized){
-                console.log(response)
-                alert("wrong password or user name;")
-            }
                 
-            else{
+                alert(response.data)
                 cookies.set('JWT',response,{path:'/'});
-                console.log(cookies.get('JWT'));
                 this.setState({accepted: true});
-            }
-             
-        })
-        .catch(error => {
-            console.log(error)
-            alert("wrong password or user name;")
-        })
+                        
+            })
+            .catch(error => {
+                if(error.response.status === 401)
+                    alert("Wrong password or email")
+                else
+                    alert("Some error occurred ("+error+ ").")
+            })
     }
     
     render(){
@@ -61,18 +58,20 @@ class Login extends Component{
                 <div>
                     <label>
                         <h4>Email:</h4>
-                        <input type="text" value={this.state.email} onChange={this.handleChangeEmail}></input>
+                        <input type="text" name="email" value={this.state.email} onChange={this.handleChange}></input>
                     </label>
                     <label>
                         <h4>Password:</h4>
-                        <input type="text" value={this.state.password} onChange={this.handleChangePassword}></input>
+                        <input type={false?'text':'password'} name="password" 
+                        value={this.state.password} onChange={this.handleChange}></input>
                     </label>
+                    <br/>
                     <button onClick={this.handleSubmit}>Submit</button>
                 </div>
             );    
         }
         else
-        return (<Redirect to={'/user/'+this.state.email}/>);
+            return (<Redirect to={'/profile/'+this.state.email}/>);
         
     }   
 }
