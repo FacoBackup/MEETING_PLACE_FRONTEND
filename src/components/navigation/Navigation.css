@@ -1,0 +1,16 @@
+.nav-style{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 5vh;
+    background: lightgray;
+    color: black;
+
+}
+.nav-links{
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: left;
+    list-style: none;
+}
