@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Redirect} from 'react-router-dom';
-import Select from 'react-select';
+import {Redirect, Link} from 'react-router-dom';
+import "../../../style/cards.css"
 
-const genderOptions=[
-    {value: 'male', label: 'Male'},
-    {value: 'female', label: 'Female'},
-    {value: 'non binary', label: 'Non binary'}
-]
+// const genderOptions=[
+//     {value: 'male', label: 'Male'},
+//     {value: 'female', label: 'Female'},
+//     {value: 'non binary', label: 'Non binary'}
+// ]
 class Creation extends Component{
     constructor(props){
         super(props);
@@ -76,7 +76,7 @@ class Creation extends Component{
         if(!this.state.sent){
     //        const { gender } = this.state.gender;
             return (
-                <div>
+                <div className="Container">
                     <label>
                         <h4>Email:</h4>
                         <input type="text" name="email" value={this.state.email} onChange={this.handleChange}></input>
@@ -118,7 +118,11 @@ class Creation extends Component{
                         options={genderOptions}
                     /> */}
                     {/* <h1>email: {this.state.email} <br/>password: {this.state.password}<br/>  name: {this.state.name}<br/> birth: {this.state.birthDate}<br/> phone: {this.state.phoneNumber}</h1> */}
-                    <button onClick={this.handleSubmit}>Submit</button>
+                    <br/>
+                    
+                    <button onClick={this.handleSubmit}>Create account</button>
+                    <br/>
+                    <button><Link to="/login">Sign in</Link></button>
                 </div>
             );  
         }

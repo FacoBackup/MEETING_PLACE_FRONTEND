@@ -7,24 +7,19 @@ const cookies = new Cookies();
 function Logout(){
          
     const fetchData = async() => {
-        await axios({
-            method: 'post',
-            url: 'http://localhost:8080/api/logout',
-            headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data}
-        }).then(response=>{
-            cookies.remove("JWT")
-            return(<Redirect to="/login"/>)
-        })
-        .catch(error => {
-            if(error.response.status === 401)
+        if(typeof cookies.get("JWT") !== 'undefined'){
+            await axios({
+                method: 'post',
+                url: 'http://localhost:8080/api/logout',
+                headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data}
+            }).then(response=>{
+                cookies.remove("JWT")
                 return(<Redirect to="/login"/>)
-            else{
-                alert(error)
-                alert("Some error occured")
-            }
-                
-    
-        });
+            })
+            .catch(()=> {
+                return(<Redirect to="/login"/>)
+            });
+        }
     }
 
     useEffect(() =>{

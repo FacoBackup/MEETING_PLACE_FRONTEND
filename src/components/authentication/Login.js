@@ -1,46 +1,55 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Redirect} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
+import "../../style/cards.css"
 
-const cookies = new Cookies();
-class Login extends Component{
-    constructor(props){
-        super(props);
-        this.state= {
-            email:'',
-            password: '',
-        
-            accepted: false,
-        };
-        this.handleChange = this.handleChange.bind(this);
-    
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    
-    handleChange(event){
-        this.setState({[event.target.name]: event.target.value});
+
+
+function Login () {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [accepted, setAccepted] = useState(false);
+    const cookies = new Cookies();
+    useEffect(()=>{
+        checkToken()
+    })
+    const checkToken = async () =>{     
+        if(typeof cookies.get("JWT") !== 'undefined'){
+            await axios({
+                method: 'get',
+                url: 'http://localhost:8080/api/verify/token',
+                headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data}
+            }).then(res =>{
+                setAccepted(true);
+            }).catch(error=>{
+                console.log(error)
+            })
+        }
     }
   
-
-    async handleSubmit(event){
-        const ip = require('local-ip-url');
+    function handleChangeEmail (event)  {
+        setEmail(event.target.value) ;
+    }
+    function handleChangePassword (event)  {
+        setPassword(event.target.value);
+    }
+    const handleSubmit = async () => {
         
         await axios({
-            method: 'post',
+            method: 'put',
             url: 'http://localhost:8080/api/login',
+            headers:{'Access-Control-Allow-Origin': '*'} ,
             data: {
-                userID: this.state.email,
-                password: this.state.password,
+                userID: email,
+                password: password,
                 ip: localIpUrl('public')
             }
             })
             .then(response => {   
-                
-                alert(response.data)
                 cookies.set('JWT',response,{path:'/'});
-                this.setState({accepted: true});
+                setAccepted(true);
                         
             })
             .catch(error => {
@@ -51,28 +60,26 @@ class Login extends Component{
             })
     }
     
-    render(){
-        
-        if(!this.state.sent){
-            return (
-                <div>
-                    <label>
-                        <h4>Email:</h4>
-                        <input type="text" name="email" value={this.state.email} onChange={this.handleChange}></input>
-                    </label>
-                    <label>
-                        <h4>Password:</h4>
-                        <input type={false?'text':'password'} name="password" 
-                        value={this.state.password} onChange={this.handleChange}></input>
-                    </label>
-                    <br/>
-                    <button onClick={this.handleSubmit}>Submit</button>
-                </div>
-            );    
-        }
-        else
-            return (<Redirect to={'/profile/'+this.state.email}/>);
-        
+
+    if(accepted)
+        return (<Redirect to='/'/>);
+    else{
+        return (
+            <div className="Container">
+                <label>
+                    <h4>Email:</h4>
+                    <input type="text" name="email" value={email} onChange={handleChangeEmail}></input>
+                </label>
+                <label>
+                    <h4>Password:</h4>
+                    <input type={false?'text':'password'} name="password" 
+                    value={password} onChange={handleChangePassword}></input>
+                </label>
+                <br/>
+                <button onClick={handleSubmit}>Sign in</button>
+                <button><Link to="/creation">Sign up</Link></button>
+            </div>
+        );    
     }   
 }
 

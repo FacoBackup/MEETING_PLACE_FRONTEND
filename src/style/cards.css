@@ -1,0 +1,15 @@
+.Container {
+    background-color: lightgray;
+    border: lightgray;
+    border-radius: 8px;
+    margin: auto;
+    width:50%;
+}
+.ContainerContent{
+
+    display: flex;
+
+    align-items: center;
+
+    
+}
