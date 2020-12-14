@@ -2,14 +2,12 @@
     background-color: lightgray;
     border: lightgray;
     border-radius: 8px;
-    margin: auto;
-    width:50%;
+    margin: left ;
+    
+    position:static;
+    width:30%;
 }
 .ContainerContent{
-
     display: flex;
-
     align-items: center;
-
-    
 }

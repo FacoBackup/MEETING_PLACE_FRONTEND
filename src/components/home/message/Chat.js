@@ -10,8 +10,9 @@ function Chat ({match}){
         fetchMessages()
     },[]);
     const [conversation,setConversation] = useState([]);
-    const [message, setMessage] = useState([]);
-
+    //const [message ,setMessage] = useState('');
+    const [messageInput, setMessageInput] = useState('');
+    
     const fetchMessages = async () =>{
         await axios({
             method: 'post',
@@ -22,8 +23,7 @@ function Chat ({match}){
                 isGroup: false
             }
         }).then(res=>{
-            alert(match.params.email)
-            setConversation(res);
+            setConversation(res.data);
         })
         .catch(error => {
             alert(match.params.email)
@@ -37,13 +37,13 @@ function Chat ({match}){
             url: 'http://localhost:8080/api/message',
             headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data},
             data: {
-                message: message,
+                message: messageInput,
                 imageURL: null,
                 receiverID: match.params.email,
                 isGroup: false
             }
-        }).then(res=>{
-            setConversation(res);
+        }).then(()=>{
+            fetchMessages();
         })
         .catch(error => {
             console.log(error);
@@ -51,15 +51,20 @@ function Chat ({match}){
     };
 
     function handleChange (event)  {
-        setMessage(event.target.value) ;
+        setMessageInput(event.target.value) ;
     }
 
     return(
         <div>
-            
-            <h1>messages: {conversation.forEach(<li>{conversation.content}</li>)}</h1>
+            <h1>Conversation with {match.params.email}</h1>
+            {conversation.map((message, index) => 
+                <div>
+                    <h3>{message.content}</h3> 
+                    <p> from {message.creatorID}</p>
+                    <p> read: {JSON.stringify(message.read)}</p>
+                </div>)}
             <label>
-                <input type="text" name="message" value={message} onChange={handleChange}></input>
+                <input type="text" name="message" value={messageInput} onChange={handleChange}></input>
             </label>
             <button onClick={send}>Send</button>
         </div>

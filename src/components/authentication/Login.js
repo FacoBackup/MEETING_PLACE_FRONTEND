@@ -12,6 +12,7 @@ function Login () {
     const [password, setPassword] = useState('');
     const [accepted, setAccepted] = useState(false);
     const cookies = new Cookies();
+
     useEffect(()=>{
         checkToken()
     })
@@ -31,12 +32,14 @@ function Login () {
   
     function handleChangeEmail (event)  {
         setEmail(event.target.value) ;
+        event.preventDefault();
     }
     function handleChangePassword (event)  {
         setPassword(event.target.value);
+        event.preventDefault();
     }
     const handleSubmit = async () => {
-        
+
         await axios({
             method: 'put',
             url: 'http://localhost:8080/api/login',
