@@ -11,6 +11,7 @@
     "cookie-parser": "^1.4.5",
     "local-ip-url": "^1.0.3",
     "react": "^17.0.1",
+    "react-calendar": "^3.2.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.1",
     "react-http-status-code": "^1.0.1",
