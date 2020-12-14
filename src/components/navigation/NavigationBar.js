@@ -3,7 +3,7 @@ import './Navigation.css';
 import {Link} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
-function Navigation (){
+function NavigationBar (){
     const [isLogged, setLogged] = useState(false);
     const [path, setPath] = useState('login')
     const cookies = new Cookies();
@@ -13,11 +13,11 @@ function Navigation (){
     function checkLogin() {
         if(typeof cookies.get("JWT") !== 'undefined'){
             setLogged(true);
-            setPath('logout');
+            setPath('signout');
         }
         else{
             setLogged(false);
-            setPath('login');
+            setPath('authenticate');
         }    
     }
     return (
@@ -52,4 +52,4 @@ function Navigation (){
 }
 
 
-export default Navigation;
+export default NavigationBar;

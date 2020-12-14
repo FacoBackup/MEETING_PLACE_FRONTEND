@@ -5,12 +5,11 @@ import axios from 'axios';
 import "../../../style/cards.css";
 
 const cookies = new Cookies();
-function Chat ({match}){
+function Conversation ({match}){
     useEffect(()=>{
         fetchMessages()
     },[]);
     const [conversation,setConversation] = useState([]);
-    //const [message ,setMessage] = useState('');
     const [messageInput, setMessageInput] = useState('');
     
     const fetchMessages = async () =>{
@@ -72,4 +71,4 @@ function Chat ({match}){
 
 }   
 
-export default Chat;
+export default Conversation;

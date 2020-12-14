@@ -22,30 +22,27 @@ function Profile(){
             setProfile(res.data);
         })
         .catch(error => {
-            console.log(error)
+            return(<Redirect to={"/authenticate"} />)
         });
     }
 
 
     return(
+        <div className="Container">
         
-            <div className="Container">
-            
-                <h3>Profile</h3>
-                <ul>
-                    <li>name: {profile.name}</li>
-                    <li>email: {profile.email}</li>
-                    <li>phoneNumber: {profile.phoneNumber}</li>
-                    <li>about: {profile.about}</li>
-                    <li>image: {profile.imageURL}</li>
-                    <li>birthDate: {profile.birthDate}</li>
-                    <li>cityOfBirth: {profile.cityOfBirth}</li>
-                    <li>nationality : {profile.nationality}</li>
-                </ul>
+            <h3>Profile</h3>
+            <ul>
+                <li>name: {profile.name}</li>
+                <li>email: {profile.email}</li>
+                <li>phoneNumber: {profile.phoneNumber}</li>
+                <li>about: {profile.about}</li>
+                <li>image: {profile.imageURL}</li>
+                <li>birthDate: {profile.birthDate}</li>
+                <li>cityOfBirth: {profile.cityOfBirth}</li>
+                <li>nationality : {profile.nationality}</li>
+            </ul>
 
-            </div>
-
-        
+        </div>
     );  
 }
 

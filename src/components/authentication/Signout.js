@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect} from 'react';
 
 const cookies = new Cookies();
-function Logout(){
+function SignOut(){
          
     const fetchData = async() => {
         if(typeof cookies.get("JWT") !== 'undefined'){
@@ -14,10 +14,10 @@ function Logout(){
                 headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data}
             }).then(response=>{
                 cookies.remove("JWT")
-                return(<Redirect to="/login"/>)
+                return(<Redirect to="/authenticate"/>)
             })
             .catch(()=> {
-                return(<Redirect to="/login"/>)
+                return(<Redirect to="/authenticate"/>)
             });
         }
     }
@@ -26,7 +26,7 @@ function Logout(){
         fetchData();
      },[])   
 
-    return(<Redirect to="/login"/>)
+    return(<Redirect to="/authenticate"/>)
 }
 
-export default Logout;
+export default SignOut;

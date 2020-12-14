@@ -7,7 +7,7 @@ import "../../style/cards.css"
 
 
 
-function Login () {
+function SignIn () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [accepted, setAccepted] = useState(false);
@@ -86,4 +86,4 @@ function Login () {
     }   
 }
 
-export default Login;
+export default SignIn;

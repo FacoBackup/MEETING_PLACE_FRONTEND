@@ -9,7 +9,7 @@ import Calendar from 'react-calendar';
 //     {value: 'female', label: 'Female'},
 //     {value: 'non binary', label: 'Non binary'}
 // ]
-function Creation (){
+function UserCreation (){
 
     const [sent, setSent] = useState(false);
     const [admin, setAdmin] = useState(true);
@@ -119,4 +119,4 @@ function Creation (){
         return (<Redirect to={'/login'}/>);
 }
 
-export default Creation;
+export default UserCreation;
