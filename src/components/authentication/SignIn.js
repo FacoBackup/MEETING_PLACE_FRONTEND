@@ -3,14 +3,15 @@ import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
-import "../../style/cards.css"
-
-
+import "../authentication/Auth.css"
+import { getTheme } from '@fluentui/react';
+import { NeutralColors } from '@fluentui/theme';
 function SignIn () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [accepted, setAccepted] = useState(false);
     const cookies = new Cookies();
+    const theme = getTheme();
 
     useEffect(()=>{
         checkToken()
@@ -21,7 +22,7 @@ function SignIn () {
             setAccepted(true);
         }
     }
-  
+
     function handleChangeEmail (event)  {
         setEmail(event.target.value) ;
         event.preventDefault();
@@ -61,7 +62,7 @@ function SignIn () {
         return (<Redirect to='/'/>);
     else{
         return (
-            <div className="Container">
+            <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="InputBox">
                 <label>
                     <h4>Email:</h4>
                     <input type="text" name="email" value={email} onChange={handleChangeEmail}></input>

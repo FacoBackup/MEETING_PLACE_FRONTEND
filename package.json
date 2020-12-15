@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fluentui/react": "^7.155.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
@@ -10,6 +11,7 @@
     "axios": "^0.21.0",
     "cookie-parser": "^1.4.5",
     "local-ip-url": "^1.0.3",
+    "qrcode.react": "^1.0.0",
     "react": "^17.0.1",
     "react-calendar": "^3.2.1",
     "react-cookie": "^4.0.3",

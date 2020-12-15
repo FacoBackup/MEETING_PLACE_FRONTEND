@@ -1,0 +1,7 @@
+.InputBox{
+    width: 348px;
+    border-radius: 8px;
+    position: fixed;
+    align-items:center;
+    place-items: center;
+}
