@@ -6,7 +6,6 @@ import localIpUrl from 'local-ip-url';
 import "../../style/cards.css"
 
 
-
 function SignIn () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -16,17 +15,10 @@ function SignIn () {
     useEffect(()=>{
         checkToken()
     })
-    const checkToken = async () =>{     
+    
+    function checkToken (){     
         if(typeof cookies.get("JWT") !== 'undefined'){
-            await axios({
-                method: 'get',
-                url: 'http://localhost:8080/api/verify/token',
-                headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data}
-            }).then(res =>{
-                setAccepted(true);
-            }).catch(error=>{
-                console.log(error)
-            })
+            setAccepted(true);
         }
     }
   
@@ -51,7 +43,8 @@ function SignIn () {
             }
             })
             .then(response => {   
-                cookies.set('JWT',response,{path:'/'});
+                cookies.set('JWT',response.data.token,{path:'/'});
+                cookies.set('ID',response.data.userID,{path:'/'});
                 setAccepted(true);
                         
             })

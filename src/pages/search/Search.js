@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import Profile from "../../components/profile/Profile"
+import UserSearch from "../../components/search/user/UserSearch"
 import Navigation from "../../components/navigation/NavigationBar"
 
-class Home extends Component{
+class Search extends Component{
   render(){
     return (
       <div>
           <Navigation/>
-          <Profile/>
+          <UserSearch/>
       </div>
     );
   }
 }
 
-export default Home;
+export default Search;

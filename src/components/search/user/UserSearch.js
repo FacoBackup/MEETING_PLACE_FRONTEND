@@ -1,62 +1,68 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../../style/cards.css";
-import NavBar from "../../navigation/NavBar";
 
-function ProfileSearch(props){
+
+function UserSearch(props){
     const [profile, setProfile] = useState({});
     const [searchInput, setInput] = useState('');
 
     const [isFollower, setIsFollower] = useState(false);
     const [found, setFound] = useState(false);
     const [searched, setSearched] = useState(false);
-
+    const [valid, setValid] = useState(true);
     const cookies = new Cookies();
-
-    const fetchData = async () => {
-        await axios({
-            method: 'patch',
-            url: 'http://localhost:8080/api/user/search',
-            data: {
-                userID: searchInput
-            }
-        }).then(res=>{
-            setProfile(res);
-            setFound(true);
-            setSearched(true);
-            fetchIsFollower();
-        })
-        .catch(error => {
-             setFound(false);
-             setSearched(true);
-        });
+    
+    async function fetchData (){
+        if(typeof cookies.get("ID") !== 'undefined' && cookies.get("ID") !== searchInput){
+            await axios({
+                method: 'patch',
+                url: 'http://localhost:8080/api/user/search',
+                data: {
+                    userID: searchInput
+                }
+            }).then(res=>{
+            
+                setProfile(res);
+                setFound(true);
+                setSearched(true);
+            })
+            .catch(error => {
+                 setFound(false);
+                 setSearched(true);
+            });
+        }else if(typeof cookies.get("ID") !== 'undefined' && cookies.get("ID") === searchInput)
+            setValid(false)  ;
+        
+        fetchIsFollower()
     }
     
     function handleChange (event)  {
         setInput(event.target.value) ;
     }
 
-    const fetchIsFollower = async () => {
+    async function fetchIsFollower(){
         await axios({
             method: 'patch',
             url: 'http://localhost:8080/api/follower',
-            headers: {"Authorization": 'Bearer '+cookies.get("JWT").data},
+            headers: {"Authorization": 'Bearer '+cookies.get("JWT")},
             data: {
                 userID: searchInput
             }
         }).then(res=>{
-           setIsFollower(res);
+            setIsFollower(res.data);
         })
         .catch();
+        
     }
 
     async function follow (){
         await axios({
             method: 'post',
             url: 'http://localhost:8080/api/follow',
-            headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data},
+            headers: {"Authorization": 'Bearer ' + cookies.get("JWT")},
             data: {
                 subjectID: profile.data.email,
                 community: false
@@ -71,7 +77,7 @@ function ProfileSearch(props){
         await axios({
             method: 'delete',
             url: 'http://localhost:8080/api/unfollow',
-            headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data},
+            headers: {"Authorization": 'Bearer ' + cookies.get("JWT")},
             data: {
                 subjectID: profile.data.email,
                 community: false
@@ -82,10 +88,9 @@ function ProfileSearch(props){
         .catch();
     }
 
-    if(found && searched){
+    if(found && searched && valid){
         return(
             <div>
-                <NavBar/>
                 <div className="Container">
                     
                     <label>
@@ -111,10 +116,10 @@ function ProfileSearch(props){
             </div>
         );
     }
-    else if(searched && !found)
+    else if(searched && !found && valid)
         return(
             <div>
-                 <NavBar/>
+        
                 <div className="Container">
                     <label>
                         <input type="text" name="email" value={searchInput} onChange={handleChange}></input>
@@ -124,10 +129,10 @@ function ProfileSearch(props){
                 </div>
             </div>
         );
-    else 
+    else if(!searched)
         return(
             <div>
-                <NavBar/>
+        
                 <div className="Container">
                     <label>
                         <input type="text" name="email" value={searchInput} onChange={handleChange}></input>
@@ -136,6 +141,10 @@ function ProfileSearch(props){
                 </div>
             </div>
         );
+    else if (!valid){
+        return (<Redirect to="/"/>);
+    }
+        
 }
 
-export default ProfileSearch;
+export default UserSearch;

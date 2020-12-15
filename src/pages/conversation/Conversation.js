@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import Profile from "../../components/profile/Profile"
+import Chat from "../../components/Chat/Chat"
 import Navigation from "../../components/navigation/NavigationBar"
 
-class Home extends Component{
+class Conversation extends Component{
   render(){
     return (
       <div>
           <Navigation/>
-          <Profile/>
+          <Chat/>
       </div>
     );
   }
 }
 
-export default Home;
+export default Conversation;

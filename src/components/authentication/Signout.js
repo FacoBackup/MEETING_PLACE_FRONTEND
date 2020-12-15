@@ -1,31 +1,36 @@
 import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import { useEffect} from 'react';
+import { useEffect, useState} from 'react';
 
-const cookies = new Cookies();
+
 function SignOut(){
-         
-    const fetchData = async() => {
+
+    const cookies = new Cookies();
+
+    useEffect(() =>{
+        fetchData();
+     })   
+
+    async function fetchData () {
         if(typeof cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/logout',
-                headers: {"Authorization": 'Bearer ' + cookies.get("JWT").data}
-            }).then(response=>{
-                cookies.remove("JWT")
-                return(<Redirect to="/authenticate"/>)
+                headers: {"Authorization": 'Bearer ' + cookies.get("JWT")}
+            }).then(()=>{
+                cookies.remove("JWT");
+                cookies.remove('ID');
             })
-            .catch(()=> {
-                return(<Redirect to="/authenticate"/>)
-            });
+            .catch(error=>{
+                console.log(cookies.get("JWT"))
+                alert(cookies.get("JWT"))
+                alert(error.response.status)
+            }
+            )
         }
     }
-
-    useEffect(() =>{
-        fetchData();
-     },[])   
-
+    
     return(<Redirect to="/authenticate"/>)
 }
 

@@ -5,11 +5,13 @@ import Cookies from 'universal-cookie';
 
 function NavigationBar (){
     const [isLogged, setLogged] = useState(false);
-    const [path, setPath] = useState('login')
+    const [path, setPath] = useState('authenticate')
     const cookies = new Cookies();
+
     useEffect(()=>{
         checkLogin();
     })
+
     function checkLogin() {
         if(typeof cookies.get("JWT") !== 'undefined'){
             setLogged(true);
@@ -20,15 +22,21 @@ function NavigationBar (){
             setPath('authenticate');
         }    
     }
+    
     return (
         <nav className="nav-style">
-            <h3>Nav here</h3>
+            <h3>Nav here </h3>
+            
             <ul className="nav-links">
-                <Link to='/search'>
+                <Link to='/'>
+                    <button>Home</button>
+                </Link>
+                <Link to="/search_user" >
                     <button>Search</button>
                 </Link>
                 <Link to={'/'+ path}>
-                    {isLogged ? <button>logout</button> : <button>login</button>}
+                    
+                    {isLogged ? <button>Sign out</button> : <button>Sign in</button>}
                 </Link>
 
                 {/* <Link to='/get'>
