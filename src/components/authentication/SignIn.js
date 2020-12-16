@@ -3,10 +3,15 @@ import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
-import "../authentication/Auth.css"
+import "../authentication/SigninStyle.css"
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
+import { Button } from '@fluentui/react-button';
+import { FontSizes, FontWeights } from '@fluentui/theme';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
+
 function SignIn () {
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [accepted, setAccepted] = useState(false);
@@ -62,19 +67,24 @@ function SignIn () {
         return (<Redirect to='/'/>);
     else{
         return (
-            <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="InputBox">
-                <label>
-                    <h4>Email:</h4>
-                    <input type="text" name="email" value={email} onChange={handleChangeEmail}></input>
-                </label>
-                <label>
-                    <h4>Password:</h4>
-                    <input type={false?'text':'password'} name="password" 
-                    value={password} onChange={handleChangePassword}></input>
-                </label>
-                <br/>
-                <button onClick={handleSubmit}>Sign in</button>
-                <button><Link to="/creation">Sign up</Link></button>
+            <div className="signInContainer">
+                <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}  className="signInComponent">
+                    <div >
+                        <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign in</p>
+                    </div>
+                    <div>
+                        <TextField label="Email address" onChange={handleChangeEmail}></TextField>
+                    </div>
+                    <div>
+                        <TextField type="password" label="Password" onChange={handleChangePassword}></TextField>
+                    </div>
+
+                    <div>
+                        <Button onClick={handleSubmit} style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }}>Sign in</Button>
+                        <Button style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} href="/creation">Sign up</Button>
+                    </div>
+
+                </div>
             </div>
         );    
     }   

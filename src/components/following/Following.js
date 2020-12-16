@@ -28,11 +28,11 @@ function Following(){
     }
 
     return(
-        <div>
-            <h3>following</h3>
+        <div style={{paddingLeft:'10px', paddingRight: '10px'}}>
+            
             {following.map((user, index) => 
-            <div>
-                <h3>{user.followedID}</h3> 
+            <div >
+                <p>{user.followedID}</p> 
                 <Link to={'/chat/'+user.followedID}><button>Send message</button></Link>
             </div>)}
         </div>

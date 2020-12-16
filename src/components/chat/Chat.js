@@ -3,7 +3,7 @@ import Navigation from "../navigation/NavigationBar"
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../style/cards.css";
-
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 function Chat ({match}){
     
@@ -67,9 +67,8 @@ function Chat ({match}){
                         <p> from {message.creatorID}</p>
                         <p> read: {JSON.stringify(message.read)}</p>
                     </div>)}
-                <label>
-                    <input type="text" name="message" value={messageInput} onChange={handleChange}></input>
-                </label>
+                    <TextField  placeholder="Message"multiline autoAdjustHeight onChange={handleChange} />
+                
                 <button onClick={send}>Send</button>
             </div>
         </div>

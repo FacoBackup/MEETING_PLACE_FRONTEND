@@ -1,0 +1,39 @@
+.homeContainer{
+    display:grid;
+    grid-template-columns: 1fr 15fr 1fr 50fr 1fr 5fr 1fr;
+    grid-template-rows: 1fr 1fr 50fr;
+    width: 100vw;   
+    height: 100vh;
+    
+}
+.navbarContainer{
+    grid-row:1;
+    grid-column: 1/8;
+    
+}
+.profileContainer{
+    display: grid;
+    justify-content: space-around;
+
+    grid-column: 2;
+    grid-row: 3;
+    height: 50%;
+    width:100%;
+}
+.topicCreationContainer{
+    display: grid;
+    justify-content: space-evenly;
+    grid-column: 4;
+    grid-row: 3;
+    width: 100%;
+    height: 20%;
+}
+.chatsContainer{
+    display: grid;
+    justify-content: space-around;
+    
+    grid-column: 6;
+    grid-row: 3;
+    width: 100%;
+    height: 98%;
+}
