@@ -8,7 +8,7 @@
 .signupComponent{
     display:grid;
     place-items: center;
-    width: 475px;
+    width: 350px;
     height: 650px;
     margin: auto;
     border-radius: 8px;

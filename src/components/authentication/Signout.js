@@ -24,8 +24,6 @@ function SignOut(){
             })
             .catch(error=>{
                 console.log(cookies.get("JWT"))
-                alert(cookies.get("JWT"))
-                alert(error.response.status)
             }
             )
         }

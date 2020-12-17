@@ -49,8 +49,8 @@ function SignIn () {
             }
             })
             .then(response => {   
-                cookies.set('JWT',response.data.token,{path:'/'});
-                cookies.set('ID',response.data.userID,{path:'/'});
+                cookies.set('JWT',response.data,{path:'/'});
+                cookies.set('ID',email,{path:'/'});
                 setAccepted(true);
                         
             })

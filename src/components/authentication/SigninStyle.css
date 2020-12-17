@@ -9,7 +9,7 @@
 .signInComponent{    
     display:grid;
     place-items: center;
-    width: 475px;
+    width: 350px;
     height: 375px;
     margin: auto;
     border-radius: 8px;

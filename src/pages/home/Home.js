@@ -8,6 +8,7 @@ import { NeutralColors } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
 import Following from "../../components/following/Following"
 import TopicCreation from "../../components/topics/creation/TopicCreation"
+import Conversations from "../../components/chat/Conversation"
 class Home extends Component{
   state={
     cookies: new Cookies(),
@@ -20,17 +21,15 @@ class Home extends Component{
             <div className="navbarContainer">
               <Navigation/>
             </div>
-
-      
-              <div style={{ borderRadius: '8px' , boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="profileContainer">
-                <Profile/>
-              </div>
-              <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="topicCreationContainer" >
-                <TopicCreation/>
-              </div>
-              <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="chatsContainer" >
-                <Following/>
-              </div>
+            <div style={{ borderRadius: '8px' , boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="profileContainer">
+              <Profile/>
+            </div>
+            <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="topicCreationContainer" >
+              <TopicCreation/>
+            </div>
+            <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="chatsContainer" >
+              <Conversations/>
+            </div>
         </div>
       );
     else
