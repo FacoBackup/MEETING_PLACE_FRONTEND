@@ -109,7 +109,7 @@ function UserSearch(props){
                         <li>cityOfBirth: {profile.data.cityOfBirth}</li>
                         <li>nationality : {profile.data.nationality}</li>
                     </ul>
-                    <button><Link to={'/chat/'+profile.data.email}>Send message</Link></button>
+                    <button><Link to={'/chat/'+profile.data.email+"/false"}>Send message</Link></button>
                     {isFollower ? <button onClick={unfollow}>UNFOLLOW</button> : <button onClick={follow}>FOLLOW</button> }
                 </div>
 

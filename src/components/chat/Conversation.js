@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../style/cards.css";
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 function Conversations (){
     
@@ -31,7 +30,7 @@ function Conversations (){
         <div>
             {conversations.map((chat, index) => 
                 <div>
-                    <Link style={{textDecoration:'none', textAlign:'center'}} to={"/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)}><p>{(chat.name).replace(cookies.get('ID', ""))}</p></Link>
+                    <Link style={{textDecoration:'none', textAlign:'center'}} to={"/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)}><p>{(chat.id).replace(cookies.get('ID'), "")}</p></Link>
                 </div>)}
         </div>
     );

@@ -14,12 +14,15 @@ function Chat ({match}){
     useEffect(()=>{
         fetchMessages()
     },[]);
+
     const theme = getTheme();
     const cookies = new Cookies();
     const [conversation,setConversation] = useState([]);
     const [messageInput, setMessageInput] = useState('');
-    
+
     const fetchMessages = async () =>{
+        
+   
         await axios({
             method: 'post',
             url: 'http://localhost:8080/api/get/conversation',
@@ -29,12 +32,9 @@ function Chat ({match}){
             }
         }).then(res=>{
             setConversation(res.data);
-        
         })
         .catch(error => {
-            alert( match.params.id)
-            
-            console.log(error);
+            alert(error)
         });
     }
 
@@ -46,7 +46,7 @@ function Chat ({match}){
             data: {
                 message: messageInput,
                 imageURL: null,
-                receiverID:null,
+                receiverID:match.params.id,
                 isGroup: match.params.isGroup,
                 conversationID: match.params.id
             }
@@ -69,7 +69,7 @@ function Chat ({match}){
             </div>
             <div className="component" style={{boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
                 <div>
-                    <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.semibold,textAlign:'center' }}>{match.params.id}</p>
+                    <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.semibold,textAlign:'center' }}>{(match.params.id).replace(cookies.get('ID'), "")}</p>
                 </div>
                 <div className="messageContainer">
                     {conversation.map((message, index) => 
@@ -77,6 +77,7 @@ function Chat ({match}){
                             <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.semibold }}>{message.content}</p>
                             {/* <TextField readOnly defaultValue={message.content} /> */}
                             <p style={{ fontSize: FontSizes.size12, fontWeight:FontWeights.regular }}> from {message.creatorID}</p>
+                            <p style={{ fontSize: FontSizes.size12, fontWeight:FontWeights.regular }}> valid until {message.valid}</p>
                             <p style={{ fontSize: FontSizes.size12, fontWeight:FontWeights.regular }}> read: {JSON.stringify(message.read)}</p>
                         </div>)}    
                 </div>

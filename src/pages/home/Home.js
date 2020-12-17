@@ -6,16 +6,18 @@ import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { NeutralColors } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
-import Following from "../../components/following/Following"
-import TopicCreation from "../../components/topics/creation/TopicCreation"
-import Conversations from "../../components/chat/Conversation"
+import TopicCreation from "../../components/topics/creation/TopicCreation";
+import Conversations from "../../components/chat/Conversation";
+
 class Home extends Component{
+  
   state={
     cookies: new Cookies(),
     theme : getTheme()
   }  
+  
   render(){
-    if(typeof this.state.cookies.get("JWT") !== 'undefined')
+    if(typeof this.state.cookies.get("JWT") !== 'undefined'){
       return (
         <div className="homeContainer">
             <div className="navbarContainer">
@@ -32,8 +34,9 @@ class Home extends Component{
             </div>
         </div>
       );
+    }
     else
-        <Redirect to="/authenticate"/>
+      <Redirect to='/authenticate'/>
   }
 }
 

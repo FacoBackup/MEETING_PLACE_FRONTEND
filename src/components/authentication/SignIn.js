@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
 import "../authentication/SigninStyle.css"

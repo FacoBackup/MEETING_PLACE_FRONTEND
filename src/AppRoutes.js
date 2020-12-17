@@ -7,7 +7,7 @@ import Search from "./pages/search/Search";
 import Conversation from "./components/chat/Chat";
 import Followers from "./components/followers/Followers";
 import Following from "./components/following/Following";
-import Auth from "./components/authentication/SignIn"
+import SignIn from "./components/authentication/SignIn"
 
 function AppRoutes() {
   return (
@@ -20,7 +20,7 @@ function AppRoutes() {
               <Route path="/chat/:id/:isGroup" exact component={Conversation}/>
               <Route path="/search_user" exact component={Search}/>
               <Route path="/signout" exact component={SignOut}/>
-              <Route path="/authenticate" exact component={Auth}/>
+              <Route path="/authenticate" exact component={SignIn}/>
               <Route path="/creation" exact component={SignUp}/>
           </Switch>
       </Router>

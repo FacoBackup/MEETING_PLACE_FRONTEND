@@ -50,7 +50,7 @@ function SignUp (){
                 userName: name,
                 gender: gender,
                 nationality: '',
-                birthDate: birth.toString(),
+                birthDate: birth.replace("_", ""),
                 cityOfBirth: '',
                 phoneNumber: phone,
                 admin: false
@@ -89,7 +89,7 @@ function SignUp (){
                         <MaskedTextField label="Phone number" onChange={handleChangePhone} mask="(99) 99999-9999" />
                     </div>
                     <div>
-                        <MaskedTextField label="Birthday" onChange={handleChangeBirth} mask="99/99/9999"/>
+                        <MaskedTextField label="Birthday" onChange={handleChangeBirth} mask="99-99-9999"/>
                     </div>
 
                     <div>

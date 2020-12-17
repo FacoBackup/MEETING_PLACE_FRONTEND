@@ -1,7 +1,7 @@
 import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import { useEffect, useState} from 'react';
+import { useEffect} from 'react';
 
 
 function SignOut(){
