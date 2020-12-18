@@ -1,6 +1,9 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import "../creation/TopicCreationStyle.css"
+import { Button } from '@fluentui/react-button';
+import { FontSizes, FontWeights } from '@fluentui/theme';
 
 function TopicCreation(){
  
@@ -8,12 +11,9 @@ function TopicCreation(){
  
 
     return(
-        <div style={{display: "grid", placeItems:'center'}}>
-            <div style={{width:'60vw'}}>
+        <div className="topicCreationContainer">
+            <div className="topicInputContainer">
                 <TextField  placeholder="Title" multiline autoAdjustHeight />
-            </div>
-            <div style={{width:'60vw'}}>
-                <TextField  placeholder="Content" multiline autoAdjustHeight />
             </div>
         </div>
     );  

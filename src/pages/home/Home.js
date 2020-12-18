@@ -26,9 +26,15 @@ class Home extends Component{
             <div style={{ borderRadius: '8px' , boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="profileContainer">
               <Profile/>
             </div>
-            <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="topicCreationContainer" >
-              <TopicCreation/>
+            <div className="topicContainer">
+              <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="topicCreationContainer" >
+                <TopicCreation/>
+              </div>
+              <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="timelineContainer" >
+                <h3 style={{textAlign:'center'}}>PLACEHOLDER TIMELINE</h3>
+              </div>
             </div>
+            
             <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="chatsContainer" >
               <Conversations/>
             </div>
@@ -36,7 +42,9 @@ class Home extends Component{
       );
     }
     else
-      <Redirect to='/authenticate'/>
+      return (<Redirect to="/authenticate"/>);
+      
+   
   }
 }
 

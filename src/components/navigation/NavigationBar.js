@@ -29,7 +29,7 @@ function NavigationBar (){
 
     return (
        <div>
-           <CommandBar items={_items} style={{boxShadow: theme.effects.elevation8}}/>
+           <CommandBar items={_items} />
        </div>
         // <nav className="nav-style">
         //     <h3>Nav here </h3>

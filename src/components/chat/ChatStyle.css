@@ -9,35 +9,42 @@
 }
 .component{
     display: grid;
-    grid-template-rows: 1fr 100fr 1fr;
-    
+    grid-template-rows: 1fr 1fr 1fr;
     grid-row: 2;
-
     justify-content: space-around;
     border-radius: 8px;
     width: 65vw;
-    height: 100%;
+    height: 70vh;
     margin: auto;
     overflow-y: scroll;
-    padding-bottom: 5vh;
+
     grid-column: 2;
 }
 
-.messageContainer{
+.subjectMessageContainer{
     grid-row: 2;
     display: grid;
     width: 60vw;
     row-gap: 0.5vh;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 50fr 50fr 1fr;
 }
-.message{
+.myMessageContentContainer{
     border-radius: 8px;
-    grid-column: 2;
+    grid-column: 4;
     text-align: right;
     width: 25vw;
     margin: auto;
     border: 2px solid lightgray;
+}
+
+.subjectMessageContentContainer{
+    border-radius: 8px;
+    grid-column: 2;
+    text-align: left;
+    width: 25vw;
+    margin: auto;
+    border: 2px solid gray;
 }
 .messageInputContainer{
     display: grid;

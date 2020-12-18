@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "../../style/cards.css";
+import "../chat/ConversationStyle.css";
+import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import { FontSizes, FontWeights } from '@fluentui/theme';
+import { Link } from 'react-router-dom';
 
 function Conversations (){
     
@@ -14,6 +16,7 @@ function Conversations (){
     const [conversations,setConversations] = useState([]);
     
     const fetchMessages = async () =>{
+        
         await axios({
             method: 'get',
             url: 'http://localhost:8080/api/conversation/all',
@@ -27,10 +30,22 @@ function Conversations (){
     }
 
     return(
-        <div>
+        <div className="conversationComponentContainer">
+            <div className="titleContainer">
+                <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular }}>Conversations</p>
+            </div>
             {conversations.map((chat, index) => 
-                <div>
-                    <Link style={{textDecoration:'none', textAlign:'center'}} to={"/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)}><p>{(chat.id).replace(cookies.get('ID'), "")}</p></Link>
+                <div className="contentContainer">
+                        <Link style={{textDecoration: 'none', textDecorationColor: '-moz-initial'}} to ={chat.isGroup ? ("/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)) : ("/chat/" +((chat.name).replace(cookies.get('ID'), ""))+"/"+JSON.stringify(chat.isGroup))}>
+                            <Persona
+                                {...{
+                                    text: (chat.isGroup ? (chat.name) : (chat.name).replace(cookies.get('ID'), "")),
+                                    secondaryText: (chat.isGroup ? "Group" : "Private")
+                                }}
+                                size={PersonaSize.size40}
+                                imageAlt="Conversation picture"
+                            />
+                        </Link>
                 </div>)}
         </div>
     );

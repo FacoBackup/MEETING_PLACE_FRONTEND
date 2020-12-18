@@ -132,7 +132,6 @@ function UserSearch(props){
     else if(!searched)
         return(
             <div>
-        
                 <div className="Container">
                     <label>
                         <input type="text" name="email" value={searchInput} onChange={handleChange}></input>

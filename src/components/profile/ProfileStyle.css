@@ -1,4 +1,28 @@
 .profileContainer{
     display: grid;
-    justify-content: center;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
+.imageContainer{
+    grid-row: 1;
+    grid-column: 2;
+    margin: auto;
+    padding-top: 1.8vh;
+    padding-bottom: 1vh;
+}
+.personaContainer{
+    grid-row: 2;
+    grid-column: 2;
+    margin: auto;  
+}
+.infoContainer{
+    grid-row: 3;
+    grid-column: 2;
+    margin: auto;
+}
+.profileButtonContainer{
+    grid-row: 4;
+    grid-column: 2;
+    margin: auto;
+}
+

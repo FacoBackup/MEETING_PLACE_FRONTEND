@@ -1,10 +1,9 @@
 .homeContainer{
     display:grid;
-    grid-template-columns: 1fr 15fr 1fr 50fr 1fr 5fr 1fr;
+    grid-template-columns: 1fr 15fr 1fr 30fr 1fr 15fr 1fr;
     grid-template-rows: 1fr 1fr 50fr;
     width: 100vw;   
     height: 100vh;
-    
 }
 .navbarContainer{
     grid-row:1;
@@ -12,28 +11,42 @@
     
 }
 .profileContainer{
-    display: grid;
-    justify-content: space-around;
-
     grid-column: 2;
     grid-row: 3;
-    height: 50%;
-    width:100%;
+    height: 55vh;
+    width:17.5vw;
 }
-.topicCreationContainer{
-    display: grid;
-    justify-content: space-evenly;
+.topicContainer{
     grid-column: 4;
     grid-row: 3;
-    width: 100%;
-    height: 20%;
+    width: 60vw;
+    height: 90vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    row-gap: 0.95vh;
+}
+
+.topicCreationContainer{
+    grid-row: 1;
+    margin:auto;
+    width: 60vw;
+    height: 10vh;
+}
+.timelineContainer{
+    grid-row: 3;
+    margin:auto;
+
+    width: 60vw;
+    height: 80vh;
+    overflow-y: scroll;
 }
 .chatsContainer{
     display: grid;
     justify-content: space-around;
-    
+    overflow-x:hidden;
+    text-align: right;
     grid-column: 6;
     grid-row: 3;
-    width: 100%;
+    width: 17.5vw;
     height: 98%;
 }
