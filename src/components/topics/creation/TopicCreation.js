@@ -8,13 +8,12 @@ import { FontSizes, FontWeights } from '@fluentui/theme';
 function TopicCreation(){
  
     const cookies = new Cookies();
- 
 
     return(
-        <div className="topicCreationContainer">
-            <div className="topicInputContainer">
-                <TextField  placeholder="Title" multiline autoAdjustHeight />
-            </div>
+        <div className="topic_creation_container">
+            <Button style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout">Timeline</Button>
+            <Button style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout">My topics</Button>
+            <Button style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout">Create New</Button>
         </div>
     );  
        

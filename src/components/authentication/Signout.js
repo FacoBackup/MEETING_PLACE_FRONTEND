@@ -3,7 +3,6 @@ import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import { useEffect} from 'react';
 
-
 function SignOut(){
 
     const cookies = new Cookies();
@@ -27,9 +26,11 @@ function SignOut(){
             }
             )
         }
+
     }
     
     return(<Redirect to="/authenticate"/>)
+    
 }
 
 export default SignOut;

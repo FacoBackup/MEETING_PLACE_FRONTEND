@@ -6,7 +6,7 @@ import localIpUrl from 'local-ip-url';
 import "../authentication/SigninStyle.css"
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
-import { Button } from '@fluentui/react-button';
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
@@ -67,21 +67,19 @@ function SignIn () {
         return (<Redirect to='/'/>);
     else{
         return (
-            <div className="signInContainer">
-                <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}  className="signInComponent">
-                    <div >
+            <div className="sign_in_container">
+                <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}  className="sign_in_component">
+                    <div className="sign_in_title_container">
                         <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign in</p>
                     </div>
-                    <div>
-                        <TextField label="Email address" onChange={handleChangeEmail}></TextField>
-                    </div>
-                    <div>
+                    <div className="sign_input_container">
+                        <TextField label="Email address" onChange={handleChangeEmail}></TextField>    
                         <TextField type="password" label="Password" onChange={handleChangePassword}></TextField>
                     </div>
 
-                    <div>
-                        <Button onClick={handleSubmit} style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }}>Sign in</Button>
-                        <Button style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} href="/creation">Sign up</Button>
+                    <div className="sign_button_container">
+                        <PrimaryButton text="Sign in" onClick={handleSubmit}/>
+                        <DefaultButton text="Sign up" href="/creation"/>
                     </div>
 
                 </div>

@@ -1,18 +1,37 @@
-.signupContainer{
+.sign_up_container{
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1 1 1;
+    grid-template-columns: 1 1 1;
     width: 100vw;
     height: 100vh;
 }
-.signupComponent{
+.sign_up_component{
+    grid-row: 2;
+    grid-column: 2;
+
     display:grid;
-    place-items: center;
-    width: 350px;
-    height: 650px;
-    margin: auto;
+    grid-template-columns: 1fr 98fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  
+    align-items: center;
     border-radius: 8px;
+    row-gap: 5vh;
+    column-gap: 1vh;
+    width: 40vh;
+    height: 75vh;
+}
+.sign_up_title_container{
+    grid-column: 2;
+    grid-row: 1;
+    text-align: center;
+}
+.sign_up_input_container{
     grid-column: 2;
     grid-row: 2;
-    row-gap: 5px;
+}
+.sign_up_buttons_container{
+    grid-row: 3;
+    grid-column: 2;
+    display: flex;
+    justify-content: space-around;
 }

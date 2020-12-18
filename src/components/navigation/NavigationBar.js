@@ -18,13 +18,7 @@ function NavigationBar (){
           text: 'Search',
           iconProps: { iconName: 'Search' },
           href: "/search_user",
-        },
-        {
-          key: 'signout',
-          text: 'Sign out',
-          iconProps: { iconName: 'Share' },
-          href: '/signout',
-        },
+        }
       ];
 
     return (

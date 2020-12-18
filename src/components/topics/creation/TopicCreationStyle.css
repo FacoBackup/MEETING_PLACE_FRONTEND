@@ -1,13 +1,5 @@
-.topicCreationContainer{
-    display: grid;
-    grid-template-columns:1fr 50fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr ;
-    
-  
-    row-gap: 1vh;
-}
-.topicInputContainer{
-    grid-row: 2;
-    grid-column: 2;
-    
+.topic_creation_container{
+    display: flex;
+    justify-content: space-around;
+   
 }

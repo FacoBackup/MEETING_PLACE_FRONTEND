@@ -30,12 +30,13 @@ function Conversations (){
     }
 
     return(
-        <div className="conversationComponentContainer">
-            <div className="titleContainer">
-                <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular }}>Conversations</p>
+        <div className="conversation_component_container">
+            <div className="conversation_title_container">
+                <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Conversations</p>
             </div>
-            {conversations.map((chat, index) => 
-                <div className="contentContainer">
+            <div className="conversation_content_container">
+                {conversations.map((chat, index) => 
+                <div className="conversation_personas_container">
                         <Link style={{textDecoration: 'none', textDecorationColor: '-moz-initial'}} to ={chat.isGroup ? ("/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)) : ("/chat/" +((chat.name).replace(cookies.get('ID'), ""))+"/"+JSON.stringify(chat.isGroup))}>
                             <Persona
                                 {...{
@@ -47,6 +48,7 @@ function Conversations (){
                             />
                         </Link>
                 </div>)}
+            </div>
         </div>
     );
 

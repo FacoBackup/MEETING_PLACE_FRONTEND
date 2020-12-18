@@ -1,22 +1,27 @@
-.homeContainer{
+.home_page_container{
     display:grid;
     grid-template-columns: 1fr 15fr 1fr 30fr 1fr 15fr 1fr;
     grid-template-rows: 1fr 1fr 50fr;
     width: 100vw;   
     height: 100vh;
 }
-.navbarContainer{
+.navigation_container{
     grid-row:1;
     grid-column: 1/8;
-    
 }
-.profileContainer{
+.home_profile_container{
     grid-column: 2;
     grid-row: 3;
     height: 55vh;
     width:17.5vw;
 }
-.topicContainer{
+.home_settings_pannel_container{
+    grid-column: 2;
+    grid-row: 4;
+    height: 34.25vh;
+    width:17.5vw;
+}
+.home_topics_container{
     grid-column: 4;
     grid-row: 3;
     width: 60vw;
@@ -26,27 +31,24 @@
     row-gap: 0.95vh;
 }
 
-.topicCreationContainer{
+.home_topic_control_bar_container{
     grid-row: 1;
     margin:auto;
     width: 60vw;
-    height: 10vh;
+    height: auto;
 }
-.timelineContainer{
+.home_timeline_container{
     grid-row: 3;
     margin:auto;
 
     width: 60vw;
-    height: 80vh;
+    height: 85.3vh;
     overflow-y: scroll;
 }
-.chatsContainer{
+.conversation_container{
     display: grid;
-    justify-content: space-around;
-    overflow-x:hidden;
-    text-align: right;
     grid-column: 6;
     grid-row: 3;
     width: 17.5vw;
-    height: 98%;
+    height: 91vh;
 }

@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 import "../user/SignupStyle.css";
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
-import { Button } from '@fluentui/react-button';
+import { DefaultButton, PrimaryButton, IIconProps, ImageIcon } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
@@ -67,32 +67,32 @@ function SignUp (){
             else alert("Some error occurred.")
         })
     }
-
+    function getErrorMessage (value) {
+        return value.length >= 8 ? '' : `Input value must be more or equal to 8 characters.`;
+      };
     if(!sent){
         return (
-            <div  className="signupContainer">
-                <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="signupComponent">
-                    <div >
+            <div  className="sign_up_container">
+                <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="sign_up_component">
+                    <div className="sign_up_title_container" >
                         <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign up</p>
                     </div>
-                    <div>
+                    <div className="sign_up_input_container">
                         <TextField label="Full name" onChange={handleChangeName}></TextField>
-                    </div>
-                    <div>
+                 
                         <TextField label="Email address" onChange={handleChangeEmail}></TextField>
-                    </div>
-                    <div>
-                        <TextField type="password" label="Password" onChange={handleChangePassword}></TextField>
-                    </div>
-                    
-                    <div>
+                  
+                        <TextField
+                            type="password"
+                            label="Password"
+                            onChange={handleChangePassword}
+                            description="Max length is 64"
+                            onGetErrorMessage={getErrorMessage}
+                        />
                         <MaskedTextField label="Phone number" onChange={handleChangePhone} mask="(99) 99999-9999" />
-                    </div>
-                    <div>
+                
                         <MaskedTextField label="Birthday" onChange={handleChangeBirth} mask="99-99-9999"/>
-                    </div>
-
-                    <div>
+                    
                         <Dropdown
                             onChange={(event, option) =>  setGender(option.key)}
                             placeholder="Select an option"
@@ -100,9 +100,9 @@ function SignUp (){
                             options={genderOptions}/>
                     </div>
                   
-                    <div >
-                        <Button style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} href="/authenticate">Sign in</Button>
-                        <Button onClick={handleSubmit} style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} >Create</Button>
+                    <div className="sign_up_buttons_container" >
+                        <DefaultButton text="Sign in" href="/authenticate"/>
+                        <PrimaryButton iconProps='Add' text="Create Account" onClick={handleSubmit} />
                     </div>
                     
                 </div>
