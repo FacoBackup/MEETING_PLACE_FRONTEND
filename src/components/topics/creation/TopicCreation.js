@@ -2,7 +2,7 @@ import React from 'react';
 import Cookies from 'universal-cookie';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import "../creation/TopicCreationStyle.css"
-import { Button } from '@fluentui/react-button';
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 
 function TopicCreation(){
@@ -11,9 +11,9 @@ function TopicCreation(){
 
     return(
         <div className="topic_creation_container">
-            <Button style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout">Timeline</Button>
-            <Button style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout">My topics</Button>
-            <Button style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout">Create New</Button>
+            <DefaultButton text="Timeline" disabled={true} style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout"/>
+            <DefaultButton text="My Topics" disabled={true} style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout"/>
+            <PrimaryButton text="Create New" disabled={true} style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'auto'}} href="/signout"/>
         </div>
     );  
        

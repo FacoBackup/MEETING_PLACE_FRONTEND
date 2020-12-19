@@ -9,28 +9,28 @@
     grid-row:1;
     grid-column: 1/8;
 }
-.home_profile_container{
+.home_left_components{
     grid-column: 2;
     grid-row: 3;
-    height: 55vh;
+    height: 75vh;
     width:17.5vw;
 }
 .home_settings_pannel_container{
     grid-column: 2;
     grid-row: 4;
-    height: 34.25vh;
+    height: 24.25vh;
     width:17.5vw;
 }
-.home_topics_container{
+.home_middle_components{
     grid-column: 4;
     grid-row: 3;
     width: 60vw;
     height: 90vh;
     display: grid;
+    
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     row-gap: 0.95vh;
 }
-
 .home_topic_control_bar_container{
     grid-row: 1;
     margin:auto;
@@ -45,7 +45,7 @@
     height: 85.3vh;
     overflow-y: scroll;
 }
-.conversation_container{
+.home_right_components{
     display: grid;
     grid-column: 6;
     grid-row: 3;

@@ -21,26 +21,26 @@ class Home extends Component{
       return (
         <div className="home_page_container">
             <div className="navigation_container">
-              <Navigation/>
+                <Navigation/>
             </div>
-            <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="home_profile_container">
-              <div>
-                <Profile/>
-              </div>
-              <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="home_settings_pannel_container">
-                <p>PLACEHOLDER</p>
-              </div>
+            <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="home_left_components">
+                <div >
+                  <Profile/>
+                </div>
+                {/* <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="home_settings_pannel_container">
+                  <p>PLACEHOLDER</p>
+                </div> */}
             </div>
-            <div className="home_topics_container">
-              <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_topic_control_bar_container" >
-                <TopicCreation/>
-              </div>
-              <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_timeline_container" >
-                <h3 style={{textAlign:'center'}}>PLACEHOLDER TIMELINE</h3>
-              </div>
+            <div className="home_middle_components">
+                <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_topic_control_bar_container" >
+                  <TopicCreation/>
+                </div>
+                <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_timeline_container" >
+                  <h3 style={{textAlign:'center'}}>PLACEHOLDER TIMELINE</h3>
+                </div>
             </div>
             
-            <div style={{borderRadius: '8px',backgroundColor: NeutralColors.white}} className="conversation_container" >
+            <div style={{borderRadius: '8px',backgroundColor: NeutralColors.white}} className="home_right_components" >
               <Conversations/>
             </div>
         </div>

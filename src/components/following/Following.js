@@ -29,7 +29,7 @@ function Following(){
 
     return(
         <div style={{paddingLeft:'10px', paddingRight: '10px'}}>
-            
+            <h1>FOLLOWING</h1>
             {following.map((user, index) => 
             <div >
                 <p>{user.followedID}</p> 

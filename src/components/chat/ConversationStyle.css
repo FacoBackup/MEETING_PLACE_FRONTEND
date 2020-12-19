@@ -1,7 +1,7 @@
 .conversation_component_container{
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    align-content: center;
+    grid-template-rows: 1fr 98fr;
+    overflow-y: scroll;
     justify-content: space-around;
 }
 
@@ -10,14 +10,8 @@
     grid-column: 1;
     text-align: center;
 }
-.conversation_content_container{
-    grid-row: 2;  
-   
-    grid-column: 1; 
-    margin-bottom: auto;
-    overflow-y: scroll;
-    height: auto;
-}
 .conversation_personas_container{
+    grid-row: 2;
+ 
     padding-bottom: 1vh;
 }

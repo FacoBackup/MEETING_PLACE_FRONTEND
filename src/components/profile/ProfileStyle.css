@@ -4,7 +4,7 @@
     grid-template-columns: 1;
     overflow-x: hidden;
     align-items: center;
-    height: 55vh;
+    height: 75vh;
     width:17.5vw;
 }
 .profile_background_image_container{
@@ -18,8 +18,8 @@
 }
 .profile_info_container{
     grid-row: 3;
+    height: 28.5vh;
     overflow-y: scroll;
-    
 }
 .profile_buttons_container{
     grid-row: 4;
@@ -29,6 +29,16 @@
     row-gap: 1vh;
     margin: auto;
 }
-
+.profile_edit_info_buttons{
+    display: flex;
+    justify-content: space-around;
+}
+.profile_edit_info{
+    grid-row: 3;
+    overflow-y: scroll;
+    margin: auto;
+    width: 17vw;
+    height: 35vh;
+}
 
 

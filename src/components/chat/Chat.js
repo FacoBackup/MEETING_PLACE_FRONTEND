@@ -150,17 +150,18 @@ function Chat ({match}){
                 <div className="subjectMessageContainer">
                     {conversationMessages.map((message, index) => 
                         <div className={(message.creatorID === cookies.get("ID")) ? "myMessageContentContainer" : "subjectMessageContentContainer"}>
-                            <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.semibold }}>{message.content}</p>
-                            {/* <TextField readOnly defaultValue={message.content} /> */}
-                            <p style={{ fontSize: FontSizes.size12, fontWeight:FontWeights.regular }}> from: {message.creatorID}</p>
-                            {(message.creatorID === cookies.get("ID")) ? <p style={{ fontSize: FontSizes.size12, fontWeight:FontWeights.regular }}> seen: {JSON.stringify(message.read)}</p> : <p></p> }
-                            <p style={{ fontSize: FontSizes.size12, fontWeight:FontWeights.regular }}>Valid until: {message.valid} hours</p>
+                            <TextField 
+                                label={"From: " + message.creatorID } 
+                                readOnly 
+                                multiline 
+                                autoAdjustHeight
+                                placeholder={message.content} />
                         </div>)}    
                 </div>
             </div>
             <div className="messageInputContainer" style={{boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
                 <div className="input">
-                    <TextField  placeholder="Message"multiline autoAdjustHeight onChange={handleChange} />
+                    <TextField  placeholder="Message" multiline autoAdjustHeight onChange={handleChange} />
                 </div>
                 <div className="button">
                     <Button style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={send}>Send</Button>
