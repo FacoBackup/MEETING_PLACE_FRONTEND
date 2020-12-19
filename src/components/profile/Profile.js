@@ -7,6 +7,7 @@ import { FontSizes, FontWeights } from '@fluentui/theme';
 import { IPersonaSharedProps, Persona, PersonaSize, PersonaPresence } from 'office-ui-fabric-react/lib/Persona';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import { useBoolean } from '@uifabric/react-hooks';
+import QRcode from 'qrcode.react';
 
 function Profile(){
  
@@ -100,21 +101,24 @@ function Profile(){
                     />
                 </div>
                 <div className="profile_info_container">
-                    <ul>
-                        <li>
+                   
                             <TextField label="About You" readOnly placeholder={profile.about} />
-                        </li>
-                        <li>
                             <TextField label="Your Phone Number" readOnly placeholder={profile.phoneNumber} />
-                        </li>
-                        <li>
                             <TextField label="Your Nationality" readOnly placeholder={profile.nationality} />
-                        </li>
-                        <li>
                             <TextField label="Your city of birth" readOnly placeholder={profile.cityOfBirth} />
-                        </li>
-                    </ul>
+                    <div style={{paddingLeft:'4.2vw', paddingTop:'3.5vh'}}>
+                    <QRcode 
+                                        value= {"BEGIN:VCARD" +
+                                        "VERSION:4.0" +
+                                        "N:{profile.name}" +
+                                        "FN:"+ profile.name +
+                                        "TEL;TYPE#work,voice;VALUE#uri:tel:" + profile.phoneNumber +
+                                        "ADR;TYPE#HOME;LABEL#" + profile.nationality + "/" + profile.cityOfBirth +
+                                        "EMAIL:" + profile.email + "END:VCARD"}
+                                        />
+                    </div>
                 </div>
+                
                 <div className="profile_buttons_container">
                     <div style={{gridRow:'1', gridColumn:'4'}}>
                         <DefaultButton text ="Followers" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'7vw' }} href="/followers"/>
@@ -129,7 +133,6 @@ function Profile(){
                         <PrimaryButton text="Sign out" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} href="/signout" />
                     </div>
                 </div>
-                
             </div>
         );  
     }
@@ -151,11 +154,10 @@ function Profile(){
                 />
             </div>
             <div className="profile_edit_info">
-                <ul>
-                    <li>
-                        <MaskedTextField label="Phone number" mask="(99) 99999-9999" />
-                    </li>
-                    <li>
+            
+                   
+                    <MaskedTextField label="Phone number" mask="(99) 99999-9999" />
+                   
                     <TextField
                         label="About you"
                         placeholder={(profile.about)}
@@ -164,17 +166,15 @@ function Profile(){
                         onChange={handleChangeAbout}
                         onGetErrorMessage={getErrorMessageAbout}
                     />
-                    </li>
-                    <li>
-                        <TextField
-                            label="Your nationality" 
-                            placeholder={profile.nationality} 
-                            description="Max length is 128 characters"
-                            onChange={handleChangeNationality}
-                            onGetErrorMessage={getErrorMessage}
-                        />
-                    </li>
-                    <li>
+                
+                    <TextField
+                        label="Your nationality" 
+                        placeholder={profile.nationality} 
+                        description="Max length is 128 characters"
+                        onChange={handleChangeNationality}
+                        onGetErrorMessage={getErrorMessage}
+                    />
+                
                     <TextField
                             label="Your city of birth" 
                             placeholder={profile.cityOfBirth} 
@@ -182,8 +182,7 @@ function Profile(){
                             onChange={handleChangeBirthCity}
                             onGetErrorMessage={getErrorMessage}
                         />
-                    </li>
-                </ul>   
+
             </div>
             <div>
                 <div className="profile_edit_info_buttons">

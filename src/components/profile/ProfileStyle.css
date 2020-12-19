@@ -4,26 +4,31 @@
     grid-template-columns: 1;
     overflow-x: hidden;
     align-items: center;
-    height: 75vh;
+    justify-content: center;
+    height: 93.5vh;
     width:17.5vw;
+    
 }
 .profile_background_image_container{
     grid-row: 1;
-
 }
 .profile_persona_container{
     grid-row: 2;
+    height: 5vh;
     display:grid;
     padding-left: 5%;
 }
 .profile_info_container{
     grid-row: 3;
-    height: 28.5vh;
-    overflow-y: scroll;
+    height: 42vh;
+    width: 15vw;
+    margin: auto;
+    overflow-y: auto;
 }
 .profile_buttons_container{
     grid-row: 4;
     display: grid;
+    
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     row-gap: 1vh;
@@ -32,13 +37,17 @@
 .profile_edit_info_buttons{
     display: flex;
     justify-content: space-around;
+    
 }
 .profile_edit_info{
     grid-row: 3;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin: auto;
-    width: 17vw;
+    
     height: 35vh;
+    width: 15vw;
+    margin: auto;
+    overflow-y: auto;
 }
 
 

@@ -16,7 +16,7 @@
     width: 65vw;
     height: 70vh;
     margin: auto;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     grid-column: 2;
 }
@@ -27,24 +27,22 @@
     width: 60vw;
     row-gap: 0.5vh;
     grid-template-rows: 1fr 1fr 1fr ;
-    grid-template-columns: 1fr 50fr 50fr 1fr;
+    grid-template-columns: 1fr 50fr 50fr 1fr 1fr;
+    margin: auto;
 }
 .myMessageContentContainer{
-    border-radius: 8px;
-    grid-column: 4;
-    text-align: right;
-    width: 25vw;
+
+    grid-column: 4;   
+    width: 20vw;
     margin: auto;
-    border: 2px solid lightgray;
+   
 }
 
 .subjectMessageContentContainer{
-    border-radius: 8px;
-    grid-column: 2;
-    text-align: left;
-    width: 25vw;
+    grid-column: 2;    
+    width: 20vw;
     margin: auto;
-    border: 2px solid gray;
+    
 }
 .messageInputContainer{
     display: grid;

@@ -8,6 +8,7 @@ import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Button } from '@fluentui/react-button';
+import MessageBox from "../chat/message/MessageBox"
 
 function Chat ({match}){
     
@@ -150,12 +151,7 @@ function Chat ({match}){
                 <div className="subjectMessageContainer">
                     {conversationMessages.map((message, index) => 
                         <div className={(message.creatorID === cookies.get("ID")) ? "myMessageContentContainer" : "subjectMessageContentContainer"}>
-                            <TextField 
-                                label={"From: " + message.creatorID } 
-                                readOnly 
-                                multiline 
-                                autoAdjustHeight
-                                placeholder={message.content} />
+                          {MessageBox(message.content, message.valid, message.creatorID, message.creationDate, cookies.get('ID'), message.creatorID, message.read)}
                         </div>)}    
                 </div>
             </div>

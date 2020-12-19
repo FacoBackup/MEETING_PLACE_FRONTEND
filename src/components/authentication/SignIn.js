@@ -37,7 +37,7 @@ function SignIn () {
         event.preventDefault();
     }
     const handleSubmit = async () => {
-
+        alert(localIpUrl('public'))
         await axios({
             method: 'put',
             url: 'http://localhost:8080/api/login',

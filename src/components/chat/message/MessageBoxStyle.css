@@ -1,0 +1,18 @@
+.my_message_box_container{
+    line-break:auto;
+    overflow-x: auto;
+    border-radius: 8px;
+    background-color: #edebe9;
+    text-align: right;
+    border: 2px solid #edebe9;
+    height: auto;
+}
+.subject_message_box_container{
+    line-break:auto;
+    overflow-x: auto;
+    border-radius: 8px;
+    text-align: left;
+    background-color: #d2d0ce;
+    border: 2px solid #d2d0ce;
+    height: auto;
+}

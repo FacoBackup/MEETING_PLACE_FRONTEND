@@ -1,0 +1,8 @@
+BEGIN:VCARD
+    VERSION:4.0
+    N:{profile.name};
+    FN:{profile.name}
+    TEL;TYPE#work,voice;VALUE#uri:tel:{{profile.phoneNumber}}
+    ADR;TYPE#HOME;LABEL#({profile.nationality} + "/" + {profile.cityOfBirth})
+    EMAIL:{profile.email}
+END:VCARD

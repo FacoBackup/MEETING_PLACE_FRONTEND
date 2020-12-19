@@ -1,7 +1,7 @@
 .conversation_component_container{
     display: grid;
     grid-template-rows: 1fr 98fr;
-    overflow-y: scroll;
+    overflow-y: auto;
     justify-content: space-around;
 }
 

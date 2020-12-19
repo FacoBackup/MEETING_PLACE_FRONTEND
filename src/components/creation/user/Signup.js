@@ -12,7 +12,7 @@ import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
 const genderOptions = [
     { key: 'male', text: 'Male'},
     { key: 'female', text: 'Female' },
-    { key: 'Non binary', text: 'Non binary' },
+   
   ];
 
 function SignUp (){
