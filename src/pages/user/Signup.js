@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
-import "../user/SignupStyle.css";
+import "./SignupStyle.css";
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
 import { DefaultButton, PrimaryButton, IIconProps, ImageIcon } from 'office-ui-fabric-react';
-import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
+import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
 
 const genderOptions = [

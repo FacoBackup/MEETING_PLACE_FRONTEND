@@ -1,13 +1,13 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import SignUp from "./components/creation/user/Signup";
-import SignOut from "./components/authentication/Signout";
+import SignUp from "./pages/user/Signup";
+import SignOut from "./pages/authentication/Signout";
 import Home from "./pages/home/Home";
 import Search from "./pages/search/Search";
-import Conversation from "./components/chat/Chat";
-import Followers from "./components/followers/Followers";
-import Following from "./components/following/Following";
-import SignIn from "./components/authentication/SignIn"
+import Chat from "./pages/chat/Chat";
+import Followers from "./pages/followers/Followers";
+import Following from "./pages/following/Following";
+import SignIn from "./pages/authentication/SignIn"
 
 function AppRoutes() {
   return (
@@ -17,7 +17,7 @@ function AppRoutes() {
               <Route path="/following" exact component={Following}/>
               <Route path="/followers" exact component={Followers}/>
               <Route path="/" exact component={Home}/>
-              <Route path="/chat/:id/:isGroup" exact component={Conversation}/>
+              <Route path="/chat/:id/:isGroup" exact component={Chat}/>
               <Route path="/search_user" exact component={Search}/>
               <Route path="/signout" exact component={SignOut}/>
               <Route path="/authenticate" exact component={SignIn}/>

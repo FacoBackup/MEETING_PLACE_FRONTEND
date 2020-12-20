@@ -1,0 +1,10 @@
+.conversation_info_container{
+    display: flex;
+    
+    align-items: center;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 23px;
+    border-bottom-left-radius: 23px;
+    height: auto
+}

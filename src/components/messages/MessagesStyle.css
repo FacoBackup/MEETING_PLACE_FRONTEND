@@ -1,0 +1,62 @@
+
+.messages_component_container{
+    display: grid;
+    grid-template-columns: 1;
+    grid-row: 1fr 1fr;
+    align-items: center;
+    width: 60vw;
+    height: 86.2vh;
+   
+    margin: auto;
+
+}
+.messages_component{
+    grid-row: 1;
+    display: grid;
+    grid-template-rows: auto;
+    padding-top: 1vh;
+    row-gap: 1vh;
+    
+    height: 76.2vh;
+    border-radius: 8px;
+    overflow: auto;
+}
+
+.messages_container{
+    grid-row: 1;
+    display: grid;
+    width: 60vw;
+    row-gap: 0.5vh;
+    grid-template-rows: 1fr 1fr;
+}
+.my_message_container{
+
+    grid-column: 3;   
+    width: 20vw;
+    
+    margin: auto;
+}
+
+.subject_message_container{
+    grid-column: 1;    
+    width: 20vw;
+    
+    margin: auto;
+}
+
+.message_input_container{
+    grid-row: 2;
+    grid-column: 1/2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    margin: auto;
+}
+
+
+.message_input_box{
+    width: 55.8vw;
+
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import "../creation/TopicCreationStyle.css"
+import "./TopicCreationStyle.css"
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 

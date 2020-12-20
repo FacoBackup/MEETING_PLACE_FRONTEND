@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "../profile/ProfileStyle.css";
+import "./ProfileStyle.css";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { IPersonaSharedProps, Persona, PersonaSize, PersonaPresence } from 'office-ui-fabric-react/lib/Persona';

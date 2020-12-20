@@ -1,35 +1,9 @@
-.home_page_container{
-    display:grid;
-    grid-template-columns: 1fr 15fr 1fr 30fr 1fr 15fr 1fr;
-    grid-template-rows: 1fr 1fr 50fr;
-    width: 100vw;   
-    height: 100vh;
-}
-.navigation_container{
-    grid-row:1;
-    grid-column: 1/8;
-}
-.home_left_components{
-    grid-column: 2;
-    grid-row: 3;
-    height: 90.6vh;
-    width:17.5vw;
-}
+
 .home_settings_pannel_container{
     grid-column: 2;
     grid-row: 4;
     height: 24.25vh;
     width:17.5vw;
-}
-.home_middle_components{
-    grid-column: 4;
-    grid-row: 3;
-    width: 60vw;
-    height: 90vh;
-    display: grid;
-    
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    row-gap: 0.95vh;
 }
 .home_topic_control_bar_container{
     grid-row: 1;
@@ -42,13 +16,6 @@
     margin:auto;
 
     width: 60vw;
-    height: 85.3vh;
+    height: 87vh;
     overflow-y: auto;
-}
-.home_right_components{
-    display: grid;
-    grid-column: 6;
-    grid-row: 3;
-    width: 17.5vw;
-    height: 91vh;
 }

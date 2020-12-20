@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "../chat/ConversationStyle.css";
+import "./ConversationBarStyle.css";
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Link } from 'react-router-dom';
 
-function Conversations (){
+function ConversationBar (){
     
     useEffect(()=>{
         fetchMessages()
@@ -30,7 +30,7 @@ function Conversations (){
     }
 
     return(
-        <div className="conversation_component_container">
+        <div className="conversation_bar_component_container">
             <div className="conversation_title_container">
                 <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Conversations</p>
             </div>
@@ -54,4 +54,4 @@ function Conversations (){
 
 }   
 
-export default Conversations;
+export default ConversationBar;

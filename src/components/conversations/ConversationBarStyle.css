@@ -1,4 +1,4 @@
-.conversation_component_container{
+.conversation_bar_component_container{
     display: grid;
     grid-template-rows: 1fr 98fr;
     overflow-y: auto;
