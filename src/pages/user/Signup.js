@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Component, useState} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import "./SignupStyle.css";
@@ -12,105 +12,109 @@ import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
 const genderOptions = [
     { key: 'male', text: 'Male'},
     { key: 'female', text: 'Female' },
-   
   ];
 
-function SignUp (){
-    const theme = getTheme();
-    const [sent, setSent] = useState(false);
-    const [email, setEmail] = useState('');
-    function handleChangeEmail(event){
-        setEmail(event.target.value);
+class SignUp extends Component{
+    constructor(){
+        super()
+        this.state={
+            sent: false,
+            email: '',
+            password: null, 
+            name: '',
+            phone: '',
+            birth: '',
+            gender:'',
+            theme: getTheme()
+                }
+        this.handleChange = this.handleChange.bind(this)
     }
-    const [password, setPassword] = useState('');
-    function handleChangePassword(event){
-        setPassword(event.target.value);
-    }
-    const [name, setName] = useState('');
-    function handleChangeName(event){
-        setName(event.target.value);
-    }
-    const [phone, setPhone] = useState('');
-    function handleChangePhone(event){
-        setPhone(event.target.value);
-    }
-    const [birth, setBirth] = useState('');
-    function handleChangeBirth(event){
-        setBirth(event.target.value);
-    }
-    const [gender, setGender] = useState(''); //SELECT    
     
-    async function handleSubmit(){
+    handleChange(event){
+        this.setState({
+            [event.target.name]: event.target.value 
+        })
+    }
+    
+    async handleSubmit(){
         await axios({
             method: 'post',
             url: 'http://localhost:8080/api/user',
             data: {
-                email: email,
-                password: password,
-                userName: name,
-                gender: gender,
+                email: this.state.email,
+                password: this.state.password,
+                userName: this.state.name,
+                gender: this.state.gender,
                 nationality: '',
-                birthDate: birth.replace("_", ""),
+                birthDate: this.state.birth.replace("_", ""),
                 cityOfBirth: '',
-                phoneNumber: phone,
-                admin: false
+                phoneNumber: this.state.phone,
+                admin: false,
             }
             })
         .then(() => {   
-            setSent(true);
-
+            this.setState({
+               sent: true
+            });
         })
         .catch(error => {
             console.log(error)
-            if(email !== '')
+            if(this.state.email !== '')
                 alert("Some error occurred, maybe this email is already taken.")
             else alert("Some error occurred.")
         })
     }
-    function getErrorMessage (value) {
+
+    getErrorMessage (value) {
         return value.length >= 8 ? '' : `Input value must be more or equal to 8 characters.`;
-      };
-    if(!sent){
-        return (
-            <div  className="sign_up_container">
-                <div style={{ boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }} className="sign_up_component">
-                    <div className="sign_up_title_container" >
-                        <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign up</p>
-                    </div>
-                    <div className="sign_up_input_container">
-                        <TextField label="Full name" onChange={handleChangeName}></TextField>
-                 
-                        <TextField label="Email address" onChange={handleChangeEmail}></TextField>
-                  
-                        <TextField
-                            type="password"
-                            label="Password"
-                            onChange={handleChangePassword}
-                            description="Max length is 64"
-                            onGetErrorMessage={getErrorMessage}
-                        />
-                        <MaskedTextField label="Phone number" onChange={handleChangePhone} mask="(99) 99999-9999" />
-                
-                        <MaskedTextField label="Birthday" onChange={handleChangeBirth} mask="99-99-9999"/>
+    };
+
+    render(){
+        if(!this.state.sent){
+            return (
+                <div  className="sign_up_container">
+                    <div style={{backgroundColor: NeutralColors.white,  boxShadow: this.state.theme.effects.elevation8 }} className="sign_up_component">
+                        <div className="sign_up_title_container" >
+                            <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign up</p>
+                        </div>
+                        <div className="sign_up_input_container">
+                            <TextField label="Full name" name="name" onChange={this.handleChange}></TextField>
+                     
+                            <TextField label="Email address" name="email" onChange={this.handleChange}></TextField>
+                      
+                            <TextField
+                                type="password"
+                                label="Password"
+                                name="password"
+                                onChange={this.handleChange}
+                                description="Max length is 64"
+                                onGetErrorMessage={this.getErrorMessage}
+                            />
+                            <MaskedTextField label="Phone number" name="phone" onChange={this.handleChange} mask="(99) 99999-9999" />
                     
-                        <Dropdown
-                            onChange={(event, option) =>  setGender(option.key)}
-                            placeholder="Select an option"
-                            label="Gender"
-                            options={genderOptions}/>
+                            <MaskedTextField label="Birthday" name="birth" onChange={this.handleChange} mask="99-99-9999"/>
+                        
+                            <Dropdown
+                                onChange={(event, option) =>  this.setState({
+                                    gender: option.key
+                                })}
+                                placeholder="Select an option"
+                                label="Gender"
+                                options={genderOptions}/>
+                        </div>
+                      
+                        <div className="sign_up_buttons_container" >
+                            <DefaultButton text="Sign in" href="/authenticate"/>
+                            <PrimaryButton iconProps='Add' text="Create Account" onClick={this.handleSubmit} />
+                        </div>
+                        
                     </div>
-                  
-                    <div className="sign_up_buttons_container" >
-                        <DefaultButton text="Sign in" href="/authenticate"/>
-                        <PrimaryButton iconProps='Add' text="Create Account" onClick={handleSubmit} />
-                    </div>
-                    
                 </div>
-            </div>
-        );  
-    }
-    else
-        return (<Redirect to={'/authenticate'}/>);
+            );  
+        }
+        else
+            return (<Redirect to={'/authenticate'}/>);
+    } 
 }
 
 export default SignUp;

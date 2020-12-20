@@ -48,7 +48,23 @@ function Profile(){
             .catch()
         }         
     }
-    
+
+    async function signout () {
+        if(typeof cookies.get("JWT") !== 'undefined'){
+            await axios({
+                method: 'post',
+                url: 'http://localhost:8080/api/logout',
+                headers: {"Authorization": 'Bearer ' + cookies.get("JWT")}
+            }).then(()=>{
+                Object.keys(cookies.getAll()).forEach(name => cookies.remove(name))
+            })
+            .catch(error=>{
+                console.log(cookies.get("JWT"))
+            }
+            )
+        }
+    }
+
     function edit(){
         setEditMode(!editMode)
     }
@@ -130,7 +146,7 @@ function Profile(){
                         <DefaultButton  text ="Edit" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={edit}/>
                     </div>
                     <div style={{gridRow:'2', gridColumn:'2'}}>
-                        <PrimaryButton text="Sign out" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} href="/signout" />
+                        <PrimaryButton text="Sign out" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={signout} />
                     </div>
                 </div>
             </div>

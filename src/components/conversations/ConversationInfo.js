@@ -49,7 +49,7 @@ function ConversationInfo(params) {
                     cookies.remove(params.conversationId)
                     cookies.set(params.conversationId, JSON.stringify(res.data),{path:'/'})
                     setConversation(res.data)
-                    alert(JSON.stringify(conversation))
+               
                 })
                 .catch(error => {
                     alert(error)
