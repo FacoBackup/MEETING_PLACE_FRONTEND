@@ -26,6 +26,7 @@ function Messages (params){
     const userID = params.userID
     
     const FetchMessages = async() =>{
+        alert("FETCHING")
         if(typeof cookies.get("MESSAGES/"+params.conversationId) === 'undefined'){
             if(params.isGroup  === true){
                 await axios({
@@ -36,7 +37,8 @@ function Messages (params){
                         conversationID: params.conversationId
                     }
                 }).then(res=>{
-                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res), {path:'/'} )
+                    
+                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res.data), {path:'/'} )
                     setMessages(cookies.get("MESSAGES/"+params.conversationId));
                 })
                 .catch(error => {
@@ -44,6 +46,7 @@ function Messages (params){
                 });
             }
             else{
+
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/all/user/messages',
@@ -52,7 +55,8 @@ function Messages (params){
                         userID: params.conversationId
                     }
                 }).then(res=>{
-                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res), {path:'/'} )
+      
+                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res.data), {path:'/'} )
                     setMessages(cookies.get("MESSAGES/"+params.conversationId));
                 })
                 .catch(error => {
@@ -70,13 +74,11 @@ function Messages (params){
                         conversationID: params.conversationId
                     }
                 }).then(res=>{
-                    var stringRes = JSON.stringify(res.data)
-                    var messagesStored = JSON.stringify(cookies.get("MESSAGES/"+params.conversationId))
-                    messagesStored = messagesStored.replace("]", ",")
-                    messagesStored = messagesStored.concat(stringRes.replace("[", ""))
 
-                    cookies.remove("MESSAGES/"+params.conversationId)
-                    cookies.set("MESSAGES/"+params.conversationId,messagesStored, {path:'/'} )
+                    if(JSON.stringify(res.data) !== "[]"){
+                        cookies.remove("MESSAGES/"+params.conversationId)
+                        cookies.set("MESSAGES/"+params.conversationId,cookies.get("MESSAGES/"+params.conversationId)).replace("]", ",").concat(JSON.stringify(res.data).replace("[", ""), {path:'/'} )
+                    }
 
                     setMessages(cookies.get("MESSAGES/"+params.conversationId));
                 })
@@ -85,6 +87,7 @@ function Messages (params){
                 });
             }
             else{
+             
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/new/user/messages',
@@ -93,14 +96,11 @@ function Messages (params){
                         userID: params.conversationId
                     }
                 }).then(res=>{
-                    var stringRes = JSON.stringify(res.data)
-                    var messagesStored = JSON.stringify(cookies.get("MESSAGES/"+params.conversationId))
-                    messagesStored = messagesStored.replace("]", ",")
-                    messagesStored = messagesStored.concat(stringRes.replace("[", ""))
-
-                    cookies.remove("MESSAGES/"+params.conversationId)
-                    cookies.set("MESSAGES/"+params.conversationId,messagesStored, {path:'/'} )
-                    
+                  
+                    if(JSON.stringify(res.data) !== "[]"){
+                        cookies.remove("MESSAGES/"+params.conversationId)
+                        cookies.set("MESSAGES/"+params.conversationId,cookies.get("MESSAGES/"+params.conversationId)).replace("]", ",").concat(JSON.stringify(res.data).replace("[", ""), {path:'/'} )
+                    }
                     setMessages(cookies.get("MESSAGES/"+params.conversationId));
                 })
                 .catch(error => {
@@ -114,7 +114,7 @@ function Messages (params){
   
     
     const SendMessage = async() =>{
-        
+    
         if(params.isGroup === true){
             await axios({
                 method: 'post',
@@ -128,7 +128,9 @@ function Messages (params){
                     conversationID: params.conversationId
                 }
             })
-            .then(()=>{
+            .then(res=>{
+                alert(messageInput)
+                alert(JSON.stringify(res))
                 FetchMessages()
             })
             .catch(error => {
@@ -166,7 +168,7 @@ function Messages (params){
                     <div className={(message.creatorID === userID) ? "my_message_container" : "subject_message_container"}>
                         {MessageBox(message.content, message.valid, message.creationDate, userID, message.creatorID, message.read)}
                     </div>)}    
-                
+             
             </div>
             <div className="message_input_container">
                 <div className="message_input_box">

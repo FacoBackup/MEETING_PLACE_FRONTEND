@@ -18,7 +18,7 @@
     row-gap: 5vh;
     column-gap: 1vh;
     width: 40vh;
-    height: 75vh;
+    height: 80vh;
 }
 .sign_up_title_container{
     grid-column: 2;
@@ -34,4 +34,5 @@
     grid-column: 2;
     display: flex;
     justify-content: space-around;
+    
 }

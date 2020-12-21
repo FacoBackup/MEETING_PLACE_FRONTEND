@@ -1,4 +1,7 @@
 .my_message_box_container{
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
     line-break:auto;
     overflow-x: auto;
     border-radius: 8px;
@@ -8,6 +11,8 @@
     height: auto;
 }
 .subject_message_box_container{
+    display: flex;
+    justify-content: space-around;
     line-break:auto;
     overflow-x: auto;
     border-radius: 8px;

@@ -20,7 +20,7 @@ class SignUp extends Component{
         this.state={
             sent: false,
             email: '',
-            password: null, 
+            password: '', 
             name: '',
             phone: '',
             birth: '',
@@ -28,6 +28,7 @@ class SignUp extends Component{
             theme: getTheme()
                 }
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
     
     handleChange(event){
@@ -37,6 +38,7 @@ class SignUp extends Component{
     }
     
     async handleSubmit(){
+        
         await axios({
             method: 'post',
             url: 'http://localhost:8080/api/user',
