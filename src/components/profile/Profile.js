@@ -56,6 +56,7 @@ function Profile(){
                 url: 'http://localhost:8080/api/logout',
                 headers: {"Authorization": 'Bearer ' + cookies.get("JWT")}
             }).then(()=>{
+
                 Object.keys(cookies.getAll()).forEach(name => cookies.remove(name))
             })
             .catch(error=>{

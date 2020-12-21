@@ -26,8 +26,8 @@ function Messages (params){
     const userID = params.userID
     
     const FetchMessages = async() =>{
-        alert("FETCHING")
-        if(typeof cookies.get("MESSAGES/"+params.conversationId) === 'undefined'){
+        
+        if(localStorage.getItem("MSG/"+params.conversationId) === null){
             if(params.isGroup  === true){
                 await axios({
                     method: 'post',
@@ -38,15 +38,16 @@ function Messages (params){
                     }
                 }).then(res=>{
                     
-                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res.data), {path:'/'} )
-                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                    localStorage.setItem(("MSG/"+params.conversationId),JSON.stringify(res.data))
+                    
+                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))      
                 })
                 .catch(error => {
                     alert(error)
                 });
             }
             else{
-
+       
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/all/user/messages',
@@ -55,9 +56,9 @@ function Messages (params){
                         userID: params.conversationId
                     }
                 }).then(res=>{
-      
-                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res.data), {path:'/'} )
-                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                    localStorage.setItem(("MSG/"+params.conversationId),JSON.stringify(res.data))
+                    
+                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))      
                 })
                 .catch(error => {
                     alert(error)
@@ -75,19 +76,20 @@ function Messages (params){
                     }
                 }).then(res=>{
 
-                    if(JSON.stringify(res.data) !== "[]"){
-                        cookies.remove("MESSAGES/"+params.conversationId)
-                        cookies.set("MESSAGES/"+params.conversationId,cookies.get("MESSAGES/"+params.conversationId)).replace("]", ",").concat(JSON.stringify(res.data).replace("[", ""), {path:'/'} )
+                    if(res.data !== []){
+                        const oldStorage = localStorage.getItem("MSG/"+params.conversationId)
+                        localStorage.removeItem("MSG/"+params.conversationId)
+                        localStorage.setItem("MSG/"+params.conversationId,{...oldStorage, ...res.data}, {path: "/"} )
                     }
-
-                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                    
+                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))      
                 })
                 .catch(error => {
                     alert(error)
                 });
             }
             else{
-             
+     
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/new/user/messages',
@@ -96,12 +98,13 @@ function Messages (params){
                         userID: params.conversationId
                     }
                 }).then(res=>{
-                  
+                    
                     if(JSON.stringify(res.data) !== "[]"){
-                        cookies.remove("MESSAGES/"+params.conversationId)
-                        cookies.set("MESSAGES/"+params.conversationId,cookies.get("MESSAGES/"+params.conversationId)).replace("]", ",").concat(JSON.stringify(res.data).replace("[", ""), {path:'/'} )
+                        const oldStorage = JSON.parse(localStorage.getItem("MSG/"+params.conversationId))
+                        localStorage.removeItem("MSG/"+params.conversationId)
+                        localStorage.setItem("MSG/"+params.conversationId,JSON.stringify({...oldStorage, ...res.data}, {path: "/"}) )
                     }
-                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))                
                 })
                 .catch(error => {
                     alert(error)
@@ -129,8 +132,6 @@ function Messages (params){
                 }
             })
             .then(res=>{
-                alert(messageInput)
-                alert(JSON.stringify(res))
                 FetchMessages()
             })
             .catch(error => {
@@ -152,7 +153,7 @@ function Messages (params){
                 }
             })
             .then(()=>{
-               
+                
                 FetchMessages()
             })
             .catch(error => {
@@ -163,13 +164,13 @@ function Messages (params){
     
     const toRender = (
         <div className="messages_component_container">  
-          <div className="messages_component" style={{boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
-                {messages.map((message, index) => 
-                    <div className={(message.creatorID === userID) ? "my_message_container" : "subject_message_container"}>
+            <div className="messages_component" style={{boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
+                {(messages === [] || messages === {}) ? <div> </div> : Object.keys(messages).forEach(message =>(
+                    <div className={(message.creatorID === userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
                         {MessageBox(message.content, message.valid, message.creationDate, userID, message.creatorID, message.read)}
-                    </div>)}    
-             
+                    </div>))}    
             </div>
+        
             <div className="message_input_container">
                 <div className="message_input_box">
                     <TextField  placeholder="Message" multiline autoAdjustHeight onChange={handleChange} />                       

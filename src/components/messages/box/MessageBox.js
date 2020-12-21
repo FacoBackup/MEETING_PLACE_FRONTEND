@@ -11,7 +11,7 @@ function MessageBox(content, valid, creationDate, userID, creatorID, read) {
 
     if(creatorID === userID)
         return (
-            <div className="my_message_box_container" style={{boxShadow: theme.effects.elevation4 }}>
+            <div className="my_message_box_container" style={(read === true) ? {boxShadow: theme.effects.elevation4, backgroundColor: 'blue'}  : {boxShadow: theme.effects.elevation4, backgroundColor: 'green'} } >
                 <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{content}</p>
                 <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Seen: {JSON.stringify(read)}</p>
               
@@ -21,9 +21,6 @@ function MessageBox(content, valid, creationDate, userID, creatorID, read) {
         return (
             <div className="subject_message_box_container" style={{boxShadow: theme.effects.elevation4 }}>
                 <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{content}</p>
-                <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Sent on: {dateOfCreation}</p>
-                <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Valid for: {((valid-Date.now())/3600000).toFixed(0)} Hours</p>
-        
             </div>
         )
 }
