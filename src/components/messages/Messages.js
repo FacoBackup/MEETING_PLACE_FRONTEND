@@ -7,6 +7,7 @@ import MessageBox from "./box/MessageBox";
 import { DefaultButton, PrimaryButton, IIconProps, ImageIcon } from 'office-ui-fabric-react';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 function Messages (params){
     
@@ -14,7 +15,7 @@ function Messages (params){
         FetchMessages();
     },[])
     
-    // const cookies = new Cookies(); 
+    const cookies = new Cookies(); 
     const theme = getTheme();
     const [messages, setMessages] = useState([]);
     
@@ -25,43 +26,89 @@ function Messages (params){
     const userID = params.userID
     
     const FetchMessages = async() =>{
-        // if(typeof cookies.get("MESSAGES") === 'undefined'){
-
-        // }
-        // else{ 
-        //     FETCH NEW MESSAGES
-        //     setMessages(cookies.get(params.conversationId))
-        // }
-        if(params.isGroup  === true){
-            await axios({
-                method: 'post',
-                url: 'http://localhost:8080/api/get/conversation/group/messages',
-                headers: {"Authorization": 'Bearer ' + params.token},
-                data: {
-                    conversationID: params.conversationId
-                }
-            }).then(res=>{
-                setMessages(res.data);
-            })
-            .catch(error => {
-                alert(error)
-            });
+        if(typeof cookies.get("MESSAGES/"+params.conversationId) === 'undefined'){
+            if(params.isGroup  === true){
+                await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/api/get/all/group/messages',
+                    headers: {"Authorization": 'Bearer ' + params.token},
+                    data: {
+                        conversationID: params.conversationId
+                    }
+                }).then(res=>{
+                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res), {path:'/'} )
+                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                })
+                .catch(error => {
+                    alert(error)
+                });
+            }
+            else{
+                await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/api/get/all/user/messages',
+                    headers: {"Authorization": 'Bearer ' + params.token},
+                    data: {
+                        userID: params.conversationId
+                    }
+                }).then(res=>{
+                    cookies.set("MESSAGES/"+params.conversationId,JSON.stringify(res), {path:'/'} )
+                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                })
+                .catch(error => {
+                    alert(error)
+                });
+            }    
         }
-        else{
-            await axios({
-                method: 'post',
-                url: 'http://localhost:8080/api/get/conversation/user/messages',
-                headers: {"Authorization": 'Bearer ' + params.token},
-                data: {
-                    userID: params.conversationId
-                }
-            }).then(res=>{
-                setMessages(res.data);
-            })
-            .catch(error => {
-                alert(error)
-            });
-        }    
+        else{ 
+            if(params.isGroup  === true){
+                await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/api/get/new/group/messages',
+                    headers: {"Authorization": 'Bearer ' + params.token},
+                    data: {
+                        conversationID: params.conversationId
+                    }
+                }).then(res=>{
+                    var stringRes = JSON.stringify(res.data)
+                    var messagesStored = JSON.stringify(cookies.get("MESSAGES/"+params.conversationId))
+                    messagesStored = messagesStored.replace("]", ",")
+                    messagesStored = messagesStored.concat(stringRes.replace("[", ""))
+
+                    cookies.remove("MESSAGES/"+params.conversationId)
+                    cookies.set("MESSAGES/"+params.conversationId,messagesStored, {path:'/'} )
+
+                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                })
+                .catch(error => {
+                    alert(error)
+                });
+            }
+            else{
+                await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/api/get/new/user/messages',
+                    headers: {"Authorization": 'Bearer ' + params.token},
+                    data: {
+                        userID: params.conversationId
+                    }
+                }).then(res=>{
+                    var stringRes = JSON.stringify(res.data)
+                    var messagesStored = JSON.stringify(cookies.get("MESSAGES/"+params.conversationId))
+                    messagesStored = messagesStored.replace("]", ",")
+                    messagesStored = messagesStored.concat(stringRes.replace("[", ""))
+
+                    cookies.remove("MESSAGES/"+params.conversationId)
+                    cookies.set("MESSAGES/"+params.conversationId,messagesStored, {path:'/'} )
+                    
+                    setMessages(cookies.get("MESSAGES/"+params.conversationId));
+                })
+                .catch(error => {
+                    alert(error)
+                });
+            }    
+        }
+        
     }
 
   
