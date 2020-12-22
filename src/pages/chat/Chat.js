@@ -31,28 +31,6 @@ class Chat extends Component{
             window.location.reload()
     }
     
-    componentDidMount(){
-        
-        this.timerID = setInterval(
-            () => this.tick(),
-            10000
-        );
-
-     
-    }
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-    tick() {
-        this.setState({
-            update:true
-        })
-        this.setState({
-            date: new Date(),
-            update:false
-        });
-    }
-    
     render(){
         if(typeof this.state.token !== 'undefined'){
             return(
@@ -66,8 +44,8 @@ class Chat extends Component{
                     </div>
                 </div>
                 <div className="middle_components">
-                    <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationId={this.state.id} />
-                    <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationId={this.state.id} update={this.state.update}/>
+                    <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token}  conversationID={this.state.id} />
+                    <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.id}/>
                 </div>
                 
                     <div style={{borderRadius: '8px',backgroundColor: NeutralColors.white}} className="right_components" >

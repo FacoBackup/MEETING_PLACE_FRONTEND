@@ -1,81 +1,108 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { NeutralColors } from '@fluentui/theme';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
-import { DefaultButton, PrimaryButton, IIconProps, ImageIcon } from 'office-ui-fabric-react';
+import { DefaultButton, PrimaryButton, IIconProps, ImageIcon, TooltipHost } from 'office-ui-fabric-react';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Cookies from 'universal-cookie';
 import "./ConversationInfoStyle.css"
-function ConversationInfo(params) {
 
-    const cookies = new Cookies();
-    const theme = getTheme();
-    const [conversation, setConversation] = useState({})
-    useEffect(()=>{
-        FetchConversation();
-    })
-    const FetchConversation = async()=>{
+class ConversationInfo extends Component {
+    constructor(params){
+        super()
+        this.state={
+            theme: getTheme(),
+            conversation: {},
+            conversationID: params.conversationID,
+            isGroup: params.isGroup,
+            date: new Date(),
+            token: params.token,
+            userID: params.userID
+        }
+    }
+    
+    componentDidMount(){
+        this.FetchConversation()
+        this.timerID = setInterval(
+            () => this.tick(),
+            10000
+        );
+    }
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+    tick() {
+        this.setState({
+            date: new Date(),
+        });
+    }
+    
+
+    FetchConversation = async()=>{
    
-        if(params.isGroup === true && typeof cookies.get(params.conversationId) === 'undefined'){
+        if(this.state.isGroup === true && sessionStorage.getItem(this.state.conversationID) === null){
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/get/conversation/group',
-                headers: {"Authorization": 'Bearer ' + params.token},
+                headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
-                    conversationID: params.conversationId
+                    conversationID: this.state.conversationID
                 }
             }).then(res=>{
-                cookies.remove(params.conversationId)
-                cookies.set(params.conversationId, JSON.stringify(res.data),{path:'/'})
-                setConversation(res.data)
+                sessionStorage.removeItem(this.state.conversationID)
+                sessionStorage.setItem(this.state.conversationID, JSON.stringify(res.data),{path:'/'})
+                this.setState({
+                    conversation:  res.data
+                })
             })
             .catch(error => {
-                alert(error)
+                console.log(error)
             });
         }
-        else if(params.isGroup === false && typeof cookies.get(params.conversationId) === 'undefined'){
+        else if(this.state.isGroup === false && sessionStorage.getItem(this.state.conversationID) === null){
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/get/conversation/user',
-                headers: {"Authorization": 'Bearer ' + params.token},
+                headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
-                    userID: params.conversationId
+                    userID: this.state.conversationID
                 }
             }).then(res=>{
-                alert(JSON.stringify(res.data))
-                cookies.remove(params.conversationId)
-                cookies.set(params.conversationId, JSON.stringify(res.data),{path:'/'})
-                setConversation(res.data)
-            
+                alert("HERE")
+                sessionStorage.removeItem(this.state.conversationID)
+                sessionStorage.setItem(this.state.conversationID, JSON.stringify(res.data),{path:'/'})
+                this.setState({
+                    conversation: res.data
+                })
             })
             .catch(error => {
-                alert(error)
+                console.log(error)
             });
         }
-        else if(typeof cookies.get(params.conversationId) !== 'undefined')
-            setConversation(cookies.get(params.conversationId))
-      
+        else if(sessionStorage.getItem(this.state.conversationID) !== null)
+            this.setState({
+                conversation:  this.state.cookies.get(this.state.conversationID)
+            })
     } 
-    const toRender =(
-        <div className="conversation_info_container" style={{boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
-            <Persona
-                {...{
-                    text: (conversation.isGroup === false && typeof conversation.name !== 'undefined' ? (conversation.name).replace(params.userID, "") : (conversation.name)),
-                    secondaryText: (conversation.isGroup ? "Group" : "Private")
-                }}
-                size={PersonaSize.size48}
-                imageAlt="Conversation picture"
-            />
-        </div>
-    );
-   
-    return(
-        toRender
-    );
-    
-       
+    render(){
+        return(
+            (
+                <div className="conversation_info_container" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
+                   
+                    <Persona
+                        {...{
+                            text: (this.state.isGroup === false && typeof this.state.conversation.name !== 'undefined' ? (this.state.conversation.name).replace(this.state.userID, "") : (this.state.conversation.name)),
+                            secondaryText: this.state.conversation.about
+                        }}
+                        size={PersonaSize.size48}
+                        imageAlt="Conversation picture"
+                    />
+                </div>
+            )
+        );
+    }
 }
 
 export default ConversationInfo;
