@@ -9,56 +9,85 @@ import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-function Messages (params){
-    
-    useEffect(()=>{
-        FetchMessages();
-    },[])
-    
-    const cookies = new Cookies(); 
-    const theme = getTheme();
-    const [messages, setMessages] = useState([]);
-    
-    const [messageInput, setMessageInput] = useState('');
-    const handleChange = (event) => {
-        setMessageInput(event.target.value) ;
+class Messages extends Component{
+    constructor({params}){
+        super()
+        this.state={
+            theme: getTheme(),
+            messages: [],
+            messageInput: '',
+            userID : params.userID,
+            conversationID: params.conversationId,
+            update: params.update,
+            token: params.token,
+            toRender: (
+                <div className="messages_component_container">  
+                    <div className="messages_component" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
+                        {/* {(localStorage.getItem("MSG/"+params.conversationId) === null || messages.length === 0) ? <div>EMPTY</div> : messages.map((message,index) =>(
+                            <div className={(message.creatorID === userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
+                                
+                                {MessageBox(message.content, message.valid, message.creationDate, userID, message.creatorID, message.read)}
+                            </div>
+                        )
+                        )}     */}
+                    </div>
+                
+                    <div className="message_input_container">
+                        <div className="message_input_box">
+                            <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
+                        </div>
+                            
+                        <PrimaryButton text="Send" style={{ height:'62px',fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={SendMessage}/>      
+                    </div>
+                </div>
+            )
+        }
+        this.handleChange = this.handleChange.bind(this)
     }
-    const userID = params.userID
     
-    const FetchMessages = async() =>{
+    handleChange(event){
+        this.setState({
+            messageInput: event.target.value
+        })
+    }
+    FetchMessages = async() =>{
         
-        if(localStorage.getItem("MSG/"+params.conversationId) === null){
+        if(localStorage.getItem("MSG/"+this.state.conversationID) === null){
             if(params.isGroup  === true){
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/all/group/messages',
-                    headers: {"Authorization": 'Bearer ' + params.token},
+                    headers: {"Authorization": 'Bearer ' +this.state.token},
                     data: {
-                        conversationID: params.conversationId
+                        conversationID: this.state.conversationID
                     }
                 }).then(res=>{
                     
-                    localStorage.setItem(("MSG/"+params.conversationId),JSON.stringify(res.data))
+                    localStorage.setItem(("MSG/"+this.state.conversationID),JSON.stringify(res.data))
                     
-                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))      
+                    setState({
+                        messages:JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
+                    })
                 })
                 .catch(error => {
                     alert(error)
                 });
             }
             else{
-       
+         
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/all/user/messages',
-                    headers: {"Authorization": 'Bearer ' + params.token},
+                    headers: {"Authorization": 'Bearer ' +this.state.token},
                     data: {
-                        userID: params.conversationId
+                        userID: this.state.conversationID
                     }
                 }).then(res=>{
-                    localStorage.setItem(("MSG/"+params.conversationId),JSON.stringify(res.data))
+                    localStorage.setItem(("MSG/"+this.state.conversationID),JSON.stringify(res.data))
                     
-                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))      
+                    setState({
+                        messages:JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
+                    })
                 })
                 .catch(error => {
                     alert(error)
@@ -70,41 +99,47 @@ function Messages (params){
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/new/group/messages',
-                    headers: {"Authorization": 'Bearer ' + params.token},
+                    headers: {"Authorization": 'Bearer ' + this.state.token},
                     data: {
-                        conversationID: params.conversationId
+                        conversationID: this.state.conversationID
                     }
                 }).then(res=>{
 
                     if(res.data !== []){
-                        const oldStorage = localStorage.getItem("MSG/"+params.conversationId)
-                        localStorage.removeItem("MSG/"+params.conversationId)
-                        localStorage.setItem("MSG/"+params.conversationId,{...oldStorage, ...res.data}, {path: "/"} )
+                        const oldStorage = localStorage.getItem("MSG/"+this.state.conversationID)
+                        localStorage.removeItem("MSG/"+this.state.conversationID)
+                        localStorage.setItem("MSG/"+this.state.conversationID,{...oldStorage, ...res.data}, {path: "/"} )
                     }
                     
-                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))      
+                    setState({
+                        messages:JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
+                    })
                 })
                 .catch(error => {
                     alert(error)
                 });
             }
             else{
-     
+       
                 await axios({
                     method: 'post',
                     url: 'http://localhost:8080/api/get/new/user/messages',
-                    headers: {"Authorization": 'Bearer ' + params.token},
+                    headers: {"Authorization": 'Bearer ' + this.state.token},
                     data: {
-                        userID: params.conversationId
+                        userID: this.state.conversationID
                     }
                 }).then(res=>{
                     
                     if(JSON.stringify(res.data) !== "[]"){
-                        const oldStorage = JSON.parse(localStorage.getItem("MSG/"+params.conversationId))
-                        localStorage.removeItem("MSG/"+params.conversationId)
-                        localStorage.setItem("MSG/"+params.conversationId,JSON.stringify({...oldStorage, ...res.data}, {path: "/"}) )
+                        alert("ADD MORE MESSAGES")
+                        const oldStorage = JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
+                        localStorage.removeItem("MSG/"+this.state.conversationID)
+                        localStorage.setItem("MSG/"+this.state.conversationID,JSON.stringify({...oldStorage, ...res.data}, {path: "/"}) )
                     }
-                    setMessages(JSON.parse(localStorage.getItem("MSG/"+params.conversationId)))                
+                    setState({
+                        messages:JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
+                    })
+                    
                 })
                 .catch(error => {
                     alert(error)
@@ -113,25 +148,24 @@ function Messages (params){
         }
         
     }
-
   
     
-    const SendMessage = async() =>{
+    SendMessage = async() =>{
     
         if(params.isGroup === true){
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/message/group',
-                headers: {"Authorization": 'Bearer ' + params.token},
+                headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     message: messageInput,
                     imageURL: null,
                     receiverID:null,
                     isGroup: true,
-                    conversationID: params.conversationId
+                    conversationID: this.state.conversationID
                 }
             })
-            .then(res=>{
+            .then(()=>{
                 FetchMessages()
             })
             .catch(error => {
@@ -143,11 +177,11 @@ function Messages (params){
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/message/user',
-                headers: {"Authorization": 'Bearer ' + params.token},
+                headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     message: messageInput,
                     imageURL: null,
-                    receiverID: params.conversationId,
+                    receiverID: this.state.conversationID,
                     isGroup:false,
                     conversationID:""
                 }
@@ -161,35 +195,16 @@ function Messages (params){
             });
         }   
     }
-    
-    const toRender = (
-        <div className="messages_component_container">  
-            <div className="messages_component" style={{boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
-                {(messages === [] || messages === {}) ? <div> </div> : Object.keys(messages).forEach(message =>(
-                    <div className={(message.creatorID === userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
-                        {MessageBox(message.content, message.valid, message.creationDate, userID, message.creatorID, message.read)}
-                    </div>))}    
-            </div>
-        
-            <div className="message_input_container">
-                <div className="message_input_box">
-                    <TextField  placeholder="Message" multiline autoAdjustHeight onChange={handleChange} />                       
-                </div>
-                    
-                <PrimaryButton text="Send" style={{ height:'6.3vh',fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={SendMessage}/>      
-            </div>
-        </div>
-    
-    );
 
-    if(params.update === true){
-        FetchMessages();
-        return toRender
-    }
-        
-    else
-        return toRender
-
+    render(){
+        if(this.state.update === true){
+            FetchMessages();
+            return this.state.toRender
+        }
+            
+        else
+            return this.state.toRender
+    }    
 }   
 
 export default Messages;

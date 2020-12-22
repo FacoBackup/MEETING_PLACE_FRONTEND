@@ -14,7 +14,7 @@ import ConversationInfo from "../../components/conversations/ConversationInfo"
 class Chat extends Component{
     
     constructor({match}){
-        super({match})
+        super()
         this.state={
             id: match.params.id,
             isGroup: match.params.isGroup,

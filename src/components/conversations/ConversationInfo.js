@@ -10,57 +10,55 @@ import Cookies from 'universal-cookie';
 import "./ConversationInfoStyle.css"
 function ConversationInfo(params) {
 
-    useEffect(()=>{
-        FetchConversation();
-    },[])
-
     const cookies = new Cookies();
     const theme = getTheme();
     const [conversation, setConversation] = useState({})
-  
+    useEffect(()=>{
+        FetchConversation();
+    })
     const FetchConversation = async()=>{
-        if(typeof cookies.get(params.conversationId) === 'undefined'){
-            if(params.isGroup === true){
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/api/get/conversation/group',
-                    headers: {"Authorization": 'Bearer ' + params.token},
-                    data: {
-                        conversationID: params.conversationId
-                    }
-                }).then(res=>{
-                    cookies.remove(params.conversationId)
-                    cookies.set(params.conversationId, JSON.stringify(res.data),{path:'/'})
-                    setConversation(res.data)
-                })
-                .catch(error => {
-                    alert(error)
-                });
-            }
-            else{
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/api/get/conversation/user',
-                    headers: {"Authorization": 'Bearer ' + params.token},
-                    data: {
-                        userID: params.conversationId
-                    }
-                }).then(res=>{
-                    cookies.remove(params.conversationId)
-                    cookies.set(params.conversationId, JSON.stringify(res.data),{path:'/'})
-                    setConversation(res.data)
-               
-                })
-                .catch(error => {
-                    alert(error)
-                });
-            }
+   
+        if(params.isGroup === true && typeof cookies.get(params.conversationId) === 'undefined'){
+            await axios({
+                method: 'post',
+                url: 'http://localhost:8080/api/get/conversation/group',
+                headers: {"Authorization": 'Bearer ' + params.token},
+                data: {
+                    conversationID: params.conversationId
+                }
+            }).then(res=>{
+                cookies.remove(params.conversationId)
+                cookies.set(params.conversationId, JSON.stringify(res.data),{path:'/'})
+                setConversation(res.data)
+            })
+            .catch(error => {
+                alert(error)
+            });
         }
-        else
+        else if(params.isGroup === false && typeof cookies.get(params.conversationId) === 'undefined'){
+            await axios({
+                method: 'post',
+                url: 'http://localhost:8080/api/get/conversation/user',
+                headers: {"Authorization": 'Bearer ' + params.token},
+                data: {
+                    userID: params.conversationId
+                }
+            }).then(res=>{
+                alert(JSON.stringify(res.data))
+                cookies.remove(params.conversationId)
+                cookies.set(params.conversationId, JSON.stringify(res.data),{path:'/'})
+                setConversation(res.data)
+            
+            })
+            .catch(error => {
+                alert(error)
+            });
+        }
+        else if(typeof cookies.get(params.conversationId) !== 'undefined')
             setConversation(cookies.get(params.conversationId))
+      
     } 
-
-    return(
+    const toRender =(
         <div className="conversation_info_container" style={{boxShadow: theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
             <Persona
                 {...{
@@ -72,6 +70,11 @@ function ConversationInfo(params) {
             />
         </div>
     );
+   
+    return(
+        toRender
+    );
+    
        
 }
 
