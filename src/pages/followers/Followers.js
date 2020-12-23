@@ -37,7 +37,7 @@ class Followers extends React.Component{
     fetchData = async () => {
         await axios({
             method: 'get',
-            url: 'http://localhost:8080/api/followers',
+            url: 'http://192.168.15.35:8080/api/followers',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
 
         }).then(res=>{
@@ -56,10 +56,10 @@ class Followers extends React.Component{
                 <div className="top_container">
                     <Navigation/>
                 </div>
-                <div className="left_components" style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
+                <div className="left_components" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
                     <Profile/>
                 </div>
-                <div className="middle_components" style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
+                <div className="middle_components" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
                     <h3>Followers</h3>
                     {this.state.followers !== [] ? this.state.followers.map((user, index) => 
                     <div>
@@ -67,7 +67,7 @@ class Followers extends React.Component{
                         <Link to={'/chat/'+user.followerID}><button>Send message</button></Link>
                     </div>): <div> </div>}
                 </div>
-               <div className="right_components" style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
+               <div className="right_components" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
                     <ConversationBar/>
                </div>
             </div>

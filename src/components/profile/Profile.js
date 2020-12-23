@@ -46,7 +46,7 @@ class Profile extends Component{
         if(typeof this.state.cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'get',
-                url: 'http://localhost:8080/api/user',
+                url: 'http://192.168.15.35:8080/api/user',
                 headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
             }).then(res=>{
                 this.setState({
@@ -61,7 +61,7 @@ class Profile extends Component{
         if(typeof this.state.cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'post',
-                url: 'http://localhost:8080/api/logout',
+                url: 'http://192.168.15.35:8080/api/logout',
                 headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
             }).then(()=>{
 
@@ -98,7 +98,7 @@ class Profile extends Component{
     submitChanges = async() => {
         await axios({
             method: 'patch',
-            url: 'http://localhost:8080/api/profile',
+            url: 'http://192.168.15.35:8080/api/profile',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
             data:{
                 about : this.state.about,
@@ -120,18 +120,11 @@ class Profile extends Component{
             return(
                 <div className="profile_container">
                     <div className="profile_background_image_container">
-                        <img style={{borderRadius:'8px', width:'17.5vw'}} alt="BACKGROUD IMG"src={(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
+                        <img className="profile_image" alt="BACKGROUD IMG"src={(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
                     </div>
-                    <div className="profile_persona_container"> 
-                        <Persona
-                            {...{
-                                text:this.state.profile.name,
-                                secondaryText: this.state.profile.email,
-                                imageUrl: this.state.profile.imageURL
-                            }}
-                            size={PersonaSize.size56}
-                            imageAlt="Profile Image"
-                        />
+                    <div className="profile_identifier_container"> 
+                        <p style={{ fontSize: FontSizes.size32, fontWeight: FontWeights.semibold, color: '#252423'}}>{this.state.profile.name}</p>
+                        <p style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.regular, color: '#323130' }}>{this.state.profile.email}</p>
                     </div>
                     <div className="profile_info_container">
                        

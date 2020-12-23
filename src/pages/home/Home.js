@@ -25,21 +25,21 @@ class Home extends Component{
             <div className="top_container">
                 <Navigation/>
             </div>
-            <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="left_components">
+            <div style={{backgroundColor: NeutralColors.white }} className="left_components">
                 <div >
                   <Profile/>
                 </div>
             </div>
             <div className="middle_components">
-                <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_topic_control_bar_container" >
+                <div style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_topic_control_bar_container" >
                   <TopicCreation/>
                 </div>
-                <div style={{borderRadius: '8px' ,boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_timeline_container" >
+                <div style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}} className="home_timeline_container" >
                   <h3 style={{textAlign:'center'}}>PLACEHOLDER TIMELINE</h3>
                 </div>
             </div>
             
-            <div style={{borderRadius: '8px',backgroundColor: NeutralColors.white}} className="right_components" >
+            <div style={{backgroundColor: NeutralColors.white}} className="right_components" >
               <Conversations/>
             </div>
         </div>

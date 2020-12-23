@@ -1,29 +1,37 @@
 .profile_container{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1;
-    overflow-x: hidden;
-    align-items: center;
-    justify-content: center;
-    height: 93.5vh;
-    width:17.5vw;
+    display: block;
+    height: auto;
+    width:auto;
     
 }
-.profile_background_image_container{
-    grid-row: 1;
+
+.profile_image{
+    display: inline;
+    margin: 0 auto;
+    margin-left: -25%;
+    height: 100%;
+    width: auto;
 }
-.profile_persona_container{
-    grid-row: 2;
-    height: 5vh;
-    display:grid;
-    padding-left: 5%;
+.profile_background_image_container{
+    width: 13vw;
+    height: 13vw;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.profile_identifier_container{
+    overflow-x: hidden;
+    line-height: .5vh;
+    margin: auto;
+    text-align: center;
 }
 .profile_info_container{
-    grid-row: 3;
-    height: 42vh;
     width: 15vw;
     margin: auto;
-    overflow-y: auto;
+    overflow: auto;
+    margin-bottom: 10%;
+    margin-top: 10%;
 }
 .profile_buttons_container{
     grid-row: 4;

@@ -36,7 +36,7 @@ class ConversationBar extends Component{
     fetchConversations = async () =>{
         await axios({
             method: 'get',
-            url: 'http://localhost:8080/api/conversation/all',
+            url: 'http://192.168.15.35:8080/api/conversation/all',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
         }).then(res=>{
             this.setState({

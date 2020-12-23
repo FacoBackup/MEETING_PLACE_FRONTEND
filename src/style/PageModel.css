@@ -4,29 +4,36 @@
     grid-template-rows: 1fr 1fr 50fr;
     width: 100vw;   
     height: 100vh;
-    overflow: hidden;
+    overflow-y: scroll;
+    
 }
 .top_container{
     grid-row:1;
     grid-column: 1/8;
 }
 .left_components{
+    
+    border-radius: 8px;
     grid-column: 2;
     grid-row: 3;
-    height: 92vh;
+    
+    display: block;
+    height: 98%;
     width:17.5vw;
 }
 .middle_components{
+    border-radius: 8px;
     grid-column: 4;
     grid-row: 3;
     width: 60vw;
-    height: 80vh;
+    height: 92vh;
     display: grid;
     
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     row-gap: 0.95vh;
 }
 .right_components{
+    border-radius: 8px;
     display: grid;
     grid-column: 6;
     grid-row: 3;

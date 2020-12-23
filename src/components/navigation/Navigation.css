@@ -1,8 +1,8 @@
 .nav-style{
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-width: 5vh;
+    justify-content: space-between;
+    
+   
     background: lightgray;
     color: black;
 

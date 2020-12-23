@@ -30,9 +30,11 @@ class Messages extends React.Component{
             500
         );
     }
+    
     componentWillUnmount() {
         clearInterval(this.timerID);
     }
+
     tick() {
         this.FetchMessages();
         this.setState({
@@ -52,7 +54,7 @@ class Messages extends React.Component{
             if(this.state.isGroup  === true){
                 await axios({
                     method: 'post',
-                    url: 'http://localhost:8080/api/get/all/group/messages',
+                    url: 'http://192.168.15.35:8080/api/get/all/group/messages',
                     headers: {"Authorization": 'Bearer ' +this.state.token},
                     data: {
                         conversationID: this.state.conversationID
@@ -73,7 +75,7 @@ class Messages extends React.Component{
                 
                 await axios({
                     method: 'post',
-                    url: 'http://localhost:8080/api/get/all/user/messages',
+                    url: 'http://192.168.15.35:8080/api/get/all/user/messages',
                     headers: {"Authorization": 'Bearer ' +this.state.token},
                     data: {
                         userID: this.state.conversationID
@@ -95,7 +97,7 @@ class Messages extends React.Component{
             if(this.state.isGroup  === true){
                 await axios({
                     method: 'post',
-                    url: 'http://localhost:8080/api/get/new/group/messages',
+                    url: 'http://192.168.15.35:8080/api/get/new/group/messages',
                     headers: {"Authorization": 'Bearer ' + this.state.token},
                     data: {
                         conversationID: this.state.conversationID
@@ -120,7 +122,7 @@ class Messages extends React.Component{
 
                 await axios({
                     method: 'post',
-                    url: 'http://localhost:8080/api/get/new/user/messages',
+                    url: 'http://192.168.15.35:8080/api/get/new/user/messages',
                     headers: {"Authorization": 'Bearer ' + this.state.token},
                     data: {
                         userID: this.state.conversationID
@@ -156,7 +158,7 @@ class Messages extends React.Component{
     SendMessage = async() =>{
         await axios({
             method: 'post',
-            url: (this.state.isGroup === true) ? 'http://localhost:8080/api/message/group': 'http://localhost:8080/api/message/user',
+            url: (this.state.isGroup === true) ? 'http://192.168.15.35:8080/api/message/group': 'http://192.168.15.35:8080/api/message/user',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data: {
                 message: this.state.messageInput,
@@ -191,8 +193,9 @@ class Messages extends React.Component{
                     <div className="message_input_box">
                         <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
                     </div>
-                        
-                    <PrimaryButton text="Send" style={{ height:'62px',fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
+                    <div>
+                        <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
+                    </div>    
                 </div>
             </div>
         );

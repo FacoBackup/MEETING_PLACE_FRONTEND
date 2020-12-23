@@ -41,7 +41,7 @@ class SignUp extends Component{
         
         await axios({
             method: 'post',
-            url: 'http://localhost:8080/api/user',
+            url: 'http://192.168.15.35:8080/api/user',
             data: {
                 email: this.state.email,
                 password: this.state.password,

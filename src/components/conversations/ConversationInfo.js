@@ -41,7 +41,7 @@ class ConversationInfo extends Component {
         if(this.state.isGroup === true)
             await axios({
                 method: 'post',
-                url: 'http://localhost:8080/api/get/conversation/group',
+                url: 'http://192.168.15.35:8080/api/get/conversation/group',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     conversationID: this.state.conversationID
@@ -57,7 +57,7 @@ class ConversationInfo extends Component {
         else
             await axios({
                 method: 'post',
-                url: 'http://localhost:8080/api/get/conversation/user',
+                url: 'http://192.168.15.35:8080/api/get/conversation/user',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     userID: this.state.conversationID

@@ -15,7 +15,7 @@ function Following(){
     async function fetchData () {
         await axios({
             method: 'get',
-            url: 'http://localhost:8080/api/following',
+            url: 'http://192.168.15.35:8080/api/following',
             headers: {"Authorization": 'Bearer ' + cookies.get("JWT")},
 
         }).then(res=>{

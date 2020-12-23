@@ -26,11 +26,12 @@ class Chat extends Component{
         }
     }
 
-    componentDidUpdate(params){
+    componentWillUpdate(params){
+    
         if(this.state.id !== params.match.params.id)
             window.location.reload()
     }
-    
+
     render(){
         if(typeof this.state.token !== 'undefined'){
             return(
@@ -38,7 +39,7 @@ class Chat extends Component{
                     <div className="top_container">
                         <Navigation/>
                     </div>
-                    <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="left_components">    
+                    <div style={{backgroundColor: NeutralColors.white }} className="left_components">    
                         <Profile/>
                     
                     </div>
@@ -47,7 +48,7 @@ class Chat extends Component{
                         <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.id}/>
                     </div>
                     
-                        <div style={{borderRadius: '8px',backgroundColor: NeutralColors.white}} className="right_components" >
+                        <div style={{backgroundColor: NeutralColors.white}} className="right_components" >
                             <Conversations/>
                         </div>
                 </div>
