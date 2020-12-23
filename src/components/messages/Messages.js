@@ -181,7 +181,7 @@ class Messages extends React.Component{
                     {this.state.messages === [] ? <div>EMPTY</div> : this.state.messages.map((message,index) =>(
                         <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
                             
-                            {MessageBox(message.content, message.valid, message.creationDate,this.state.userID, message.creatorID, message.read)}
+                            {MessageBox(message.content, message.valid, message.creationDate,this.state.userID, message.creatorID, message.seenByEveryone)}
                         </div>
                     )
                     )}    

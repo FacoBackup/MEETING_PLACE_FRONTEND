@@ -1,6 +1,7 @@
 import React from 'react';
 import './Navigation.css';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 
 function NavigationBar (){
     const _items = [
@@ -20,6 +21,7 @@ function NavigationBar (){
 
     return (
        <div>
+         {/* <DefaultButton></DefaultButton> */}
            <CommandBar items={_items} />
        </div>
         // <nav className="nav-style">

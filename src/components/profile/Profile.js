@@ -67,6 +67,7 @@ class Profile extends Component{
 
                 Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
                 localStorage.clear()
+                window.location.reload()
             })
             .catch(error=>{
                 console.log(error)

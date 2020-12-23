@@ -16,9 +16,24 @@ class ConversationBar extends Component{
     }
 
     componentDidMount(){
-        this.fetchMessages()
+        this.fetchConversations()
+        this.timerID = setInterval(
+            () => this.tick(),
+            10000
+        );
     }
-    fetchMessages = async () =>{
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+    tick() {
+        this.setState({
+            date: new Date(),
+        });
+    }
+
+    fetchConversations = async () =>{
         await axios({
             method: 'get',
             url: 'http://localhost:8080/api/conversation/all',
@@ -53,6 +68,9 @@ class ConversationBar extends Component{
                                 />
                             </Link>
                     </div>)}
+                </div>
+                <div className="conversation_title_container">
+                    <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Conversations</p>
                 </div>
             </div>
         );
