@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {Component } from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -71,7 +71,7 @@ class SignIn extends Component {
                 })    
             })
             .catch(error => {
-                if(error.response.status === 401)
+                if(typeof error.response !== 'undefined' && error.response.status === 401)
                     alert("Wrong password or email")
                 else
                     alert("Some error occurred ("+error+ ").")

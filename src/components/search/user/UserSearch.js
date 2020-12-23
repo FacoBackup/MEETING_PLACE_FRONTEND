@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 
 
-function UserSearch(props){
+function UserSearch(){
     const [profile, setProfile] = useState({});
     const [searchInput, setInput] = useState('');
 

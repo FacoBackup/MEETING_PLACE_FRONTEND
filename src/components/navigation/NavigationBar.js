@@ -1,11 +1,8 @@
 import React from 'react';
 import './Navigation.css';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
-import { getTheme } from '@fluentui/react';
 
 function NavigationBar (){
-    const theme = getTheme();
-
     const _items = [
         {
           key: 'home',

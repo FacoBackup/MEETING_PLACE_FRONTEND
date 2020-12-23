@@ -1,12 +1,13 @@
 import "./MessageBoxStyle.css";
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import { useEffect } from "react";
 import { getTheme } from '@fluentui/react';
 
 function MessageBox(content, valid, creationDate, userID, creatorID, read) {
     
     creationDate = new Date(creationDate);
-    const dateOfCreation = creationDate.toDateString()
+    creationDate = creationDate.toDateString()
+    // valid = new Date(valid)
+    // valid = valid.toString()
     const theme = getTheme();
 
     if(creatorID === userID)
@@ -21,6 +22,8 @@ function MessageBox(content, valid, creationDate, userID, creatorID, read) {
         return (
             <div className="subject_message_box_container" style={{boxShadow: theme.effects.elevation4 }}>
                 <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{content}</p>
+                <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Sent on: {creationDate}</p>
+                {/* <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Valid until: {valid}</p> */}
             </div>
         )
 }

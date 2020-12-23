@@ -1,11 +1,11 @@
-import React, {useEffect, useState, Component} from 'react';
+import React from 'react';
 import "./MessagesStyle.css";
 import { NeutralColors } from '@fluentui/theme';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
 import MessageBox from "./box/MessageBox";
-import { DefaultButton, PrimaryButton, IIconProps, ImageIcon } from 'office-ui-fabric-react';
-import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
+import { PrimaryButton } from 'office-ui-fabric-react';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 
 class Messages extends React.Component{

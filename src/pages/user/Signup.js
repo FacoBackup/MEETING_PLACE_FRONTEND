@@ -1,10 +1,10 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import "./SignupStyle.css";
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
-import { DefaultButton, PrimaryButton, IIconProps, ImageIcon } from 'office-ui-fabric-react';
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';

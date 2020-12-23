@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component } from 'react';
 import Navigation from "../../components/navigation/NavigationBar"
 import Cookies from 'universal-cookie';
 import "./ChatStyle.css"
@@ -35,22 +35,21 @@ class Chat extends Component{
         if(typeof this.state.token !== 'undefined'){
             return(
                 <div className="page_container">
-                <div className="top_container">
-                    <Navigation/>
-                </div>
-                <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="left_components">
-                    <div >
-                      <Profile/>
+                    <div className="top_container">
+                        <Navigation/>
                     </div>
-                </div>
-                <div className="middle_components">
-                    <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token}  conversationID={this.state.id} />
-                    <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.id}/>
-                </div>
-                
-                    <div style={{borderRadius: '8px',backgroundColor: NeutralColors.white}} className="right_components" >
-                        <Conversations/>
+                    <div style={{ borderRadius: '8px',backgroundColor: NeutralColors.white }} className="left_components">    
+                        <Profile/>
+                    
                     </div>
+                    <div className="middle_components">
+                        <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token}  conversationID={this.state.id} />
+                        <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.id}/>
+                    </div>
+                    
+                        <div style={{borderRadius: '8px',backgroundColor: NeutralColors.white}} className="right_components" >
+                            <Conversations/>
+                        </div>
                 </div>
             );
         }

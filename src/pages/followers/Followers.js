@@ -10,7 +10,7 @@ function Followers(){
     
     useEffect(()=>{
         fetchData();
-    },[]);
+    });
 
     async function fetchData () {
         await axios({

@@ -1,12 +1,8 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component } from 'react';
 import { NeutralColors } from '@fluentui/theme';
-import { FontSizes, FontWeights } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
-import { DefaultButton, PrimaryButton, IIconProps, ImageIcon, TooltipHost } from 'office-ui-fabric-react';
-import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import Cookies from 'universal-cookie';
 import "./ConversationInfoStyle.css"
 
 class ConversationInfo extends Component {
@@ -41,8 +37,8 @@ class ConversationInfo extends Component {
     
 
     FetchConversation = async()=>{
-   
-        if(this.state.isGroup === true && sessionStorage.getItem(this.state.conversationID) === null){
+        
+        if(this.state.isGroup === true)
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/get/conversation/group',
@@ -51,17 +47,14 @@ class ConversationInfo extends Component {
                     conversationID: this.state.conversationID
                 }
             }).then(res=>{
-                sessionStorage.removeItem(this.state.conversationID)
-                sessionStorage.setItem(this.state.conversationID, JSON.stringify(res.data),{path:'/'})
                 this.setState({
-                    conversation:  res.data
+                    conversation: res.data
                 })
             })
             .catch(error => {
                 console.log(error)
             });
-        }
-        else if(this.state.isGroup === false && sessionStorage.getItem(this.state.conversationID) === null){
+        else
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/get/conversation/user',
@@ -70,30 +63,25 @@ class ConversationInfo extends Component {
                     userID: this.state.conversationID
                 }
             }).then(res=>{
-                alert("HERE")
-                sessionStorage.removeItem(this.state.conversationID)
-                sessionStorage.setItem(this.state.conversationID, JSON.stringify(res.data),{path:'/'})
                 this.setState({
                     conversation: res.data
                 })
+            
             })
             .catch(error => {
                 console.log(error)
             });
-        }
-        else if(sessionStorage.getItem(this.state.conversationID) !== null)
-            this.setState({
-                conversation:  this.state.cookies.get(this.state.conversationID)
-            })
+    
+    
     } 
     render(){
         return(
             (
                 <div className="conversation_info_container" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
-                   
+
                     <Persona
                         {...{
-                            text: (this.state.isGroup === false && typeof this.state.conversation.name !== 'undefined' ? (this.state.conversation.name).replace(this.state.userID, "") : (this.state.conversation.name)),
+                            text: (this.state.isGroup !== false && typeof this.state.conversation.name !== 'undefined' ? this.state.conversation.name.replace(this.state.userID, "") :  (this.state.conversation.name)),
                             secondaryText: this.state.conversation.about
                         }}
                         size={PersonaSize.size48}

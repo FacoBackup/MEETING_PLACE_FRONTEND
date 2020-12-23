@@ -1,12 +1,11 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "./ProfileStyle.css";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import { IPersonaSharedProps, Persona, PersonaSize, PersonaPresence } from 'office-ui-fabric-react/lib/Persona';
+import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
-import { useBoolean } from '@uifabric/react-hooks';
 import QRcode from 'qrcode.react';
 
 class Profile extends Component{
@@ -14,7 +13,7 @@ class Profile extends Component{
         super()
         this.state={
             profile: {},
-            cookies: new Cookies,
+            cookies: new Cookies(),
             editMode: false,
             about: "",
             nationality: '',
@@ -27,11 +26,13 @@ class Profile extends Component{
         this.getErrorMessageAbout = this.getErrorMessageAbout.bind(this)
     }
     componentDidMount(){
-        fetchData()
+        this.fetchData()
     }
     handleChangeAbout(event){
-        setAbout(event.target.value)   
-        const newMultiline = about.length > 50;
+        this.setState({
+            about: event.target.value
+        })   
+        const newMultiline = this.state.about.length > 50;
         if (newMultiline !== this.state.multiline)
             this.toggleMultiline();
      
@@ -42,42 +43,48 @@ class Profile extends Component{
         })   
     }
     fetchData = async() => {
-        if(typeof cookies.get("JWT") !== 'undefined'){
+        if(typeof this.state.cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'get',
                 url: 'http://localhost:8080/api/user',
-                headers: {"Authorization": 'Bearer ' + cookies.get("JWT")}
+                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
             }).then(res=>{
-                setProfile(res.data);
+                this.setState({
+                    profile: res.data
+                })
             })
             .catch()
         }         
     }
 
     signout = async() => {
-        if(typeof cookies.get("JWT") !== 'undefined'){
+        if(typeof this.state.cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'post',
                 url: 'http://localhost:8080/api/logout',
-                headers: {"Authorization": 'Bearer ' + cookies.get("JWT")}
+                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
             }).then(()=>{
 
-                Object.keys(cookies.getAll()).forEach(name => cookies.remove(name))
+                Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
                 localStorage.clear()
             })
             .catch(error=>{
-                console.log(cookies.get("JWT"))
+                console.log(error)
             }
             )
         }
     }
 
-    edit(){
-        setEditMode(!this.state.editMode)
+    editProfileMode(){
+        this.setState({
+            editMode: !this.state.editMode
+        })
     }
 
     toggleMultiline(){
-        setEditMode(!this.state.multiline)
+        this.setState({
+            multiline: !this.state.multiline
+        })
     }
     getErrorMessageAbout (value) {
         return value.length < 512 ? '' : `Input value must be less than 512 characters.`;
@@ -91,17 +98,17 @@ class Profile extends Component{
         await axios({
             method: 'patch',
             url: 'http://localhost:8080/api/profile',
-            headers: {"Authorization": 'Bearer ' + cookies.get("JWT")},
+            headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
             data:{
-                about : about,
-                nationality : nationality,
-                city: birthCity,
+                about : this.state.about,
+                nationality : this.state.nationality,
+                city: this.state.birthCity,
                 name: null,
                 imageURL: null
             }
         }).then(()=>{
-            edit()
-            fetchData()
+            this.editProfileMode()
+            this.fetchData()
         })
         .catch()
     
@@ -112,14 +119,14 @@ class Profile extends Component{
             return(
                 <div className="profile_container">
                     <div className="profile_background_image_container">
-                        <img style={{borderRadius:'8px', width:'17.5vw'}} src={(profile.imageURL === null) ?  profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
+                        <img style={{borderRadius:'8px', width:'17.5vw'}} alt="BACKGROUD IMG"src={(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
                     </div>
                     <div className="profile_persona_container"> 
                         <Persona
                             {...{
-                                text:(profile.name),
-                                secondaryText: (profile.email),
-                                imageUrl: (profile.imageURL)
+                                text:this.state.profile.name,
+                                secondaryText: this.state.profile.email,
+                                imageUrl: this.state.profile.imageURL
                             }}
                             size={PersonaSize.size56}
                             imageAlt="Profile Image"
@@ -136,7 +143,7 @@ class Profile extends Component{
                                 value= {"BEGIN:VCARD" +
                                 "VERSION:4.0" +
                                 "N:{profile.name}" +
-                                "FN:"+ profile.name +
+                                "FN:"+ this.state.profile.name +
                                 "TEL;TYPE#work,voice;VALUE#uri:tel:" + this.state.profile.phoneNumber +
                                 "ADR;TYPE#HOME;LABEL#" + this.state.profile.nationality + "/" + this.state.profile.cityOfBirth +
                                 "EMAIL:" + this.state.profile.email + "END:VCARD"}
@@ -152,10 +159,10 @@ class Profile extends Component{
                             <DefaultButton text ="Following" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'7vw' }} href="/following"/>
                         </div>
                         <div style={{gridRow:'1', gridColumn:'2'}}>
-                            <DefaultButton  text ="Edit" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={edit}/>
+                            <DefaultButton  text ="Edit" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={this.editProfileMode}/>
                         </div>
                         <div style={{gridRow:'2', gridColumn:'2'}}>
-                            <PrimaryButton text="Sign out" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={signout} />
+                            <PrimaryButton text="Sign out" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={this.signout} />
                         </div>
                     </div>
                 </div>
@@ -165,14 +172,14 @@ class Profile extends Component{
             return(
                 <div className="profile_container">
                 <div className="profile_background_image_container">
-                    <img style={{borderRadius:'8px', width:'17.5vw'}} src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAgICAgHBwcHBwoHBwcHBw8ICQYKFREWFhURExMYHCggGBoxGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0ODg0NEisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKsBJwMBIgACEQEDEQH/xAAWAAEBAQAAAAAAAAAAAAAAAAAAAQb/xAAWEAEBAQAAAAAAAAAAAAAAAAAAgRH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQcF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AzoDitUCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIKgCoAAAAAKIAAAKgAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/Z"/>
+                    <img style={{borderRadius:'8px', width:'17.5vw'}} alt="BACKGROUND IMG" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAgICAgHBwcHBwoHBwcHBw8ICQYKFREWFhURExMYHCggGBoxGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0ODg0NEisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKsBJwMBIgACEQEDEQH/xAAWAAEBAQAAAAAAAAAAAAAAAAAAAQb/xAAWEAEBAQAAAAAAAAAAAAAAAAAAgRH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQcF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AzoDitUCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIKgCoAAAAAKIAAAKgAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/Z"/>
                 </div>
                 <div className="profile_persona_container"> 
                     <Persona
                         {...{
-                            text:(this.state.profile.name),
-                            secondaryText: (this.state.profile.email),
-                            imageUrl: (this.state.profile.imageURL)
+                            text: this.state.profile.name,
+                            secondaryText: this.state.profile.email,
+                            imageUrl: this.state.profile.imageURL
                         }}
                         size={PersonaSize.size56}
                         imageAlt="Profile Image"
@@ -213,8 +220,8 @@ class Profile extends Component{
                 </div>
                 <div>
                     <div className="profile_edit_info_buttons">
-                        <DefaultButton text ="Cancel" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto'}} onClick={edit}/>
-                        <PrimaryButton text ="Save modifications" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto', height:'auto' }} onClick={submitChanges}/>    
+                        <DefaultButton text ="Cancel" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto'}} onClick={this.editProfileMode}/>
+                        <PrimaryButton text ="Save modifications" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto', height:'auto' }} onClick={this.submitChanges}/>    
                     </div>
                 
                 </div>
