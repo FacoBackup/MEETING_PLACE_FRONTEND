@@ -1,17 +1,28 @@
 .conversation_bar_component_container{
     display: grid;
-    grid-template-rows: 1fr 98fr;
-    overflow-y: auto;
-    justify-content: space-around;
+    grid-template-rows: 1fr 13.8fr 1fr;
+    row-gap: 1vh;
+    height: 100%;
+    margin: auto;
+    align-items: flex-start;
+      
 }
 
 .conversation_title_container{
     grid-row: 1;
-    grid-column: 1;
     text-align: center;
 }
-.conversation_personas_container{
+.conversation_personas{
+
+    overflow-y: auto;
     grid-row: 2;
- 
-    padding-bottom: 1vh;
+    display: grid;
+    align-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+}
+.conversation_search{
+    grid-row:3;
+    width: 13vw;
+    
 }

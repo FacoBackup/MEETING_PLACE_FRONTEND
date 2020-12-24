@@ -5,6 +5,7 @@ import "./ConversationBarStyle.css";
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Link } from 'react-router-dom';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 class ConversationBar extends Component{
     constructor(){
@@ -54,9 +55,9 @@ class ConversationBar extends Component{
                 <div className="conversation_title_container">
                     <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Conversations</p>
                 </div>
-                <div className="conversation_content_container">
+                <div className="conversation_personas">
                     {this.state.conversations.map((chat) => 
-                    <div className="conversation_personas_container">
+                    <div style={{paddingBottom:'1vh'}}>
                             <Link style={{textDecoration: 'none', textDecorationColor: '-moz-initial'}} to ={chat.isGroup ? ("/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)) : ("/chat/" +((chat.name).replace(this.state.cookies.get('ID'), ""))+"/"+JSON.stringify(chat.isGroup))}>
                                 <Persona
                                     {...{
@@ -68,10 +69,12 @@ class ConversationBar extends Component{
                                 />
                             </Link>
                     </div>)}
+                    
                 </div>
-                <div className="conversation_title_container">
-                    <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Conversations</p>
+                <div className="conversation_search">
+                    <TextField placeholder="Search conversation" onChange={console.log("NOT YET ")}/>
                 </div>
+                
             </div>
         );
     }

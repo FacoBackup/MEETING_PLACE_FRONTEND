@@ -15,16 +15,18 @@ class Profile extends Component{
         this.state={
             profile: {},
             cookies: new Cookies(),
-            editMode: false,
+            
             about: "",
             nationality: '',
             birthCity: '',
-            multiline: false
+            multiline: false,
+            editMode: false,
         }
         this.handleChangeAbout = this.handleChangeAbout.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.getErrorMessage = this.getErrorMessage.bind(this)
         this.getErrorMessageAbout = this.getErrorMessageAbout.bind(this)
+        this.editProfileMode = this.editProfileMode.bind(this)
     }
     componentDidMount(){
         this.fetchData()
@@ -78,9 +80,12 @@ class Profile extends Component{
     }
 
     editProfileMode(){
+        
+     
         this.setState({
             editMode: !this.state.editMode
         })
+    
     }
 
     toggleMultiline(){

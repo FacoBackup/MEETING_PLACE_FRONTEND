@@ -6,8 +6,8 @@ function MessageBox(content, valid, creationDate, userID, creatorID, read) {
     
     creationDate = new Date(creationDate);
     creationDate = creationDate.toDateString()
-    // valid = new Date(valid)
-    // valid = valid.toString()
+    valid = new Date(valid)
+    valid = valid.toString()
     const theme = getTheme();
 
     if(creatorID === userID)
@@ -23,7 +23,7 @@ function MessageBox(content, valid, creationDate, userID, creatorID, read) {
             <div className="subject_message_box_container" style={{boxShadow: theme.effects.elevation4 }}>
                 <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{content}</p>
                 <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Sent on: {creationDate}</p>
-                {/* <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Valid until: {valid}</p> */}
+                <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>Valid until: {valid}</p>
             </div>
         )
 }

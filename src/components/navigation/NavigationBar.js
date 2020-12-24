@@ -2,6 +2,11 @@ import React from 'react';
 import './Navigation.css';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+import { NeutralColors } from '@fluentui/theme';
+
+import { FontSizes, FontWeights } from '@fluentui/theme';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 function NavigationBar (){
     const _items = [
@@ -20,11 +25,14 @@ function NavigationBar (){
       ];
 
     return (
-       <div className="nav-style">
-          <CommandBar items={_items} /> 
-          <CommandBar items={_items} />
-          <CommandBar items={_items} />
+       <div className="nav_container" style={{backgroundColor: NeutralColors.white }}>
+          
+          <a href="/" style={{fontSize: FontSizes.size14}}>Home</a>
+        
+          
+          <TextField placeholder="search" />
        </div>
+
        
         // <nav className="nav-style">
         //     <h3>Nav here </h3>

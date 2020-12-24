@@ -23,7 +23,7 @@ function UserSearch(){
                     userID: searchInput
                 }
             }).then(res=>{
-                alert
+       
                 setProfile(res);
                 setFound(true);
                 setSearched(true);

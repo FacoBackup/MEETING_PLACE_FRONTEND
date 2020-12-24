@@ -1,16 +1,16 @@
-.nav-container{
+.nav_container{
     display: flex;
     justify-content: space-between;
-    
-   
+    margin: auto;
+    padding-right: 8vw;
+    padding-left: 8vw;
+    align-items: center;
     background: lightgray;
     color: black;
 
 }
-.nav-links{
-    width: 50%;
-    display: flex;
-    justify-content: space-around;
-    align-content: center;
-    list-style: none;
+.nav_links{
+    
+    display: inline-block;
+    
 }
