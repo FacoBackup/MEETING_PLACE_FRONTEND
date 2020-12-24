@@ -1,4 +1,4 @@
-.nav-style{
+.nav-container{
     display: flex;
     justify-content: space-between;
     
@@ -11,6 +11,6 @@
     width: 50%;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-content: center;
     list-style: none;
 }

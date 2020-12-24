@@ -106,8 +106,8 @@ class SignUp extends Component{
                         </div>
                       
                         <div className="sign_up_buttons_container" >
-                            <DefaultButton text="Sign in" href="/authenticate"/>
-                            <PrimaryButton iconProps='Add' text="Create Account" onClick={this.handleSubmit} />
+                            <DefaultButton text="Sign in" href="/authenticate" />
+                            <PrimaryButton iconProps='Add' text="Create Account"  style={{ float: 'right'}}onClick={this.handleSubmit} />
                         </div>
                         
                     </div>

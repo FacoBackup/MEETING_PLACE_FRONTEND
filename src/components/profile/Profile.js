@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "./ProfileStyle.css";
+import { Label } from 'office-ui-fabric-react/lib/Label';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';

@@ -18,8 +18,8 @@
     border-radius: 8px;
     row-gap: 1vh;
     column-gap: 1vh;
-    width: 37vh;
-    height: 45vh;
+    width: 400px;
+    height: 450px;
 }
 .sign_in_title_container{
     grid-column: 2;
@@ -29,7 +29,8 @@
 .sign_input_container{
     grid-column: 2;
     grid-row: 2;
-    
+    width: 300px;
+    margin:auto
 }
 .sign_button_container{
     grid-row: 3;

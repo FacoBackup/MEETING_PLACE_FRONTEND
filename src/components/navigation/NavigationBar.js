@@ -20,10 +20,12 @@ function NavigationBar (){
       ];
 
     return (
-       <div>
-         {/* <DefaultButton></DefaultButton> */}
-           <CommandBar items={_items} />
+       <div className="nav-style">
+          <CommandBar items={_items} /> 
+          <CommandBar items={_items} />
+          <CommandBar items={_items} />
        </div>
+       
         // <nav className="nav-style">
         //     <h3>Nav here </h3>
             
