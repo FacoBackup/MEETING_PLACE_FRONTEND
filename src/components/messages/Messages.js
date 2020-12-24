@@ -54,7 +54,7 @@ class Messages extends React.Component{
             if(this.state.isGroup  === true){
                 await axios({
                     method: 'post',
-                    url: 'http://192.168.15.35:8080/api/get/all/group/messages',
+                    url: 'http://localhost:8080/api/get/all/group/messages',
                     headers: {"Authorization": 'Bearer ' +this.state.token},
                     data: {
                         conversationID: this.state.conversationID
@@ -75,7 +75,7 @@ class Messages extends React.Component{
                 
                 await axios({
                     method: 'post',
-                    url: 'http://192.168.15.35:8080/api/get/all/user/messages',
+                    url: 'http://localhost:8080/api/get/all/user/messages',
                     headers: {"Authorization": 'Bearer ' +this.state.token},
                     data: {
                         userID: this.state.conversationID
@@ -97,7 +97,7 @@ class Messages extends React.Component{
             if(this.state.isGroup  === true){
                 await axios({
                     method: 'post',
-                    url: 'http://192.168.15.35:8080/api/get/new/group/messages',
+                    url: 'http://localhost:8080/api/get/new/group/messages',
                     headers: {"Authorization": 'Bearer ' + this.state.token},
                     data: {
                         conversationID: this.state.conversationID
@@ -122,7 +122,7 @@ class Messages extends React.Component{
 
                 await axios({
                     method: 'post',
-                    url: 'http://192.168.15.35:8080/api/get/new/user/messages',
+                    url: 'http://localhost:8080/api/get/new/user/messages',
                     headers: {"Authorization": 'Bearer ' + this.state.token},
                     data: {
                         userID: this.state.conversationID

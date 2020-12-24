@@ -37,7 +37,7 @@ class Followers extends React.Component{
     fetchData = async () => {
         await axios({
             method: 'get',
-            url: 'http://192.168.15.35:8080/api/followers',
+            url: 'http://localhost:8080/api/followers',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
 
         }).then(res=>{

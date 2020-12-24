@@ -47,7 +47,7 @@ class Profile extends Component{
         if(typeof this.state.cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'get',
-                url: 'http://192.168.15.35:8080/api/user',
+                url: 'http://localhost:8080/api/user',
                 headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
             }).then(res=>{
                 this.setState({
@@ -62,7 +62,7 @@ class Profile extends Component{
         if(typeof this.state.cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'post',
-                url: 'http://192.168.15.35:8080/api/logout',
+                url: 'http://localhost:8080/api/logout',
                 headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
             }).then(()=>{
 
@@ -99,7 +99,7 @@ class Profile extends Component{
     submitChanges = async() => {
         await axios({
             method: 'patch',
-            url: 'http://192.168.15.35:8080/api/profile',
+            url: 'http://localhost:8080/api/profile',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
             data:{
                 about : this.state.about,

@@ -57,7 +57,7 @@ class ConversationInfo extends Component {
         else
             await axios({
                 method: 'post',
-                url: 'http://192.168.15.35:8080/api/get/conversation/user',
+                url: 'http://localhost:8080/api/get/conversation/user',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     userID: this.state.conversationID

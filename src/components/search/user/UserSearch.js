@@ -54,7 +54,6 @@ function UserSearch(){
             setIsFollower(res.data);
         })
         .catch();
-        
     }
 
     async function follow (){
