@@ -17,13 +17,13 @@ function UserSearch(){
     async function fetchData (){
         if(typeof cookies.get("ID") !== 'undefined' && cookies.get("ID") !== searchInput){
             await axios({
-                method: 'patch',
-                url: 'http://192.168.15.35:8080/api/user/search',
-                data: {
+                method: 'get',
+                url: 'http://localhost:8080/api/user/name',
+                params: {
                     userID: searchInput
                 }
             }).then(res=>{
-            
+                alert
                 setProfile(res);
                 setFound(true);
                 setSearched(true);
@@ -45,7 +45,7 @@ function UserSearch(){
     async function fetchIsFollower(){
         await axios({
             method: 'patch',
-            url: 'http://192.168.15.35:8080/api/follower',
+            url: 'http://localhost:8080/api/follower',
             headers: {"Authorization": 'Bearer '+cookies.get("JWT")},
             data: {
                 userID: searchInput
@@ -60,7 +60,7 @@ function UserSearch(){
     async function follow (){
         await axios({
             method: 'post',
-            url: 'http://192.168.15.35:8080/api/follow',
+            url: 'http://localhost:8080/api/follow',
             headers: {"Authorization": 'Bearer ' + cookies.get("JWT")},
             data: {
                 subjectID: profile.data.email,
@@ -75,7 +75,7 @@ function UserSearch(){
     async function unfollow () {
         await axios({
             method: 'delete',
-            url: 'http://192.168.15.35:8080/api/unfollow',
+            url: 'http://localhost:8080/api/unfollow',
             headers: {"Authorization": 'Bearer ' + cookies.get("JWT")},
             data: {
                 subjectID: profile.data.email,
