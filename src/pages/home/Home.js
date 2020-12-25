@@ -6,7 +6,7 @@ import "../home/Home.css";
 import "../../style/PageModel.css"
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { NeutralColors } from '@fluentui/theme';
+
 import { getTheme } from '@fluentui/react';
 
 
@@ -23,12 +23,12 @@ class Home extends Component{
       return (
         <div>
         
-            <div style={{backgroundColor: NeutralColors.white }} className="left_components">
+            <div className="left_components">
                 
                   <Profile/>
                 
             </div>
-            <div style={{backgroundColor: NeutralColors.white}} className="right_components" >
+            <div  className="right_components" >
               <Conversations/>
             </div>
         </div>

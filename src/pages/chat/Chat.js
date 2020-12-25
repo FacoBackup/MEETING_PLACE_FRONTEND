@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navigation from "../../components/navigation/NavigationBar"
+
 import Cookies from 'universal-cookie';
 import "./ChatStyle.css"
 import {Redirect} from 'react-router-dom'

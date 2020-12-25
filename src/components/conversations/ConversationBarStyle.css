@@ -1,3 +1,4 @@
+
 .conversation_bar_component_container{
     display: grid;
     grid-template-rows: 1fr 13.8fr 1fr;
@@ -7,6 +8,7 @@
     margin: auto;
     align-items: flex-start;
     overflow: hidden;  
+    
 }
 
 .conversation_title_container{
@@ -17,8 +19,12 @@
     margin-bottom: 1vh;
     border-radius: 8px;
     padding: 1vh;
-    
-    background-color: rgba(121, 119, 117, .2);
+    background-color: rgba(210, 208, 206, .5);
+  
+}
+div.conversation_persona_container:hover{
+  
+    box-shadow:  1px 1px 10px #b2b2b2;
 }
 .conversation_personas{
     

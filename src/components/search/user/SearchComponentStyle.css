@@ -1,0 +1,25 @@
+.search_component{
+    background-color: white;
+    border-radius: 8px;
+    height: 100vh;
+    overflow: auto;
+}
+.search_box_container{
+    width: 50%;
+    margin: auto;
+}
+.search_personas_container{
+    display: flex;
+    margin-top: 5%;
+    background-color: rgba(210, 208, 206, .5);
+    padding: 1vh;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: space-around;
+}
+.search_result_container{
+    margin: auto;
+    width: 65%;
+    display: block;
+    align-items: center;
+}

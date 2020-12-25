@@ -9,12 +9,10 @@
     padding: 1%;
     margin-top: 3%;
     align-items: flex-start;
-    
-    min-height: 50%;
+    min-height: 75vh;
     max-height: 75vh;
     border-radius: 8px;
     overflow: auto;
-    
 }
 
 .my_message_container{ 

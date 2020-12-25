@@ -13,10 +13,7 @@
 .profile_background_image{
     grid-row: 1;
     width: 18vw;
-    
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-top-right-radius: 8px;
+    border-radius: 8px;
 }
 /* .profile_image{
     display: inline;
@@ -44,7 +41,7 @@
     display: grid;
     
        
-    background-color: rgba(121, 119, 117, .5);
+    background-color:rgba(210, 208, 206, .5);
     border-radius: 8px;
     height: 35%;
     align-items: center;
@@ -54,6 +51,9 @@
     width: 80%;
     margin: auto;
     
+}
+.div.profile_card_container:hover{
+    box-shadow:  1px 1px 10px #b2b2b2;
 }
 .profile_buttons_container{
     grid-row: 2;

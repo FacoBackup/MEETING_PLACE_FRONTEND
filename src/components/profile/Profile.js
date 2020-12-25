@@ -63,22 +63,23 @@ class Profile extends Component{
     }
 
     signout = async() => {
-        if(typeof this.state.cookies.get("JWT") !== 'undefined'){
-            await axios({
-                method: 'post',
-                url: 'http://localhost:8080/api/logout',
-                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
-            }).then(()=>{
+        Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
+        localStorage.clear()
+        window.location.reload()
+        // if(typeof this.state.cookies.get("JWT") !== 'undefined'){
+        //     await axios({
+        //         method: 'post',
+        //         url: 'http://localhost:8080/api/logout',
+        //         headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
+        //     }).then(()=>{
 
-                Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
-                localStorage.clear()
-                window.location.reload()
-            })
-            .catch(error=>{
-                console.log(error)
-            }
-            )
-        }
+            
+        //     })
+        //     .catch(error=>{
+        //         console.log(error)
+        //     }
+        //     )
+        // }
     }
 
     editProfileMode(){
@@ -159,14 +160,14 @@ class Profile extends Component{
                             <DefaultButton text ="Following" href="/following"/>
 
                             
-                            <DefaultButton  text ="Add friend"  onClick={this.editProfileMode}/>
+                            <DefaultButton  text ="Add friend"  href="/search_user"/>
 
                             <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/>
 
                             
-                            <PrimaryButton text="Sign out"  onClick={this.signout} />
+                            <PrimaryButton text="Sign out"  onClick={() => this.signout()} />
                     </div>
-                    <div className="profile_card_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
+                    <div className="profile_card_container" >
                     
                         <Persona
                             {...{

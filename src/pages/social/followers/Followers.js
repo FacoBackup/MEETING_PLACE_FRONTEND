@@ -9,6 +9,7 @@ import ConversationBar from "../../../components/conversations/ConversationBar"
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import { PrimaryButton } from 'office-ui-fabric-react';
 
 class Followers extends React.Component{
     constructor(){
@@ -21,6 +22,7 @@ class Followers extends React.Component{
         } 
     }
     componentDidMount(){
+        this.fetchData();
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -30,7 +32,7 @@ class Followers extends React.Component{
         clearInterval(this.timerID);
     }
     tick() {
-        this.fetchData();
+    
         this.setState({
             date: new Date(),
         });
@@ -38,7 +40,7 @@ class Followers extends React.Component{
     fetchData = async () => {
         await axios({
             method: 'get',
-            url: 'http://localhost:8080/api/follower',
+            url: 'http://localhost:8080/api/followers',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
 
         }).then(res=>{
@@ -62,15 +64,18 @@ class Followers extends React.Component{
                     <div className="socail_info_container">
                     <p style={{textAlign:'center'}}>Followers</p>
                     {this.state.followers.map((follower)=> 
-                         <Persona
-                         {...{
-                             imageUrl: (follower.imageURL === null) ?  follower.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
-                             text: follower.name,
-                             secondaryText: follower.email
-                         }}
-                         size={PersonaSize.size48}
-                         imageAlt="Conversation picture"
-                     />
+                         <div className="social_personas_container"> 
+                            <Persona
+                            {...{
+                                imageUrl: (follower.imageURL === null) ?  follower.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                text: follower.name,
+                                secondaryText: follower.email
+                            }}
+                            size={PersonaSize.size48}
+                            imageAlt="Conversation picture"
+                            />
+                            <PrimaryButton href={'/chat/'+follower.email+"/false"} text="Send Message"/>
+                        </div>
                     )}
                     </div>
                 </div>

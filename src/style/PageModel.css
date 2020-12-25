@@ -1,34 +1,35 @@
 .center_component{
     width: 50%;
-    height: 5vh;
     left: 25%;
     right: 25%;
     position: fixed;
     text-align: center;
-    top: 1vh;
+    top: 5px;
+    overflow-y: auto;
 }
 .left_components{
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    bottom: 0vh;
-    left: 0vw;
+    border-radius: 8px;
+    bottom: 5px;
+    left: 5px;
     position: fixed;
-    
+    background-color: white;
     margin: auto;
-    height: 100%;
+    height: 99%;
     overflow-y: hidden;
     width: 18%;
 }
-
+/* div{
+    background-color: #323130;
+    color: white;
+} */
 .right_components{
-    border-top-left-radius:8px;
-    border-bottom-left-radius: 8px;
-    bottom: 0vh;
-    right: 0vw;
+    border-radius: 8px;
+    bottom: 5px;
+    right: 5px;
     margin: auto;
     position: fixed;
-    
-    height: 100%;
+    background-color: white;
+    height: 99%;
     overflow-y: hidden;
     width: 18%;
 }

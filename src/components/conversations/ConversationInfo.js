@@ -78,10 +78,10 @@ class ConversationInfo extends Component {
         return(
             (
                 <div className="conversation_info_container" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
-
+                    
                     <Persona
                         {...{
-                            text: (this.state.isGroup !== false && typeof this.state.conversation.name !== 'undefined' ? this.state.conversation.name.replace(this.state.userID, "") :  (this.state.conversation.name)),
+                            text: (this.state.isGroup !== false && typeof this.state.conversation.name !== 'undefined' ? this.state.conversationID :  (this.state.conversation.name)),
                             secondaryText: this.state.conversation.about
                         }}
                         size={PersonaSize.size40}
