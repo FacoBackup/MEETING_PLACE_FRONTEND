@@ -1,23 +1,17 @@
 
 .messages_component_container{
-    display: grid;
-    grid-template-columns: 1;
-    grid-row: 1fr 1fr;
-    align-items: center;
-    width: 60vw;
-    height: 86.2vh;
-   
-    margin: auto;
-
+    display: block;
 }
 .messages_component{
-    grid-row: 1;
-    display: grid;
-    width: 59vw;
-    padding: 1vh;
     
+    display: grid;
+    width: auto;
+    padding: 1%;
+    margin-top: 3%;
     align-items: flex-start;
-    height: 75.5vh;
+    
+    min-height: 50%;
+    max-height: 75vh;
     border-radius: 8px;
     overflow: auto;
     
@@ -34,18 +28,20 @@
 }
 
 .message_input_container{
-    grid-row: 2;
-    grid-column: 1/2;
-    display: flex;
+    
+    display: inline-flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
     width: 100%;
-
-    margin: auto;
+    border-radius: 8px;
+    background-color: white;
+    margin-top: 3%;
 }
 
 
 .message_input_box{
-    width: 54.8vw;
-
+    
+    width: 88%;
 }

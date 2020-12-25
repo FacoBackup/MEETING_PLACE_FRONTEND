@@ -3,11 +3,12 @@ import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "./ProfileStyle.css";
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton, getTheme, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import QRcode from 'qrcode.react';
+import { SearchBox } from '@fluentui/react';
 
 class Profile extends Component{
     constructor(){
@@ -21,6 +22,7 @@ class Profile extends Component{
             birthCity: '',
             multiline: false,
             editMode: false,
+            theme: getTheme()
         }
         this.handleChangeAbout = this.handleChangeAbout.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -125,20 +127,18 @@ class Profile extends Component{
         if(this.state.editMode === false){
             return(
                 <div className="profile_container">
-                    <div className="profile_background_image_container">
-                        <img className="profile_image" alt="BACKGROUD IMG"src={(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
-                    </div>
-                    <div className="profile_identifier_container"> 
-                        <p style={{ fontSize: FontSizes.size32, fontWeight: FontWeights.semibold, color: '#252423'}}>{this.state.profile.name}</p>
-                        <p style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.regular, color: '#323130' }}>{this.state.profile.email}</p>
-                    </div>
-                    <div className="profile_info_container">
+                   
+                        <img className="profile_background_image" alt="BACKGROUD IMG"src= {(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
+                   
+              
+                    
                        
-                                <TextField label="About You" readOnly placeholder={this.state.profile.about} />
+                                {/* <TextField label="About You" readOnly placeholder={this.state.profile.about} />
                                 <TextField label="Your Phone Number" readOnly placeholder={this.state.profile.phoneNumber} />
                                 <TextField label="Your Nationality" readOnly placeholder={this.state.profile.nationality} />
                                 <TextField label="Your city of birth" readOnly placeholder={this.state.profile.cityOfBirth} />
-                        <div style={{paddingLeft:'4.2vw', paddingTop:'3.5vh'}}>
+                     */}
+                        {/* <div  className="profile_qrcode_container">
                         <QRcode 
                                 value= {"BEGIN:VCARD" +
                                 "VERSION:4.0" +
@@ -148,87 +148,103 @@ class Profile extends Component{
                                 "ADR;TYPE#HOME;LABEL#" + this.state.profile.nationality + "/" + this.state.profile.cityOfBirth +
                                 "EMAIL:" + this.state.profile.email + "END:VCARD"}
                                 />
-                        </div>
-                    </div>
+                        </div> */}
+                    
                     
                     <div className="profile_buttons_container">
-                        <div style={{gridRow:'1', gridColumn:'4'}}>
-                            <DefaultButton text ="Followers" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'7vw' }} href="/followers"/>
-                        </div>
-                        <div style={{gridRow:'2', gridColumn:'4'}}>
-                            <DefaultButton text ="Following" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'7vw' }} href="/following"/>
-                        </div>
-                        <div style={{gridRow:'1', gridColumn:'2'}}>
-                            <DefaultButton  text ="Edit" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={this.editProfileMode}/>
-                        </div>
-                        <div style={{gridRow:'2', gridColumn:'2'}}>
-                            <PrimaryButton text="Sign out" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold ,width:'7vw'}} onClick={this.signout} />
-                        </div>
+                            <DefaultButton text="Home"  href='/' />
+                            
+                            <DefaultButton text ="Followers"  href="/followers"/>
+
+                            <DefaultButton text ="Following" href="/following"/>
+
+                            
+                            <DefaultButton  text ="Add friend"  onClick={this.editProfileMode}/>
+
+                            <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/>
+
+                            
+                            <PrimaryButton text="Sign out"  onClick={this.signout} />
+                    </div>
+                    <div className="profile_card_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
+                    
+                        <Persona
+                            {...{
+                                imageUrl: (this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                text: this.state.profile.name,
+                                secondaryText: this.state.profile.email
+                            }}
+                            size={PersonaSize.size48}
+                            imageAlt="Conversation picture"
+                        />
+                        {/* <p style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold, gridRow:'1' , gridColumn:'1'}}>{this.state.profile.name}</p>
+                        
+                        <PrimaryButton text="Sign out" style={{ gridColumn:'2', width:'1%'}} onClick={this.signout} /> */}
                     </div>
                 </div>
             );  
         }
-        else{
-            return(
-                <div className="profile_container">
-                <div className="profile_background_image_container">
-                    <img style={{borderRadius:'8px', width:'17.5vw'}} alt="BACKGROUND IMG" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAgICAgHBwcHBwoHBwcHBw8ICQYKFREWFhURExMYHCggGBoxGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0ODg0NEisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKsBJwMBIgACEQEDEQH/xAAWAAEBAQAAAAAAAAAAAAAAAAAAAQb/xAAWEAEBAQAAAAAAAAAAAAAAAAAAgRH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQcF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AzoDitUCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIKgCoAAAAAKIAAAKgAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/Z"/>
-                </div>
-                <div className="profile_persona_container"> 
-                    <Persona
-                        {...{
-                            text: this.state.profile.name,
-                            secondaryText: this.state.profile.email,
-                            imageUrl: this.state.profile.imageURL
-                        }}
-                        size={PersonaSize.size56}
-                        imageAlt="Profile Image"
-                    />
-                </div>
-                <div className="profile_edit_info">
+        // else{
+        //     return(
+        //         <div className="profile_container">
+        //         <div className="profile_background_image_container">
+        //             <img style={{borderRadius:'8px', width:'17.5vw'}} alt="BACKGROUND IMG" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAgICAgHBwcHBwoHBwcHBw8ICQYKFREWFhURExMYHCggGBoxGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0ODg0NEisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKsBJwMBIgACEQEDEQH/xAAWAAEBAQAAAAAAAAAAAAAAAAAAAQb/xAAWEAEBAQAAAAAAAAAAAAAAAAAAgRH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQcF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AzoDitUCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIKgCoAAAAAKIAAAKgAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/Z"/>
+        //         </div>
+        //         <div className="profile_persona_container"> 
+        //             <Persona
+        //                 {...{
+        //                     text: this.state.profile.name,
+        //                     secondaryText: this.state.profile.email,
+        //                     imageUrl: this.state.profile.imageURL
+        //                 }}
+        //                 size={PersonaSize.size56}
+        //                 imageAlt="Profile Image"
+        //             />
+        //         </div>
+        //         <div className="profile_edit_info">
                 
                        
-                        <MaskedTextField label="Phone number" mask="(99) 99999-9999" />
+        //                 <MaskedTextField label="Phone number" mask="(99) 99999-9999" />
                        
-                        <TextField
-                            label="About you"
-                            placeholder={(this.state.profile.about)}
-                            multiline={this.state.multiline}
-                            description="Max length is 512 characters"
-                            onChange={this.state.handleChangeAbout}
-                            onGetErrorMessage={this.state.getErrorMessageAbout}
-                        />
+        //                 <TextField
+        //                     label="About you"
+        //                     placeholder={(this.state.profile.about)}
+        //                     multiline={this.state.multiline}
+        //                     description="Max length is 512 characters"
+        //                     onChange={this.state.handleChangeAbout}
+        //                     onGetErrorMessage={this.state.getErrorMessageAbout}
+        //                 />
                     
-                        <TextField
-                            label="Your nationality" 
-                            placeholder={this.state.profile.nationality} 
-                            description="Max length is 128 characters"
-                            name = "nationality"
-                            onChange={this.handleChange}
-                            onGetErrorMessage={this.getErrorMessage}
-                        />
+        //                 <TextField
+        //                     label="Your nationality" 
+        //                     placeholder={this.state.profile.nationality} 
+        //                     description="Max length is 128 characters"
+        //                     name = "nationality"
+        //                     onChange={this.handleChange}
+        //                     onGetErrorMessage={this.getErrorMessage}
+        //                 />
                     
-                        <TextField
-                                label="Your city of birth" 
-                                placeholder={this.state.profile.cityOfBirth} 
-                                description="Max length is 128 characters"
-                                name = "birthCity"
-                                onChange={this.handleChange}
-                                onGetErrorMessage={this.getErrorMessage}
-                            />
+        //                 <TextField
+        //                         label="Your city of birth" 
+        //                         placeholder={this.state.profile.cityOfBirth} 
+        //                         description="Max length is 128 characters"
+        //                         name = "birthCity"
+        //                         onChange={this.handleChange}
+        //                         onGetErrorMessage={this.getErrorMessage}
+        //                     />
     
-                </div>
-                <div>
-                    <div className="profile_edit_info_buttons">
-                        <DefaultButton text ="Cancel" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto'}} onClick={this.editProfileMode}/>
-                        <PrimaryButton text ="Save modifications" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto', height:'auto' }} onClick={this.submitChanges}/>    
-                    </div>
+        //         </div>
+        //         <div>
+        //             <div className="profile_edit_info_buttons">
+        //                 <DefaultButton text ="Cancel" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto'}} onClick={this.editProfileMode}/>
+        //                 <PrimaryButton text ="Save modifications" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto', height:'auto' }} onClick={this.submitChanges}/>    
+        //             </div>
                 
-                </div>
+        //         </div>
                 
-            </div>
-            )
-        }
+        //     </div>
+        //     )
+        // }
     }
  
        

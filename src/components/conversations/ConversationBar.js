@@ -6,13 +6,15 @@ import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Link } from 'react-router-dom';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { getTheme } from '@fluentui/react';
 
 class ConversationBar extends Component{
     constructor(){
         super()
         this.state={
             cookies: new Cookies(),
-            conversations: []
+            conversations: [],
+            theme: getTheme()
         }
     }
 
@@ -57,14 +59,14 @@ class ConversationBar extends Component{
                 </div>
                 <div className="conversation_personas">
                     {this.state.conversations.map((chat) => 
-                    <div style={{paddingBottom:'1vh'}}>
+                    <div style={{boxShadow: this.state.theme.effects.elevation8}} className="conversation_persona_container">
                             <Link style={{textDecoration: 'none', textDecorationColor: '-moz-initial'}} to ={chat.isGroup ? ("/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)) : ("/chat/" +((chat.name).replace(this.state.cookies.get('ID'), ""))+"/"+JSON.stringify(chat.isGroup))}>
                                 <Persona
                                     {...{
                                         text: (chat.isGroup ? (chat.name) : (chat.name).replace(this.state.cookies.get('ID'), "")),
                                         secondaryText: (chat.isGroup ? "Group" : "Private")
                                     }}
-                                    size={PersonaSize.size40}
+                                    size={PersonaSize.size32}
                                     imageAlt="Conversation picture"
                                 />
                             </Link>

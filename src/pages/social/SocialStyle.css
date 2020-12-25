@@ -1,0 +1,6 @@
+.social_component_container{
+    background-color: white;
+    border-radius: 8px;
+    min-height: 100%;
+    overflow-x: scroll;
+}

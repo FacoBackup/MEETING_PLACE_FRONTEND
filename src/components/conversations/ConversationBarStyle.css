@@ -2,19 +2,27 @@
     display: grid;
     grid-template-rows: 1fr 13.8fr 1fr;
     row-gap: 1vh;
+    justify-content: space-around;
     height: 100%;
     margin: auto;
     align-items: flex-start;
-      
+    overflow: hidden;  
 }
 
 .conversation_title_container{
     grid-row: 1;
     text-align: center;
 }
+.conversation_persona_container{
+    margin-bottom: 1vh;
+    border-radius: 8px;
+    padding: 1vh;
+    
+    background-color: rgba(121, 119, 117, .2);
+}
 .conversation_personas{
-
-    overflow-y: auto;
+    
+    
     grid-row: 2;
     display: grid;
     align-content: flex-start;
@@ -23,6 +31,6 @@
 }
 .conversation_search{
     grid-row:3;
-    width: 13vw;
+    width: 100%;
     
 }

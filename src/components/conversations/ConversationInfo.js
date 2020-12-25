@@ -84,7 +84,7 @@ class ConversationInfo extends Component {
                             text: (this.state.isGroup !== false && typeof this.state.conversation.name !== 'undefined' ? this.state.conversation.name.replace(this.state.userID, "") :  (this.state.conversation.name)),
                             secondaryText: this.state.conversation.about
                         }}
-                        size={PersonaSize.size48}
+                        size={PersonaSize.size40}
                         imageAlt="Conversation picture"
                     />
                 </div>

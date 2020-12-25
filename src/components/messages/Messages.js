@@ -179,7 +179,7 @@ class Messages extends React.Component{
     render(){    
         return(
             <div className="messages_component_container">  
-                <div className="messages_component" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white}}>
+                <div className="messages_component" style={{backgroundColor: NeutralColors.white}}>
                     {this.state.messages === [] ? <div>EMPTY</div> : this.state.messages.map((message,index) =>(
                         <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
                             
@@ -189,7 +189,7 @@ class Messages extends React.Component{
                     )}    
                 </div>
             
-                <div className="message_input_container">
+                <div className="message_input_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
                     <div className="message_input_box">
                         <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
                     </div>

@@ -8,6 +8,7 @@ import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
+import Moment from 'moment';
 
 const genderOptions = [
     { key: 'male', text: 'Male'},
@@ -48,7 +49,7 @@ class SignUp extends Component{
                 userName: this.state.name,
                 gender: this.state.gender,
                 nationality: '',
-                birthDate: this.state.birth.replace("_", ""),
+                birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
                 cityOfBirth: '',
                 phoneNumber: this.state.phone,
                 admin: false,
@@ -94,7 +95,7 @@ class SignUp extends Component{
                             />
                             <MaskedTextField label="Phone number" name="phone" onChange={this.handleChange} mask="(99) 99999-9999" />
                     
-                            <MaskedTextField label="Birthday" name="birth" onChange={this.handleChange} mask="99-99-9999"/>
+                            <MaskedTextField label="Birthday" name="birth" onChange={this.handleChange} mask="99/99/9999"/>
                         
                             <Dropdown
                                 onChange={(event, option) =>  this.setState({

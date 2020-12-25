@@ -36,16 +36,18 @@ class Chat extends Component{
         if(typeof this.state.token !== 'undefined'){
             return(
                 <div className="page_container">
-                    <div className="top_container">
-                        <Navigation/>
-                    </div>
+                    
                     <div style={{backgroundColor: NeutralColors.white }} className="left_components">    
                         <Profile/>
                     
                     </div>
-                    <div className="middle_components">
+                    <div className="center_component">
                         <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token}  conversationID={this.state.id} />
-                        <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.id}/>
+                        
+                        <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.id} />
+                    
+
+
                     </div>
                     
                         <div style={{backgroundColor: NeutralColors.white}} className="right_components" >

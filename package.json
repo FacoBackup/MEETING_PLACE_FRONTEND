@@ -12,6 +12,7 @@
     "axios": "^0.21.0",
     "cookie-parser": "^1.4.5",
     "local-ip-url": "^1.0.3",
+    "moment": "^2.29.1",
     "qrcode.react": "^1.0.0",
     "react": "^17.0.1",
     "react-calendar": "^3.2.1",

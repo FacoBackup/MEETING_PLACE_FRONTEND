@@ -5,8 +5,8 @@ import SignUp from "./pages/user/Signup";
 import Home from "./pages/home/Home";
 import Search from "./pages/search/Search";
 import Chat from "./pages/chat/Chat";
-import Followers from "./pages/followers/Followers";
-import Following from "./pages/following/Following";
+import Followers from "./pages/social/followers/Followers";
+import Following from "./pages/social/following/Following";
 import SignIn from "./pages/authentication/SignIn"
 
 function AppRoutes() {
