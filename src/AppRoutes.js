@@ -17,7 +17,7 @@ function AppRoutes() {
               <Route path="/following" exact component={Following}/>
               <Route path="/followers" exact component={Followers}/>
               <Route path="/" exact component={Home}/>
-              <Route path="/chat/:id/:isGroup" exact component={Chat}/>
+              <Route path="/chat/:username/:isGroup/:absoluteid" exact component={Chat}/>
               <Route path="/search_user" exact component={Search}/>
               <Route path="/authenticate" exact component={SignIn}/>
               <Route path="/creation" exact component={SignUp}/>

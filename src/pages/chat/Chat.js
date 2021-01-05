@@ -16,7 +16,8 @@ class Chat extends Component{
     constructor({match}){
         super()
         this.state={
-            id: match.params.id,
+            conversationID: match.params.absoluteid,
+            receiverName: match.params.username,
             isGroup: match.params.isGroup,
             token: (new Cookies()).get("JWT"),
             userID: (new Cookies()).get("ID"),
@@ -42,9 +43,9 @@ class Chat extends Component{
                     
                     </div>
                     <div className="center_component">
-                        <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token}  conversationID={this.state.id} />
+                        <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token}  conversationID={this.state.receiverName} />
                         
-                        <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.id} />
+                        <Messages userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.conversationID} receiverName={this.state.receiverName} />
                     
 
 

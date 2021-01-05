@@ -9,14 +9,14 @@ import Cookies from 'universal-cookie';
 class Search extends Component{
   render(){
     
-    if(typeof (new Cookies).get("JWT") !== 'undefined'){
+    if(typeof (new Cookies()).get("JWT") !== 'undefined'){
       return (
         <div>
           <div className="center_component">
             <UserSearch/>
           </div>
           <div className="left_components">
-              <Profile/>
+            <Profile/>
           </div>
           <div  className="right_components" >
             <Conversations/>

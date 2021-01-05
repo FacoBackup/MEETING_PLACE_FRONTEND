@@ -11,6 +11,7 @@
     "axion": "^0.1.0",
     "axios": "^0.21.0",
     "cookie-parser": "^1.4.5",
+    "dexie": "^3.0.3",
     "local-ip-url": "^1.0.3",
     "moment": "^2.29.1",
     "qrcode.react": "^1.0.0",

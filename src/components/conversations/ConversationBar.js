@@ -60,7 +60,7 @@ class ConversationBar extends Component{
                 <div className="conversation_personas">
                     {this.state.conversations.map((chat) => 
                     <div className="conversation_persona_container">
-                            <Link style={{textDecoration: 'none', textDecorationColor: '-moz-initial'}} to ={chat.isGroup ? ("/chat/" + chat.id+"/"+JSON.stringify(chat.isGroup)) : ("/chat/" +((chat.name).replace(this.state.cookies.get('ID'), ""))+"/"+JSON.stringify(chat.isGroup))}>
+                            <Link style={{textDecoration: 'none', textDecorationColor: '-moz-initial'}} to ={"/chat/" + ((chat.name).replace(this.state.cookies.get('ID'), "")) +"/"+JSON.stringify(chat.isGroup) +"/"+chat.id}>
                                 <Persona
                                     {...{
                                         text: (chat.isGroup ? (chat.name) : (chat.name).replace(this.state.cookies.get('ID'), "")),

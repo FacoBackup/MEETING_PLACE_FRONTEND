@@ -7,6 +7,8 @@ import MessageBox from "./box/MessageBox";
 import { PrimaryButton } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
+import Dexie from "dexie";
+
 
 class Messages extends React.Component{
     constructor(params){
@@ -15,15 +17,28 @@ class Messages extends React.Component{
             theme: getTheme(),
             messages: [],
             messageInput: '',
+            receiverName: params.receiverName,
             userID : params.userID,
             conversationID: params.conversationID,
             token: params.token,
             isGroup: params.isGroup,
-            date:new Date()
+            date:new Date(),
+            db:  new Dexie('api_web_db')
         }
         this.handleChange = this.handleChange.bind(this)
     }
-    
+
+    setupDB(){
+        
+
+        if(this.state.db.isOpen() === false){
+            console.log("SETTING DATABASE")
+            this.state.db.version(1).stores({
+                messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone"
+            })
+        }
+    }
+
     componentDidMount(){
         this.timerID = setInterval(
             () => this.tick(),
@@ -48,110 +63,72 @@ class Messages extends React.Component{
         })
     }
 
+    async setMessages(){
+        
+        this.setState({
+            messages: await this.state.db.messages.where('conversationID').equals(this.state.conversationID).toArray()
+        })        
+    }
+    async insertMessages(res){
+        const sortedMessages = [...res].sort((a, b) =>a.creationDate - b.creationDate)  
+        this.state.db.transaction('rw', this.state.db.messages, async() => {
+            await sortedMessages.forEach(message => {
+                this.state.db.messages.add({id: message.id, content: message.content,imageURL: message.imageURL, creatorID: message.creatorID, conversationID: message.conversationID, type: message.type, valid: message.valid , creationDate: message.creationDate,seenByEveryone: message.seenByEveryone })
+            });
+        })
+    }
     FetchMessages = async() =>{
         
-        if(localStorage.getItem("MSG/"+this.state.conversationID) === null || localStorage.getItem("MSG/"+this.state.conversationID) === "[]"){
-            if(this.state.isGroup  === true){
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/api/get/all/group/messages',
-                    headers: {"Authorization": 'Bearer ' +this.state.token},
-                    data: {
-                        conversationID: this.state.conversationID
-                    }
-                }).then(res=>{
-                    
-                    localStorage.setItem(("MSG/"+this.state.conversationID),JSON.stringify(res.data))
-                    
-                    this.setState({
-                        messages:JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
-                    })
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-            }
-            else{
-                
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/api/get/all/user/messages',
-                    headers: {"Authorization": 'Bearer ' +this.state.token},
-                    data: {
-                        userID: this.state.conversationID
-                    }
-                }).then(res=>{
-                
-                    localStorage.setItem(("MSG/"+this.state.conversationID),JSON.stringify(res.data))
-                    
-                    this.setState({
-                        messages:JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
-                    })
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-            }    
+        if(this.state.db.isOpen() === false){
+            
+            this.setupDB()
+            this.state.db.open().catch((error) => {
+                console.log(error)
+            }) 
         }
-        else{ 
-            if(this.state.isGroup  === true){
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/api/get/new/group/messages',
-                    headers: {"Authorization": 'Bearer ' + this.state.token},
-                    data: {
-                        conversationID: this.state.conversationID
-                    }
-                }).then(res=>{
 
-                    if(res.data !== []){
-                        const oldStorage = localStorage.getItem("MSG/"+this.state.conversationID)
-                        localStorage.removeItem("MSG/"+this.state.conversationID)
-                        localStorage.setItem("MSG/"+this.state.conversationID,{...oldStorage, ...res.data}, {path: "/"} )
-                    }
-                    
-                    this.setState({
-                        messages:JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
-                    })
+        if(this.state.isGroup  === true){
+            const data = await this.state.db.messages.where("conversationID").equals(this.state.conversationID).toArray()
+            await axios({
+                method: 'post',
+                url: (data.length === 0  ? 'http://localhost:8080/api/get/all/group/messages' : 'http://localhost:8080/api/get/new/group/messages'),
+                headers: {"Authorization": 'Bearer ' +this.state.token},
+                data: {
+                    conversationID: this.state.conversationID
+                }
+            }).then(res=>{
+                console.log("RESPONSE -> " + JSON.stringify(res.data))
+                this.state.db.transaction('w', this.state.db.messages, async() => {
+                    this.insertMessages(res.data)
                 })
-                .catch(error => {
-                    console.log(error)
-                });
-            }
-            else{
-
-                await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/api/get/new/user/messages',
-                    headers: {"Authorization": 'Bearer ' + this.state.token},
-                    data: {
-                        userID: this.state.conversationID
-                    }
-                }).then(res=>{
-                    
-                    if(JSON.stringify(res.data) !== "[]"){
-                        var oldStorage = JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
-                        console.log("1 Old storage --> " + JSON.stringify(oldStorage)) // ok
-
-                        if(Array.isArray(res.data))
-                            localStorage.setItem("MSG/"+this.state.conversationID,JSON.stringify([...oldStorage, ...res.data], {path: "/"}) )
-                        else
-                        localStorage.setItem("MSG/"+this.state.conversationID,JSON.stringify([...oldStorage, res.data], {path: "/"}) )
-                        // console.log("3 Union between old and response --> " + JSON.stringify([...oldStorage, res.data])) // nop
-                        console.log("4 New storage --> " + localStorage.getItem("MSG/"+this.state.conversationID))
-                    }
-                    this.setState({
-                        messages: JSON.parse(localStorage.getItem("MSG/"+this.state.conversationID))
-                    })
-                    
-                    
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-            }    
+                this.setMessages()
+            })
+            .catch(error => {
+                console.log(error)
+            });
         }
+        else{
+            const data = await this.state.db.messages.where("conversationID").equals(this.state.conversationID).toArray()
         
+            await axios({
+                method: 'post',
+                url: (data.length === 0 ? 'http://localhost:8080/api/get/all/user/messages':  'http://localhost:8080/api/get/new/user/messages'),
+                headers: {"Authorization": 'Bearer ' +this.state.token},
+                data: {
+                    userID : this.state.receiverName                    
+                }
+            }).then(res=>{
+            
+                if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){
+                    
+                    this.insertMessages(res.data)
+                }
+                this.setMessages()
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        }   
     }
   
     
@@ -163,7 +140,7 @@ class Messages extends React.Component{
             data: {
                 message: this.state.messageInput,
                 imageURL: null,
-                receiverID:(this.state.isGroup === true) ? null : this.state.conversationID,
+                receiverID:(this.state.isGroup === true) ? null : this.state.receiverName,
                 isGroup: this.state.isGroup,
                 conversationID: (this.state.isGroup === true) ? this.state.conversationID: ""
             }
@@ -180,7 +157,7 @@ class Messages extends React.Component{
         return(
             <div className="messages_component_container">  
                 <div className="messages_component" style={{backgroundColor: NeutralColors.white}}>
-                    {this.state.messages === [] ? <div>EMPTY</div> : this.state.messages.map((message,index) =>(
+                    {this.state.messages === [] ? <div></div> : this.state.messages.map((message,index) =>(
                         <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
                             
                             {MessageBox(message.content, message.valid, message.creationDate,this.state.userID, message.creatorID, message.seenByEveryone)}
