@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import Profile from "../../components/profile/Profile"
 import Conversations from "../../components/conversations/ConversationBar";
-
 import "../home/Home.css";
 import "../../style/PageModel.css"
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-
 import { getTheme } from '@fluentui/react';
-
-
 
 class Home extends Component{
   
@@ -24,9 +20,7 @@ class Home extends Component{
         <div>
         
             <div className="left_components">
-                
-                  <Profile/>
-                
+              <Profile/>
             </div>
             <div  className="right_components" >
               <Conversations/>
