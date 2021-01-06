@@ -144,7 +144,7 @@ class Profile extends Component{
 
                             
                             <DefaultButton  text ="Search User"  href="/search_user"/>
-                            <DefaultButton  text ="Communities"  href="/community/options"/>
+                            <DefaultButton  text ="Communities"  href="/communities"/>
 
                             <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/>
 

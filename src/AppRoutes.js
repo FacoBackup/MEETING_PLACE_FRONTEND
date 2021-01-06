@@ -16,7 +16,7 @@ function AppRoutes() {
       <Router>
           <Switch>    
               <Route path="/community/:id" exact component={Community}/>
-              <Route path="/community/options" exact component={CommunityOptions}/>
+              <Route path="/communities" exact component={CommunityOptions}/>
               <Route path="/following" exact component={Following}/>
               <Route path="/followers" exact component={Followers}/>
               <Route path="/" exact component={Home}/>

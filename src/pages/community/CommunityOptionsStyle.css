@@ -1,0 +1,10 @@
+.community_options_buttons{
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+    margin: auto;
+    background-color: white;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+    border-radius: 8px;
+}

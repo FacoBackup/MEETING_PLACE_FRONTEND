@@ -1,4 +1,4 @@
-
+import React from 'react'
 import Profile from "../../components/profile/Profile"
 import Conversations from "../../components/conversations/ConversationBar"
 import "../../style/PageModel.css"

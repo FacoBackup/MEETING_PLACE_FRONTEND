@@ -3,10 +3,10 @@ import "./TopicCreationStyle.css"
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import axios from 'axios';
-import Dexie from "dexie";
+// import axios from 'axios';
+// import Dexie from "dexie";
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+// import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 
 class TopicCreation extends React.Component{
     constructor(params){

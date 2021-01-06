@@ -1,11 +1,10 @@
+import React from 'react'
 import Profile from "../../components/profile/Profile"
 import Conversations from "../../components/conversations/ConversationBar"
 import "../../style/PageModel.css"
-import { Redirect } from 'react-router-dom'
-import Cookies from 'universal-cookie';
-
 import "./CommunityOptionsStyle.css"
-import { DefaultButton, getTheme, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { Redirect } from 'react-router-dom'
 
 class CommunityOptions extends React.Component{
     constructor(){
@@ -19,10 +18,16 @@ class CommunityOptions extends React.Component{
 
     render(){
         switch(true){
+            default: {
+                return(
+                    <Redirect to='/'/>
+                )
+            }
             case this.state.create: {
                 return(
                     <div>
                         <div className="center_component">
+                        
                             <div className="community_options_buttons">
                                 <DefaultButton text ="Member In And Following" onClick={ ()=>
                                        this.setState({

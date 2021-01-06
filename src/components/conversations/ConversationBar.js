@@ -48,7 +48,8 @@ class ConversationBar extends Component{
     }
 
     async fetchConversations (){
-        if(this.state.searchInput === ''){
+        console.log(this.state.searchInput.length)
+        if(this.state.searchInput === ""){
             await axios({
                 method: 'get',
                 url: 'http://localhost:8080/api/conversation/all',
@@ -85,11 +86,12 @@ class ConversationBar extends Component{
         await axios({
             method: 'patch',
             url: 'http://localhost:8080/api/conversation/search',
-            headers: {"Authorization": 'Bearer '+cookies.get("JWT")},
+            headers: {"Authorization": 'Bearer '+this.state.cookies.get("JWT")},
             data: {
-                conversationID: searchInput
+                conversationID: this.state.searchInput
             }
         }).then(res=>{
+            console.log(JSON.stringify(res.data))
             this.setState({
                 conversations: res.data
             })

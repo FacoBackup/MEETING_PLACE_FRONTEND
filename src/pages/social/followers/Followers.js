@@ -7,7 +7,6 @@ import "../SocialStyle.css"
 import Profile from "../../../components/profile/Profile"
 import ConversationBar from "../../../components/conversations/ConversationBar"
 import { getTheme } from '@fluentui/react';
-import { NeutralColors } from '@fluentui/theme';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { PrimaryButton } from 'office-ui-fabric-react';
 import { Redirect } from 'react-router-dom';

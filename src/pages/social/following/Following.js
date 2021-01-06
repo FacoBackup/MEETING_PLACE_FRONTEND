@@ -6,11 +6,10 @@ import "../SocialStyle.css"
 import Profile from "../../../components/profile/Profile"
 import ConversationBar from "../../../components/conversations/ConversationBar"
 import { getTheme } from '@fluentui/react';
-import { NeutralColors } from '@fluentui/theme';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { PrimaryButton, TooltipHostBase } from 'office-ui-fabric-react';
+import { PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import { Link, Redirect } from 'react-router-dom';
+import {  Redirect } from 'react-router-dom';
 
 class Following extends React.Component{
     constructor(){

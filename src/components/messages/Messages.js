@@ -23,14 +23,31 @@ class Messages extends React.Component{
             token: params.token,
             isGroup: params.isGroup,
             date:new Date(),
-            db:  new Dexie('api_web_db')
+            db:  new Dexie('api_web_db'),
+            conversationContainer: React.createRef()
         }
         this.handleChange = this.handleChange.bind(this)
     }
+    
+    // messages (){
 
+    //     const messagesEndRef = useRef(null)
+      
+    //     const scrollToBottom = () => {
+    //       messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    //     }
+      
+    //     useEffect(scrollToBottom, [messages]);
+      
+    //     return (
+    //       <div>
+         
+                
+            
+    //       </div>
+    //     )
+    //   }
     setupDB(){
-        
-
         if(this.state.db.isOpen() === false){
             console.log("SETTING DATABASE")
             this.state.db.version(1).stores({
@@ -38,14 +55,15 @@ class Messages extends React.Component{
             })
         }
     }
-
+    
     componentDidMount(){
+        
         this.timerID = setInterval(
             () => this.tick(),
             1000
         );
+        
     }
-    
     componentWillUnmount() {
         clearInterval(this.timerID);
     }
@@ -64,11 +82,10 @@ class Messages extends React.Component{
     }
 
     async setMessages(){
-
-        
         this.setState({
             messages: await this.state.db.messages.where('conversationID').equals(this.state.conversationID).sortBy('creationDate')
         })        
+        this.scrollToEnd();
     }
 
     async insertMessages(res){
@@ -83,6 +100,13 @@ class Messages extends React.Component{
             }).catch(error=>console.log(error))
        
     }
+    scrollToEnd = () => {
+        
+        const scroll =
+          this.state.conversationContainer.current.scrollHeight -
+          this.state.conversationContainer.current.clientHeight;
+          this.state.conversationContainer.current.scrollTo(0, scroll);
+      };
     async FetchMessages(){
         
         if(this.state.db.isOpen() === false){
@@ -104,15 +128,17 @@ class Messages extends React.Component{
             }).then(res=>{
               
                 if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){
-                    
                     this.insertMessages(res.data)
+                    this.setMessages()  
                 }
-                this.setMessages()
+                if((data.length > 0 && this.state.messages.length === 0) || data.length > this.state.messages.length)
+                    this.setMessages()
             })
             .catch(error => {
                 console.log(error)
             });
         }
+        
         else{
             const data = await this.state.db.messages.where("conversationID").equals(this.state.conversationID).toArray()
         
@@ -125,11 +151,12 @@ class Messages extends React.Component{
                 }
             }).then(res=>{
             
-                if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){
-                    
+                if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){   
                     this.insertMessages(res.data)
+                    this.setMessages()
                 }
-                this.setMessages()
+                if((data.length > 0 && this.state.messages.length === 0) || data.length > this.state.messages.length)
+                    this.setMessages()
             })
             .catch(error => {
                 console.log(error)
@@ -153,6 +180,7 @@ class Messages extends React.Component{
         })
         .then(()=>{
             this.FetchMessages()
+            
         })
         .catch(error => {
             console.log(error);
@@ -162,14 +190,14 @@ class Messages extends React.Component{
     render(){    
         return(
             <div className="messages_component_container">  
-                <div className="messages_component" style={{backgroundColor: NeutralColors.white}}>
+                <div className="messages_component" style={{backgroundColor: NeutralColors.white}} ref={this.state.conversationContainer}>
                     {this.state.messages === [] ? <div></div> : this.state.messages.map((message,index) =>(
                         <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
-                            
                             {MessageBox(message.content, message.valid, message.creationDate,this.state.userID, message.creatorID, message.seenByEveryone)}
-                        </div>
-                    )
-                    )}    
+                            <div ref={this.state.essagesEndRef} />
+                        </div>   
+                    ))}       
+                
                 </div>
             
                 <div className="message_input_container" style={{boxShadow: this.state.theme.effects.elevation8}}>

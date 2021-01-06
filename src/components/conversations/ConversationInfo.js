@@ -47,7 +47,7 @@ class ConversationInfo extends Component {
                     conversationID: this.state.conversationID
                 }
             }).then(res=>{
-                if(res.data != {})
+                if(res.data !== {})
                     this.setState({
                         conversation: res.data
                     })
@@ -64,7 +64,7 @@ class ConversationInfo extends Component {
                     userID: this.state.conversationID
                 }
             }).then(res=>{
-                if(res.data != {})
+                if(res.data !== {})
                     this.setState({
                         conversation: res.data
                     })

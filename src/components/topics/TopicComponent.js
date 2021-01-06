@@ -1,11 +1,9 @@
 import React from 'react';
 import "./TopicCreationStyle.css"
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import Dexie from "dexie";
-import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 
 class TopicComponent extends React.Component{
@@ -104,7 +102,7 @@ class TopicComponent extends React.Component{
                         <p style={{ fontSize: FontSizes.size16, fontWeight:FontWeights.semilight}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     </div>
                     <div className="topic_image_container">
-                        <img alt="Topic Image" classname="topic_image" src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"/>
+                        <img style={{borderRadius:'8px', width:'100%', height: '100%'}}alt="Topic" src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"/>
                     </div>
                     <div className="topic_buttons_container">
                         <DefaultButton text="Like"/> 

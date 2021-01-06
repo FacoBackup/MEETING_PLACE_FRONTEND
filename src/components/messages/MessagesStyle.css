@@ -13,8 +13,8 @@
     max-height: 75vh;
     border-radius: 8px;
     overflow: auto;
-}
 
+}
 .my_message_container{ 
     display: flex;
     justify-content: flex-end;

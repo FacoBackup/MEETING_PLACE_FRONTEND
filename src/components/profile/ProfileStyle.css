@@ -1,18 +1,14 @@
 .profile_container{
     display: grid;
     overflow: hidden;   
-    align-items: flex-start;
-    
-    
     width:100%;
-    grid-template-rows: 1fr 1.5fr 1fr ;
+    grid-template-rows: 1fr 1fr 1fr ;
     height: 100vh;
-    row-gap: 15%;
     
 }
 .profile_background_image{
     grid-row: 1;
-    width: 18vw;
+    width: stretch;
     border-radius: 8px;
 }
 /* .profile_image{
@@ -43,7 +39,7 @@
        
     background-color:rgba(210, 208, 206, .5);
     border-radius: 8px;
-    height: 35%;
+    height: 60px;
     align-items: center;
     padding:.5vw;
     justify-content: flex-start;
@@ -57,14 +53,14 @@
 }
 .profile_buttons_container{
     grid-row: 2;
-    padding-left: 7%;
-    
     display: grid;
-    width: 5%;
-    row-gap: 10%;
+    align-items: center;
+    margin: auto;
+    row-gap: 3vh;
+    width: auto;
     
 }
-.profile_edit_info_buttons{
+/* .profile_edit_info_buttons{
     grid-row: 3;
 
     display: flex;
@@ -81,5 +77,5 @@
     margin: auto;
     overflow-y: auto;
 }
-
+ */
 
