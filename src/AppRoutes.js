@@ -8,6 +8,7 @@ import Chat from "./pages/chat/Chat";
 import Followers from "./pages/social/followers/Followers";
 import Following from "./pages/social/following/Following";
 import SignIn from "./pages/authentication/SignIn"
+import CommunityOptions from "./pages/community/CommunityOptions"
 
 function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ function AppRoutes() {
       <Router>
           <Switch>    
               <Route path="/community/:id" exact component={Community}/>
+              <Route path="/community/options" exact component={CommunityOptions}/>
               <Route path="/following" exact component={Following}/>
               <Route path="/followers" exact component={Followers}/>
               <Route path="/" exact component={Home}/>
