@@ -5,6 +5,7 @@ import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import "./SearchComponentStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
+import { FontSizes, FontWeights } from '@fluentui/theme';
 
 function UserSearch(){
     const [profile, setProfile] = useState([]);
@@ -25,10 +26,7 @@ function UserSearch(){
                     userID: searchInput
                 }
             }).then(res=>{
-       
                 setProfile(res.data);
-      
-            
             })
             .catch(error => console.log(error));
         }
@@ -78,7 +76,7 @@ function UserSearch(){
                 size={PersonaSize.size48}
                 imageAlt="Conversation picture"
                 />
-                <PrimaryButton href={'/chat/'+user.email+"/false"} text="Send Message"/>
+                <PrimaryButton href={'/chat/'+user.email+"/false/"+user.email} text="Send Message"/>
             
                 {user.isFollowing ? <DefaultButton onClick={() => unfollow(user.email)} text="Unfollow"/>: <PrimaryButton onClick={() => follow(user.email)} text="Follow"/>}
             </div>
@@ -89,10 +87,10 @@ function UserSearch(){
         return(
             <div className="search_component">
                 <div>
-                    <p>Search</p>
+                  <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Search User</p>
                 </div>
                 <div className="search_box_container">
-                    <TextField onChange={fetchData} laceholder="Search User"/>
+                    <TextField onChange={fetchData} placeholder="Search User"/>
                 </div>
                 <div className="search_result_container">
                     {renderProfile}
@@ -100,40 +98,6 @@ function UserSearch(){
                 
             </div>
         )
-    
-    // if(){
-    //     return(
-    //         <div className="search_component">
-    //             <div>
-    //                 <SearchBox onChange={fetchData} placeholder="Search User"/>
-                    
-                
-               
-    //             </div>
-
-    //         </div>
-    //     );
-    // }
-    // else if(searched && !found && valid)
-    //     return(
-    //         <div className="search_component">
-        
-    //             <div className="Container">
-    //                     <SearchBox onChange={fetchData} placeholder="Search User"/>
-    //                 <h3>Nothing found</h3>
-    //             </div>
-    //         </div>
-    //     );
-    // else if(!searched)
-    //     return(
-    //         <div className="search_component">
-    //             <div className="Container">
-    //             <SearchBox onChange={fetchData} placeholder="Search User"/>
-    //             </div>
-    //         </div>
-    //     );
-   
-        
 }
 
 export default UserSearch;

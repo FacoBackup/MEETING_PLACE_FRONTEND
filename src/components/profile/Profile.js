@@ -4,6 +4,7 @@ import axios from 'axios';
 import "./ProfileStyle.css";
 import { DefaultButton, getTheme, PrimaryButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import Dexie from "dexie";
 
 class Profile extends Component{
     constructor(){
@@ -11,7 +12,6 @@ class Profile extends Component{
         this.state={
             profile: {},
             cookies: new Cookies(),
-            
             about: "",
             nationality: '',
             birthCity: '',
@@ -60,6 +60,8 @@ class Profile extends Component{
     signout = async() => {
         Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
         localStorage.clear()
+        Dexie.delete('api_web_db')
+    
         window.location.reload()
         // if(typeof this.state.cookies.get("JWT") !== 'undefined'){
         //     await axios({

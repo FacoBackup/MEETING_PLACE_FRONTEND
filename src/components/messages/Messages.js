@@ -42,7 +42,7 @@ class Messages extends React.Component{
     componentDidMount(){
         this.timerID = setInterval(
             () => this.tick(),
-            500
+            1000
         );
     }
     
@@ -64,23 +64,28 @@ class Messages extends React.Component{
     }
 
     async setMessages(){
+
         
         this.setState({
-            messages: await this.state.db.messages.where('conversationID').equals(this.state.conversationID).toArray()
+            messages: await this.state.db.messages.where('conversationID').equals(this.state.conversationID).sortBy('creationDate')
         })        
     }
+
     async insertMessages(res){
-        const sortedMessages = [...res].sort((a, b) =>a.creationDate - b.creationDate)  
-        this.state.db.transaction('rw', this.state.db.messages, async() => {
-            await sortedMessages.forEach(message => {
-                this.state.db.messages.add({id: message.id, content: message.content,imageURL: message.imageURL, creatorID: message.creatorID, conversationID: message.conversationID, type: message.type, valid: message.valid , creationDate: message.creationDate,seenByEveryone: message.seenByEveryone })
-            });
-        })
+   
+            this.state.db.transaction('rw', this.state.db.messages, async() => {
+                res.forEach(message => {
+                    const value = this.state.db.messages.where('id').equals(message.id).toArray()
+                    if(value.length === 0 || typeof value.length === 'undefined')
+                        this.state.db.messages.add({id: message.id, content: message.content,imageURL: message.imageURL, creatorID: message.creatorID, conversationID: message.conversationID, type: message.type, valid: message.valid , creationDate: message.creationDate,seenByEveryone: message.seenByEveryone })
+
+                });
+            }).catch(error=>console.log(error))
+       
     }
-    FetchMessages = async() =>{
+    async FetchMessages(){
         
         if(this.state.db.isOpen() === false){
-            
             this.setupDB()
             this.state.db.open().catch((error) => {
                 console.log(error)

@@ -47,9 +47,10 @@ class ConversationInfo extends Component {
                     conversationID: this.state.conversationID
                 }
             }).then(res=>{
-                this.setState({
-                    conversation: res.data
-                })
+                if(res.data != {})
+                    this.setState({
+                        conversation: res.data
+                    })
             })
             .catch(error => {
                 console.log(error)
@@ -63,10 +64,11 @@ class ConversationInfo extends Component {
                     userID: this.state.conversationID
                 }
             }).then(res=>{
-                this.setState({
-                    conversation: res.data
-                })
-            
+                if(res.data != {})
+                    this.setState({
+                        conversation: res.data
+                    })
+                
             })
             .catch(error => {
                 console.log(error)
@@ -81,7 +83,7 @@ class ConversationInfo extends Component {
                     
                     <Persona
                         {...{
-                            text: (this.state.isGroup !== false && typeof this.state.conversation.name !== 'undefined' ? this.state.conversationID :  (this.state.conversation.name)),
+                            text: (typeof this.state.conversation.name === 'undefined' ? this.state.conversationID :  (this.state.isGroup === true ? this.state.conversation.name: this.state.conversation.name.replace(this.state.userID, ''))),
                             secondaryText: this.state.conversation.about
                         }}
                         size={PersonaSize.size40}

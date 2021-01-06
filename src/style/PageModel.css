@@ -1,11 +1,11 @@
+
 .center_component{
-    width: 50%;
-    left: 25%;
-    right: 25%;
-    position: fixed;
-    text-align: center;
-    top: 5px;
-    overflow-y: auto;
+    
+    
+    margin: auto;
+    width: 60%;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .left_components{
     border-radius: 8px;

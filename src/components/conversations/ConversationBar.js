@@ -14,10 +14,16 @@ class ConversationBar extends Component{
         this.state={
             cookies: new Cookies(),
             conversations: [],
-            theme: getTheme()
+            theme: getTheme(),
+            searchInput:''
         }
+        this.handleChange = this.handleChange.bind(this)
     }
-
+    handleChange(event){
+        this.setState({
+            searchInput: event.target.value
+        })
+    }
     componentDidMount(){
         this.fetchConversations()
         this.timerID = setInterval(
@@ -37,18 +43,37 @@ class ConversationBar extends Component{
     }
 
     fetchConversations = async () =>{
-        await axios({
-            method: 'get',
-            url: 'http://localhost:8080/api/conversation/all',
-            headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
-        }).then(res=>{
-            this.setState({
-                conversations: res.data
+        if(this.state.searchInput === ''){
+            await axios({
+                method: 'get',
+                url: 'http://localhost:8080/api/conversation/all',
+                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
+            }).then(res=>{
+                this.setState({
+                    conversations: res.data
+                })
             })
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .catch(error => {
+                console.log(error);
+            });
+        }
+        else{
+            await axios({
+                method: 'patch',
+                url: 'http://localhost:8080/api/conversation/search',
+                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
+                data:{
+                    conversationID: this.state.searchInput
+                }
+            }).then(res=>{
+                this.setState({
+                    conversations: res.data
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
     }
 
     render(){
@@ -74,7 +99,7 @@ class ConversationBar extends Component{
                     
                 </div>
                 <div className="conversation_search">
-                    <TextField placeholder="Search conversation" onChange={console.log("NOT YET ")}/>
+                    <TextField placeholder="Search conversation" onChange={this.handleChange}/>
                 </div>
                 
             </div>

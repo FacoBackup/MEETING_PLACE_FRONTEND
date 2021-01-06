@@ -1,7 +1,7 @@
 .search_component{
     background-color: white;
     border-radius: 8px;
-    height: 100vh;
+    padding-bottom: 2vh;
     overflow: auto;
 }
 .search_box_container{
