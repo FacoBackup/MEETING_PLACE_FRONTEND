@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import SignUp from "./pages/user/Signup";
-
+import Community from "./pages/community/Community"
 import Home from "./pages/timeline/Timeline";
 import Search from "./pages/search/Search";
 import Chat from "./pages/chat/Chat";
@@ -14,6 +14,7 @@ function AppRoutes() {
     <div>
       <Router>
           <Switch>    
+              <Route path="/community/:id" exact component={Community}/>
               <Route path="/following" exact component={Following}/>
               <Route path="/followers" exact component={Followers}/>
               <Route path="/" exact component={Home}/>

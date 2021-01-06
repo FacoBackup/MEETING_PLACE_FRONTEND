@@ -19,10 +19,15 @@ class ConversationBar extends Component{
         }
         this.handleChange = this.handleChange.bind(this)
     }
-    handleChange(event){
+    async handleChange(event){
+        
         this.setState({
             searchInput: event.target.value
         })
+        if(this.state.searchInput !== '')
+            await this.fetchSearch()
+        else if (this.state.searchInput === '')
+            await this.fetchConversations()
     }
     componentDidMount(){
         this.fetchConversations()
@@ -42,7 +47,7 @@ class ConversationBar extends Component{
         });
     }
 
-    fetchConversations = async () =>{
+    async fetchConversations (){
         if(this.state.searchInput === ''){
             await axios({
                 method: 'get',
@@ -74,6 +79,22 @@ class ConversationBar extends Component{
                 console.log(error);
             });
         }
+    }
+
+    async fetchSearch (){    
+        await axios({
+            method: 'patch',
+            url: 'http://localhost:8080/api/conversation/search',
+            headers: {"Authorization": 'Bearer '+cookies.get("JWT")},
+            data: {
+                conversationID: searchInput
+            }
+        }).then(res=>{
+            this.setState({
+                conversations: res.data
+            })
+        })
+        .catch(error => console.log(error));
     }
 
     render(){

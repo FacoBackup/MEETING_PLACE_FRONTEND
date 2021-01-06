@@ -102,10 +102,11 @@ class Messages extends React.Component{
                     conversationID: this.state.conversationID
                 }
             }).then(res=>{
-                console.log("RESPONSE -> " + JSON.stringify(res.data))
-                this.state.db.transaction('w', this.state.db.messages, async() => {
+              
+                if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){
+                    
                     this.insertMessages(res.data)
-                })
+                }
                 this.setMessages()
             })
             .catch(error => {

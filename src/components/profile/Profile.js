@@ -63,20 +63,6 @@ class Profile extends Component{
         Dexie.delete('api_web_db')
     
         window.location.reload()
-        // if(typeof this.state.cookies.get("JWT") !== 'undefined'){
-        //     await axios({
-        //         method: 'post',
-        //         url: 'http://localhost:8080/api/logout',
-        //         headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
-        //     }).then(()=>{
-
-            
-        //     })
-        //     .catch(error=>{
-        //         console.log(error)
-        //     }
-        //     )
-        // }
     }
 
     editProfileMode(){
