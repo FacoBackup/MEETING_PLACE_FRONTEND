@@ -107,11 +107,11 @@ class TopicComponent extends React.Component{
                                 />
                             </div>
                             <div className="topic_fields_container">
-                                <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>TITLE</p>
-                                <p style={{ fontSize: FontSizes.size16, fontWeight:FontWeights.semilight}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{topic.header}</p>
+                                <p style={{ fontSize: FontSizes.size16, fontWeight:FontWeights.semilight}}>{topic.body}</p>
                             </div>
                             <div className="topic_image_container">
-                                <img style={{borderRadius:'8px', width:'100%', height: '100%'}}alt="Topic" src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"/>
+                                <img style={{borderRadius:'8px', width:'100%', height: '100%'}}alt="Topic" src={ (topic.imageURL !== null) ? topic.imageURL:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
                             </div>
                             <div className="topic_buttons_container">
                                 <DefaultButton text="Like" disabled={true}/> 

@@ -15,7 +15,8 @@ class TopicCreation extends React.Component{
             title:'',
             body:'',
             token: params.token,
-            imageURL: '',
+            imageURL: null,
+            communityID: null
         }
         
         this.handleChange = this.handleChange.bind(this)
