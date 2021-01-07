@@ -8,7 +8,7 @@ import ProfileBar from "../../../components/profile/ProfileBar.js"
 import ConversationBar from "../../../components/conversations/ConversationBar"
 import { getTheme } from '@fluentui/react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { PrimaryButton } from 'office-ui-fabric-react';
+import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
 import { Redirect } from 'react-router-dom';
 
 class Followers extends React.Component{
@@ -42,10 +42,12 @@ class Followers extends React.Component{
     }
     async fetchData(){
         await axios({
-            method: 'get',
-            url: 'http://localhost:8080/api/followers',
+            method: 'patch',
+            url: 'http://localhost:8080/api/get/followers',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
-
+            data:{
+                userID: this.state.userID
+            }
         }).then(res=>{
             this.setState({
                 followers: res.data
@@ -107,7 +109,8 @@ class Followers extends React.Component{
                                 size={PersonaSize.size48}
                                 imageAlt="Conversation picture"
                                 />
-                                  <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
+                                <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email}/>
+                                <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
                             </div>
                         )}
                         </div>

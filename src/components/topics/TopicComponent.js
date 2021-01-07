@@ -12,7 +12,10 @@ class TopicComponent extends React.Component{
         super(params)
         this.state={
             token: params.token,   
-            db: new Dexie('api_web_db')
+            db: new Dexie('api_web_db'),
+            community: params.community,
+            subjectID: params.subjectID,
+            timeline: params.timeline
         }
     }
 
@@ -65,13 +68,17 @@ class TopicComponent extends React.Component{
 
         
         await axios({
-            method: 'get',
-            url: (data.lenght === 0 || typeof data.lenght === 'undefined' ? 'http://localhost:8080/api/timeline/all': 'http://localhost:8080/api/timeline/new'),
+            method: (this.state.timeline === true ? 'get':'patch'),
+            url: (this.state.timeline === true ?(data.lenght === 0 || typeof data.lenght === 'undefined' ? 'http://localhost:8080/api/timeline/all': 'http://localhost:8080/api/timeline/new') : "http://localhost:8080/api/get/topics/subject"),
             headers: {"Authorization": 'Bearer ' +this.state.token},
+            data:{
+                subjectID:this.state.subjectID,
+                community: this.state.community                
+            }
+            
         }).then(res=>{
         
             if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){
-                    
                 this.insertTopics(res.data)
             }
             this.setMessages()

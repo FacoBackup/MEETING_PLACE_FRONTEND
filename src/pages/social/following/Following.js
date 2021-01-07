@@ -7,16 +7,18 @@ import ProfileBar from "../../../components/profile/ProfileBar.js"
 import ConversationBar from "../../../components/conversations/ConversationBar"
 import { getTheme } from '@fluentui/react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { PrimaryButton } from 'office-ui-fabric-react';
+import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import {  Redirect } from 'react-router-dom';
 
+
 class Following extends React.Component{
-    constructor(){
+    constructor({match}){
         super()
         this.state={
             cookies: new Cookies(),
             following: [],
+            userID: match.params.userID,
             date: new Date(),
             theme: getTheme(),
             conversations: {},
@@ -43,10 +45,12 @@ class Following extends React.Component{
     }
     async fetchData() {
         await axios({
-            method: 'get',
-            url: 'http://localhost:8080/api/following',
+            method: 'patch',
+            url: 'http://localhost:8080/api/get/following',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
-
+            data:{
+                userID: this.state.userID
+            }
         }).then(res=>{
             this.setState({
                 following: res.data
@@ -110,6 +114,7 @@ class Following extends React.Component{
                                 size={PersonaSize.size48}
                                 imageAlt="Conversation picture"
                                 />
+                                <DefaultButton text ="See Profile"  href={"/profile/"+flw.email}/>
                                 <PrimaryButton onClick={() => this.setRedirect(flw.email)} text="Send Message"/>
                             </div>
                         )}

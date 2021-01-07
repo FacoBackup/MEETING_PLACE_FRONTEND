@@ -1,0 +1,27 @@
+.profile_component_container{
+    display: grid;
+    row-gap: 1vh;
+    width: 81%;
+    
+    border-radius: 8px;
+    margin-top: .27%;
+    margin-bottom: .15%;
+    margin-left: .3%;
+    height: 100%;
+}
+.profile_background_image_container{
+    overflow: hidden;
+    height: 40vh;
+    border-radius: 8px;
+}
+.profile_background_image_style{
+    width: 100%;
+}
+.profile_action_bar_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1vh;
+}

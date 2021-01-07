@@ -1,7 +1,5 @@
 
 .center_component{
-    
-    
     margin: auto;
     width: 60%;
     padding-top: 5px;
@@ -18,14 +16,12 @@
     overflow-y: hidden;
     width: 18%;
 }
-/* div{
-    background-color: #323130;
-    color: white;
-} */
+
 .right_components{
     border-radius: 8px;
-    bottom: 5px;
-    right: 5px;
+    top: .15%;
+    bottom: .15%;
+    right: .3%;
     margin: auto;
     position: fixed;
     background-color: white;

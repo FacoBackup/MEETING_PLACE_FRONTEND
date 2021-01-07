@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "./ProfileBarStyle.css";
-import { DefaultButton, getTheme, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Dexie from "dexie";
 
@@ -11,13 +11,12 @@ class ProfileBar extends Component{
         super()
         this.state={
             profile: {},
-            cookies: new Cookies(),
-            about: "",
-            nationality: '',
-            birthCity: '',
-            multiline: false,
-            editMode: false,
-            theme: getTheme()
+            // about: "",
+            // nationality: '',
+            // birthCity: '',
+            // multiline: false,
+            // editMode: false,
+            // theme: getTheme()
         }
         this.handleChangeAbout = this.handleChangeAbout.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -28,26 +27,26 @@ class ProfileBar extends Component{
     componentDidMount(){
         this.fetchData()
     }
-    handleChangeAbout(event){
-        this.setState({
-            about: event.target.value
-        })   
-        const newMultiline = this.state.about.length > 50;
-        if (newMultiline !== this.state.multiline)
-            this.toggleMultiline();
+    // handleChangeAbout(event){
+    //     this.setState({
+    //         about: event.target.value
+    //     })   
+    //     const newMultiline = this.state.about.length > 50;
+    //     if (newMultiline !== this.state.multiline)
+    //         this.toggleMultiline();
      
-    }
-    handleChange(event){
-        this.setState({
-            [event.target.name] : event.target.value
-        })   
-    }
+    // }
+    // handleChange(event){
+    //     this.setState({
+    //         [event.target.name] : event.target.value
+    //     })   
+    // }
     fetchData = async() => {
         if(typeof this.state.cookies.get("JWT") !== 'undefined'){
             await axios({
                 method: 'get',
                 url: 'http://localhost:8080/api/user',
-                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")}
+                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")}
             }).then(res=>{
                 this.setState({
                     profile: res.data
@@ -65,47 +64,47 @@ class ProfileBar extends Component{
         window.location.reload()
     }
 
-    editProfileMode(){
+    // editProfileMode(){
         
      
-        this.setState({
-            editMode: !this.state.editMode
-        })
+    //     this.setState({
+    //         editMode: !this.state.editMode
+    //     })
     
-    }
+    // }
 
-    toggleMultiline(){
-        this.setState({
-            multiline: !this.state.multiline
-        })
-    }
-    getErrorMessageAbout (value) {
-        return value.length < 512 ? '' : `Input value must be less than 512 characters.`;
-    };    
+    // toggleMultiline(){
+    //     this.setState({
+    //         multiline: !this.state.multiline
+    //     })
+    // }
+    // getErrorMessageAbout (value) {
+    //     return value.length < 512 ? '' : `Input value must be less than 512 characters.`;
+    // };    
     
-    getErrorMessage (value) {
-        return value.length < 128 ? '' : `Input value must be less than 128 characters.`;
-    };
+    // getErrorMessage (value) {
+    //     return value.length < 128 ? '' : `Input value must be less than 128 characters.`;
+    // };
 
-    submitChanges = async() => {
-        await axios({
-            method: 'patch',
-            url: 'http://localhost:8080/api/profile',
-            headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
-            data:{
-                about : this.state.about,
-                nationality : this.state.nationality,
-                city: this.state.birthCity,
-                name: null,
-                imageURL: null
-            }
-        }).then(()=>{
-            this.editProfileMode()
-            this.fetchData()
-        })
-        .catch()
+    // submitChanges = async() => {
+    //     await axios({
+    //         method: 'patch',
+    //         url: 'http://localhost:8080/api/profile',
+    //         headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
+    //         data:{
+    //             about : this.state.about,
+    //             nationality : this.state.nationality,
+    //             city: this.state.birthCity,
+    //             name: null,
+    //             imageURL: null
+    //         }
+    //     }).then(()=>{
+    //         this.editProfileMode()
+    //         this.fetchData()
+    //     })
+    //     .catch()
     
-    }
+    // }
 
     render(){
         if(this.state.editMode === false){
@@ -137,16 +136,13 @@ class ProfileBar extends Component{
                     
                     <div className="profile_buttons_container">
                             <DefaultButton text="Home"  href='/' />
-                            
-                            <DefaultButton text ="Followers"  href="/followers"/>
-
-                            <DefaultButton text ="Following" href="/following"/>
-
-                            
+                            <DefaultButton text ="Followers"  href={"/followers/"+(new Cookies()).get("ID")}/>
+                            <DefaultButton text ="Following" href={"/following/"+(new Cookies()).get("ID")}/>
                             <DefaultButton  text ="Search User"  href="/search_user"/>
+                            <DefaultButton  text ="My Profile"  href={"/profile/"+(new Cookies()).get("ID")}/>
                             <DefaultButton  text ="Communities"  href="/communities"/>
 
-                            <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/>
+                            {/* <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/> */}
 
                             
                             <PrimaryButton text="Sign out"  onClick={() => this.signout()} />

@@ -156,7 +156,7 @@ class UserSearchComponent extends React.Component{
                             size={PersonaSize.size48}
                             imageAlt="Conversation picture"
                             />
-        
+                            <DefaultButton  text ="See Profile"  href={"/profile/"+user.email}/>
                             <PrimaryButton onClick={() => this.setRedirect(user.email)} text="Send Message"/>
                             {user.isFollowing ? <DefaultButton onClick={() => this.unfollow(user.email)} text="Unfollow"/>: <PrimaryButton onClick={() => this.follow(user.email)} text="Follow"/>}
                         </div>

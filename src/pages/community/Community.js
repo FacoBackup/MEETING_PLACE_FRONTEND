@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 import CommunityComponent from '../../components/community/CommunityComponent'
 
 class Community extends React.Component{
-    constructor(match){
+    constructor({match}){
         super()
         this.state={
             communityID: match.params.id
