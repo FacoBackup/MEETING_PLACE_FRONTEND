@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import UserSearch from "../../components/search/user/UserSearch"
+import UserSearch from "../../components/search/user/NewUserSearch"
 import Profile from "../../components/profile/Profile"
 import Conversations from "../../components/conversations/ConversationBar"
 import "../../style/PageModel.css"
@@ -13,7 +13,7 @@ class Search extends Component{
       return (
         <div>
           <div className="center_component">
-            <UserSearch/>
+            <UserSearch token={new Cookies().get("JWT")}/>
           </div>
           <div className="left_components">
             <Profile/>

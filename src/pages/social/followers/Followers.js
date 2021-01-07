@@ -40,7 +40,7 @@ class Followers extends React.Component{
             date: new Date(),
         });
     }
-    fetchData = async () => {
+    async fetchData(){
         await axios({
             method: 'get',
             url: 'http://localhost:8080/api/followers',
@@ -107,7 +107,7 @@ class Followers extends React.Component{
                                 size={PersonaSize.size48}
                                 imageAlt="Conversation picture"
                                 />
-                                <PrimaryButton href={'/chat/'+follower.email+"/false/"+follower.email} text="Send Message"/>
+                                  <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
                             </div>
                         )}
                         </div>

@@ -5,6 +5,10 @@ import "../../style/PageModel.css"
 import "./CommunityOptionsStyle.css"
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { Redirect } from 'react-router-dom'
+import CommunityCreationComponent from '../../components/community/CommunityCreationComponent'
+import Cookies from 'universal-cookie';
+import UserCommunitiesComponent from '../../components/community/UserCommunitiesComponent'
+import CommunitySearchComponent from "../../components/community/CommunitySearchComponent"
 
 class CommunityOptions extends React.Component{
     constructor(){
@@ -47,7 +51,7 @@ class CommunityOptions extends React.Component{
                                 
                             </div>
                             <div>
-                                CREATE COMPONENT
+                                <CommunityCreationComponent token={(new Cookies()).get("JWT")}/>
                             </div>
                         </div>
                       
@@ -84,7 +88,7 @@ class CommunityOptions extends React.Component{
                                
                             </div>
                             <div>
-                                JOIN COMPONENT
+                                <CommunitySearchComponent token={(new Cookies()).get("JWT")}/>
                             </div>
                         </div>
                       
@@ -120,7 +124,7 @@ class CommunityOptions extends React.Component{
                                 
                             </div>
                             <div>
-                                MEMBER IN COMPONENT
+                                <UserCommunitiesComponent token={(new Cookies()).get("JWT")}/>
                             </div>
                         </div>
                        
