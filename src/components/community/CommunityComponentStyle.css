@@ -1,0 +1,28 @@
+.community_component_container{
+    display: grid;
+    row-gap: 1vh;
+    width: 75%;
+    margin: auto;
+}
+.community_image_container{
+    overflow: hidden;
+    border-radius: 8px;
+    height: 40vh;
+}
+.community_image_style{
+    width: 100%;
+    
+}
+.community_action_bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1vh;
+}
+
+.community_content_container{
+    background-color: white;
+    border-radius: 8px;
+}
