@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../../style/PageModel.css"
 import "../SocialStyle.css"
-import Profile from "../../../components/profile/Profile"
+import ProfileBar from "../../../components/profile/ProfileBar.js"
 import ConversationBar from "../../../components/conversations/ConversationBar"
 import { getTheme } from '@fluentui/react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
@@ -94,7 +94,7 @@ class Following extends React.Component{
                 <div className="page_container">
                     
                     <div className="left_components" >
-                        <Profile/>
+                        <ProfileBar/>
                     </div>
                     <div className="center_component social_component_container">
                         <div className="socail_info_container">

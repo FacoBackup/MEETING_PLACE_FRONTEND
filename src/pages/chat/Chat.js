@@ -5,7 +5,7 @@ import "./ChatStyle.css"
 import {Redirect} from 'react-router-dom'
 import Messages from "../../components/messages/Messages"
 import "../../style/PageModel.css"
-import Profile from "../../components/profile/Profile"
+import ProfileBar from "../../components/profile/ProfileBar.js"
 import Conversations from "../../components/conversations/ConversationBar";
 import { NeutralColors } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
@@ -39,7 +39,7 @@ class Chat extends Component{
                 <div className="page_container">
                     
                     <div style={{backgroundColor: NeutralColors.white }} className="left_components">    
-                        <Profile/>
+                        <ProfileBar/>
                     
                     </div>
                     <div className="center_component">

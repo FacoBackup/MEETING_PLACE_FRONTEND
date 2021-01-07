@@ -1,5 +1,5 @@
 import React from 'react'
-import Profile from "../../components/profile/Profile"
+import ProfileBar from "../../components/profile/ProfileBar.js"
 import Conversations from "../../components/conversations/ConversationBar"
 import "../../style/PageModel.css"
 import "./CommunityOptionsStyle.css"
@@ -56,7 +56,7 @@ class CommunityOptions extends React.Component{
                         </div>
                       
                         <div className="left_components">
-                            <Profile/>
+                            <ProfileBar/>
                         </div>
                         <div  className="right_components" >
                             <Conversations/>
@@ -93,7 +93,7 @@ class CommunityOptions extends React.Component{
                         </div>
                       
                         <div className="left_components">
-                            <Profile/>
+                            <ProfileBar/>
                         </div>
                         <div  className="right_components" >
                             <Conversations/>
@@ -129,7 +129,7 @@ class CommunityOptions extends React.Component{
                         </div>
                        
                         <div className="left_components">
-                            <Profile/>
+                            <ProfileBar/>
                         </div>
                         <div  className="right_components" >
                             <Conversations/>

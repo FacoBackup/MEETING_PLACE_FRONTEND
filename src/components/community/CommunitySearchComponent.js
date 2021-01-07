@@ -7,7 +7,6 @@ import React from 'react'
 import "../../pages/social/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
-import { JSONCookies } from "cookie-parser";
 
 class CommunitySearchComponent extends React.Component{
     constructor(params){

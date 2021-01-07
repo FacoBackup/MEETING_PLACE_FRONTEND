@@ -15,6 +15,7 @@ function AppRoutes() {
     <div>
       <Router>
           <Switch>    
+              <Route path="/profile/:userID" exact component={Community}/>
               <Route path="/community/:id" exact component={Community}/>
               <Route path="/communities" exact component={CommunityOptions}/>
               <Route path="/following" exact component={Following}/>

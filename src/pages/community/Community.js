@@ -1,5 +1,5 @@
 import React from 'react'
-import Profile from "../../components/profile/Profile"
+import ProfileBar from "../../components/profile/ProfileBar.js"
 import Conversations from "../../components/conversations/ConversationBar"
 import "../../style/PageModel.css"
 import { Redirect } from 'react-router-dom'
@@ -21,7 +21,7 @@ class Community extends React.Component{
                     <CommunityComponent communityID={this.state.communityID}/>
                 </div>
                 <div className="left_components">
-                    <Profile/>
+                    <ProfileBar/>
                 </div>
                 <div  className="right_components" >
                     <Conversations/>

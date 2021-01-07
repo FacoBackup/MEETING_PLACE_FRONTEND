@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "./ProfileStyle.css";
+import "./ProfileBarStyle.css";
 import { DefaultButton, getTheme, PrimaryButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Dexie from "dexie";
 
-class Profile extends Component{
+class ProfileBar extends Component{
     constructor(){
         super()
         this.state={
@@ -235,4 +235,4 @@ class Profile extends Component{
        
 }
 
-export default Profile;
+export default ProfileBar;

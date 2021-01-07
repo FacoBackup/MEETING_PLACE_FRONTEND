@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import UserSearch from "../../components/search/user/NewUserSearch"
-import Profile from "../../components/profile/Profile"
+import ProfileBar from "../../components/profile/ProfileBar.js"
 import Conversations from "../../components/conversations/ConversationBar"
 import "../../style/PageModel.css"
 import { Redirect } from 'react-router-dom'
@@ -16,7 +16,7 @@ class Search extends Component{
             <UserSearch token={new Cookies().get("JWT")}/>
           </div>
           <div className="left_components">
-            <Profile/>
+            <ProfileBar/>
           </div>
           <div  className="right_components" >
             <Conversations/>
