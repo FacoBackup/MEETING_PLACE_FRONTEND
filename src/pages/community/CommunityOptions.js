@@ -7,7 +7,6 @@ import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { Redirect } from 'react-router-dom'
 import CommunityCreationComponent from '../../components/community/CommunityCreationComponent'
 import Cookies from 'universal-cookie';
-import UserCommunitiesComponent from '../../components/community/UserCommunitiesComponent'
 import CommunitySearchComponent from "../../components/community/CommunitySearchComponent"
 
 class CommunityOptions extends React.Component{

@@ -47,6 +47,15 @@ class Profile extends React.Component{
             .catch()
         }         
     }
+    async signout() {
+        console.log(this.state.cookies.get("JWT"))
+        Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
+        localStorage.clear()
+        Dexie.delete('api_web_db')
+    
+        window.location.reload()
+    }
+
     optionSelect(){
         switch(true){
             case this.state.followers:{
@@ -111,7 +120,7 @@ class Profile extends React.Component{
                                 }
                                 {this.state.userID !== (new Cookies()).get("ID")?
                                     <PrimaryButton text='Send Message'/>:
-                                    <PrimaryButton text='Sign Out'/>
+                                    <PrimaryButton text='Sign Out' onClick={()=> this.signout()}/>
                                 }                            
                                 {this.state.community === true ? <PrimaryButton text='Communities'/> : <DefaultButton text='Communities' href={'/profile/'+this.state.profile.email+'/'+'3'}/>}
                                 {this.state.followers === true ? <PrimaryButton text='Followers'/> : <DefaultButton text='Followers' href={'/profile/'+this.state.profile.email+'/'+'1'}/> }
