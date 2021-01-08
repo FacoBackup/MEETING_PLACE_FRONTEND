@@ -15,11 +15,10 @@ class CommunityOptions extends React.Component{
         super()
         this.state={
             create: false,
-            join: false,
-            memberIn: true
+            join: true,
+            
         }
     }
-
     render(){
         switch(true){
             default: {
@@ -30,21 +29,12 @@ class CommunityOptions extends React.Component{
             case this.state.create: {
                 return(
                     <div>
-                        <div className="center_component">
-                        
-                            <div className="community_options_buttons">
-                                <DefaultButton text ="Member In And Following" onClick={ ()=>
-                                       this.setState({
-                                           create: false,
-                                           join: false,
-                                           memberIn: true
-                                       })
-                                }/>
+                        <div className="center_component">                   
+                            <div className="community_options_buttons">     
                                 <PrimaryButton text ="Create"/>
                                 <DefaultButton text ="Join" onClick={()=>
                                     this.setState({
                                         create: false,
-                                        memberIn: false,
                                         join: true
                                     })
                                 }/>
@@ -70,17 +60,10 @@ class CommunityOptions extends React.Component{
                     <div>
                         <div className="center_component">
                             <div  className="community_options_buttons">
-                                <DefaultButton text ="Member In And Following" onClick={ ()=>
-                                       this.setState({
-                                           create: false,
-                                           join: false,
-                                           memberIn: true
-                                       })
-                                }/>
                                 <DefaultButton text ="Create" onClick={()=>
                                     this.setState({
                                         create: true,
-                                        memberIn: false,
+                                 
                                         join: false
                                     })
                                 }/>
@@ -99,43 +82,6 @@ class CommunityOptions extends React.Component{
                             <Conversations/>
                         </div>
                     </div>
-                    )
-            }
-            case this.state.memberIn:{
-                return(
-                    <div>
-                        <div className="center_component">
-                            <div  className="community_options_buttons">
-                                <PrimaryButton text ="Member In And Following"/>
-                                <DefaultButton text ="Create" onClick={()=>
-                                    this.setState({
-                                        create: true,
-                                        memberIn: false,
-                                        join: false
-                                    })
-                                }/>
-                                <DefaultButton text ="Join" onClick={()=>
-                                    this.setState({
-                                        create: false,
-                                        memberIn: false,
-                                        join: true
-                                    })
-                                }/>
-                                
-                            </div>
-                            <div>
-                                <UserCommunitiesComponent token={(new Cookies()).get("JWT")}/>
-                            </div>
-                        </div>
-                       
-                        <div className="left_components">
-                            <ProfileBar/>
-                        </div>
-                        <div  className="right_components" >
-                            <Conversations/>
-                        </div>
-                    </div>
-                    
                     )
             }
         }

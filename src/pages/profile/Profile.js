@@ -10,6 +10,7 @@ import TopicComponent from '../../components/topics/TopicComponent'
 import { Redirect } from "react-router-dom";
 import Followers from '../social/followers/Followers'
 import Following from '../social/following/Following'
+import UserCommunitiesComponent from '../../components/community/UserCommunitiesComponent'
 
 class Profile extends React.Component{
     constructor({match}){
@@ -20,7 +21,9 @@ class Profile extends React.Component{
             profile: {},
             topics: (typeof match.params.option === 'undefined' || match.params.option === '0'? true: false),
             followers: (match.params.option === '1'? true: false),
-            following: (match.params.option === '2'? true: false)
+            following: (match.params.option === '2'? true: false),
+            community: match.params.option === '3' ? true: false,
+            aboutOption: match.params.option === '4' ? true: false
         }
     }
     componentDidMount(){
@@ -61,6 +64,16 @@ class Profile extends React.Component{
                     <TopicComponent community={false} timeline={false} subjectID={this.state.userID} token={(new Cookies()).get('JWT')}/>
                 )
             }
+            case this.state.aboutOption:{
+                return(
+                    <h1>ABOUT MODULE</h1>
+                )
+            }
+            case this.state.community:{
+                return(
+                    <UserCommunitiesComponent token={(new Cookies()).get('JWT')}/>
+                )
+            }
             default:{
                 return(
                     <TopicComponent community={false} timeline={false} subjectID={this.state.userID} token={(new Cookies()).get('JWT')}/>
@@ -75,13 +88,13 @@ class Profile extends React.Component{
                 <div className="">
                     <div className="profile_component_container">
                         <div className='profile_background_image_container'>
-                            <img className='profile_background_image_style' alt="BACKGROUD IMG"src= {(this.state.profile.backgroundImageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
+                            <img className='profile_background_image_style' alt="BACKGROUD"src= {this.state.profile.imageURL} />
                         </div>
                         <div className='profile_action_bar_container'>
                             <div className="profile_persona_container">
                                 <Persona
                                     {...{
-                                        imageUrl: (this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://preview.redd.it/bq0p7ds60f461.png?width=522&format=png&auto=webp&s=ef1c8eacc400a29430bdc1d3a005270e7762e7c2",
+                                        imageUrl: this.state.profile.imageURL,
                                         text: this.state.profile.name,
                                         secondaryText:  this.state.profile.email
                                     }}
@@ -91,13 +104,21 @@ class Profile extends React.Component{
                                 />
                             </div>
                             <div className="profile_action_bar_buttons_container">
-                                <PrimaryButton text='Follow'/>
-                                <PrimaryButton text='Send Message'/>
-                                <DefaultButton text='Topics' href={'/profile/'+this.state.profile.email+'/'+'0'}/>
-                                <DefaultButton text='Following' href={'/profile/'+this.state.profile.email+'/'+'2'}/>
-                                <DefaultButton text='Followers' href={'/profile/'+this.state.profile.email+'/'+'1'}/>
-                                <DefaultButton text='Communities'/>
-                                <DefaultButton text='About'/>
+                                
+                                {this.state.userID !== (new Cookies()).get("ID")?
+                                    <PrimaryButton text='Follow'/>:
+                                    <PrimaryButton text='Edit Profile'/>
+                                }
+                                {this.state.userID !== (new Cookies()).get("ID")?
+                                    <PrimaryButton text='Send Message'/>:
+                                    <PrimaryButton text='Sign Out'/>
+                                }                            
+                                {this.state.community === true ? <PrimaryButton text='Communities'/> : <DefaultButton text='Communities' href={'/profile/'+this.state.profile.email+'/'+'3'}/>}
+                                {this.state.followers === true ? <PrimaryButton text='Followers'/> : <DefaultButton text='Followers' href={'/profile/'+this.state.profile.email+'/'+'1'}/> }
+                                {this.state.following === true ? <PrimaryButton text='Following'/> : <DefaultButton text='Following' href={'/profile/'+this.state.profile.email+'/'+'2'}/>}
+                                {this.state.topics === true ? <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' href={'/profile/'+this.state.profile.email+'/'+'0'}/>}
+                                {this.state.aboutOption === true ? <PrimaryButton text='About'/> : <DefaultButton text='About' href={'/profile/'+this.state.profile.email+'/'+'4'}/>}
+        
                                 <DefaultButton text='Home' href='/'/>
                             </div>
                         </div>
