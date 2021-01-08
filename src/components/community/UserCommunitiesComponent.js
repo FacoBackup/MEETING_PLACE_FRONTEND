@@ -4,8 +4,9 @@ import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import "./UserCommunitiesStyle.css"
 import React from 'react'
-import "../../pages/social/SocialStyle.css"
+import "../social/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import Host from '../../Host'
 
 class UserCommunitiesComponent extends React.Component{
     constructor(params){
@@ -41,7 +42,7 @@ class UserCommunitiesComponent extends React.Component{
         
         await axios({
             method: 'get',
-            url: 'http://localhost:8080/api/communities/related',
+            url: Host()+'api/communities/related',
             headers: {"Authorization": 'Bearer ' + this.state.token}
         }).then(res=>{
             this.setState({

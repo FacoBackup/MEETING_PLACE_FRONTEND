@@ -9,6 +9,7 @@ import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
 import Moment from 'moment';
+import Host from '../../Host'
 
 const genderOptions = [
     { key: 'male', text: 'Male'},
@@ -42,7 +43,7 @@ class SignUp extends Component{
         
         await axios({
             method: 'post',
-            url: 'http://192.168.15.35:8080/api/user',
+            url: Host()+'api/user',
             data: {
                 email: this.state.email,
                 password: this.state.password,

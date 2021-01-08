@@ -7,10 +7,12 @@ import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import TopicComponent from '../../components/topics/TopicComponent'
-import { Redirect } from "react-router-dom";
-import Followers from '../social/followers/Followers'
-import Following from '../social/following/Following'
+
+import Followers from '../../components/social/followers/Followers'
+import Following from '../../components/social/following/Following'
 import UserCommunitiesComponent from '../../components/community/UserCommunitiesComponent'
+import Dexie from "dexie";
+import Host from '../../Host'
 
 class Profile extends React.Component{
     constructor({match}){
@@ -33,7 +35,7 @@ class Profile extends React.Component{
         if(typeof this.state.token !== 'undefined'){
             await axios({
                 method: 'patch',
-                url: 'http://localhost:8080/api/get/profile',
+                url: Host()+'api/get/profile',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data:{
                     userID: this.state.userID

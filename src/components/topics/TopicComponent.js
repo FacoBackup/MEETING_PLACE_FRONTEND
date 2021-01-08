@@ -5,7 +5,7 @@ import { FontSizes, FontWeights } from '@fluentui/theme';
 import axios from 'axios';
 import Dexie from "dexie";
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-
+import Host from '../../Host'
 class TopicComponent extends React.Component{
     
     constructor(params){
@@ -70,7 +70,7 @@ class TopicComponent extends React.Component{
         
         await axios({
             method: (this.state.topics === true ? 'get':'patch'),
-            url: (this.state.topics === true ?(data.lenght === 0 || typeof data.lenght === 'undefined' ? 'http://localhost:8080/api/timeline/all': 'http://localhost:8080/api/timeline/new') : "http://localhost:8080/api/get/topics/subject"),
+            url: (this.state.topics === true ?(data.lenght === 0 || typeof data.lenght === 'undefined' ? Host()+'api/timeline/all': Host()+'api/timeline/new') : Host()+"api/get/topics/subject"),
             headers: {"Authorization": 'Bearer ' +this.state.token},
             data:{
                 subjectID:this.state.subjectID,

@@ -6,7 +6,7 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import CommunitySearchComponent from '../community/CommunitySearchComponent'
-
+import Host from '../../Host'
 class TopicCreation extends React.Component{
     constructor(params){
         super(params)
@@ -46,7 +46,7 @@ class TopicCreation extends React.Component{
     async createTopic(){
         await axios({
             method: 'post',
-            url: 'http://localhost:8080/api/topic',
+            url: Host()+'api/topic',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 header: this.state.title,
@@ -78,7 +78,7 @@ class TopicCreation extends React.Component{
         if(this.state.imageModal === true)
            return(
                 <Modal
-                titleAriaId={"TESTE"}
+                // titleAriaId={"TESTE"}
                 isOpen={true}
                 onDismiss={true}
                 isBlocking={false}

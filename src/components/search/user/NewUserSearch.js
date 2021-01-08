@@ -8,6 +8,7 @@ import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
 import "../../community/UserCommunitiesStyle.css"
 import "./SearchComponentStyle.css"
+import Host from '../../../Host'
 
 class UserSearchComponent extends React.Component{
     constructor(params){
@@ -55,13 +56,13 @@ class UserSearchComponent extends React.Component{
        if(this.state.searchInput !== ''){
             await axios({
                 method: 'patch',
-                url: 'http://localhost:8080/api/search/user',
+                url: Host()+'api/search/user',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data:{
                     userID: this.state.searchInput
                 }
             }).then(res=>{
-                console.log("RESPONSE -> " +JSON.stringify(res.data))
+                
                 this.setState({
                     users: res.data
                 })
@@ -72,13 +73,13 @@ class UserSearchComponent extends React.Component{
     async fetchConversation (param){
         await axios({
             method: 'patch',
-            url: 'http://localhost:8080/api/conversation/by/owner',
+            url: Host()+'api/conversation/by/owner',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 userID: param
             }
         }).then(res=>{
-            console.log(JSON.stringify(res.data))
+            
             this.setState({
                 conversations: res.data
             })
@@ -103,7 +104,7 @@ class UserSearchComponent extends React.Component{
 
         await axios({
             method: 'post',
-            url: 'http://localhost:8080/api/follow',
+            url: Host()+'api/follow',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data: {
                 subjectID: params,
@@ -118,7 +119,7 @@ class UserSearchComponent extends React.Component{
     async unfollow (params) {
         await axios({
             method: 'delete',
-            url: 'http://localhost:8080/api/unfollow',
+            url: Host()+'api/unfollow',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data: {
                 subjectID: params,

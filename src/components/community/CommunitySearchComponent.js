@@ -7,6 +7,7 @@ import React from 'react'
 import "../../pages/social/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
+import Host from '../../Host'
 
 class CommunitySearchComponent extends React.Component{
     constructor(params){
@@ -33,7 +34,7 @@ class CommunitySearchComponent extends React.Component{
         clearInterval(this.timerID);
     }
     tick() {
-        console.log("UPDATING")
+  
         this.fetchData();
         this.setState({
             date: new Date(),
@@ -51,7 +52,7 @@ class CommunitySearchComponent extends React.Component{
        if(this.state.searchInput !== ''){
             await axios({
                 method: 'patch',
-                url: 'http://localhost:8080/api/search/community',
+                url: Host()+'api/search/community',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data:{
                     communityID: this.state.searchInput

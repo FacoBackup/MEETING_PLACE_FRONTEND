@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 import TopicComponent from '../topics/TopicComponent'
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import Host from '../../Host'
 
 class CommunityComponent extends React.Component{
     constructor(params){
@@ -24,7 +25,7 @@ class CommunityComponent extends React.Component{
     async fetchData(){
         await axios({
             method: 'patch',
-            url: 'http://localhost:8080/api/get/community',
+            url: Host()+'api/get/community',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 communityID: this.state.communityID
@@ -40,7 +41,7 @@ class CommunityComponent extends React.Component{
     async fetchMembers(){
         await axios({
             method: 'patch',
-            url: 'http://localhost:8080/api/get/community/related/users',
+            url: Host()+'api/get/community/related/users',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 communityID: this.state.communityID

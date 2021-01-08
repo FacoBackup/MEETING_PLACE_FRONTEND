@@ -4,7 +4,8 @@ import axios from 'axios';
 import "./ProfileBarStyle.css";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import Dexie from "dexie";
+
+import Host from '../../Host'
 
 class AboutProfile extends Component{
     constructor(params){
@@ -32,7 +33,7 @@ class AboutProfile extends Component{
         if(typeof (new Cookies()).get("JWT") !== 'undefined'){
             await axios({
                 method: 'get',
-                url: 'http://localhost:8080/api/user',
+                url: Host()+'api/user',
                 headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")}
             }).then(res=>{
                 this.setState({

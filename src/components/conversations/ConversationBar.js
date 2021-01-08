@@ -7,6 +7,7 @@ import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Link } from 'react-router-dom';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { getTheme } from '@fluentui/react';
+import Host from '../../Host'
 
 class ConversationBar extends Component{
     constructor(){
@@ -52,7 +53,7 @@ class ConversationBar extends Component{
         if(this.state.searchInput === ""){
             await axios({
                 method: 'get',
-                url: 'http://localhost:8080/api/conversation/all',
+                url: Host()+'api/conversation/all',
                 headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
             }).then(res=>{
                 this.setState({
@@ -66,7 +67,7 @@ class ConversationBar extends Component{
         else{
             await axios({
                 method: 'patch',
-                url: 'http://localhost:8080/api/conversation/search',
+                url: Host()+'api/conversation/search',
                 headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
                 data:{
                     conversationID: this.state.searchInput
@@ -85,7 +86,7 @@ class ConversationBar extends Component{
     async fetchSearch (){    
         await axios({
             method: 'patch',
-            url: 'http://localhost:8080/api/conversation/search',
+            url: Host()+'api/conversation/search',
             headers: {"Authorization": 'Bearer '+this.state.cookies.get("JWT")},
             data: {
                 conversationID: this.state.searchInput

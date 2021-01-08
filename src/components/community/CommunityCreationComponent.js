@@ -6,6 +6,7 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import "./CommunityCreationComponentStyle.css"
 import React from 'react'
 import CommunitySearchComponent from '../community/CommunitySearchComponent'
+import Host from '../../Host'
 
 class CommunityCreationComponent extends React.Component{
     constructor(params){
@@ -68,7 +69,7 @@ class CommunityCreationComponent extends React.Component{
         console.log(this.state.token)
         await axios({
             method: 'post',
-            url: 'http://localhost:8080/api/community',
+            url: Host()+'api/community',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 about : this.state.about,

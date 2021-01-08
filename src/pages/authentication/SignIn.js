@@ -9,6 +9,7 @@ import { NeutralColors } from '@fluentui/theme';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import Host from '../../Host'
 
 class SignIn extends Component {
     constructor(){
@@ -55,7 +56,7 @@ class SignIn extends Component {
     
         await axios({
             method: 'put',
-            url: 'http://localhost:8080/api/login',
+            url: Host()+'api/login',
             headers:{'Access-Control-Allow-Origin': '*'} ,
             data: {
                 userID: this.state.email,

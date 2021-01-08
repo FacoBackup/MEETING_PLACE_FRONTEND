@@ -4,6 +4,7 @@ import { getTheme } from '@fluentui/react';
 import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import "./ConversationInfoStyle.css"
+import Host from '../../Host'
 
 class ConversationInfo extends Component {
     constructor(params){
@@ -41,7 +42,7 @@ class ConversationInfo extends Component {
         if(this.state.isGroup === true)
             await axios({
                 method: 'post',
-                url: 'http://localhost:8080/api/get/conversation/group',
+                url: Host()+'api/get/conversation/group',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     conversationID: this.state.conversationID
@@ -58,7 +59,7 @@ class ConversationInfo extends Component {
         else
             await axios({
                 method: 'post',
-                url: 'http://localhost:8080/api/get/conversation/user',
+                url: Host()+'http://localhost:8080/api/get/conversation/user',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     userID: this.state.conversationID

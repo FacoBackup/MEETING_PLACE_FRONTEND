@@ -8,7 +8,7 @@ import { PrimaryButton } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import Dexie from "dexie";
-
+import Host from '../../Host'
 
 class Messages extends React.Component{
     constructor(params){
@@ -31,7 +31,7 @@ class Messages extends React.Component{
     
     setupDB(){
         if(this.state.db.isOpen() === false){
-            console.log("SETTING DATABASE")
+            
             this.state.db.version(1).stores({
                 messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone"
             })
@@ -103,7 +103,7 @@ class Messages extends React.Component{
             const data = await this.state.db.messages.where("conversationID").equals(this.state.conversationID).toArray()
             await axios({
                 method: 'post',
-                url: (data.length === 0  ? 'http://localhost:8080/api/get/all/group/messages' : 'http://localhost:8080/api/get/new/group/messages'),
+                url: (data.length === 0  ? Host()+'api/get/all/group/messages' : Host()+'api/get/new/group/messages'),
                 headers: {"Authorization": 'Bearer ' +this.state.token},
                 data: {
                     conversationID: this.state.conversationID
@@ -127,7 +127,7 @@ class Messages extends React.Component{
         
             await axios({
                 method: 'post',
-                url: (data.length === 0 ? 'http://localhost:8080/api/get/all/user/messages':  'http://localhost:8080/api/get/new/user/messages'),
+                url: (data.length === 0 ? Host()+'api/get/all/user/messages':  Host()+'api/get/new/user/messages'),
                 headers: {"Authorization": 'Bearer ' +this.state.token},
                 data: {
                     userID : this.state.receiverName                    
