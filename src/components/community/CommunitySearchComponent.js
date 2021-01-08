@@ -106,9 +106,10 @@ class CommunitySearchComponent extends React.Component{
                             {...{
                                 imageUrl: (community.imageURL === null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
                                 text: community.name,
-                                secondaryText: community.role
+                                secondaryText: community.role,
+                                tertiaryText: community.about
                             }}
-                            size={PersonaSize.size48}
+                            size={PersonaSize.size72}
                             imageAlt="Conversation picture"
                             />
                             {this.renderButtons(community)}

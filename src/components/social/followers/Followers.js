@@ -102,9 +102,10 @@ class Followers extends React.Component{
                                 {...{
                                     imageUrl: (follower.imageURL === null) ?  follower.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
                                     text: follower.name,
-                                    secondaryText: follower.email
+                                    secondaryText: follower.email,
+                                    tertiaryText: follower.phoneNumber
                                 }}
-                                size={PersonaSize.size48}
+                                size={PersonaSize.size72}
                                 imageAlt="Conversation picture"
                                 />
                                 <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>

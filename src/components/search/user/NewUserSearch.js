@@ -151,9 +151,11 @@ class UserSearchComponent extends React.Component{
                             {...{
                                 imageUrl: (user.imageURL === null) ?  user.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
                                 text: user.name,
-                                secondaryText: user.email
+                                secondaryText: user.email,
+                                tertiaryText: user.phoneNumber
+
                             }}
-                            size={PersonaSize.size48}
+                            size={PersonaSize.size72}
                             imageAlt="Conversation picture"
                             />
                             <DefaultButton  text ="See Profile"  href={"/profile/"+user.email+'/0'}/>

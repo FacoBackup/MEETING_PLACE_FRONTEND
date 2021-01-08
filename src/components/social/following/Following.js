@@ -104,9 +104,10 @@ class Following extends React.Component{
                                 {...{
                                     imageUrl: (flw.imageURL === null) ?  flw.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
                                     text: flw.name,
-                                    secondaryText: flw.email
+                                    secondaryText: flw.email,
+                                    tertiaryText: flw.phoneNumber
                                 }}
-                                size={PersonaSize.size48}
+                                size={PersonaSize.size72}
                                 imageAlt="Conversation picture"
                                 />
                                 <DefaultButton text ="See Profile"  href={"/profile/"+flw.email+'/0'}/>
