@@ -58,7 +58,7 @@ class CommunityComponent extends React.Component{
             case this.state.membersOption:{
                 return(
                     <div className="community_content_container">
-                        {(this.state.members === []) ? <div></div> : this.state.members.map((member) => {
+                        {(this.state.members === []) ? <div></div> : this.state.members.map((member) => (
                             <div className='persona_container'>
                                     <Persona
                                         {...{
@@ -70,7 +70,7 @@ class CommunityComponent extends React.Component{
                                         imageAlt="user"
                                     />
                             </div>
-                        })}
+                        ))}
                         
                     </div>
         

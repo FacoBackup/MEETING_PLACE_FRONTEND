@@ -102,7 +102,7 @@ class CommunityCreationComponent extends React.Component{
                     <h5 style={{textAlign:'center'}}>Selected Image</h5>
                     <div style={{display:'flex', justifyContent:'center'}}>
                     
-                    <img style={{margin:'auto',width:'70%', borderRadius:'8px'}} alt="topic Image" src={this.state.imageURL}/>
+                    <img style={{margin:'auto',width:'70%', borderRadius:'8px'}} alt="topic" src={this.state.imageURL}/>
                 </div>
                 </div>
                 

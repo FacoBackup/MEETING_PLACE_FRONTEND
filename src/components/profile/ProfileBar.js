@@ -135,10 +135,10 @@ class ProfileBar extends Component{
                     
                     <div className="profile_bar_buttons_container">
                             <DefaultButton text="Home"  href='/' />
-                            <DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/'+'1'}/>
-                            <DefaultButton text ="Following" href={'/profile/'+this.state.profile.email+'/'+'2'}/>
+                            <DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/1'}/>
+                            <DefaultButton text ="Following" href={'/profile/'+this.state.profile.email+'/2'}/>
                             <DefaultButton  text ="Search User"  href="/search_user"/>
-                            <DefaultButton  text ="My Profile"  href={"/profile/"+(new Cookies()).get("ID") + '/' +'0'}/>
+                            <DefaultButton  text ="My Profile"  href={"/profile/"+(new Cookies()).get("ID") + '/0' }/>
                             <DefaultButton  text ="Communities"  href="/communities"/>
 
                             {/* <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/> */}

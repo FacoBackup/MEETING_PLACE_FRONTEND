@@ -4,8 +4,6 @@ import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../../style/PageModel.css"
 import "../SocialStyle.css"
-import ProfileBar from "../../profile/ProfileBar.js"
-import ConversationBar from "../../conversations/ConversationBar"
 import { getTheme } from '@fluentui/react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
@@ -109,7 +107,7 @@ class Followers extends React.Component{
                                 size={PersonaSize.size48}
                                 imageAlt="Conversation picture"
                                 />
-                                <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/'+'0'}/>
+                                <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>
                                 <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
                             </div>
                         )}

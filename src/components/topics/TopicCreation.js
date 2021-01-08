@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import CommunitySearchComponent from '../community/CommunitySearchComponent'
 import Host from '../../Host'
+
 class TopicCreation extends React.Component{
     constructor(params){
         super(params)
@@ -67,7 +68,7 @@ class TopicCreation extends React.Component{
         if(this.state.imageURL !== null)
             return(
                 <div style={{display:'flex', justifyContent:'center'}}>
-                    <img style={{margin:'auto',width:'70%', borderRadius:'8px'}} alt="topic Image" src={this.state.imageURL}/>
+                    <img style={{margin:'auto',width:'70%', borderRadius:'8px'}} alt="topic" src={this.state.imageURL}/>
                 </div>
                 
             )

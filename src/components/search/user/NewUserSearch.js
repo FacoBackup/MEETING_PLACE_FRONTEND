@@ -3,7 +3,7 @@ import axios from 'axios';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import React from 'react'
-import "../../../pages/social/SocialStyle.css"
+import "../../social/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
 import "../../community/UserCommunitiesStyle.css"
@@ -156,7 +156,7 @@ class UserSearchComponent extends React.Component{
                             size={PersonaSize.size48}
                             imageAlt="Conversation picture"
                             />
-                            <DefaultButton  text ="See Profile"  href={"/profile/"+user.email+'/'+'0'}/>
+                            <DefaultButton  text ="See Profile"  href={"/profile/"+user.email+'/0'}/>
                             <PrimaryButton onClick={() => this.setRedirect(user.email)} text="Send Message"/>
                             {user.isFollowing ? <DefaultButton onClick={() => this.unfollow(user.email)} text="Unfollow"/>: <PrimaryButton onClick={() => this.follow(user.email)} text="Follow"/>}
                         </div>

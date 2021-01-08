@@ -124,11 +124,11 @@ class Profile extends React.Component{
                                     <PrimaryButton text='Send Message'/>:
                                     <PrimaryButton text='Sign Out' onClick={()=> this.signout()}/>
                                 }                            
-                                {this.state.community === true ? <PrimaryButton text='Communities'/> : <DefaultButton text='Communities' href={'/profile/'+this.state.profile.email+'/'+'3'}/>}
-                                {this.state.followers === true ? <PrimaryButton text='Followers'/> : <DefaultButton text='Followers' href={'/profile/'+this.state.profile.email+'/'+'1'}/> }
-                                {this.state.following === true ? <PrimaryButton text='Following'/> : <DefaultButton text='Following' href={'/profile/'+this.state.profile.email+'/'+'2'}/>}
-                                {this.state.topics === true ? <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' href={'/profile/'+this.state.profile.email+'/'+'0'}/>}
-                                {this.state.aboutOption === true ? <PrimaryButton text='About'/> : <DefaultButton text='About' href={'/profile/'+this.state.profile.email+'/'+'4'}/>}
+                                {this.state.community === true ? <PrimaryButton text='Communities'/> : <DefaultButton text='Communities' href={'/profile/'+this.state.profile.email+'/3'}/>}
+                                {this.state.followers === true ? <PrimaryButton text='Followers'/> : <DefaultButton text='Followers' href={'/profile/'+this.state.profile.email+'/1'}/> }
+                                {this.state.following === true ? <PrimaryButton text='Following'/> : <DefaultButton text='Following' href={'/profile/'+this.state.profile.email+'/2'}/>}
+                                {this.state.topics === true ? <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' href={'/profile/'+this.state.profile.email+'/0'}/>}
+                                {this.state.aboutOption === true ? <PrimaryButton text='About'/> : <DefaultButton text='About' href={'/profile/'+this.state.profile.email+'/4'}/>}
         
                                 <DefaultButton text='Home' href='/'/>
                             </div>
