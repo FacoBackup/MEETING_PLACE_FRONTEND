@@ -1,4 +1,4 @@
-import { Redirect } from "react-router-dom"
+
 import axios from 'axios';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
@@ -13,11 +13,9 @@ class CommunitySearchComponent extends React.Component{
         super(params)
         this.state={
             token: params.token,
+            isModal: params.isModal,
             communities: [],
             date: new Date(),
-            conversations: {},
-            redirect: false,
-            redirectCommunityID: '',
             searchInput: ''
         }
       this.fetchData = this.fetchData.bind(this)
@@ -49,8 +47,7 @@ class CommunitySearchComponent extends React.Component{
         this.fetchData()
     }
     async fetchData(){
-        console.log("INPUT -> " + this.state.searchInput)
-        console.log("token -> " + this.state.token)
+  
        if(this.state.searchInput !== ''){
             await axios({
                 method: 'patch',
@@ -68,20 +65,27 @@ class CommunitySearchComponent extends React.Component{
             .catch(error => console.log(error))
         }
     }
-
-    async setRedirect(communityID){
-        console.log("PARAMS => " + communityID)
-    
-        this.setState({
-            redirect: true,
-            redirectCommunityID:communityID
-        },()=>{
-            console.log("STATE => " + JSON.stringify(this.state.redirectCommunityID))    
-        })
+    selectCommunity(community){
+        sessionStorage.setItem("SELECTED_COMMUNITY",JSON.stringify(community))
     }
-
+    renderButtons(community){
+        console.log("COMMUNITY FOUND -> " + JSON.stringify(community))
+        if(this.state.isModal === false)
+            return(
+                <div>
+                    {(community.role === "") ? <PrimaryButton text="Join Community" /> : <DefaultButton text="Quit Community"/>}
+                    <DefaultButton text="See Community" href={'/community/' + community.communityID}/>
+                </div>
+            )
+        else
+            return(
+                <div>
+                    <PrimaryButton text="Select" onClick={() => this.selectCommunity(community)}/>
+                </div>
+            )
+    }
     render(){
-        if(this.state.redirect === false)
+        
         return(
             <div>
                 <div className="search_component">
@@ -96,7 +100,7 @@ class CommunitySearchComponent extends React.Component{
                 <div className="socail_info_container">
                 
                     {this.state.communities.map((community)=> 
-                        <div className="social_personas_container"> 
+                        <div className="personas_container"> 
                             <Persona
                             {...{
                                 imageUrl: (community.imageURL === null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
@@ -106,8 +110,8 @@ class CommunitySearchComponent extends React.Component{
                             size={PersonaSize.size48}
                             imageAlt="Conversation picture"
                             />
-                            <DefaultButton text="Quit Community" disabled={(community.role === "")}/>
-                            <PrimaryButton text="See Community" onClick={() => this.setRedirect(community.id)}/>
+                            {this.renderButtons(community)}
+                           
                         </div>
                     )}
                     </div>   
@@ -117,13 +121,7 @@ class CommunitySearchComponent extends React.Component{
     
             
         );
-        else{
-            
-            return(
-                <Redirect to={'/community/'+this.state.redirectCommunityID}/>
-            )
-            
-        }
+     
     }
 }
 

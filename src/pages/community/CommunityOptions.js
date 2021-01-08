@@ -88,7 +88,7 @@ class CommunityOptions extends React.Component{
                                
                             </div>
                             <div>
-                                <CommunitySearchComponent token={(new Cookies()).get("JWT")}/>
+                                <CommunitySearchComponent token={(new Cookies()).get("JWT")} isModal={false}/>
                             </div>
                         </div>
                       

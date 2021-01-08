@@ -5,8 +5,6 @@ import Community from "./pages/community/Community"
 import Home from "./pages/timeline/Timeline";
 import Search from "./pages/search/Search";
 import Chat from "./pages/chat/Chat";
-import Followers from "./pages/social/followers/Followers";
-import Following from "./pages/social/following/Following";
 import SignIn from "./pages/authentication/SignIn"
 import CommunityOptions from "./pages/community/CommunityOptions"
 import Profile from "./pages/profile/Profile"

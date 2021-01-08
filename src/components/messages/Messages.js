@@ -29,24 +29,6 @@ class Messages extends React.Component{
         this.handleChange = this.handleChange.bind(this)
     }
     
-    // messages (){
-
-    //     const messagesEndRef = useRef(null)
-      
-    //     const scrollToBottom = () => {
-    //       messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-    //     }
-      
-    //     useEffect(scrollToBottom, [messages]);
-      
-    //     return (
-    //       <div>
-         
-                
-            
-    //       </div>
-    //     )
-    //   }
     setupDB(){
         if(this.state.db.isOpen() === false){
             console.log("SETTING DATABASE")
@@ -64,6 +46,7 @@ class Messages extends React.Component{
         );
         
     }
+    
     componentWillUnmount() {
         clearInterval(this.timerID);
     }

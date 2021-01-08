@@ -13,16 +13,19 @@ class CommunityComponent extends React.Component{
             community: {},
             token: params.token,
             communityID: params.communityID,
-            members: false,
-            topic: true
+            membersOption: false,
+            topic: true,
+            members:[]
         }
     }
-
+    componentDidMount(){
+        this.fetchData()
+    }
     async fetchData(){
         await axios({
             method: 'patch',
             url: 'http://localhost:8080/api/get/community',
-            headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
+            headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 communityID: this.state.communityID
             }
@@ -34,11 +37,27 @@ class CommunityComponent extends React.Component{
         .catch(error=>console.log(error))
     }
 
+    async fetchMembers(){
+        await axios({
+            method: 'patch',
+            url: 'http://localhost:8080/api/get/community/related/users',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: this.state.communityID
+            }
+        }).then(res=>{
+            this.setState({
+                members: res.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+
     render(){
         if(this.state.community !== {}){
             switch(true){
                
-                case this.state.members:{
+                case this.state.membersOption:{
                     return(
                         <div className="community_component_container">
                             <div className="community_image_container">
@@ -58,11 +77,23 @@ class CommunityComponent extends React.Component{
                                 <PrimaryButton text='Members And Followers'/>
                                 <DefaultButton text='Topics' onClick={()=>this.setState({
                                     topic: true,
-                                    members: false
+                                    membersOption: false
                                 })}/>                                
                             </div>
                             <div className="community_content_container">
-                                MEMBERS HERE
+                               {(this.state.members === []) ? <div></div> : this.state.members.map((member) => {
+                                    <div className='persona_container'>
+                                            <Persona
+                                                {...{
+                                                    imageUrl: member.imageURL,
+                                                    text: member.name,
+                                                    secondaryText:  member.role
+                                                }}
+                                                size={PersonaSize.size48}
+                                                imageAlt="user"
+                                            />
+                                    </div>
+                               })}
                              {/* <TopicComponent community={true} token={this.state.token} timeline={false} subjectID={this.state.communityID}/> */}
                             </div>
                         </div>
@@ -77,17 +108,17 @@ class CommunityComponent extends React.Component{
                             <div className="community_action_bar">
                                 <Persona
                                     {...{
-                                        imageUrl: '',
-                                        text: "COMMUNITY NAME",
-                                        secondaryText:  "YOUR ROLE IN IT"
+                                        imageUrl: this.state.community.imageURL,
+                                        text: this.state.community.name,
+                                        secondaryText:  this.state.community.role
                                     }}
-                                    size={PersonaSize.size120}
+                                    size={PersonaSize.size48}
                                     imageAlt="Community"
                                 />
                                 <DefaultButton text='Home' href='/' />
                                 <DefaultButton text='Members And Followers' onClick={()=>this.setState({
                                     topic: false,
-                                    members: true
+                                    membersOption: true
                                 })}/>
                                 <PrimaryButton text='Topics'/>
                             </div>

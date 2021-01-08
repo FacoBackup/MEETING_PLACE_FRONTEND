@@ -15,8 +15,7 @@ class UserCommunitiesComponent extends React.Component{
             communities: [],
             date: new Date(),
             conversations: {},
-            redirect: false,
-            redirectCommunityID: ''
+
         }
       this.fetchData = this.fetchData.bind(this)
     }
@@ -52,19 +51,8 @@ class UserCommunitiesComponent extends React.Component{
         .catch(error => console.log(error))
     }
 
-    async setRedirect(communityID){
-        console.log("PARAMS => " + communityID)
-    
-        this.setState({
-            redirect: true,
-            redirectCommunityID:communityID
-        },()=>{
-            console.log("STATE => " + JSON.stringify(this.state.redirectCommunityID))    
-        })
-    }
-
     render(){
-        if(this.state.redirect === false)
+        
         return(
             <div>
             
@@ -72,10 +60,10 @@ class UserCommunitiesComponent extends React.Component{
                     <div className="socail_info_container">
                     <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Communities</p>
                     {this.state.communities.map((community)=> 
-                        <div className="social_personas_container"> 
+                        <div className="personas_container"> 
                             <Persona
                             {...{
-                                imageUrl: (community.imageURL === null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                imageUrl: (community.imageURL !== null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
                                 text: community.name,
                                 secondaryText: community.role
                             }}
@@ -83,7 +71,7 @@ class UserCommunitiesComponent extends React.Component{
                             imageAlt="Conversation picture"
                             />
                             <DefaultButton text="Quit Community" disabled={true}/>
-                            <PrimaryButton text="See Community" onClick={() => this.setRedirect(community.id)}/>
+                            <PrimaryButton text="See Community" href={'/community/'+community.communityID}/>
                         </div>
                     )}
                     </div>
@@ -91,13 +79,7 @@ class UserCommunitiesComponent extends React.Component{
     
             </div>
         );
-        else{
-            
-            return(
-                <Redirect to={'/community/'+this.state.redirectCommunityID}/>
-            )
-            
-        }
+      
     }
 }
 

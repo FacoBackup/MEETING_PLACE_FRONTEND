@@ -1,12 +1,11 @@
 import React from 'react';
 import "./TopicCreationStyle.css"
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton,Modal, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
-
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
-// import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import CommunitySearchComponent from '../community/CommunitySearchComponent'
 
 class TopicCreation extends React.Component{
     constructor(params){
@@ -16,7 +15,10 @@ class TopicCreation extends React.Component{
             body:'',
             token: params.token,
             imageURL: null,
-            communityID: null
+            communityID: null,
+            openModal: false,
+            imageModal: false,
+            communityModal: false
         }
         
         this.handleChange = this.handleChange.bind(this)
@@ -55,7 +57,7 @@ class TopicCreation extends React.Component{
             }
         }).then(res=>{
             alert(res.response.status)
-            if(res.response.status === 201)
+            if(typeof res.response.status !== 'undefined' && res.response.status === 201)
                 window.location.reload()
         })
         .catch(error => console.log(error))
@@ -70,6 +72,74 @@ class TopicCreation extends React.Component{
                 
             )
     }
+
+    modalRender(){
+        console.log("STATE -> " + JSON.stringify(this.state.imageModal))
+        if(this.state.imageModal === true)
+           return(
+                <Modal
+                titleAriaId={"TESTE"}
+                isOpen={true}
+                onDismiss={true}
+                isBlocking={false}
+                
+                containerClassName={"contentStyles.container"}
+                >
+                    <div className='modal_container'>
+                        <div className="modal_title_component">
+                            <h2 >Upload an image for your topic</h2>
+                        </div>
+                        <div className="modal_top_component">
+                            <input type="file" name="file"  onChange={event => this.getFile(event.target.files)}/>
+                        </div>
+                        <div className="modal_middle_component" >
+                            {this.imageRender()}
+                        </div>
+                        <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between', }}>
+                            <DefaultButton text="Cancel" onClick={()=> this.setState({
+                                imageModal: false,
+                                communityModal:false,
+                                openModal:false,
+                                imageURL: null
+                            })}/>
+                            
+                            <PrimaryButton text="Choose"/>
+                        </div>
+                    </div>
+                </Modal>
+           )
+
+           else if(this.state.communityModal === true && this.state.imageModal === false)
+            return(
+                    <Modal
+                    titleAriaId={"TESTE"}
+                    isOpen={true}
+                    onDismiss={true}
+                    isBlocking={false}
+                    //dragOptions={true}
+                    containerClassName={"contentStyles.container"}
+                    >
+                        <div className='modal_container'>
+                            <div className="modal_title_component">
+                                <h2 >Post your topic in a community</h2>
+                            </div>
+                            <div className="modal_top_component" >
+                                <CommunitySearchComponent token ={this.state.token}/>
+                            </div>
+                            <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between', }}>
+                                <DefaultButton text="Cancel" onClick={()=> this.setState({
+                                    imageModal: false,
+                                    communityModal:false,
+                                    openModal:false,
+                                    imageURL: null
+                                })}/>
+                                
+                                <PrimaryButton text="Choose"/>
+                            </div>
+                        </div>
+                    </Modal>
+            )
+    }
     render(){
         return(
             <div className="timeline_component_container">
@@ -78,9 +148,20 @@ class TopicCreation extends React.Component{
                         <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Express Yourself</p>
                     </div>
                     <div  className="topic_creation_top_buttons">
-                    <input type="file" name="file"  onChange={event => this.getFile(event.target.files)}/>
-                        <DefaultButton text="To Community"/> 
+                    
+                        <DefaultButton text="To Community" onClick={() => this.setState({
+                            openModal: true,
+                            imageModal:false,
+                            communityModal:true
+                        })}/> 
+            
                         <Toggle label="Visibility" defaultChecked onText="Only Fans" offText="Public"/>
+                        <DefaultButton text="Upload Image" onClick={() => this.setState({
+                            openModal: true,
+                            imageModal:true,
+                            communityModal:false
+                        })}/> 
+                        {this.modalRender()}
                     </div>
                     <div className="topic_creation_fields">
                         <TextField placeholder="Title" multiline resizable={false} name='title' onChange={this.handleChange}/>
