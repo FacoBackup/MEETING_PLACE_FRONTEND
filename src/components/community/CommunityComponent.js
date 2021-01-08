@@ -37,6 +37,7 @@ class CommunityComponent extends React.Component{
     render(){
         if(this.state.community !== {}){
             switch(true){
+               
                 case this.state.members:{
                     return(
                         <div className="community_component_container">
@@ -96,11 +97,16 @@ class CommunityComponent extends React.Component{
                         </div>
                     )
                 }
+                default:{
+                    return(
+                        <Redirect to='/'/>
+                    )
+                }
             }
         }
 
             
-        else{Opa
+        else{
             alert("Some error ocurred")
             return(
                 <Redirect to='/'/>

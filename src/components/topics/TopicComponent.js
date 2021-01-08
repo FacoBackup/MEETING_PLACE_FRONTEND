@@ -15,7 +15,8 @@ class TopicComponent extends React.Component{
             db: new Dexie('api_web_db'),
             community: params.community,
             subjectID: params.subjectID,
-            timeline: params.timeline
+            timeline: params.timeline,
+            topics: []
         }
     }
 
@@ -23,23 +24,23 @@ class TopicComponent extends React.Component{
         if(this.state.db.isOpen() === false){
           
             this.state.db.version(1).stores({
-                timeline: "id,header,body,approved, creatorID, mainTopicID, creationDate, communityID, imageURL"
+                topics: "id,header,body,approved, creatorID, mainTopicID, creationDate, communityID, imageURL"
             })
         }
       }
     
     async setTopics(){      
         this.setState({
-            topics: await this.state.db.timeline.sortBy('creationDate')
+            topics: await this.state.db.topics.sortBy('creationDate')
         })        
     }
     async insertTopics(res){
    
-        this.state.db.transaction('rw', this.state.db.timeline, async() => {
+        this.state.db.transaction('rw', this.state.db.topics, async() => {
             res.forEach(topic => {
-                const value = this.state.db.timeline.where('id').equals(topic.id).toArray()
+                const value = this.state.db.topics.where('id').equals(topic.id).toArray()
                 if(value.length === 0 || typeof value.length === 'undefined')
-                    this.state.db.timeline.add({
+                    this.state.db.topics.add({
                         id: topic.id, 
                         header: topic.header, 
                         body: topic.body, 
@@ -55,7 +56,7 @@ class TopicComponent extends React.Component{
        
     }
     async fetchData(){
-        
+        console.log("TOPIC -> " + JSON.stringify(this.state.topics))
         if(this.state.db.isOpen() === false){
                 
             this.setupDB()
@@ -64,12 +65,12 @@ class TopicComponent extends React.Component{
             }) 
         }
 
-        const data = await this.state.db.timeline.toArray()
+        const data = await this.state.db.topics.toArray()
 
         
         await axios({
-            method: (this.state.timeline === true ? 'get':'patch'),
-            url: (this.state.timeline === true ?(data.lenght === 0 || typeof data.lenght === 'undefined' ? 'http://localhost:8080/api/timeline/all': 'http://localhost:8080/api/timeline/new') : "http://localhost:8080/api/get/topics/subject"),
+            method: (this.state.topics === true ? 'get':'patch'),
+            url: (this.state.topics === true ?(data.lenght === 0 || typeof data.lenght === 'undefined' ? 'http://localhost:8080/api/timeline/all': 'http://localhost:8080/api/timeline/new') : "http://localhost:8080/api/get/topics/subject"),
             headers: {"Authorization": 'Bearer ' +this.state.token},
             data:{
                 subjectID:this.state.subjectID,

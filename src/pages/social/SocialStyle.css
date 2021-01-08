@@ -6,8 +6,8 @@
     overflow: auto;
     margin-top: 5px;
 }
-.social_personas_container{
-    width: 50%;
+.personas_container{
+    width: 65%;
     background-color: rgba(210, 208, 206, .5);
     padding: 1vh;
     border-radius: 8px;

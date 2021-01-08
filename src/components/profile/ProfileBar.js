@@ -11,6 +11,7 @@ class ProfileBar extends Component{
         super()
         this.state={
             profile: {},
+            cookies: new Cookies()
             // about: "",
             // nationality: '',
             // birthCity: '',
@@ -18,15 +19,11 @@ class ProfileBar extends Component{
             // editMode: false,
             // theme: getTheme()
         }
-        this.handleChangeAbout = this.handleChangeAbout.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.getErrorMessage = this.getErrorMessage.bind(this)
-        this.getErrorMessageAbout = this.getErrorMessageAbout.bind(this)
-        this.editProfileMode = this.editProfileMode.bind(this)
     }
     componentDidMount(){
         this.fetchData()
     }
+
     // handleChangeAbout(event){
     //     this.setState({
     //         about: event.target.value
@@ -41,8 +38,8 @@ class ProfileBar extends Component{
     //         [event.target.name] : event.target.value
     //     })   
     // }
-    fetchData = async() => {
-        if(typeof this.state.cookies.get("JWT") !== 'undefined'){
+    async fetchData(){
+        if(typeof (new Cookies()).get("JWT") !== 'undefined'){
             await axios({
                 method: 'get',
                 url: 'http://localhost:8080/api/user',
@@ -56,7 +53,8 @@ class ProfileBar extends Component{
         }         
     }
 
-    signout = async() => {
+    async signout() {
+        console.log(this.state.cookies.get("JWT"))
         Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
         localStorage.clear()
         Dexie.delete('api_web_db')
@@ -107,11 +105,11 @@ class ProfileBar extends Component{
     // }
 
     render(){
-        if(this.state.editMode === false){
+        
             return(
-                <div className="profile_container">
+                <div className="profile_bar_container">
                    
-                        <img className="profile_background_image" alt="BACKGROUD IMG"src= {(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
+                        <img className="profile_bar_background_image" alt="BACKGROUD IMG"src= {(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
                    
               
                     
@@ -134,12 +132,12 @@ class ProfileBar extends Component{
                         </div> */}
                     
                     
-                    <div className="profile_buttons_container">
+                    <div className="profile_bar_buttons_container">
                             <DefaultButton text="Home"  href='/' />
-                            <DefaultButton text ="Followers"  href={"/followers/"+(new Cookies()).get("ID")}/>
-                            <DefaultButton text ="Following" href={"/following/"+(new Cookies()).get("ID")}/>
+                            <DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/'+'1'}/>
+                            <DefaultButton text ="Following" href={'/profile/'+this.state.profile.email+'/'+'2'}/>
                             <DefaultButton  text ="Search User"  href="/search_user"/>
-                            <DefaultButton  text ="My Profile"  href={"/profile/"+(new Cookies()).get("ID")}/>
+                            <DefaultButton  text ="My Profile"  href={"/profile/"+(new Cookies()).get("ID") + '/' +'0'}/>
                             <DefaultButton  text ="Communities"  href="/communities"/>
 
                             {/* <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/> */}
@@ -147,7 +145,7 @@ class ProfileBar extends Component{
                             
                             <PrimaryButton text="Sign out"  onClick={() => this.signout()} />
                     </div>
-                    <div className="profile_card_container" >
+                    <div className="profile_bar_card_container" >
                     
                         <Persona
                             {...{
@@ -164,7 +162,7 @@ class ProfileBar extends Component{
                     </div>
                 </div>
             );  
-        }
+        
         // else{
         //     return(
         //         <div className="profile_container">

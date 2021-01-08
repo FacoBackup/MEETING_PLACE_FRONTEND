@@ -12,11 +12,12 @@ import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
 import { Redirect } from 'react-router-dom';
 
 class Followers extends React.Component{
-    constructor(){
+    constructor(params){
         super()
         this.state={
             cookies: new Cookies(),
             followers: [],
+            userID: params.userID,
             date: new Date(),
             theme: getTheme(),
             conversations: {},
@@ -41,6 +42,7 @@ class Followers extends React.Component{
         });
     }
     async fetchData(){
+        
         await axios({
             method: 'patch',
             url: 'http://localhost:8080/api/get/followers',
@@ -49,6 +51,8 @@ class Followers extends React.Component{
                 userID: this.state.userID
             }
         }).then(res=>{
+            console.log("FOLLOWERS RESPONSE -> " + JSON.stringify(res.data))
+            console.log("FOLLOWERS USER ID-> " + JSON.stringify(this.state.userID))
             this.setState({
                 followers: res.data
             })
@@ -76,7 +80,7 @@ class Followers extends React.Component{
                 userID: param
             }
         }).then(res=>{
-            console.log(JSON.stringify(res.data))
+            
             this.setState({
                 conversations: res.data
             })
@@ -90,16 +94,12 @@ class Followers extends React.Component{
     render(){
         if(this.state.redirect === false)
             return(
-                <div className="page_container">
-                    
-                    <div className="left_components">
-                        <ProfileBar/>
-                    </div>
-                    <div className="center_component social_component_container" >
+                <div>
+                    <div className="social_component_container" >
                         <div className="socail_info_container">
                         <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Followers</p>
                         {this.state.followers.map((follower)=> 
-                            <div className="social_personas_container"> 
+                            <div className="personas_container"> 
                                 <Persona
                                 {...{
                                     imageUrl: (follower.imageURL === null) ?  follower.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
@@ -109,15 +109,13 @@ class Followers extends React.Component{
                                 size={PersonaSize.size48}
                                 imageAlt="Conversation picture"
                                 />
-                                <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email}/>
+                                <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/'+'0'}/>
                                 <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
                             </div>
                         )}
                         </div>
                     </div>
-                <div className="right_components" >
-                        <ConversationBar/>
-                </div>
+    
                 </div>
             );
             else{

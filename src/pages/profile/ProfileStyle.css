@@ -16,11 +16,20 @@
 .profile_background_image_style{
     width: 100%;
 }
-.profile_action_bar_container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.profile_persona_container{
+    margin: auto;
+    padding-bottom: 2vh;
+}
+.profile_action_bar_container{    
+    display: grid;
     background-color: white;
     border-radius: 8px;
     padding: 1vh;
+}
+.profile_action_bar_buttons_container{
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
+    
 }

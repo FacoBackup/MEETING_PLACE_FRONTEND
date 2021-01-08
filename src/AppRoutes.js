@@ -15,11 +15,9 @@ function AppRoutes() {
     <div>
       <Router>
           <Switch>    
-              <Route path="/profile/:userID" exact component={Profile}/>
+              <Route path="/profile/:userID/:option" exact component={Profile}/>
               <Route path="/community/:id" exact component={Community}/>
               <Route path="/communities" exact component={CommunityOptions}/>
-              <Route path="/following/:userID" exact component={Following}/>
-              <Route path="/followers/:userID" exact component={Followers}/>
               <Route path="/" exact component={Home}/>
               <Route path="/chat/:username/:isGroup/:absoluteid" exact component={Chat}/>
               <Route path="/search_user" exact component={Search}/>

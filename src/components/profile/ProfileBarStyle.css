@@ -1,12 +1,13 @@
-.profile_container{
+.profile_bar_container{
     display: grid;
     overflow: hidden;   
     width:100%;
+    row-gap: 10vh;
     grid-template-rows: 1fr 1fr 1fr ;
     height: 100vh;
     
 }
-.profile_background_image{
+.profile_bar_background_image{
     grid-row: 1;
     width: stretch;
     border-radius: 8px;
@@ -32,7 +33,7 @@
     margin: auto;
  
 }
-.profile_card_container{
+.profile_bar_card_container{
     grid-row: 3;
     display: grid;
     
@@ -48,10 +49,8 @@
     margin: auto;
     
 }
-.div.profile_card_container:hover{
-    box-shadow:  1px 1px 10px #b2b2b2;
-}
-.profile_buttons_container{
+
+.profile_bar_buttons_container{
     grid-row: 2;
     display: grid;
     align-items: center;

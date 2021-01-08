@@ -23,7 +23,7 @@
   
 }
 div.conversation_persona_container:hover{
-  
+    transform: scale(1.02);
     box-shadow:  1px 1px 10px #b2b2b2;
 }
 .conversation_personas{

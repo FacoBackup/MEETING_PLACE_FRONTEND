@@ -9,6 +9,7 @@
     margin: auto;
 }
 .search_personas_container{
+    width: 100%;
     display: flex;
     margin-top: 5%;
     background-color: rgba(210, 208, 206, .5);
@@ -19,7 +20,7 @@
 }
 .search_result_container{
     margin: auto;
-    width: 65%;
+    width: 100%;
     display: block;
     align-items: center;
 }

@@ -143,10 +143,9 @@ class UserSearchComponent extends React.Component{
                 </div>
                 
                     
-                <div className="socail_info_container">
-                
+                <div>
                     {this.state.users.map((user)=> 
-                        <div className="social_personas_container"> 
+                        <div className="personas_container"> 
                             <Persona
                             {...{
                                 imageUrl: (user.imageURL === null) ?  user.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
@@ -156,7 +155,7 @@ class UserSearchComponent extends React.Component{
                             size={PersonaSize.size48}
                             imageAlt="Conversation picture"
                             />
-                            <DefaultButton  text ="See Profile"  href={"/profile/"+user.email}/>
+                            <DefaultButton  text ="See Profile"  href={"/profile/"+user.email+'/'+'0'}/>
                             <PrimaryButton onClick={() => this.setRedirect(user.email)} text="Send Message"/>
                             {user.isFollowing ? <DefaultButton onClick={() => this.unfollow(user.email)} text="Unfollow"/>: <PrimaryButton onClick={() => this.follow(user.email)} text="Follow"/>}
                         </div>
