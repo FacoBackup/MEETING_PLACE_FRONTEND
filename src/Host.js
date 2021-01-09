@@ -1,6 +1,6 @@
 
 function Host(){
-    const hostAddress = 'é um teste'
+    const hostAddress = 'http://localhost:8080/'
     return hostAddress
 }
 

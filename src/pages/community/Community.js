@@ -18,7 +18,7 @@ class Community extends React.Component{
             return (
                 <div>
                 <div className="center_component">
-                    <CommunityComponent communityID={this.state.communityID}/>
+                    <CommunityComponent communityID={this.state.communityID} token={(new Cookies()).get("JWT")}/>
                 </div>
                 <div className="left_components">
                     <ProfileBar/>

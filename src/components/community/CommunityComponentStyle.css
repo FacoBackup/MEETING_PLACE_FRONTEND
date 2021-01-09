@@ -1,7 +1,7 @@
 .community_component_container{
     display: grid;
     row-gap: 1vh;
-    width: 75%;
+    width: 100%;
     margin: auto;
 }
 .community_image_container{
@@ -21,7 +21,11 @@
     border-radius: 8px;
     padding: 1vh;
 }
-
+.community_action_bar_buttons_container{
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+}
 .community_content_container{
     background-color: white;
     border-radius: 8px;

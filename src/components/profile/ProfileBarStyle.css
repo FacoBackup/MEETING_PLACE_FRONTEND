@@ -9,7 +9,7 @@
 }
 .profile_bar_background_image{
     grid-row: 1;
-    width: stretch;
+    width: 100%;
     border-radius: 8px;
 }
 /* .profile_image{

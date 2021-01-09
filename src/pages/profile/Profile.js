@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import TopicComponent from '../../components/topics/TopicComponent'
-
+import AboutComponent from '../../components/profile/AboutProfileComponent'
 import Followers from '../../components/social/followers/Followers'
 import Following from '../../components/social/following/Following'
 import UserCommunitiesComponent from '../../components/community/UserCommunitiesComponent'
@@ -77,7 +77,7 @@ class Profile extends React.Component{
             }
             case this.state.aboutOption:{
                 return(
-                    <h1>ABOUT MODULE</h1>
+                    <AboutComponent profile={this.state.profile}/>
                 )
             }
             case this.state.community:{
@@ -92,6 +92,12 @@ class Profile extends React.Component{
             }            
         }
     }
+    renderFollowButton(){
+        if(this.state.userID !== (new Cookies()).get("ID"))
+        return(
+            <PrimaryButton text='Follow'/>
+        )
+    }
     render(){
         
         return(
@@ -99,7 +105,7 @@ class Profile extends React.Component{
                 <div className="">
                     <div className="profile_component_container">
                         <div className='profile_background_image_container'>
-                            <img className='profile_background_image_style' alt="BACKGROUD"src= {this.state.profile.imageURL} />
+                            <img className='profile_background_image_style' alt="BACKGROUD"src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.imageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
                         </div>
                         <div className='profile_action_bar_container'>
                             <div className="profile_persona_container">
@@ -107,22 +113,20 @@ class Profile extends React.Component{
                                     {...{
                                         imageUrl: this.state.profile.imageURL,
                                         text: this.state.profile.name,
-                                        secondaryText:  this.state.profile.email
+                                        secondaryText:  this.state.profile.email,
+                                        tertiaryText: this.state.profile.phoneNumber,
                                     }}
-                                    size={PersonaSize.size120}
+                                    size={PersonaSize.size72}
                                     imageAlt="USER"
                                 
                                 />
                             </div>
                             <div className="profile_action_bar_buttons_container">
                                 
+                                {this.renderFollowButton()}
                                 {this.state.userID !== (new Cookies()).get("ID")?
-                                    <PrimaryButton text='Follow'/>:
-                                    <PrimaryButton text='Edit Profile'/>
-                                }
-                                {this.state.userID !== (new Cookies()).get("ID")?
-                                    <PrimaryButton text='Send Message'/>:
-                                    <PrimaryButton text='Sign Out' onClick={()=> this.signout()}/>
+                                    <DefaultButton text='Send Message'/>:
+                                    <DefaultButton text='Sign Out' onClick={()=> this.signout()}/>
                                 }                            
                                 {this.state.community === true ? <PrimaryButton text='Communities'/> : <DefaultButton text='Communities' href={'/profile/'+this.state.profile.email+'/3'}/>}
                                 {this.state.followers === true ? <PrimaryButton text='Followers'/> : <DefaultButton text='Followers' href={'/profile/'+this.state.profile.email+'/1'}/> }

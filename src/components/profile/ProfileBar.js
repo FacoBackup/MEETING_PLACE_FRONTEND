@@ -110,7 +110,7 @@ class ProfileBar extends Component{
             return(
                 <div className="profile_bar_container">
                    
-                        <img className="profile_bar_background_image" alt="BACKGROUD IMG"src= {(this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
+                        <img className="profile_bar_background_image" alt="BACKGROUD" src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ?  this.state.profile.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
                    
               
                     
@@ -150,7 +150,7 @@ class ProfileBar extends Component{
                     
                         <Persona
                             {...{
-                                imageUrl: (this.state.profile.imageURL === null) ?  this.state.profile.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                imageUrl: this.state.profile.imageURL,
                                 text: this.state.profile.name,
                                 secondaryText: this.state.profile.email
                             }}

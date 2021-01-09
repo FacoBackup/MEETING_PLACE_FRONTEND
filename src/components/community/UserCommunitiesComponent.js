@@ -57,7 +57,7 @@ class UserCommunitiesComponent extends React.Component{
         return(
             <div>
             
-                <div className="social_component_container" >
+                <div className="user_communities_container" >
                     <div className="socail_info_container">
                     <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Communities</p>
                     {this.state.communities.map((community)=> 

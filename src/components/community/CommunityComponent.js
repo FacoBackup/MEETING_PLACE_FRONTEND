@@ -16,16 +16,20 @@ class CommunityComponent extends React.Component{
             communityID: params.communityID,
             membersOption: false,
             topic: true,
+            date:new Date(),
             members:[]
         }
     }
+
     componentDidMount(){
         this.fetchData()
     }
+  
+
     async fetchData(){
         await axios({
             method: 'patch',
-            url: Host()+'api/get/community',
+            url: Host()+'api/get/community/by/id',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 communityID: this.state.communityID
@@ -39,6 +43,12 @@ class CommunityComponent extends React.Component{
     }
 
     async fetchMembers(){
+        
+        this.setState({
+            membersOption: true,
+            topic:false
+        })
+  
         await axios({
             method: 'patch',
             url: Host()+'api/get/community/related/users',
@@ -56,14 +66,15 @@ class CommunityComponent extends React.Component{
     renderOptions(){
         switch(true){
             case this.state.membersOption:{
+                
                 return(
                     <div className="community_content_container">
                         {(this.state.members === []) ? <div></div> : this.state.members.map((member) => (
                             <div className='persona_container'>
                                     <Persona
                                         {...{
-                                            imageUrl: member.imageURL,
-                                            text: member.name,
+                                            imageUrl: member.userImageURL,
+                                            text: member.userName,
                                             secondaryText:  member.role
                                         }}
                                         size={PersonaSize.size48}
@@ -78,7 +89,7 @@ class CommunityComponent extends React.Component{
             }
             case this.state.topic:{
                 return(
-                    <div className="community_content_container">
+                    <div >
                         <TopicComponent community={true} token={this.state.token} timeline={false} subjectID={this.state.communityID}/>
                     </div>
                 )
@@ -95,25 +106,25 @@ class CommunityComponent extends React.Component{
             return(
                 <div className="community_component_container">
                     <div className="community_image_container">
-                        <img className='profile_background_image_style' alt="BACKGROUD"src={this.state.community.backgroundImageURL}/>
+                        <img className='profile_background_image_style' alt="BACKGROUD" src= {(this.state.community.imageURL !== null && typeof this.state.community.imageURL !== 'undefined') ?  this.state.community.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
+                        
                     </div>
                     <div className="community_action_bar">
                         <Persona
                             {...{
                                 imageUrl: this.state.community.imageURL,
                                 text: this.state.community.name,
-                                secondaryText:  this.state.community.about
+                                secondaryText: this.state.community.about,
+                                tertiaryText: "Your're a " + this.state.community.role + " here"
                             }}
-                            size={PersonaSize.size48}
+                            size={PersonaSize.size72}
                             imageAlt="Community"
                         />
-                        <h6>Your are a {this.state.community.role} in this community.</h6>
-                        <div>
+                        
+                        <div className="community_action_bar_buttons_container">
                             <DefaultButton text='Home' href='/' />
                             {this.state.membersOption === true ? <PrimaryButton text='Members And Followers'/> : <DefaultButton text='Members And Followers' onClick={()=>
-                                this.setState({
-                                    membersOption: true
-                                })
+                                this.fetchMembers()
                             }/> }
 
                             {this.state.topic === true?  <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' onClick={()=>this.setState({
@@ -129,9 +140,10 @@ class CommunityComponent extends React.Component{
             )
         }  
         else{
-            alert("Some error ocurred")
+            // alert("Some error ocurred")
             return(
-                <Redirect to='/'/>
+                <p>error</p>
+                // <Redirect to='/'/>
             )
         } 
             
