@@ -8,37 +8,27 @@ import Dexie from "dexie";
 import Host from '../../Host'
 
 class ProfileBar extends Component{
-    constructor(){
+    constructor(params){
         super()
         this.state={
             profile: {},
-            cookies: new Cookies()
-            // about: "",
-            // nationality: '',
-            // birthCity: '',
-            // multiline: false,
-            // editMode: false,
-            // theme: getTheme()
+            followers: params.followers,
+            following: params.following,
+            communities: params.communities,
+            home: params.home,
+            about: params.about,
+            conversation: params.conversation,
+            topics: params.topics,
+            external: params.external,
+            search: params.search,
+            timeline: params.timeline,
+            communityOptions: params.communityOptions
         }
     }
     componentDidMount(){
         this.fetchData()
     }
 
-    // handleChangeAbout(event){
-    //     this.setState({
-    //         about: event.target.value
-    //     })   
-    //     const newMultiline = this.state.about.length > 50;
-    //     if (newMultiline !== this.state.multiline)
-    //         this.toggleMultiline();
-     
-    // }
-    // handleChange(event){
-    //     this.setState({
-    //         [event.target.name] : event.target.value
-    //     })   
-    // }
     async fetchData(){
         if(typeof (new Cookies()).get("JWT") !== 'undefined'){
             await axios({
@@ -63,172 +53,55 @@ class ProfileBar extends Component{
         window.location.reload()
     }
 
-    // editProfileMode(){
-        
-     
-    //     this.setState({
-    //         editMode: !this.state.editMode
-    //     })
-    
-    // }
-
-    // toggleMultiline(){
-    //     this.setState({
-    //         multiline: !this.state.multiline
-    //     })
-    // }
-    // getErrorMessageAbout (value) {
-    //     return value.length < 512 ? '' : `Input value must be less than 512 characters.`;
-    // };    
-    
-    // getErrorMessage (value) {
-    //     return value.length < 128 ? '' : `Input value must be less than 128 characters.`;
-    // };
-
-    // submitChanges = async() => {
-    //     await axios({
-    //         method: 'patch',
-    //         url: 'http://localhost:8080/api/profile',
-    //         headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
-    //         data:{
-    //             about : this.state.about,
-    //             nationality : this.state.nationality,
-    //             city: this.state.birthCity,
-    //             name: null,
-    //             imageURL: null
-    //         }
-    //     }).then(()=>{
-    //         this.editProfileMode()
-    //         this.fetchData()
-    //     })
-    //     .catch()
-    
-    // }
-
     render(){
         
-            return(
-                <div className="profile_bar_container">
-                    <div className="profile_bar_background_image_container">
-                        <img className="profile_bar_background_image" alt="BACKGROUD" src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ?  this.state.profile.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
-                    </div>
-            
-              
-                    
-                       
-                                {/* <TextField label="About You" readOnly placeholder={this.state.profile.about} />
-                                <TextField label="Your Phone Number" readOnly placeholder={this.state.profile.phoneNumber} />
-                                <TextField label="Your Nationality" readOnly placeholder={this.state.profile.nationality} />
-                                <TextField label="Your city of birth" readOnly placeholder={this.state.profile.cityOfBirth} />
-                     */}
-                        {/* <div  className="profile_qrcode_container">
-                        <QRcode 
-                                value= {"BEGIN:VCARD" +
-                                "VERSION:4.0" +
-                                "N:{profile.name}" +
-                                "FN:"+ this.state.profile.name +
-                                "TEL;TYPE#work,voice;VALUE#uri:tel:" + this.state.profile.phoneNumber +
-                                "ADR;TYPE#HOME;LABEL#" + this.state.profile.nationality + "/" + this.state.profile.cityOfBirth +
-                                "EMAIL:" + this.state.profile.email + "END:VCARD"}
-                                />
-                        </div> */}
-                    
-                    
-                    <div className="profile_bar_buttons_container">
-                            <DefaultButton text="Home"  href='/' />
-                            <DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/1'}/>
-                            <DefaultButton text ="Following" href={'/profile/'+this.state.profile.email+'/2'}/>
-                            <DefaultButton  text ="Search User"  href="/search_user"/>
-                            <DefaultButton  text ="My Profile"  href={"/profile/"+(new Cookies()).get("ID") + '/0' }/>
-                            <DefaultButton  text ="Communities"  href="/communities"/>
-
-                            {/* <DefaultButton  text ="Edit Profile"  onClick={this.editProfileMode}/> */}
-
-                            
-                            <PrimaryButton text="Sign out"  onClick={() => this.signout()} />
-                    </div>
-                    <div className="profile_bar_card_container" >
-                    
-                        <Persona
-                            {...{
-                                imageUrl: this.state.profile.imageURL,
-                                text: this.state.profile.name,
-                                secondaryText: this.state.profile.email
-                            }}
-                            size={PersonaSize.size48}
-                            imageAlt="Conversation picture"
-                        />
-                        {/* <p style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold, gridRow:'1' , gridColumn:'1'}}>{this.state.profile.name}</p>
-                        
-                        <PrimaryButton text="Sign out" style={{ gridColumn:'2', width:'1%'}} onClick={this.signout} /> */}
-                    </div>
+        return(
+            <div className="profile_bar_container">
+                <div className="profile_bar_background_image_container">
+                    <img className="profile_bar_background_image" alt="BACKGROUD" src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ?  this.state.profile.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
                 </div>
-            );  
-        
-        // else{
-        //     return(
-        //         <div className="profile_container">
-        //         <div className="profile_background_image_container">
-        //             <img style={{borderRadius:'8px', width:'17.5vw'}} alt="BACKGROUND IMG" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgICAgICAgHBwcHBwoHBwcHBw8ICQYKFREWFhURExMYHCggGBoxGxMTITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0ODg0NEisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKsBJwMBIgACEQEDEQH/xAAWAAEBAQAAAAAAAAAAAAAAAAAAAQb/xAAWEAEBAQAAAAAAAAAAAAAAAAAAgRH/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQcF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AzoDitUCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIKgCoAAAAAKIAAAKgAAAAKAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/Z"/>
-        //         </div>
-        //         <div className="profile_persona_container"> 
-        //             <Persona
-        //                 {...{
-        //                     text: this.state.profile.name,
-        //                     secondaryText: this.state.profile.email,
-        //                     imageUrl: this.state.profile.imageURL
-        //                 }}
-        //                 size={PersonaSize.size56}
-        //                 imageAlt="Profile Image"
-        //             />
-        //         </div>
-        //         <div className="profile_edit_info">
+                    {/* <div  className="profile_qrcode_container">
+                    <QRcode 
+                            value= {"BEGIN:VCARD" +
+                            "VERSION:4.0" +
+                            "N:{profile.name}" +
+                            "FN:"+ this.state.profile.name +
+                            "TEL;TYPE#work,voice;VALUE#uri:tel:" + this.state.profile.phoneNumber +
+                            "ADR;TYPE#HOME;LABEL#" + this.state.profile.nationality + "/" + this.state.profile.cityOfBirth +
+                            "EMAIL:" + this.state.profile.email + "END:VCARD"}
+                            />
+                    </div> */}
                 
-                       
-        //                 <MaskedTextField label="Phone number" mask="(99) 99999-9999" />
-                       
-        //                 <TextField
-        //                     label="About you"
-        //                     placeholder={(this.state.profile.about)}
-        //                     multiline={this.state.multiline}
-        //                     description="Max length is 512 characters"
-        //                     onChange={this.state.handleChangeAbout}
-        //                     onGetErrorMessage={this.state.getErrorMessageAbout}
-        //                 />
-                    
-        //                 <TextField
-        //                     label="Your nationality" 
-        //                     placeholder={this.state.profile.nationality} 
-        //                     description="Max length is 128 characters"
-        //                     name = "nationality"
-        //                     onChange={this.handleChange}
-        //                     onGetErrorMessage={this.getErrorMessage}
-        //                 />
-                    
-        //                 <TextField
-        //                         label="Your city of birth" 
-        //                         placeholder={this.state.profile.cityOfBirth} 
-        //                         description="Max length is 128 characters"
-        //                         name = "birthCity"
-        //                         onChange={this.handleChange}
-        //                         onGetErrorMessage={this.getErrorMessage}
-        //                     />
-    
-        //         </div>
-        //         <div>
-        //             <div className="profile_edit_info_buttons">
-        //                 <DefaultButton text ="Cancel" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto'}} onClick={this.editProfileMode}/>
-        //                 <PrimaryButton text ="Save modifications" style={{ fontSize: FontSizes.size16, fontWeight: FontWeights.semibold,width:'auto', height:'auto' }} onClick={this.submitChanges}/>    
-        //             </div>
                 
-        //         </div>
+                <div className="profile_bar_buttons_container">
+                        
+                        {this.state.timeline === true? <PrimaryButton text ="Home"/>:<DefaultButton text ="Home"  href='/'/>} 
+                        {this.state.followers === true? <PrimaryButton text ="Followers"/>:<DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/1'}/>} 
+                        {this.state.following === true? <PrimaryButton text ="Following"/>:<DefaultButton text ="Following"  href={'/profile/'+this.state.profile.email+'/2'}/>} 
+                        {this.state.search === true? <PrimaryButton text ="Search User"/>:<DefaultButton text ="Search User"  href='/search_user'/>} 
+                        {this.state.topics === true? <PrimaryButton text ="My Topics"/>:<DefaultButton text ="My Topics"  href={'/profile/'+(new Cookies()).get("ID")+'/0'}/>} 
+                        {this.state.communities === true? <PrimaryButton text ="Communities"/>:<DefaultButton text ="Communities"  href={'/profile/'+this.state.profile.email+'/3'}/>} 
+                        {this.state.communityOptions === true? <PrimaryButton text ="Community Options"/>:<DefaultButton text ="Community Options"  href={'/communities'}/>} 
+                        {this.state.about === true? <PrimaryButton text ="About Me"/>:<DefaultButton text ="About Me"  href={'/profile/'+this.state.profile.email+'/4'}/>} 
+                        <DefaultButton text="Sign out"  onClick={() => this.signout()} />                    
+                        {/* <DefaultButton  text ="Communities"  href="/communities"/>         */}
+                        
+                </div>
+                <div className="profile_bar_card_container" >
                 
-        //     </div>
-        //     )
-        // }
-    }
- 
-       
+                    <Persona
+                        {...{
+                            imageUrl: this.state.profile.imageURL,
+                            text: this.state.profile.name,
+                            secondaryText: this.state.profile.email
+                        }}
+                        size={PersonaSize.size48}
+                        imageAlt="Conversation picture"
+                    />
+                </div>
+            </div>
+        );  
+    }   
 }
 
 export default ProfileBar;

@@ -1,19 +1,19 @@
-.community_component_container{
+.dedicated_component_container{
     display: grid;
     row-gap: 1vh;
     width: 100%;
     margin: auto;
 }
-.community_image_container{
+.dedicated_image_container{
     overflow: hidden;
     border-radius: 8px;
     height: 40vh;
 }
-.community_image_style{
+.dedicated_image_style{
     width: 100%;
     
 }
-.community_action_bar{
+.dedicated_action_bar{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,12 +21,12 @@
     border-radius: 8px;
     padding: 1vh;
 }
-.community_action_bar_buttons_container{
+.dedicated_action_bar_buttons{
     display: flex;
     justify-content: space-between;
     width: 40%;
 }
-.community_content_container{
+.dedicated_content_container{
     background-color: white;
     border-radius: 8px;
     padding-bottom: 2vh;

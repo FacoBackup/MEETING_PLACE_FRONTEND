@@ -45,7 +45,7 @@ class CommunityOptions extends React.Component{
                         </div>
                       
                         <div className="left_components">
-                            <ProfileBar/>
+                            <ProfileBar communityOptions={true}/>
                         </div>
                         <div  className="right_components" >
                             <Conversations/>
@@ -75,7 +75,7 @@ class CommunityOptions extends React.Component{
                         </div>
                       
                         <div className="left_components">
-                            <ProfileBar/>
+                            <ProfileBar communityOptions={true}/>
                         </div>
                         <div  className="right_components" >
                             <Conversations/>

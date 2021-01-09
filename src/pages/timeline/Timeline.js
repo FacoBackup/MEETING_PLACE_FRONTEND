@@ -19,7 +19,7 @@ class Timeline extends Component{
               <TopicComponent token={( new Cookies()).get("JWT")} timeline={true} subjectID={( new Cookies()).get("ID")} community={false}/>
             </div>
             <div className="left_components">
-              <ProfileBar/>
+              <ProfileBar timeline={true}/>
             </div>
             <div  className="right_components" >
               <Conversations/>

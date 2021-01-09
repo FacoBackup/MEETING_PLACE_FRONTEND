@@ -41,7 +41,7 @@ class Chat extends Component{
             return(
                 <div className="page_container">
                     
-                    <div style={{backgroundColor: NeutralColors.white }} className="left_components">    
+                    <div className="left_components">    
                         <ProfileBar/>
                     
                     </div>

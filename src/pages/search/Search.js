@@ -16,7 +16,7 @@ class Search extends Component{
             <UserSearch token={new Cookies().get("JWT")}/>
           </div>
           <div className="left_components">
-            <ProfileBar/>
+            <ProfileBar search={true}/>
           </div>
           <div  className="right_components" >
             <Conversations/>

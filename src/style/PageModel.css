@@ -33,14 +33,18 @@
 }
 .modal_top_component{
     grid-row: 2;
+    width: 500px;
     margin: auto;
 }
 .modal_middle_component{
     grid-row: 3;
+    width: 200px;
     margin: auto;
 }
 .modal_bottom_component{
     grid-row: 4;
+    width: 350px;
+    margin: auto;
 }
 .right_components{
     border-radius: 8px;

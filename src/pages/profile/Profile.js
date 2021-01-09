@@ -1,7 +1,8 @@
-import "./ProfileStyle.css"
+// import "./ProfileStyle.css"
 import React from 'react';
 import Cookies from 'universal-cookie';
 import "../../style/PageModel.css"
+import "../../style/DedicatedPagesStyle.css"
 import Conversations from "../../components/conversations/ConversationBar"
 import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
@@ -13,6 +14,7 @@ import Following from '../../components/social/following/Following'
 import UserCommunitiesComponent from '../../components/community/UserCommunitiesComponent'
 import Dexie from "dexie";
 import Host from '../../Host'
+import ProfileBar from '../../components/profile/ProfileBar'
 
 class Profile extends React.Component{
     constructor({match}){
@@ -72,7 +74,8 @@ class Profile extends React.Component{
             }
             case this.state.topics:{
                 return(
-                    <TopicComponent community={false} timeline={false} subjectID={this.state.userID} token={(new Cookies()).get('JWT')}/>
+                   
+                    <TopicComponent community={false} timeline={false} subjectID={this.state.userID} topics={true} token={(new Cookies()).get('JWT')}/>
                 )
             }
             case this.state.aboutOption:{
@@ -87,7 +90,8 @@ class Profile extends React.Component{
             }
             default:{
                 return(
-                    <TopicComponent community={false} timeline={false} subjectID={this.state.userID} token={(new Cookies()).get('JWT')}/>
+                    <TopicComponent community={false} timeline={false} subjectID={this.state.userID} topics={true} token={(new Cookies()).get('JWT')}/>
+                   
                 )
             }            
         }
@@ -95,20 +99,39 @@ class Profile extends React.Component{
     renderFollowButton(){
         if(this.state.userID !== (new Cookies()).get("ID"))
         return(
-            <PrimaryButton text='Follow'/>
+            <div >
+                
+                <DefaultButton text='Send Message'/>
+                <PrimaryButton text='Follow'/>
+            </div>
+            
         )
+    }
+
+    renderProfileBar(){
+        if(this.state.userID === (new Cookies()).get("ID"))
+            return(
+                <ProfileBar followers={this.state.followers} following={this.state.following} topics={this.state.topics} about={this.state.aboutOption} communities={this.state.community}/>
+            )
+        else
+            return(
+                <ProfileBar/>
+            )
     }
     render(){
         
         return(
             <div>
-                <div className="">
-                    <div className="profile_component_container">
-                        <div className='profile_background_image_container'>
-                            <img className='profile_background_image_style' alt="BACKGROUD"src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.imageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
+                <div className="left_components">
+                    {this.renderProfileBar()}
+                </div>
+                <div className="center_component">
+                    <div className="dedicated_component_container">
+                        <div className='dedicated_image_container'>
+                            <img className='dedicated_image_style' alt="BACKGROUD"src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.imageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
                         </div>
-                        <div className='profile_action_bar_container'>
-                            <div className="profile_persona_container">
+                        <div className='dedicated_action_bar'>
+                            <div>
                                 <Persona
                                     {...{
                                         imageUrl: this.state.profile.imageURL,
@@ -121,10 +144,10 @@ class Profile extends React.Component{
                                 
                                 />
                             </div>
-                            <div className="profile_action_bar_buttons_container">
+                            <div className="dedicated_action_bar_buttons">
                                 
                                 {this.renderFollowButton()}
-                                {this.state.userID !== (new Cookies()).get("ID")?
+                                {/* {this.state.userID !== (new Cookies()).get("ID")?
                                     <DefaultButton text='Send Message'/>:
                                     <DefaultButton text='Sign Out' onClick={()=> this.signout()}/>
                                 }                            
@@ -134,16 +157,14 @@ class Profile extends React.Component{
                                 {this.state.topics === true ? <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' href={'/profile/'+this.state.profile.email+'/0'}/>}
                                 {this.state.aboutOption === true ? <PrimaryButton text='About'/> : <DefaultButton text='About' href={'/profile/'+this.state.profile.email+'/4'}/>}
         
-                                <DefaultButton text='Home' href='/'/>
+                                <DefaultButton text='Home' href='/'/> */}
                             </div>
                         </div>
                         <div >
                             {this.optionSelect()}                            
                         </div>
                     </div>
-                    
                 </div>
-             
                 <div className="right_components">
                     <Conversations />
                 </div>

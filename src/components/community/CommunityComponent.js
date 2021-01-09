@@ -1,11 +1,10 @@
 import React from 'react'
-import "./CommunityComponentStyle.css"
 import axios from 'axios'; 
-import { Redirect } from "react-router-dom";
 import TopicComponent from '../topics/TopicComponent'
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
+import "../../style/DedicatedPagesStyle.css"
 
 class CommunityComponent extends React.Component{
     constructor(params){
@@ -68,7 +67,7 @@ class CommunityComponent extends React.Component{
             case this.state.membersOption:{
                 
                 return(
-                    <div className="community_content_container">
+                    <div className="dedicated_content_container">
                         {(this.state.members === []) ? <div></div> : this.state.members.map((member) => (
                             <div className='personas_container'>
                                     <Persona
@@ -104,12 +103,12 @@ class CommunityComponent extends React.Component{
     render(){
         if(typeof this.state.community.name !== 'undefined'){
             return(
-                <div className="community_component_container">
-                    <div className="community_image_container">
-                        <img className='profile_background_image_style' alt="BACKGROUD" src= {(this.state.community.imageURL !== null && typeof this.state.community.imageURL !== 'undefined') ?  this.state.community.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
+                <div className="dedicated_component_container">
+                    <div className="dedicated_image_container">
+                        <img className='dedicated_image_style' alt="BACKGROUD" src= {(this.state.community.imageURL !== null && typeof this.state.community.imageURL !== 'undefined') ?  this.state.community.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
                         
                     </div>
-                    <div className="community_action_bar">
+                    <div className="dedicated_action_bar">
                         <Persona
                             {...{
                                 imageUrl: this.state.community.imageURL,
@@ -121,7 +120,7 @@ class CommunityComponent extends React.Component{
                             imageAlt="Community"
                         />
                         
-                        <div className="community_action_bar_buttons_container">
+                        <div className="dedicated_action_bar_buttons">
                             <DefaultButton text='Home' href='/' />
                             {this.state.membersOption === true ? <PrimaryButton text='Members And Followers'/> : <DefaultButton text='Members And Followers' onClick={()=>
                                 this.fetchMembers()

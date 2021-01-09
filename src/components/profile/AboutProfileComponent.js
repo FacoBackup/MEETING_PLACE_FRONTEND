@@ -91,11 +91,11 @@ class AboutProfileComponent extends Component{
                 <div className="about_profile_component_container">
                     <div className="profile_fields_container">
                         <p>Background Image</p>
-                        <input type="file" name="backgroundImageURL"  onChange={event => this.getFile(event.target.files,'backgroundImageURL' )}/>
+                        <input type="file"  style={{width:'50%'}} name="backgroundImageURL"  onChange={event => this.getFile(event.target.files,'backgroundImageURL' )}/>
                     </div>
                     <div className="profile_fields_container">
                         <p>Profile Pic</p>
-                        <input type="file" name="imageURL"  onChange={event => this.getFile(event.target.files, 'imageURL')}/>
+                        <input type="file"  style={{width:'50%'}} name="imageURL"  onChange={event => this.getFile(event.target.files, 'imageURL')}/>
                     </div>
                     {this.state.editAbout === true ?
                          <div className="profile_fields_container"> 

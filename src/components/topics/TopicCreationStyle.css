@@ -6,10 +6,10 @@
 .topic_container{
     background-color: white;
     border-radius: 8px;
-    display: block;
-    margin-bottom: 2vh;
-    padding-top: 2vh;
     padding-bottom: 2vh;
+    margin-bottom: 1vh;
+    padding-top: 2vh;
+   
     
 }
 .topic_fields_container{
@@ -22,6 +22,9 @@
 }
 .topic_creator_persona_container{
     width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: .8vw;
     border-radius: 8px;
     background-color:rgba(210, 208, 206, .5);

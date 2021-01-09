@@ -6,6 +6,9 @@ import axios from 'axios';
 import Dexie from "dexie";
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
+import Cookies from 'universal-cookie';
+
+
 class TopicComponent extends React.Component{
     
     constructor(params){
@@ -19,28 +22,26 @@ class TopicComponent extends React.Component{
             topics: []
         }
     }
-    componentDidMount(){
+    componentDidMount(){ //here
         this.fetchData()
     }
-    setupDB(){      
-        if(this.state.db.isOpen() === false){
-          
-            this.state.db.version(1).stores({
-                topics: "id,header,body,approved, creatorID, mainTopicID, creationDate, communityID, imageURL"
-            })
-        }
-      }
     
     async setTopics(){      
         this.setState({
-            topics: await this.state.db.topics.where('creatorID').equals(this.state.subjectID).sortBy('creationDate')
+            topics: await (this.state.community === true ? this.state.db.topics.where("communityID").equals(this.state.subjectID).sortBy('creationDate') : this.state.db.topics.where("creatorID").equals(this.state.subjectID)).sortBy('creationDate')
         })        
     }
     async insertTopics(res){
-   
+        console.log("----->"+JSON.stringify(res))
         this.state.db.transaction('rw', this.state.db.topics, async() => {
+            
             res.forEach(topic => {
+                if(this.state.timeline === true){
+
+                }
+            
                 const value = this.state.db.topics.where('id').equals(topic.id).toArray()
+                
                 if(value.length === 0 || typeof value.length === 'undefined')
                     this.state.db.topics.add({
                         id: topic.id, 
@@ -51,40 +52,43 @@ class TopicComponent extends React.Component{
                         mainTopicID: topic.mainTopicID, 
                         creationDate: topic.creationDate, 
                         communityID: topic.communityID,
-                        imageURL: topic.imageURL 
+                        imageURL: topic.imageURL,
+                        subjectName: topic.subjectName,
+                        communityName: topic.communityName,
+                        subjectImageURL: topic.subjectImageURL
                     })
             });
         }).catch(error=>console.log(error))
        
     }
-    async fetchData(){
-        console.log("TOPIC -> " + JSON.stringify(this.state.topics))
+    async fetchData(){  
+        console.log("VALUES FOUND IN TOPICS -> " + JSON.stringify(this.state.topics))
         if(this.state.db.isOpen() === false){
-                
-            this.setupDB()
-            this.state.db.open().catch((error) => {
-                console.log(error)
+            this.state.db.version(1).stores({
+                messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone, receiverAsUserID",
+                topics: "id,header,body,approved, creatorID, mainTopicID, creationDate, communityID, imageURL,subjectName, communityName, subjectImageURL"
             }) 
         }
-
-        const data = await this.state.db.topics.toArray()
-
-        
+        await this.state.db.open().catch((error) => {
+            console.log(error)
+        }) 
+        const data = await (this.state.community === true ? this.state.db.topics.where("communityID").equals(this.state.subjectID).toArray() : this.state.db.topics.where("creatorID").equals(this.state.subjectID)).toArray()
+        //here
         await axios({
-            method: (this.state.topics === true ? 'get':'patch'),
-            url: (this.state.topics === true ?(data.lenght === 0 || typeof data.lenght === 'undefined' ? Host()+'api/timeline/all': Host()+'api/timeline/new') : Host()+"api/get/topics/subject"),
+            method: (this.state.topics === true ? 'patch': 'get'),
+            url: (this.state.topics === true ? Host()+"api/get/topics/subject" : (data.lenght === 0 || typeof data.lenght === 'undefined' ? Host()+'api/timeline/all': Host()+'api/timeline/new')),
             headers: {"Authorization": 'Bearer ' +this.state.token},
             data:{
-                subjectID:this.state.subjectID,
-                community: this.state.community                
+                subjectID: (this.state.timeline === true) ? (new Cookies()).get("ID") : this.state.subjectID,
+                community: (this.state.timeline === true) ? false : this.state.community   
             }
             
         }).then(res=>{
-        
+            console.log("VALUES FOUND IN RESPONSE -> " + JSON.stringify(res.data))
             if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){
                 this.insertTopics(res.data)
             }
-            this.setMessages()
+            this.setTopics()
         })
         .catch(error => {
             console.log(error)
@@ -95,19 +99,20 @@ class TopicComponent extends React.Component{
     render(){
         return(
             <div>
-                <div className="topic_container">
+                <div >
                     {this.state.topics === [] ? <div></div> : this.state.topics.map(topic => (
-                        <div>
+                        <div className="topic_container"> 
                             <div className="topic_creator_persona_container">
                                 <Persona
                                     {...{
                                         imageUrl:(topic.subjectImageURL === null) ?  topic.subjectImageURL.imageURL :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
                                         text: topic.subjectName,
-                                        secondaryText: (topic.communityID !== null ? topic.communityName : topic.creatorID)
+                                        secondaryText: (typeof topic.communityID === 'undefined' ? topic.creatorID :  topic.communityName)
                                     }}
                                     size={PersonaSize.size48}
                                     imageAlt="User"
                                 />
+                                <p style={{ fontSize: FontSizes.size14, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Sent on: {(new Date(topic.creationDate)).toLocaleString()}</p>
                             </div>
                             <div className="topic_fields_container">
                                 <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{topic.header}</p>
@@ -115,7 +120,11 @@ class TopicComponent extends React.Component{
                             </div>
                             <div className="topic_image_container">
                                 <img style={{borderRadius:'8px', width:'100%', height: '100%'}}alt="Topic" src={ (topic.imageURL !== null) ? topic.imageURL:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU"}/>
+                            
                             </div>
+                            {/* <div style={{textAlign:'center'}}>
+                              
+                            </div> */}
                             <div className="topic_buttons_container">
                                 <DefaultButton text="Like" disabled={true}/> 
                                 <DefaultButton text="Dislike" disabled={true}/> 

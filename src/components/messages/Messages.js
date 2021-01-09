@@ -11,6 +11,7 @@ import Dexie from "dexie";
 import Host from '../../Host'
 import { Redirect } from 'react-router-dom';
 
+
 class Messages extends React.Component{
     constructor(params){
         super()
@@ -30,15 +31,7 @@ class Messages extends React.Component{
         }
         this.handleChange = this.handleChange.bind(this)
     }
-    
-    setupDB(){
-        if(this.state.db.isOpen() === false){
-            
-            this.state.db.version(1).stores({
-                messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone, receiverAsUserID"
-            })
-        }
-    }
+  
     
     componentDidMount(){
         this.timerID = setInterval(
@@ -113,13 +106,16 @@ class Messages extends React.Component{
           this.state.conversationContainer.current.scrollTo(0, scroll);
       };
     async FetchMessages(){
-        
+
         if(this.state.db.isOpen() === false){
-            this.setupDB()
-            this.state.db.open().catch((error) => {
-                console.log(error)
+            this.state.db.version(1).stores({
+                messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone, receiverAsUserID",
+                topics: "id,header,body,approved, creatorID, mainTopicID, creationDate, communityID, imageURL,subjectName, communityName, subjectImageURL"
             }) 
         }
+        await this.state.db.open().catch((error) => {
+            console.log(error)
+        }) 
 
         if(this.state.isGroup  === true){
             const data = await this.state.db.messages.where("conversationID").equals(this.state.conversationID).toArray()
