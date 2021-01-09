@@ -1,6 +1,6 @@
 import React from 'react';
 import "./TopicCreationStyle.css"
-import { DefaultButton,Modal, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton,Modal, PrimaryButton, Persona,PersonaSize } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
@@ -19,10 +19,44 @@ class TopicCreation extends React.Component{
             communityID: null,
             openModal: false,
             imageModal: false,
-            communityModal: false
+            communityModal: false,
+            date: new Date(),
+            selectedCommunity: {}
         }
         
         this.handleChange = this.handleChange.bind(this)
+    }
+
+    componentDidMount(){
+        
+        this.timerID = setInterval(
+            () => this.tick(),
+            1000
+        );
+        
+    }
+    
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+    tick() {
+        const parsedCommunity = (sessionStorage.getItem("SELECTED_COMMUNITY") !== null) ? JSON.parse(sessionStorage.getItem("SELECTED_COMMUNITY")): null
+        if(typeof this.state.selectedCommunity.communityID === 'undefined')
+            this.setState({
+                date: new Date(),
+                selectedCommunity: (parsedCommunity !== null) ? parsedCommunity: this.state.selectedCommunity,
+            },() => console.log("PARENT COMMUNITY -------------------------> " + JSON.stringify(this.state.selectedCommunity)));
+
+        if(typeof this.state.selectedCommunity.communityID !== 'undefined'){
+            sessionStorage.removeItem("SELECTED_COMMUNITY")
+            this.setState({
+        
+                communityModal:false,
+        
+            })
+        }
+            
     }
 
     handleChange(event){
@@ -58,8 +92,7 @@ class TopicCreation extends React.Component{
             }
         }).then(res=>{
   
-            if(typeof res.response !== 'undefined' && res.response.status === 201)
-                window.location.reload()
+            window.location.reload()
         })
         .catch(error => console.log(error))
     }
@@ -74,40 +107,71 @@ class TopicCreation extends React.Component{
             )
     }
 
+    renderSelectedCommunity(){
+        if(typeof this.state.selectedCommunity.communityID !== 'undefined')
+            return(
+                <div style={{marginTop:'1vh'}}>
+                    <h5 style={{textAlign:'center'}}>Selected Community</h5>
+                    <div className="personas_container">
+                    
+                       <Persona
+                            {...{
+                                imageUrl: (this.state.selectedCommunity.imageURL === null) ?  this.state.selectedCommunity.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                text: this.state.selectedCommunity.name,
+                                secondaryText: this.state.selectedCommunity.role
+                            }}
+                            size={PersonaSize.size48}
+                            imageAlt="Community picture"
+                            />
+                    </div>
+                </div>
+                
+            )
+    }
+
     modalRender(){
-        console.log("STATE -> " + JSON.stringify(this.state.imageModal))
-        if(this.state.imageModal === true)
+    
+        if(this.state.imageModal === true  && this.state.communityModal === false)
            return(
                 <Modal
-                // titleAriaId={"TESTE"}
+                titleAriaId={"TESTE"}
                 isOpen={true}
                 onDismiss={true}
                 isBlocking={false}
                 
                 containerClassName={"contentStyles.container"}
                 >
-                    <div className='modal_container'>
+                    <div className='modal_container' >
                         <div className="modal_title_component">
                             <h2 >Upload an image for your topic</h2>
                         </div>
-                        <div className="modal_top_component">
-                            <input type="file" name="file"  onChange={event => this.getFile(event.target.files)}/>
+                        <div className="modal_top_component" style={{display:'flex', justifyContent:'center'}}>
+                            <input type="file"  name="file"  onChange={event => this.getFile(event.target.files)}/>
                         </div>
                         <div className="modal_middle_component" >
                             {this.imageRender()}
                         </div>
-                        <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between', }}>
+                        <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between'}}>
+                            {this.state.imageURL === null ? 
                             <DefaultButton text="Cancel" onClick={()=> this.setState({
                                 imageModal: false,
                                 communityModal:false,
                                 openModal:false,
+                              
+                            })}/> : 
+                            <DefaultButton text="Remove Image" onClick={()=> this.setState({
+                                imageModal: false,
+                                communityModal:false,
+                                openModal:false,
                                 imageURL: null
-                            })}/>
+                            })}/>    
+                        }
                             
-                            <PrimaryButton text="Choose" onClick={()=>this.setState({
-                                    communityModal: false,
-                                    imageModal: false
-                                })}/>
+                            <PrimaryButton text="Choose" onClick={()=> this.setState({
+                                imageModal: false,
+                                communityModal:false,
+                                openModal:false
+                            })}/>
                         </div>
                     </div>
                 </Modal>
@@ -123,29 +187,26 @@ class TopicCreation extends React.Component{
                     //dragOptions={true}
                     containerClassName={"contentStyles.container"}
                     >
-                        <div className='modal_container'>
+                        <div className='modal_container' >
                             <div className="modal_title_component">
                                 <h2 >Post your topic in a community</h2>
                             </div>
                             <div className="modal_top_component" >
-                                <CommunitySearchComponent token ={this.state.token}/>
+                                <CommunitySearchComponent token ={this.state.token} isModal={true}/>
                             </div>
-                            <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between', }}>
+                            <div className="modal_bottom_component" style={{margin:'auto'}}>
                                 <DefaultButton text="Cancel" onClick={()=> this.setState({
                                     imageModal: false,
                                     communityModal:false,
                                     openModal:false,
                                     imageURL: null
                                 })}/>
-                                
-                                <PrimaryButton text="Choose" onClick={()=>this.setState({
-                                    communityModal: false
-                                })}/>
                             </div>
                         </div>
                     </Modal>
             )
     }
+
     render(){
         return(
             <div className="timeline_component_container">
@@ -172,7 +233,22 @@ class TopicCreation extends React.Component{
                     <div className="topic_creation_fields">
                         <TextField placeholder="Title" multiline resizable={false} name='title' onChange={this.handleChange}/>
                         <TextField  placeholder="Body" multiline autoAdjustHeight name='body' onChange={this.handleChange}/>    
-                        {this.imageRender()}
+                        {typeof this.state.selectedCommunity.communityID === 'undefined' ? 
+                            <div> 
+                                <div style={{marginBottom:'1vh'}}> 
+                                    {this.imageRender()}
+                                </div>
+                                
+                                {this.renderSelectedCommunity()}
+                            </div>:
+                             <div> 
+                                <div style={{marginBottom:'1vh'}}> 
+                                    {this.renderSelectedCommunity()}    
+                                </div>
+                                
+                                {this.imageRender()}
+                            </div>
+                            }
                     </div>
                     <div className="topic_creation_bottom_buttons">
                         <PrimaryButton text="Create" onClick={() => this.createTopic()}/> 

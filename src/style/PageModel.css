@@ -34,6 +34,7 @@
 .modal_top_component{
     grid-row: 2;
     width: 500px;
+
     margin: auto;
 }
 .modal_middle_component{

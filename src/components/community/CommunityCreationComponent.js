@@ -16,7 +16,7 @@ class CommunityCreationComponent extends React.Component{
             name: '',
             about:'',
             imageURL: null,
-            parentCommunity:{},
+            relatedCommunity:{},
             created: false,
             openModal: false,
             imageModal: false,
@@ -42,13 +42,13 @@ class CommunityCreationComponent extends React.Component{
 
     tick() {
         const parsedCommunity = (sessionStorage.getItem("SELECTED_COMMUNITY") !== null) ? JSON.parse(sessionStorage.getItem("SELECTED_COMMUNITY")): null
-        if(typeof this.state.parentCommunity.communityID === 'undefined')
+        if(typeof this.state.relatedCommunity.communityID === 'undefined')
             this.setState({
                 date: new Date(),
-                parentCommunity: (parsedCommunity !== null) ? parsedCommunity: this.state.parentCommunity,
-            },() => console.log("PARENT COMMUNITY -------------------------> " + JSON.stringify(this.state.parentCommunity)));
+                relatedCommunity: (parsedCommunity !== null) ? parsedCommunity: this.state.relatedCommunity,
+            },() => console.log("related COMMUNITY -------------------------> " + JSON.stringify(this.state.relatedCommunity)));
 
-        if(typeof this.state.parentCommunity.communityID !== 'undefined'){
+        if(typeof this.state.relatedCommunity.communityID !== 'undefined'){
             sessionStorage.removeItem("SELECTED_COMMUNITY")
             this.setState({
         
@@ -74,7 +74,7 @@ class CommunityCreationComponent extends React.Component{
             data:{
                 about : this.state.about,
                 name : this.state.name,
-                parentCommunityID: this.state.parentCommunity.communityID !== 'undefined' ? this.state.parentCommunity.communityID: null ,
+                relatedCommunityID: this.state.relatedCommunity.communityID !== 'undefined' ? this.state.relatedCommunity.communityID: null ,
                 imageURL: this.state.imageURL
             }
         }).then(()=>{
@@ -110,7 +110,7 @@ class CommunityCreationComponent extends React.Component{
             )
     }
     renderSelectedCommunity(){
-        if(typeof this.state.parentCommunity.communityID !== 'undefined')
+        if(typeof this.state.relatedCommunity.communityID !== 'undefined')
             return(
                 <div>
                     <h5 style={{textAlign:'center'}}>Selected Community</h5>
@@ -118,9 +118,9 @@ class CommunityCreationComponent extends React.Component{
                     
                        <Persona
                             {...{
-                                imageUrl: (this.state.parentCommunity.imageURL === null) ?  this.state.parentCommunity.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
-                                text: this.state.parentCommunity.name,
-                                secondaryText: this.state.parentCommunity.role
+                                imageUrl: (this.state.relatedCommunity.imageURL === null) ?  this.state.relatedCommunity.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                text: this.state.relatedCommunity.name,
+                                secondaryText: this.state.relatedCommunity.role
                             }}
                             size={PersonaSize.size48}
                             imageAlt="Community picture"
@@ -146,7 +146,7 @@ class CommunityCreationComponent extends React.Component{
                         <div className="modal_title_component">
                             <h2 >Upload an image for your topic</h2>
                         </div>
-                        <div className="modal_top_component">
+                        <div className="modal_top_component" style={{display:'flex', justifyContent:'center'}}>
                             <input type="file" name="file"  onChange={event => this.getFile(event.target.files)}/>
                         </div>
                         <div className="modal_middle_component" >
@@ -219,7 +219,7 @@ class CommunityCreationComponent extends React.Component{
                         <div className="community_creation_fields">
                             <TextField placeholder="Name" name='name' onChange={this.handleChange}/>
                             <TextField placeholder="About This Community" name='about' onChange={this.handleChange}/>
-                            {typeof this.state.parentCommunity.communityID === 'undefined' ? 
+                            {typeof this.state.relatedCommunity.communityID === 'undefined' ? 
                             <div> 
                                 {this.imageRender()}
                                 {this.renderSelectedCommunity()}
@@ -228,18 +228,18 @@ class CommunityCreationComponent extends React.Component{
                                 {this.renderSelectedCommunity()}
                                 {this.imageRender()}
                             </div>
-                        }
+                            }
                         </div>
                         <div className="community_creation_buttons">
                             {this.modalRender()}
-                            {(typeof this.state.parentCommunity.communityID === 'undefined') ? 
-                            <DefaultButton text="Parent Community" onClick={() => this.setState({
+                            {(typeof this.state.relatedCommunity.communityID === 'undefined') ? 
+                            <DefaultButton text="Related Community" onClick={() => this.setState({
                      
                                 imageModal:false,
                                 communityModal:true
                             })}/>: 
                             <DefaultButton text="Remove Community" onClick={() => this.setState({
-                                parentCommunity: {}
+                                relatedCommunity: {}
                             })}/> 
                             }
                             {this.state.imageURL === null ? 

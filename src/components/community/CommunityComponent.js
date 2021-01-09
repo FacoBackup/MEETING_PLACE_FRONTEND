@@ -16,7 +16,8 @@ class CommunityComponent extends React.Component{
             membersOption: false,
             topic: true,
             date:new Date(),
-            members:[]
+            members:[],
+            related: false
         }
     }
 
@@ -45,7 +46,8 @@ class CommunityComponent extends React.Component{
         
         this.setState({
             membersOption: true,
-            topic:false
+            topic:false,
+            related: false
         })
   
         await axios({
@@ -121,14 +123,21 @@ class CommunityComponent extends React.Component{
                         />
                         
                         <div className="dedicated_action_bar_buttons">
-                            <DefaultButton text='Home' href='/' />
+
                             {this.state.membersOption === true ? <PrimaryButton text='Members And Followers'/> : <DefaultButton text='Members And Followers' onClick={()=>
                                 this.fetchMembers()
                             }/> }
-
+                             {this.state.related === true ? <PrimaryButton text='Related Communities'/> : <DefaultButton text='Related Communities' onClick={()=>
+                                this.setState({
+                                    related:true,
+                                    topic: false,
+                                    membersOption: false
+                                })
+                            }/> }
                             {this.state.topic === true?  <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' onClick={()=>this.setState({
                                 topic: true,
-                                membersOption: false
+                                membersOption: false,
+                                related: false
                             })}/>                                
                             }
                         </div>

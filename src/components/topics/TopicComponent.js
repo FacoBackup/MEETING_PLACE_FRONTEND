@@ -28,8 +28,9 @@ class TopicComponent extends React.Component{
     
     async setTopics(){      
         this.setState({
-            topics: await (this.state.community === true ? this.state.db.topics.where("communityID").equals(this.state.subjectID).sortBy('creationDate') : this.state.db.topics.where("creatorID").equals(this.state.subjectID)).sortBy('creationDate')
+            topics:  this.state.community === true ? await this.state.db.topics.where("communityID").equals(this.state.subjectID).sortBy('creationDate') : await this.state.db.topics.where("creatorID").equals(this.state.subjectID).sortBy('creationDate')
         })        
+        console.log(JSON.stringify(this.state.topics))
     }
     async insertTopics(res){
         console.log("----->"+JSON.stringify(res))
@@ -72,7 +73,7 @@ class TopicComponent extends React.Component{
         await this.state.db.open().catch((error) => {
             console.log(error)
         }) 
-        const data = await (this.state.community === true ? this.state.db.topics.where("communityID").equals(this.state.subjectID).toArray() : this.state.db.topics.where("creatorID").equals(this.state.subjectID)).toArray()
+        const data =  this.state.community === true ? await this.state.db.topics.where("communityID").equals(this.state.subjectID).toArray() : await this.state.db.topics.where("creatorID").equals(this.state.subjectID).toArray()
         //here
         await axios({
             method: (this.state.topics === true ? 'patch': 'get'),
@@ -97,6 +98,7 @@ class TopicComponent extends React.Component{
 
     }
     render(){
+        
         return(
             <div>
                 <div >
