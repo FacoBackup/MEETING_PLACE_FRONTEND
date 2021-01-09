@@ -9,6 +9,7 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import Dexie from "dexie";
 import Host from '../../Host'
+import { Redirect } from 'react-router-dom';
 
 class Messages extends React.Component{
     constructor(params){
@@ -24,7 +25,8 @@ class Messages extends React.Component{
             isGroup: params.isGroup,
             date:new Date(),
             db:  new Dexie('api_web_db'),
-            conversationContainer: React.createRef()
+            conversationContainer: React.createRef(),
+            fetchedID: null
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -33,25 +35,44 @@ class Messages extends React.Component{
         if(this.state.db.isOpen() === false){
             
             this.state.db.version(1).stores({
-                messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone"
+                messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone, receiverAsUserID"
             })
         }
     }
     
     componentDidMount(){
-        
         this.timerID = setInterval(
             () => this.tick(),
             1000
         );
-        
     }
-    
+
+    async fetchConversationID(){
+        await axios({
+            method: 'patch',
+            url: Host()+'api/get/conversationID',
+            headers: {"Authorization": 'Bearer ' +this.state.token},
+            data: {
+                userID: this.state.receiverName
+            }
+        }).then(res=>{
+        
+            this.setState({
+                fetchedID: res.data
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        });
+    }
     componentWillUnmount() {
         clearInterval(this.timerID);
     }
 
     tick() {
+        if(this.state.fetchedID === null && (this.state.receiverName === this.state.conversationID))
+            this.fetchConversationID()
+
         this.FetchMessages();
         this.setState({
             date: new Date(),
@@ -68,22 +89,23 @@ class Messages extends React.Component{
         this.setState({
             messages: await this.state.db.messages.where('conversationID').equals(this.state.conversationID).sortBy('creationDate')
         })        
-        this.scrollToEnd();
+        if(this.state.conversationID !== this.state.receiverName)
+            this.scrollToEnd();
     }
 
     async insertMessages(res){
-   
+
             this.state.db.transaction('rw', this.state.db.messages, async() => {
                 res.forEach(message => {
                     const value = this.state.db.messages.where('id').equals(message.id).toArray()
-                    if(value.length === 0 || typeof value.length === 'undefined')
-                        this.state.db.messages.add({id: message.id, content: message.content,imageURL: message.imageURL, creatorID: message.creatorID, conversationID: message.conversationID, type: message.type, valid: message.valid , creationDate: message.creationDate,seenByEveryone: message.seenByEveryone })
+                    if((value.length === 0 || typeof value.length === 'undefined' ) && this.state.conversationID !== this.state.receiverName)
+                        this.state.db.messages.add({id: message.id, content: message.content,imageURL: message.imageURL, creatorID: message.creatorID, conversationID: message.conversationID, type: message.type, valid: message.valid , creationDate: message.creationDate,seenByEveryone: message.seenByEveryone ,receiverAsUserID: message.receiverAsUserID})
 
                 });
             }).catch(error=>console.log(error))
        
     }
-    scrollToEnd = () => {
+    scrollToEnd (){
         
         const scroll =
           this.state.conversationContainer.current.scrollHeight -
@@ -171,28 +193,60 @@ class Messages extends React.Component{
     }
 
     render(){    
-        return(
-            <div className="messages_component_container">  
-                <div className="messages_component" style={{backgroundColor: NeutralColors.white}} ref={this.state.conversationContainer}>
-                    {this.state.messages === [] ? <div></div> : this.state.messages.map((message,index) =>(
-                        <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
-                            {MessageBox(message.content, message.valid, message.creationDate,this.state.userID, message.creatorID, message.seenByEveryone)}
-                            <div ref={this.state.essagesEndRef} />
-                        </div>   
-                    ))}       
-                
-                </div>
-            
-                <div className="message_input_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
-                    <div className="message_input_box">
-                        <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
+    
+        if(this.state.receiverName !== this.state.conversationID && this.state.conversationID !== null)
+            return(
+                <div className="messages_component_container">  
+                    <div className="messages_component" style={{backgroundColor: NeutralColors.white}} ref={this.state.conversationContainer}>
+                        {this.state.messages === [] ? <div></div> : this.state.messages.map((message,index) =>(
+                            <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
+                                {MessageBox(message.content, message.valid, message.creationDate,this.state.userID, message.creatorID, message.seenByEveryone)}
+                                <div ref={this.state.essagesEndRef} />
+                            </div>   
+                        ))}       
+                    
                     </div>
-                    <div>
-                        <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
-                    </div>    
+                
+                    <div className="message_input_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
+                        <div className="message_input_box">
+                            <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
+                        </div>
+                        <div>
+                            <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
+                        </div>    
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        else{
+    
+            if((this.state.fetchedID !== null || this.state.fetchedID !== "") && (this.state.receiverName === this.state.conversationID) &&  this.state.conversationID !== null){
+                console.log(JSON.stringify(null))
+                return(
+                    <Redirect to={"/chat/" + this.state.receiverName +"/false/" +this.state.fetchedID}/>
+                )
+            }
+            
+            else if((this.state.fetchedID === null || this.state.fetchedID === "") && (this.state.receiverName === this.state.conversationID)){
+                 
+                return(
+                    <div className="messages_component_container">  
+                        <div className="messages_component" style={{backgroundColor: NeutralColors.white}}>
+                        
+                        
+                        </div>
+                    
+                        <div className="message_input_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
+                            <div className="message_input_box">
+                                <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
+                            </div>
+                            <div>
+                                <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
+                            </div>    
+                        </div>
+                    </div>
+                );
+            }                
+        }
     }    
 }   
 

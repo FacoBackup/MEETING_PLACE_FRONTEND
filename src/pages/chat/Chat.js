@@ -23,10 +23,13 @@ class Chat extends Component{
             userID: (new Cookies()).get("ID"),
             date: new Date(),
             update: false,
-            theme: getTheme()
+            theme: getTheme(),
+            
         }
     }
-
+    componentDidUpdate(){
+        window.location.reload()
+    }
     componentWillUpdate(params){
     
         if(this.state.id !== params.match.params.id)

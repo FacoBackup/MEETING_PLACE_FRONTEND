@@ -19,7 +19,9 @@ class TopicComponent extends React.Component{
             topics: []
         }
     }
-
+    componentDidMount(){
+        this.fetchData()
+    }
     setupDB(){      
         if(this.state.db.isOpen() === false){
           
@@ -31,7 +33,7 @@ class TopicComponent extends React.Component{
     
     async setTopics(){      
         this.setState({
-            topics: await this.state.db.topics.sortBy('creationDate')
+            topics: await this.state.db.topics.where('creatorID').equals(this.state.subjectID).sortBy('creationDate')
         })        
     }
     async insertTopics(res){

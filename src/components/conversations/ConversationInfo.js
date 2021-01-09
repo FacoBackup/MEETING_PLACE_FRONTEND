@@ -13,10 +13,11 @@ class ConversationInfo extends Component {
             theme: getTheme(),
             conversation: {},
             conversationID: params.conversationID,
-            isGroup: params.isGroup,
+            isGroup: JSON.parse(params.isGroup),
             date: new Date(),
             token: params.token,
-            userID: params.userID
+            userID: params.userID,
+            profile: {}
         }
     }
     
@@ -37,7 +38,7 @@ class ConversationInfo extends Component {
     }
     
 
-    FetchConversation = async()=>{
+    async FetchConversation (){
         
         if(this.state.isGroup === true)
             await axios({
@@ -58,8 +59,8 @@ class ConversationInfo extends Component {
             });
         else
             await axios({
-                method: 'post',
-                url: Host()+'http://localhost:8080/api/get/conversation/user',
+                method: 'patch',
+                url: Host()+'api/get/simplified/user/profile',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data: {
                     userID: this.state.conversationID
@@ -67,32 +68,61 @@ class ConversationInfo extends Component {
             }).then(res=>{
                 if(res.data !== {})
                     this.setState({
-                        conversation: res.data
+                        profile: res.data
                     })
                 
             })
             .catch(error => {
                 console.log(error)
             });
-    
-    
     } 
-    render(){
-        return(
-            (
-                <div className="conversation_info_container" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
+    renderPersona(){
+        switch(this.state.isGroup){
+            case true:{
+                return(
+                    <div className="conversation_info_container" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
+                        <Persona
+                            {...{
+                                text: (typeof this.state.conversation.name === 'undefined' ? this.state.conversationID : this.state.conversation.name),
+                                secondaryText: this.state.conversation.about
+                            }}
+                            size={PersonaSize.size40}
+                            imageAlt="Conversation picture"
+                        />
+                    </div>
+                    )
+            }
+            case false:{
+                return(
+                    <div className="conversation_info_container" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
                     
                     <Persona
                         {...{
-                            text: (typeof this.state.conversation.name === 'undefined' ? this.state.conversationID :  (this.state.isGroup === true ? this.state.conversation.name: this.state.conversation.name.replace(this.state.userID, ''))),
-                            secondaryText: this.state.conversation.about
+                            text: this.state.profile.name ,
+                            secondaryText: this.state.profile.email
                         }}
                         size={PersonaSize.size40}
                         imageAlt="Conversation picture"
                     />
-                </div>
-            )
-        );
+                    </div>
+                )
+            }
+            default:{
+                return(
+                    <div className="conversation_info_container" style={{boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}>
+                    
+                    
+                    </div>
+                )
+            }
+        }
+    }
+    render(){
+        return(
+            <div>
+                {this.renderPersona()}
+            </div>
+        )
     }
 }
 

@@ -70,12 +70,12 @@ class CommunityComponent extends React.Component{
                 return(
                     <div className="community_content_container">
                         {(this.state.members === []) ? <div></div> : this.state.members.map((member) => (
-                            <div className='persona_container'>
+                            <div className='personas_container'>
                                     <Persona
                                         {...{
                                             imageUrl: member.userImageURL,
                                             text: member.userName,
-                                            secondaryText:  member.role
+                                            secondaryText:  (typeof member.communityName !== 'undefined') ? "From: " +member.communityName: "Role: " + member.role
                                         }}
                                         size={PersonaSize.size48}
                                         imageAlt="user"

@@ -57,8 +57,8 @@ class TopicCreation extends React.Component{
                 mainTopicID: null
             }
         }).then(res=>{
-            alert(res.response.status)
-            if(typeof res.response.status !== 'undefined' && res.response.status === 201)
+  
+            if(typeof res.response !== 'undefined' && res.response.status === 201)
                 window.location.reload()
         })
         .catch(error => console.log(error))
@@ -104,7 +104,10 @@ class TopicCreation extends React.Component{
                                 imageURL: null
                             })}/>
                             
-                            <PrimaryButton text="Choose"/>
+                            <PrimaryButton text="Choose" onClick={()=>this.setState({
+                                    communityModal: false,
+                                    imageModal: false
+                                })}/>
                         </div>
                     </div>
                 </Modal>
@@ -135,7 +138,9 @@ class TopicCreation extends React.Component{
                                     imageURL: null
                                 })}/>
                                 
-                                <PrimaryButton text="Choose"/>
+                                <PrimaryButton text="Choose" onClick={()=>this.setState({
+                                    communityModal: false
+                                })}/>
                             </div>
                         </div>
                     </Modal>

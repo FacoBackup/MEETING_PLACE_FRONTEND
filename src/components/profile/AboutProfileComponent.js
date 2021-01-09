@@ -4,7 +4,7 @@ import axios from 'axios';
 import "./ProfileBarStyle.css";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 // import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import Host from '../../Host'
 import "./AboutProfileComponentStyle.css"
 
@@ -14,11 +14,11 @@ class AboutProfileComponent extends Component{
         this.state={
             profile: params.profile,
             imageURL: null,
-            phoneNumber: '',
+            phoneNumber: null,
             backgroundImageURL: null,
-            about: '',
-            nationality: '',
-            birthCity: '',
+            about: null,
+            nationality: null,
+            birthCity: null,
             multiline: false,
             editAbout: false,
             editPhone: false,
@@ -90,44 +90,73 @@ class AboutProfileComponent extends Component{
             return(
                 <div className="about_profile_component_container">
                     <div className="profile_fields_container">
-                        <p>Upload a new profile background</p>
+                        <p>Background Image</p>
                         <input type="file" name="backgroundImageURL"  onChange={event => this.getFile(event.target.files,'backgroundImageURL' )}/>
                     </div>
                     <div className="profile_fields_container">
-                        <p>Upload a new profile pic</p>
+                        <p>Profile Pic</p>
                         <input type="file" name="imageURL"  onChange={event => this.getFile(event.target.files, 'imageURL')}/>
                     </div>
-                    {this.state.editAbout === true ? <TextField placeholder="About you" name="about" onChange={this.handleChange}/>: 
-                    <div className="profile_fields_container"> 
-                        <p>{(typeof this.state.profile.about !== 'undefined' &&this.state.profile.about !== null)? this.state.profile.about: "About You Here" }</p>
-                        <DefaultButton text='Edit' onClick={() => this.setState({
-                            editAbout: true,
-                        })}/>
-                    </div> }
+                    {this.state.editAbout === true ?
+                         <div className="profile_fields_container"> 
+                            <TextField placeholder="About you" name="about" onChange={this.handleChange}/>
+                            <DefaultButton text='Cancel' onClick={() => this.setState({
+                                editAbout: false,
+                                about:null
+                            })}/>  
+                        </div>: 
+                        <div className="profile_fields_container"> 
+                            <p>{(typeof this.state.profile.about !== 'undefined' &&this.state.profile.about !== null)? this.state.profile.about: "About You Here" }</p>
+                            <DefaultButton text='Edit' onClick={() => this.setState({
+                                editAbout: true,
+                            })}/>
+                        </div> }
                 
-                    {this.state.editPhone === true ? <TextField />: 
-                    <div className="profile_fields_container"> 
-                        <p>{(typeof this.state.profile.phoneNumber !== 'undefined' &&this.state.profile.phoneNumber !== null)? this.state.profile.phoneNumber: "Your Phone Number Here" }</p>
-                        <DefaultButton text='Edit' onClick={() => this.setState({
-                            editPhone: true,
-                        })}/>
-                    </div> }
+                    {this.state.editPhone === true ?
+                        <div className="profile_fields_container"> 
+                            <MaskedTextField label="Phone number" name="phone" onChange={this.handleChange} mask="(99) 99999-9999" />
+                            <DefaultButton text='Cancel' onClick={() => this.setState({
+                                editPhone: false,
+                                phoneNumber:null
+                            })}/>  
+                        </div>: 
+                        <div className="profile_fields_container"> 
+                            <p>{(typeof this.state.profile.phoneNumber !== 'undefined' &&this.state.profile.phoneNumber !== null)? this.state.profile.phoneNumber: "Your Phone Number Here" }</p>
+                            <DefaultButton text='Edit' onClick={() => this.setState({
+                                editPhone: true,
+                            })}/>
+                        </div> }
 
-                    {this.state.editBorn === true ? <TextField placeholder="Where you were born" />: 
-                    <div className="profile_fields_container"> 
-                    <p>{(typeof this.state.profile.cityOfBirth !== 'undefined' &&this.state.profile.cityOfBirth !== "")? this.state.profile.cityOfBirth: "Your City Of Birth Here" }</p>
-                        <DefaultButton text='Edit' onClick={() => this.setState({
-                            editPhone: true,
-                        })}/>
-                    </div> }
+                    {this.state.editBorn === true ? 
+                        <div className="profile_fields_container">
+                            <TextField placeholder="Where you were born" name="bornCity" onChange={this.handleChange}/>
+                            <DefaultButton text='Cancel' onClick={() => this.setState({
+                                editBorn: false,
+                                birthCity:null
+                            })}/>  
+                        </div>: 
+                        <div className="profile_fields_container"> 
+                            <p>{(typeof this.state.profile.cityOfBirth !== 'undefined' &&this.state.profile.cityOfBirth !== "")? this.state.profile.cityOfBirth: "Your City Of Birth Here" }</p>
+                            <DefaultButton text='Edit' onClick={() => this.setState({
+                                editPhone: true,
+                                phoneNumber:null
+                            })}/>
+                        </div> }
                     
-                    {this.state.editNationality === true ? <TextField />: 
-                    <div className="profile_fields_container"> 
-                        <p>{(typeof this.state.profile.nationality !== 'undefined' &&this.state.profile.nationality !== "")? this.state.profile.nationality: "Your Nationality Here" }</p>
-                        <DefaultButton text='Edit' onClick={() => this.setState({
-                            editNationality: true,
-                        })}/>
-                    </div> }
+                    {this.state.editNationality === true ?
+                        <div className="profile_fields_container"> 
+                            <TextField placeholder="Your nationality" name="nationality" onChange={this.handleChange}/> 
+                            <DefaultButton text='Cancel' onClick={() => this.setState({
+                                editNationality: false,
+                                nationality: null
+                            })}/>       
+                        </div>: 
+                        <div className="profile_fields_container"> 
+                            <p>{(typeof this.state.profile.nationality !== 'undefined' &&this.state.profile.nationality !== "")? this.state.profile.nationality: "Your Nationality Here" }</p>
+                            <DefaultButton text='Edit' onClick={() => this.setState({
+                                editNationality: true,
+                            })}/>
+                        </div> }
                     <div className="save_changes_button_container">
                         <PrimaryButton text="Save Changes" onClick={() => this.submitChanges()}/>
                     </div>

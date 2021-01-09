@@ -10,7 +10,10 @@
 }
 .profile_background_image_container{
     overflow: hidden;
-    height: 40vh;
+    display: grid;
+    align-content: center;
+    
+    height: 450px;
     border-radius: 8px;
 }
 .profile_background_image_style{

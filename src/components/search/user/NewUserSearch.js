@@ -149,7 +149,7 @@ class UserSearchComponent extends React.Component{
                         <div className="personas_container"> 
                             <Persona
                             {...{
-                                imageUrl: (user.imageURL === null) ?  user.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                imageUrl: user.imageURL,
                                 text: user.name,
                                 secondaryText: user.email,
                                 tertiaryText: user.phoneNumber
