@@ -16,9 +16,14 @@
     text-align: center;
 }
 .conversation_persona_container{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+   
     margin-bottom: 1vh;
     border-radius: 8px;
     padding: 1vh;
+    
     background-color: rgba(210, 208, 206, .5);
   
 }
@@ -27,8 +32,6 @@ div.conversation_persona_container:hover{
     box-shadow:  1px 1px 10px #b2b2b2;
 }
 .conversation_personas{
-    
-    
     grid-row: 2;
     display: grid;
     align-content: flex-start;

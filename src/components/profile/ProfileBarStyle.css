@@ -2,15 +2,17 @@
     display: grid;
     overflow: hidden;   
     width:100%;
-    row-gap: 10vh;
+    row-gap: 5vh;
     grid-template-rows: 1fr 1fr 1fr ;
-    height: 100vh;
+    max-height: 100%;
+    
     
 }
 .profile_bar_background_image_container{
     overflow: hidden;
     display: grid;
     align-content: center;
+    height: 20vh;
     border-radius: 8px;
 }
 .profile_bar_background_image{

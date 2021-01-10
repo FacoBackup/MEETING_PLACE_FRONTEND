@@ -50,38 +50,22 @@ class ConversationBar extends Component{
     }
 
     async fetchConversations (){
-        console.log(this.state.searchInput.length)
-        if(this.state.searchInput === ""){
-            await axios({
-                method: 'get',
-                url: Host()+'api/conversation/all',
-                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
-            }).then(res=>{
-                this.setState({
-                    conversations: res.data
-                })
+    
+        await axios({
+            method: 'get',
+            url: Host()+'api/conversation/all',
+            headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
+        }).then(res=>{
+            console.log("CONVERSATIONS -> " + JSON.stringify(res.data))
+            this.setState({
+                conversations: res.data
             })
-            .catch(error => {
-                console.log(error);
-            });
-        }
-        else{
-            await axios({
-                method: 'patch',
-                url: Host()+'api/conversation/search',
-                headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
-                data:{
-                    conversationID: this.state.searchInput
-                }
-            }).then(res=>{
-                this.setState({
-                    conversations: res.data
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    
+      
     }
     async fetchProfile(conversationID){
         await axios({
@@ -121,6 +105,7 @@ class ConversationBar extends Component{
     renderPersona(data, isGroup){
         switch(isGroup){
             case true:{
+            
                 return(
 
                     <div>
@@ -135,6 +120,8 @@ class ConversationBar extends Component{
                                 size={PersonaSize.size40}
                                 imageAlt="Conversation"
                             />
+                            { typeof data.latestMessage !== 'undefined'? <p style={{ color:"#3b3a39" ,fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>{(new Date(data.latestMessage).toTimeString())}</p>: ""}
+                       
                         </Link>
                             
                         
@@ -142,9 +129,9 @@ class ConversationBar extends Component{
                     )
             }
             case false:{
-            
+                console.log("LATEST MESSAGE -> " + data.latestMessage)
                 return(
-                    <div >
+                    <div className="conversation_persona_container" >
                         <Link style={{textDecoration: 'none'}} to ={"/chat/" + ((data.name).replace(this.state.cookies.get('ID'), "")) +"/"+JSON.stringify(isGroup) +"/"+data.id}>
                             <Persona
                                 {...{
@@ -152,10 +139,11 @@ class ConversationBar extends Component{
                                     text: data.userName,
                                     secondaryText: (data.unreadMessages === 0 ? "Private" : "Unseen Messages: " +data.unreadMessages)
                                 }}
-                                size={PersonaSize.size40}
+                                size={PersonaSize.size48}
                                 imageAlt="Conversation"
                             />
                             
+                            {typeof data.latestMessage !== 'undefined'? <p style={{color:"#3b3a39",textAlign:'center', fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>{(new Date(data.latestMessage).toString()).substring(0,24)}</p>: ""}
                         </Link>
                     </div>
                 )
@@ -175,9 +163,9 @@ class ConversationBar extends Component{
                 </div>
                 <div className="conversation_personas">
                 {this.state.conversations.map((chat) => 
-                            <div className="conversation_persona_container">
-                                {this.renderPersona(chat,chat.isGroup)}
-                            </div>)}
+                    
+                    this.renderPersona(chat,chat.isGroup)
+                )}
                     
                 </div>
                 <div className="conversation_search">

@@ -101,7 +101,7 @@ class Profile extends React.Component{
         return(
             <div >
                 
-                <DefaultButton text='Send Message'/>
+                <DefaultButton text='Send Message' href={'/chat/'+this.state.userID+"/false/"+this.state.userID}/>
                 <PrimaryButton text='Follow'/>
             </div>
             
@@ -128,7 +128,7 @@ class Profile extends React.Component{
                 <div className="center_component">
                     <div className="dedicated_component_container">
                         <div className='dedicated_image_container'>
-                            <img className='dedicated_image_style' alt="BACKGROUD"src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.imageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
+                            <img className='dedicated_image_style' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
                         </div>
                         <div className='dedicated_action_bar'>
                             <div>
@@ -137,7 +137,7 @@ class Profile extends React.Component{
                                         imageUrl: this.state.profile.imageURL,
                                         text: this.state.profile.name,
                                         secondaryText:  this.state.profile.email,
-                                        tertiaryText: this.state.profile.phoneNumber,
+                                        tertiaryText: (this.state.profile.phoneNumber),
                                     }}
                                     size={PersonaSize.size72}
                                     imageAlt="USER"
@@ -145,19 +145,7 @@ class Profile extends React.Component{
                                 />
                             </div>
                             <div className="dedicated_action_bar_buttons">
-                                
                                 {this.renderFollowButton()}
-                                {/* {this.state.userID !== (new Cookies()).get("ID")?
-                                    <DefaultButton text='Send Message'/>:
-                                    <DefaultButton text='Sign Out' onClick={()=> this.signout()}/>
-                                }                            
-                                {this.state.community === true ? <PrimaryButton text='Communities'/> : <DefaultButton text='Communities' href={'/profile/'+this.state.profile.email+'/3'}/>}
-                                {this.state.followers === true ? <PrimaryButton text='Followers'/> : <DefaultButton text='Followers' href={'/profile/'+this.state.profile.email+'/1'}/> }
-                                {this.state.following === true ? <PrimaryButton text='Following'/> : <DefaultButton text='Following' href={'/profile/'+this.state.profile.email+'/2'}/>}
-                                {this.state.topics === true ? <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' href={'/profile/'+this.state.profile.email+'/0'}/>}
-                                {this.state.aboutOption === true ? <PrimaryButton text='About'/> : <DefaultButton text='About' href={'/profile/'+this.state.profile.email+'/4'}/>}
-        
-                                <DefaultButton text='Home' href='/'/> */}
                             </div>
                         </div>
                         <div >

@@ -52,7 +52,7 @@ class SignUp extends Component{
                 nationality: '',
                 birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
                 cityOfBirth: '',
-                phoneNumber: this.state.phone,
+                phoneNumber: (this.state.phone).replace("_",""),
                 admin: false,
             }
             })

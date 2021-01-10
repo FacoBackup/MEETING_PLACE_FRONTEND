@@ -27,7 +27,7 @@
 
 .message_input_container{
     
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -36,8 +36,10 @@
     margin-top: 3%;
 }
 
-
+.message_input_buttons{
+    display: grid;
+ 
+}
 .message_input_box{
-    
-    width:95%;
+    width:stretch;
 }

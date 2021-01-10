@@ -11,7 +11,9 @@
 }
 .dedicated_image_style{
     width: 100%;
-    
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 .dedicated_action_bar{
     display: flex;

@@ -45,8 +45,7 @@ class ProfileBar extends Component{
     }
 
     async signout() {
-        console.log(this.state.cookies.get("JWT"))
-        Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
+        Object.keys((new Cookies()).getAll()).forEach(name => (new Cookies()).remove(name))
         localStorage.clear()
         Dexie.delete('api_web_db')
     
@@ -58,7 +57,8 @@ class ProfileBar extends Component{
         return(
             <div className="profile_bar_container">
                 <div className="profile_bar_background_image_container">
-                    <img className="profile_bar_background_image" alt="BACKGROUD" src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ?  this.state.profile.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
+                    {/* <img className="profile_bar_background_image" alt="BACKGROUD" src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ?  this.state.profile.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/> */}
+                    <img className='profile_bar_background_image' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
                 </div>
                     {/* <div  className="profile_qrcode_container">
                     <QRcode 

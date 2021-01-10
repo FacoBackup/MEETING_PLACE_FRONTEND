@@ -82,7 +82,10 @@ class AboutProfileComponent extends Component{
         }).then(()=>{
             window.location.reload()
         })
-        .catch()
+        .catch(error => {
+            console.log(error)
+            alert("Some Error Occurred")
+        })
     
     }
     render(){
