@@ -140,11 +140,11 @@ class CommunityCreationComponent extends React.Component{
                 onDismiss={true}
                 isBlocking={false}
                 
-                containerClassName={"contentStyles.container"}
+                
                 >
                     <div className='modal_container'>
                         <div className="modal_title_component">
-                            <h2 >Upload an image for your topic</h2>
+                            <h2 >Upload an pic for your new community</h2>
                         </div>
                         <div className="modal_top_component" style={{display:'flex', justifyContent:'center'}}>
                             <input type="file" name="file"  onChange={event => this.getFile(event.target.files)}/>
@@ -185,12 +185,13 @@ class CommunityCreationComponent extends React.Component{
                     isOpen={true}
                     onDismiss={true}
                     isBlocking={false}
-                    //dragOptions={true}
-                    containerClassName={"contentStyles.container"}
+                    
                     >
                         <div className='modal_container'>
                             <div className="modal_title_component">
-                                <h2 >Post your topic in a community</h2>
+                                <h2 >Link your community to another one</h2>
+                                <p >The members of this community will apear in the main community too.</p>
+                                <p >You have to be a moderator in the main community to be able to link the two.</p>
                             </div>
                             <div className="modal_top_component" >
                                 <CommunitySearchComponent token ={this.state.token} isModal={true}/>

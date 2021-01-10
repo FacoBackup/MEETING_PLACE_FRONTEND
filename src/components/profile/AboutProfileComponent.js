@@ -75,6 +75,7 @@ class AboutProfileComponent extends Component{
                 about : this.state.about,
                 nationality : this.state.nationality,
                 city: this.state.birthCity,
+                phoneNumber: (this.state.phoneNumber !== null) ? this.state.phoneNumber.replace("_", ""): this.state.phoneNumber,
                 name: null,
                 imageURL: this.state.imageURL,
                 backgroundImageURL: this.state.backgroundImageURL
@@ -117,7 +118,7 @@ class AboutProfileComponent extends Component{
                 
                     {this.state.editPhone === true ?
                         <div className="profile_fields_container"> 
-                            <MaskedTextField label="Phone number" name="phone" onChange={this.handleChange} mask="(99) 99999-9999" />
+                            <MaskedTextField label="Phone number" name="phoneNumber" onChange={this.handleChange} mask="(99) 99999-9999" />
                             <DefaultButton text='Cancel' onClick={() => this.setState({
                                 editPhone: false,
                                 phoneNumber:null
@@ -132,7 +133,7 @@ class AboutProfileComponent extends Component{
 
                     {this.state.editBorn === true ? 
                         <div className="profile_fields_container">
-                            <TextField placeholder="Where you were born" name="bornCity" onChange={this.handleChange}/>
+                            <TextField placeholder="Where you were born" name="birthCity" onChange={this.handleChange}/>
                             <DefaultButton text='Cancel' onClick={() => this.setState({
                                 editBorn: false,
                                 birthCity:null
@@ -141,8 +142,7 @@ class AboutProfileComponent extends Component{
                         <div className="profile_fields_container"> 
                             <p>{(typeof this.state.profile.cityOfBirth !== 'undefined' &&this.state.profile.cityOfBirth !== "")? this.state.profile.cityOfBirth: "Your City Of Birth Here" }</p>
                             <DefaultButton text='Edit' onClick={() => this.setState({
-                                editPhone: true,
-                                phoneNumber:null
+                                editBorn: true
                             })}/>
                         </div> }
                     

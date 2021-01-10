@@ -76,10 +76,10 @@ class ProfileBar extends Component{
                 <div className="profile_bar_buttons_container">
                         
                         {this.state.timeline === true? <PrimaryButton text ="Home"/>:<DefaultButton text ="Home"  href='/'/>} 
-                        {this.state.followers === true? <PrimaryButton text ="Followers"/>:<DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/1'}/>} 
-                        {this.state.following === true? <PrimaryButton text ="Following"/>:<DefaultButton text ="Following"  href={'/profile/'+this.state.profile.email+'/2'}/>} 
+                        {this.state.followers === true? <PrimaryButton text ="Followers"/>:<DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/2'}/>} 
+                        {this.state.following === true? <PrimaryButton text ="Following"/>:<DefaultButton text ="Following"  href={'/profile/'+this.state.profile.email+'/1'}/>} 
                         {this.state.search === true? <PrimaryButton text ="Search User"/>:<DefaultButton text ="Search User"  href='/search_user'/>} 
-                        {this.state.topics === true? <PrimaryButton text ="My Topics"/>:<DefaultButton text ="My Topics"  href={'/profile/'+(new Cookies()).get("ID")+'/0'}/>} 
+                        {this.state.topics === true? <PrimaryButton text ="My Topics"/>:<DefaultButton text ="My Topics"  href={'/profile/'+this.state.profile.email+'/0'}/>} 
                         {this.state.communities === true? <PrimaryButton text ="Communities"/>:<DefaultButton text ="Communities"  href={'/profile/'+this.state.profile.email+'/3'}/>} 
                         {this.state.communityOptions === true? <PrimaryButton text ="Community Options"/>:<DefaultButton text ="Community Options"  href={'/communities'}/>} 
                         {this.state.about === true? <PrimaryButton text ="About Me"/>:<DefaultButton text ="About Me"  href={'/profile/'+this.state.profile.email+'/4'}/>} 

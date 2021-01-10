@@ -24,8 +24,8 @@ class Profile extends React.Component{
             token: (new Cookies()).get("JWT"),
             profile: {},
             topics: (typeof match.params.option === 'undefined' || match.params.option === '0'? true: false),
-            followers: (match.params.option === '1'? true: false),
-            following: (match.params.option === '2'? true: false),
+            followers: (match.params.option === '2'? true: false),
+            following: (match.params.option === '1'? true: false),
             community: match.params.option === '3' ? true: false,
             aboutOption: match.params.option === '4' ? true: false
         }
@@ -99,10 +99,15 @@ class Profile extends React.Component{
     renderFollowButton(){
         if(this.state.userID !== (new Cookies()).get("ID"))
         return(
-            <div >
+            <div className="dedicated_action_bar_buttons">
                 
                 <DefaultButton text='Send Message' href={'/chat/'+this.state.userID+"/false/"+this.state.userID}/>
-                <PrimaryButton text='Follow'/>
+                <DefaultButton text='Follow'/>
+                <DefaultButton text='Topics' href={'/profile/'+this.state.userID+'/0'}/>
+                <DefaultButton text='Followers' href={'/profile/'+this.state.userID+'/2'}/>
+                <DefaultButton text='Following' href={'/profile/'+this.state.userID+'/1'}/>
+                <DefaultButton text='Communities' href={'/profile/'+this.state.userID+'/3'}/>
+
             </div>
             
         )
@@ -144,9 +149,9 @@ class Profile extends React.Component{
                                 
                                 />
                             </div>
-                            <div className="dedicated_action_bar_buttons">
-                                {this.renderFollowButton()}
-                            </div>
+                            
+                            {this.renderFollowButton()}
+                            
                         </div>
                         <div >
                             {this.optionSelect()}                            

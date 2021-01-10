@@ -96,7 +96,11 @@ class Followers extends React.Component{
                     <div className="social_component_container" >
                         <div className="socail_info_container">
                         <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Followers</p>
-                        {this.state.followers.map((follower)=> 
+                        {(this.state.followers.length === 0) ? 
+                            <div>
+                                <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one follows you yet.</p>
+                            </div>
+                            :this.state.followers.map((follower)=> 
                             <div className="personas_container"> 
                                 <Persona
                                 {...{

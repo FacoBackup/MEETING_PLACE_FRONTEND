@@ -1,6 +1,6 @@
 import React from 'react';
 import "./MessagesStyle.css";
-import { NeutralColors } from '@fluentui/theme';
+
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
 import MessageBox from "./box/MessageBox";

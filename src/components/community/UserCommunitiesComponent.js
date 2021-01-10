@@ -60,15 +60,20 @@ class UserCommunitiesComponent extends React.Component{
                 <div className="user_communities_container" >
                     <div className="socail_info_container">
                     <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Communities</p>
-                    {this.state.communities.map((community)=> 
+                    {(this.state.communities.length === 0) ? 
+                        <div style={{paddingTop: '3vh'}}>
+                            <p style={{ fontSize: FontSizes.size16, fontWeight:FontWeights.regular, textAlign:'center'}}>Looks like you are not a member of any community, try searching by one.</p>
+                        </div>
+                        :this.state.communities.map((community)=> 
                         <div className="personas_container"> 
                             <Persona
                             {...{
                                 imageUrl: (community.imageURL !== null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
                                 text: community.name,
-                                secondaryText: community.role
+                                secondaryText: community.about,
+                                tertiaryText: community.role
                             }}
-                            size={PersonaSize.size48}
+                            size={PersonaSize.size72}
                             imageAlt="Conversation picture"
                             />
                             <DefaultButton text="Quit Community" disabled={true}/>

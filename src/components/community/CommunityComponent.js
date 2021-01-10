@@ -5,6 +5,8 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
 import "../../style/DedicatedPagesStyle.css"
+import { FontSizes, FontWeights } from '@fluentui/theme';
+import Cookies from 'universal-cookie';
 
 class CommunityComponent extends React.Component{
     constructor(params){
@@ -17,7 +19,9 @@ class CommunityComponent extends React.Component{
             topic: true,
             date:new Date(),
             members:[],
-            related: false
+            related: false,
+            about: false,
+            relatedCommunities: []
         }
     }
 
@@ -47,7 +51,8 @@ class CommunityComponent extends React.Component{
         this.setState({
             membersOption: true,
             topic:false,
-            related: false
+            related: false,
+            about: false
         })
   
         await axios({
@@ -64,23 +69,80 @@ class CommunityComponent extends React.Component{
         })
         .catch(error=>console.log(error))
     }
+    async fetchRelatedCommunities(){
+        
+        this.setState({
+            related:true,
+            topic: false,
+            membersOption: false,
+            about: false
+        })
+
+        await axios({
+            method: 'patch',
+            url: Host()+'api/get/all/related/communities',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: this.state.communityID
+            }
+        }).then(res=>{
+            console.log("FETCHED RELATED COMMUNITIES -> " + JSON.stringify(res.data))
+            this.setState({
+                relatedCommunities: res.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+
     renderOptions(){
         switch(true){
+            case this.state.related: {
+            
+                return(
+                    <div className="dedicated_content_container">
+                        <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Related Communities</p>
+                        {(this.state.relatedCommunities.length === 0) ? <div>
+                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>No communities are related to this one.</p>
+                        </div> : this.state.relatedCommunities.map((community) => (
+                            <div className='personas_container'>
+                                    <Persona
+                                        {...{
+                                            imageUrl: community.imageURL,
+                                            text: community.name,
+                                            secondaryText:  (typeof community.about !== 'undefined' && community.about !== null) ? "About this community: " + community.about: null,
+                                            tertiaryText: (community.role !== null && typeof community.role !== 'undefined') ? "Your role in this one: " + community.role : null
+                                        }}
+                                        size={PersonaSize.size72}
+                                        imageAlt="community"
+                                    />
+                            </div>
+                        ))}
+                        
+                    </div>
+        
+                )
+            }
             case this.state.membersOption:{
                 
                 return(
                     <div className="dedicated_content_container">
-                        {(this.state.members === []) ? <div></div> : this.state.members.map((member) => (
+                        
+                        <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Members and Followers</p>
+                        {(this.state.members.length === 0) ? <div>
+                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one is part of this community.</p>
+                        </div> : this.state.members.map((member) => (
                             <div className='personas_container'>
                                     <Persona
                                         {...{
                                             imageUrl: member.userImageURL,
                                             text: member.userName,
-                                            secondaryText:  (typeof member.communityName !== 'undefined') ? "From: " +member.communityName: "Role: " + member.role
+                                            secondaryText: (member.communityName !== null && typeof member.communityName !== 'undefined') ? "From: " +member.communityName: null,
+                                            tertiaryText: (member.role !== null && typeof member.role !== 'undefined') ? "Your Role in this one: " + member.role : null
                                         }}
-                                        size={PersonaSize.size48}
+                                        size={PersonaSize.size72}
                                         imageAlt="user"
                                     />
+                                    {member.userEmail !== (new Cookies()).get("ID") ? <DefaultButton text="Send Message" href={"/chat/"+member.userEmail+"/false/null"}/>: "" }
                             </div>
                         ))}
                         
@@ -95,6 +157,13 @@ class CommunityComponent extends React.Component{
                     </div>
                 )
             }
+            case this.state.about:{
+                return(
+                    <div>
+                    ABout this community
+                </div>
+                )
+            }
             default:{
                 return(
                     <TopicComponent community={true} token={this.state.token} timeline={false} subjectID={this.state.communityID}/>
@@ -102,12 +171,18 @@ class CommunityComponent extends React.Component{
             }
         }
     }
+    renderFollowButton(){
+
+    }
+    renderAbout(){
+
+    }
     render(){
         if(typeof this.state.community.name !== 'undefined'){
             return(
                 <div className="dedicated_component_container">
                     <div className="dedicated_image_container">
-                        <img className='dedicated_image_style' alt="BACKGROUD" src= {(this.state.community.imageURL !== null && typeof this.state.community.imageURL !== 'undefined') ?  this.state.community.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
+                        <img className='dedicated_image_style' alt="BACKGROUD" src= {(this.state.community.backgroundImageURL !== null && typeof this.state.community.backgroundImageURL !== 'undefined') ?  this.state.community.backgroundImageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
                         
                     </div>
                     <div className="dedicated_action_bar">
@@ -128,16 +203,20 @@ class CommunityComponent extends React.Component{
                                 this.fetchMembers()
                             }/> }
                              {this.state.related === true ? <PrimaryButton text='Related Communities'/> : <DefaultButton text='Related Communities' onClick={()=>
-                                this.setState({
-                                    related:true,
-                                    topic: false,
-                                    membersOption: false
-                                })
+                                this.fetchRelatedCommunities()
                             }/> }
                             {this.state.topic === true?  <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' onClick={()=>this.setState({
                                 topic: true,
                                 membersOption: false,
-                                related: false
+                                related: false,
+                                about: false
+                            })}/>                                
+                            }
+                            {this.state.about === true?  <PrimaryButton text='About'/> : <DefaultButton text='About' onClick={()=>this.setState({
+                                topic: false,
+                                membersOption: false,
+                                related: false,
+                                about: true
                             })}/>                                
                             }
                         </div>
