@@ -58,12 +58,93 @@ class CommunityComponent extends React.Component{
             membersOption: true,
             topic:false,
             related: false,
-            about: false
+            about: false,
+            all: false,
+            followers:false,
+            mods:false
         })
-  
+        
         await axios({
             method: 'patch',
-            url: Host()+'api/get/community/related/users',
+            url: Host()+'api/get/all/users',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: this.state.communityID
+            }
+        }).then(res=>{
+            this.setState({
+                members: res.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+    async fetchMods(){
+        
+        this.setState({
+            membersOption: false,
+            topic:false,
+            related: false,
+            about: false,
+            all: false,
+            followers:false,
+            mods:true
+        })
+        
+        await axios({
+            method: 'patch',
+            url: Host()+'api/get/mods',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: this.state.communityID
+            }
+        }).then(res=>{
+            this.setState({
+                members: res.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+    async fetchFollowers(){
+        
+        this.setState({
+            membersOption: false,
+            topic:false,
+            related: false,
+            about: false,
+            all: false,
+            followers:true,
+            mods:false
+        })
+        
+        await axios({
+            method: 'patch',
+            url: Host()+'api/get/followers',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: this.state.communityID
+            }
+        }).then(res=>{
+            this.setState({
+                members: res.data
+            })
+        })
+        .catch(error=>console.log(error))
+    }
+    async fetchAll(){
+        
+        this.setState({
+            membersOption: false,
+            topic:false,
+            related: false,
+            about: false,
+            all: true,
+            followers:false,
+            mods:false
+        })
+        
+        await axios({
+            method: 'patch',
+            url: Host()+'api/get/all/users',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 communityID: this.state.communityID
@@ -130,21 +211,13 @@ class CommunityComponent extends React.Component{
         
                 )
             }
-            case this.state.followers:{
-
-            }
-            case this.state.mods:{
-
-            }
-            case this.state.all:{
-
-            }
-            case this.state.membersOption:{
+        
+            case this.state.membersOption || this.state.all || this.state.mods || this.state.followers:{
                 
                 return(
                     <div className="dedicated_content_container">
                         
-                        <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Members and Followers</p>
+                        <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{this.renderPageName()}</p>
                         {(this.state.members.length === 0) ? <div>
                             <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one is part of this community.</p>
                         </div> : this.state.members.map((member) => (
@@ -184,6 +257,30 @@ class CommunityComponent extends React.Component{
             default:{
                 return(
                     <TopicComponent community={true} token={this.state.token} timeline={false} subjectID={this.state.communityID}/>
+                )
+            }
+        }
+    }
+    renderPageName(){
+        switch(true){
+            case this.state.all:{
+                return(
+                    "All users related to this community"
+                )
+            }
+            case this.state.mods: {
+                return(
+                    "Moderators"
+                )
+            }
+            case this.state.membersOption:{
+                return(
+                    "Members"
+                )
+            }
+            case this.state.followers:{
+                return(
+                    "Followers"
                 )
             }
         }
