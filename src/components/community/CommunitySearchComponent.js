@@ -8,6 +8,7 @@ import "../social/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
 import Host from '../../Host'
+import FollowCommunity from './FollowCommunity'
 
 class CommunitySearchComponent extends React.Component{
     constructor(params){
@@ -66,6 +67,7 @@ class CommunitySearchComponent extends React.Component{
             .catch(error => console.log(error))
         }
     }
+    
     selectCommunity(community){
         sessionStorage.setItem("SELECTED_COMMUNITY",JSON.stringify(community))
     }
@@ -74,7 +76,7 @@ class CommunitySearchComponent extends React.Component{
         if(this.state.isModal === false)
             return(
                 <div>
-                    {(community.role === "") ? <PrimaryButton text="Join Community" /> : <DefaultButton text="Quit Community"/>}
+                    {(community.role === "") ? <PrimaryButton text="Follow Community" onClick={()=>FollowCommunity(community.communityID)}/> : <DefaultButton text="Quit Community"/>}
                     <DefaultButton text="See Community" href={'/community/' + community.communityID}/>
                 </div>
             )

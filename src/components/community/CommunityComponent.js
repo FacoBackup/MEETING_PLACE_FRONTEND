@@ -7,6 +7,7 @@ import Host from '../../Host'
 import "../../style/DedicatedPagesStyle.css"
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import Cookies from 'universal-cookie';
+import FollowCommunity from './FollowCommunity';
 
 class CommunityComponent extends React.Component{
     constructor(params){
@@ -115,6 +116,8 @@ class CommunityComponent extends React.Component{
                                         size={PersonaSize.size72}
                                         imageAlt="community"
                                     />
+                                    <DefaultButton text="See Community" href={"/community/"+community.communityID}/>
+                                   {typeof community.role === 'undefined' ?  <PrimaryButton text="Follow Community" onClick={() => FollowCommunity()}/> : <DefaultButton text="Quit Community" disabled={true}/> }
                             </div>
                         ))}
                         
@@ -136,8 +139,8 @@ class CommunityComponent extends React.Component{
                                         {...{
                                             imageUrl: member.userImageURL,
                                             text: member.userName,
-                                            secondaryText: (member.communityName !== null && typeof member.communityName !== 'undefined') ? "From: " +member.communityName: null,
-                                            tertiaryText: (member.role !== null && typeof member.role !== 'undefined') ? "Your Role in this one: " + member.role : null
+                                            secondaryText: (member.communityName !== null && typeof member.communityName !== 'undefined') ? "From Related Community : " +member.communityName: null,
+                                            tertiaryText: (member.role !== null && typeof member.role !== 'undefined') ? "Member Role : " + member.role : null
                                         }}
                                         size={PersonaSize.size72}
                                         imageAlt="user"

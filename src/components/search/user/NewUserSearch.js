@@ -9,6 +9,8 @@ import { TextField } from '@fluentui/react';
 import "../../community/UserCommunitiesStyle.css"
 import "./SearchComponentStyle.css"
 import Host from '../../../Host'
+import FollowUser from './FollowUser'
+import UnfollowUser from './UnfollowUser'
 
 class UserSearchComponent extends React.Component{
     constructor(params){
@@ -100,37 +102,14 @@ class UserSearchComponent extends React.Component{
             console.log("STATE => " + JSON.stringify(this.state.redirectUserID))    
         })
     }
-    async follow (params){
-
-        await axios({
-            method: 'post',
-            url: Host()+'api/follow',
-            headers: {"Authorization": 'Bearer ' + this.state.token},
-            data: {
-                subjectID: params,
-                community: false
-            }
-        }).then(()=>{
-            this.fetchData()
-        })
-        .catch();
+    async follow(userID){
+        FollowUser(userID)
+        this.fetchData()
     }
-
-    async unfollow (params) {
-        await axios({
-            method: 'delete',
-            url: Host()+'api/unfollow',
-            headers: {"Authorization": 'Bearer ' + this.state.token},
-            data: {
-                subjectID: params,
-                community: false
-            }
-        }).then(()=>{
-            this.fetchData()
-        })
-        .catch();
+    async unfollow(userID){
+        UnfollowUser(userID)
+        this.fetchData()
     }
-
     render(){
         if(this.state.redirect === false)
         return(
