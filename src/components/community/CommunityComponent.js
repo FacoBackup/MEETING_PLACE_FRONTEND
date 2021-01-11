@@ -1,14 +1,13 @@
 import React from 'react'
 import axios from 'axios'; 
 import TopicComponent from '../topics/TopicComponent'
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
+import { PrimaryButton,CommandBarButton, DefaultButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
 import "../../style/universal/DedicatedPagesStyle.css"
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import Cookies from 'universal-cookie';
 import FollowCommunity from '../../functions/community/FollowCommunity';
-import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 class CommunityComponent extends React.Component{
     constructor(params){
@@ -144,12 +143,13 @@ class CommunityComponent extends React.Component{
         
         await axios({
             method: 'patch',
-            url: Host()+'api/get/all/users',
+            url: Host()+'api/get/community/related/users',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data:{
                 communityID: this.state.communityID
             }
         }).then(res=>{
+            
             this.setState({
                 members: res.data
             })
@@ -218,9 +218,7 @@ class CommunityComponent extends React.Component{
                     <div className="dedicated_content_container">
                         
                         <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{this.renderPageName()}</p>
-                        {(this.state.members.length === 0) ? <div>
-                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one is part of this community.</p>
-                        </div> : this.state.members.map((member) => (
+                        {this.state.members.map((member) => (
                             <div className='personas_container'>
                                     <Persona
                                         {...{
@@ -265,7 +263,7 @@ class CommunityComponent extends React.Component{
         switch(true){
             case this.state.all:{
                 return(
-                    "All users related to this community"
+                    "All Users Related To This Community"
                 )
             }
             case this.state.mods: {
@@ -310,7 +308,7 @@ class CommunityComponent extends React.Component{
                             size={PersonaSize.size72}
                             imageAlt="Community"
                         />
-                        <Dropdown 
+                        {/* <Dropdown 
                             placeholder="Selected Options"
                             
                             options={[
@@ -329,23 +327,33 @@ class CommunityComponent extends React.Component{
                                         about:false
                                     })
                             }}
-                        />
+                        /> */}
                         <div className="dedicated_action_bar_buttons">
 
-                            {this.state.membersOption === true ? <PrimaryButton text='Members And Followers'/> : <DefaultButton text='Members And Followers' onClick={()=>
+                            {this.state.membersOption === true ? <CommandBarButton text='Members'style={{fontSize: '16px'}}/> : <CommandBarButton style={{fontSize: '16px'}} text='Members' onClick={()=>
                                 this.fetchMembers()
                             }/> }
-                             {this.state.related === true ? <PrimaryButton text='Related Communities'/> : <DefaultButton text='Related Communities' onClick={()=>
+
+                            {this.state.followers === true ? <CommandBarButton text='Followers'style={{fontSize: '16px'}}/> : <CommandBarButton style={{fontSize: '16px'}} text='Followers' onClick={()=>
+                                this.fetchFollowers()
+                            }/> }
+                            {this.state.mods === true ? <CommandBarButton text='Moderators'style={{fontSize: '16px'}}/> : <CommandBarButton text='Moderators'style={{fontSize: '16px'}} onClick={()=>
+                                this.fetchMods()
+                            }/> }
+                            {this.state.all === true ? <CommandBarButton text='All Users'style={{fontSize: '16px'}}/> : <CommandBarButton text='All Users'style={{fontSize: '16px'}} onClick={()=>
+                                this.fetchAll()
+                            }/> }
+                             {this.state.related === true ? <CommandBarButton text='Related Communities' style={{fontSize: '16px'}}/> : <CommandBarButton  style={{fontSize: '16px'}} text='Related Communities' onClick={()=>
                                 this.fetchRelatedCommunities()
                             }/> }
-                            {this.state.topic === true?  <PrimaryButton text='Topics'/> : <DefaultButton text='Topics' onClick={()=>this.setState({
+                            {this.state.topic === true?  <CommandBarButton style={{fontSize: '16px'}} text='Topics'/> : <CommandBarButton style={{fontSize: '16px'}} text='Topics' onClick={()=>this.setState({
                                 topic: true,
                                 membersOption: false,
                                 related: false,
                                 about: false
                             })}/>                                
                             }
-                            {this.state.about === true?  <PrimaryButton text='About'/> : <DefaultButton text='About' onClick={()=>this.setState({
+                            {this.state.about === true?  <CommandBarButton style={{fontSize: '16px'}} text='About'/> : <CommandBarButton style={{fontSize: '16px'}} text='About' onClick={()=>this.setState({
                                 topic: false,
                                 membersOption: false,
                                 related: false,

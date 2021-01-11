@@ -40,10 +40,10 @@ class UserCommunitiesComponent extends React.Component{
     }
 
     async fetchData(){
-        
+
         await axios({
             method: 'patch',
-            url: Host()+'api/communities/related',
+            url: Host()+'api/get/all/user/communities',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data: {
                 userID: this.state.userID

@@ -46,7 +46,7 @@ class MessagesComponent extends React.Component{
     }
 
     tick() {
-        if(this.state.fetchedID === null && ((this.state.receiverName === this.state.conversationID) || (this.state.conversationID === "null")))
+        if((this.state.fetchedID === null || this.state.fetchedID=== "")&& ((this.state.receiverName === this.state.conversationID) || (this.state.conversationID === "null")))
             this.fetchConversationID()
 
         this.FetchMessages();
@@ -304,7 +304,7 @@ class MessagesComponent extends React.Component{
             );
         else{
     
-            if((this.state.fetchedID !== null) && ((this.state.receiverName === this.state.conversationID) || this.state.conversationID === "null")){
+            if((this.state.fetchedID !== null && this.state.fetchedID !== "") && ((this.state.receiverName === this.state.conversationID) || this.state.conversationID === "null")){
                 console.log("IF 1 " + JSON.stringify(this.state.fetchedID))
                 return(
                     <Redirect to={"/chat/" + this.state.receiverName +"/false/" +this.state.fetchedID}/>
@@ -320,15 +320,21 @@ class MessagesComponent extends React.Component{
                         
                         </div>
                     
-                        <div className="message_input_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
-                            <div className="message_input_box">
-                                <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
-                            </div>
-                            
-                            <div>
-                                <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
-                            </div>    
+                        <div className="message_input_container" >
+                        <div className="message_input_box">
+                            <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
                         </div>
+                        
+                        {this.renderSelectedImage()}  
+                        <div className="message_input_buttons">
+                            <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
+                            <DefaultButton style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} text="Upload Image" onClick={()=> 
+                            this.setState({
+                                imageModal: true
+                            })
+                            }/>
+                        </div>    
+                    </div>
                     </div>
                 );
             }                
