@@ -15,10 +15,11 @@
 .topic_fields_container{
     width: 75%;
     margin: auto;
-    
+    display: grid;
+    row-gap: 1vh;
     text-align: center;
-    
-    padding-bottom: 1vh;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
 }
 .topic_creator_persona_container{
     width: 75%;

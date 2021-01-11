@@ -1,12 +1,13 @@
 import React from 'react';
 import "./TopicCreationStyle.css"
-import { DefaultButton,Modal, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton,Modal, PrimaryButton, TextField } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import axios from 'axios';
 import Dexie from "dexie";
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
 import Cookies from 'universal-cookie';
+
 
 
 class TopicComponent extends React.Component{
@@ -20,8 +21,12 @@ class TopicComponent extends React.Component{
             subjectID: params.subjectID,
             timeline: params.timeline,
             topics: [],
-            deleteModal: false
+            deleteModal: false,
+            editMode: false,
+            headerInput: null,
+            bodyInput: null
         }
+        this.handleChange = this.handleChange.bind(this)
     }
 
     componentDidMount(){ //here
@@ -107,6 +112,7 @@ class TopicComponent extends React.Component{
             }
             
         }).then(res=>{
+            console.log("FETCH SUBJECT TOPICS -> " + JSON.stringify(res.data))
             if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0){
                 this.setState({
                     topics:(res.data)
@@ -133,11 +139,36 @@ class TopicComponent extends React.Component{
         .catch(error => console.log(error))
     }
 
+    async updateTopic(topicID){
+        
+        await axios({
+            method: 'put',
+            url: Host()+'api/topic',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                topicID: topicID,
+                header: this.state.headerInput,
+                body: this.state.body
+            }
+        }).then(()=>{
+            this.setState({
+                editMode: false,
+                headerInput: null,
+                bodyInput: null
+            })
+            this.fetchSubjectTopics()
+            
+        })
+        .catch(error => console.log(error))
+    }
+
     renderEditButton(creator, topicID){
         if(creator === (new Cookies()).get("ID")){
             return(
                 <div >
-                    <DefaultButton text="Edit" style={{marginRight: '1vh'}}/>
+                    <DefaultButton text="Edit" onClick={() => this.setState({
+                        editMode: true
+                    })}/>
                 </div>
             )
         }
@@ -180,48 +211,110 @@ class TopicComponent extends React.Component{
                 </Modal>
             )
     }
+
+    handleChange(event){
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+    renderEditMode(){
+        if(this.state.editMode === true)
+            return(
+                <div>
+                    <div >
+                        {this.state.topics === [] ? <div></div> : this.state.topics.map(topic => (
+                            <div className="topic_container"> 
+                                <div className="topic_creator_persona_container">
+                                    <Persona
+                                        {...{
+                                            imageUrl:(topic.subjectImageURL === null) ?  topic.subjectImageURL.imageURL :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                            text: topic.subjectName,
+                                            secondaryText: (typeof topic.communityID === 'undefined' ? topic.creatorID :  topic.communityName)
+                                        }}
+                                        size={PersonaSize.size56}
+                                        imageAlt="User"
+                                    />
+                                    
+                                    <p style={{ fontSize: FontSizes.size14, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Created on: {(new Date(topic.creationDate)).toLocaleString()}</p>
+                                </div>
+                                <div className="topic_fields_container">
+                                    <TextField defaultValue={topic.header} label="New Title" multiline name="headerInput" onChange={this.handleChange}/>
+                                    <TextField defaultValue={topic.body} label="New Body" multiline name="bodyInput" onChange={this.handleChange}/>
+                                   
+                                </div>
+                        
+                                {this.renderImage(topic)}  
+                                {this.renderModal(topic.id)}
+                            
+                                <div className="topic_buttons_container">
+                                    
+                                    <DefaultButton text="Cancel" onClick={() =>
+                                        this.setState({
+                                            editMode: false
+                                        })
+                                    }/>
+                                    <PrimaryButton text="Save Changes" onClick={() => this.updateTopic(topic.id)}/>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="timeline_end_container">
+                        <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>You are all caught up for now</p>
+                    </div>
+                </div>
+            )
+    }
+    renderTopic(){
+        if(this.state.editMode === false)
+            return(
+                <div>
+                    <div >
+                        {this.state.topics === [] ? <div></div> : this.state.topics.map(topic => (
+                            <div className="topic_container"> 
+                                <div className="topic_creator_persona_container">
+                                    <Persona
+                                        {...{
+                                            imageUrl:(topic.subjectImageURL === null) ?  topic.subjectImageURL.imageURL :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                            text: topic.subjectName,
+                                            secondaryText: (typeof topic.communityID === 'undefined' ? topic.creatorID :  topic.communityName)
+                                        }}
+                                        size={PersonaSize.size56}
+                                        imageAlt="User"
+                                    />
+                                    
+                                    <p style={{ fontSize: FontSizes.size14, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Created on: {(new Date(topic.creationDate)).toLocaleString()}</p>
+                                </div>
+                                <div className="topic_fields_container">
+                                    <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{topic.header}</p>
+                                    <p style={{ fontSize: FontSizes.size16, fontWeight:FontWeights.semilight}}>{topic.body}</p>
+                                </div>
+                        
+                                {this.renderImage(topic)}  
+                                {this.renderModal(topic.id)}
+                            
+                                <div className="topic_buttons_container">
+                                    <DefaultButton text="Like" disabled={true}/> 
+                                    <DefaultButton text="Dislike" disabled={true}/> 
+                                    <DefaultButton text="Comment" disabled={true}/> 
+                                    <DefaultButton text="Share" disabled={true}/> 
+                                    {this.renderEditButton(topic.creatorID, topic.id)}
+                                    {this.renderDeleteButton(topic.creatorID)}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="timeline_end_container">
+                        <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>You are all caught up for now</p>
+                    </div>
+                </div>
+            )
+    }
     render(){
         
         return(
             <div>
-                <div >
-                    {this.state.topics === [] ? <div></div> : this.state.topics.map(topic => (
-                        <div className="topic_container"> 
-                            <div className="topic_creator_persona_container">
-                                <Persona
-                                    {...{
-                                        imageUrl:(topic.subjectImageURL === null) ?  topic.subjectImageURL.imageURL :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
-                                        text: topic.subjectName,
-                                        secondaryText: (typeof topic.communityID === 'undefined' ? topic.creatorID :  topic.communityName)
-                                    }}
-                                    size={PersonaSize.size56}
-                                    imageAlt="User"
-                                />
-                                
-                                <p style={{ fontSize: FontSizes.size14, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Created on: {(new Date(topic.creationDate)).toLocaleString()}</p>
-                            </div>
-                            <div className="topic_fields_container">
-                                <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{topic.header}</p>
-                                <p style={{ fontSize: FontSizes.size16, fontWeight:FontWeights.semilight}}>{topic.body}</p>
-                            </div>
-                    
-                            {this.renderImage(topic)}  
-                            {this.renderModal(topic.id)}
-                          
-                            <div className="topic_buttons_container">
-                                <DefaultButton text="Like" disabled={true}/> 
-                                <DefaultButton text="Dislike" disabled={true}/> 
-                                <DefaultButton text="Comment" disabled={true}/> 
-                                <DefaultButton text="Share" disabled={true}/> 
-                                {this.renderEditButton(topic.creatorID, topic.id)}
-                                {this.renderDeleteButton(topic.creatorID)}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                <div className="timeline_end_container">
-                    <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>You are all caught up for now</p>
-                </div>
+                {this.renderTopic()}
+                {this.renderEditMode()}
             </div>
         )
     }

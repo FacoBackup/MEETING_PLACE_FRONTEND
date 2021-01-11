@@ -43,7 +43,7 @@ class Profile extends React.Component{
                     userID: this.state.userID
                 }
             }).then(res=>{
-                console.log("RESPONSE -> " + JSON.stringify(res.data))
+                
                 this.setState({
                     profile: res.data
                 })
@@ -85,7 +85,7 @@ class Profile extends React.Component{
             }
             case this.state.community:{
                 return(
-                    <UserCommunitiesComponent token={(new Cookies()).get('JWT')}/>
+                    <UserCommunitiesComponent token={(new Cookies()).get('JWT')} userID={this.state.userID}/>
                 )
             }
             default:{

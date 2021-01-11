@@ -49,8 +49,7 @@ class Followers extends React.Component{
                 userID: this.state.userID
             }
         }).then(res=>{
-            console.log("FOLLOWERS RESPONSE -> " + JSON.stringify(res.data))
-            console.log("FOLLOWERS USER ID-> " + JSON.stringify(this.state.userID))
+            
             this.setState({
                 followers: res.data
             })
@@ -60,7 +59,7 @@ class Followers extends React.Component{
         });
     }
     async setRedirect(userID){
-        console.log("PARAMS => " + userID)
+    
         await this.fetchConversation(userID)
         this.setState({
             redirect: true,
@@ -96,7 +95,7 @@ class Followers extends React.Component{
                     <div className="social_component_container" >
                         <div className="socail_info_container">
                         <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Followers</p>
-                        {(this.state.followers.length === 0) ? 
+                        {(this.state.followers.length === 0 && this.state.userID === (new Cookies()).get("ID")) ? 
                             <div>
                                 <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one follows you yet.</p>
                             </div>

@@ -98,9 +98,9 @@ class Following extends React.Component{
                     <div className="social_component_container">
                         <div >
                         <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Following</p>
-                        {(this.state.following.length === 0) ? 
+                        {(this.state.following.length === 0 && this.state.userID === (new Cookies()).get("ID"))  ? 
                         <div>
-                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks don't follow anyone yet, try searching for a friend.</p>
+                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like you don't follow anyone yet, try searching for a friend.</p>
                         </div>
                         :this.state.following.map((flw)=> 
                             <div className="personas_container"> 

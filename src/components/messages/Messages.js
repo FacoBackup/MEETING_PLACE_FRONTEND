@@ -1,10 +1,8 @@
 import React from 'react';
 import "./MessagesStyle.css";
-
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import { getTheme } from '@fluentui/react';
 import MessageBox from "./box/MessageBox";
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton, Modal, PrimaryButton } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import Dexie from "dexie";
@@ -16,20 +14,24 @@ class Messages extends React.Component{
     constructor(params){
         super()
         this.state={
-            theme: getTheme(),
+
             messages: [],
             messageInput: '',
             receiverName: params.receiverName,
             userID : params.userID,
             conversationID: params.conversationID,
             token: params.token,
-            isGroup: params.isGroup,
+            isGroup: (params.isGroup === "true")? true : false,
             date:new Date(),
             db:  new Dexie('api_web_db'),
             conversationContainer: React.createRef(),
-            fetchedID: null
+            fetchedID: null,
+            imageURL: null,
+            imageModal: false
+
         }
         this.handleChange = this.handleChange.bind(this)
+        this.SendMessage = this.SendMessage.bind(this)
     }
   
     componentDidMount(){
@@ -171,15 +173,25 @@ class Messages extends React.Component{
         }   
     }
   
-    
-    SendMessage = async() =>{
+    getFile(event) {
+        console.log(event)
+
+        let reader = new FileReader();
+        reader.readAsDataURL(event[0]);
+        reader.onload =() =>{
+          this.setState({
+              imageURL: reader.result
+          })
+        }
+    }
+    async SendMessage (){
         await axios({
             method: 'post',
-            url: (this.state.isGroup === true) ? 'http://192.168.15.35:8080/api/message/group': 'http://192.168.15.35:8080/api/message/user',
+            url: (this.state.isGroup === true) ? Host()+ 'api/message/group': Host()+ 'api/message/user',
             headers: {"Authorization": 'Bearer ' + this.state.token},
             data: {
                 message: this.state.messageInput,
-                imageURL: null,
+                imageURL: this.state.imageURL,
                 receiverID:(this.state.isGroup === true) ? null : this.state.receiverName,
                 isGroup: this.state.isGroup,
                 conversationID: (this.state.isGroup === true) ? this.state.conversationID: ""
@@ -187,13 +199,76 @@ class Messages extends React.Component{
         })
         .then(()=>{
             this.FetchMessages()
-            
+            this.setState({
+                imageURL: null,
+                messageInput: null
+            })
         })
         .catch(error => {
             console.log(error);
         });       
     }
+    renderImageModal(){
+        if(this.state.imageURL !== null){
+            return(
+                <div style={{display:'flex', justifyContent:'center'}}>
+                    <img style={{margin:'auto',width:'70%', borderRadius:'8px'}} alt="message" src={this.state.imageURL}/>
+                </div>
+                
+            ) 
+        }
+    }
+    renderModal(){
+        if(this.state.imageModal === true){
+            return(
+                <Modal
+                titleAriaId={"TESTE"}
+                isOpen={true}
+                onDismiss={true}
+                isBlocking={false}
+                
+                containerClassName={"contentStyles.container"}
+                >
+                    <div className='modal_container' >
+                        <div className="modal_title_component">
+                            <h2 >Upload an image for your message</h2>
+                        </div>
+                        <div className="modal_top_component" style={{display:'flex', justifyContent:'center'}}>
+                            <input type="file"  name="file"  onChange={event => this.getFile(event.target.files)}/>
+                        </div>
+                        <div className="modal_middle_component" >
+                            {this.renderImageModal()}
+                        </div>
+                        <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between'}}>
+                            {this.state.imageURL === null ? 
+                            <DefaultButton text="Cancel" onClick={()=> this.setState({
+                                imageModal: false
+                            })}/> : 
+                            <DefaultButton text="Remove Image" onClick={()=> this.setState({
+                                imageURL: null
+                            })}/>    
+                        }
+                            
+                            <PrimaryButton text="Choose" onClick={()=> this.setState({
+                                imageModal: false,
+                                communityModal:false,
+                                openModal:false
+                            })}/>
+                        </div>
+                    </div>
+                </Modal>
+           )
 
+        }
+    }
+    renderSelectedImage(){
+        if(this.state.imageURL !== null)
+            return(
+                <div style={{display:'grid', alignContent:'center', paddingLeft:'.3vw', paddingRight:'.3vw'}}>
+                    <img style={{margin:'auto',width:'100px', borderRadius:'8px'}} alt="message" src={this.state.imageURL}/>
+                </div>  
+            ) 
+    }
     render(){    
     
         if(this.state.receiverName !== this.state.conversationID && this.state.conversationID !== "null")
@@ -202,20 +277,27 @@ class Messages extends React.Component{
                     <div className="messages_component" style={{backgroundColor: 'white'}} ref={this.state.conversationContainer}>
                         {this.state.messages === [] ? <div></div> : this.state.messages.map((message,index) =>(
                             <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
-                                {MessageBox(message.content, message.valid, message.creationDate,this.state.userID, message.creatorID, message.seenByEveryone)}
+                                <MessageBox content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {this.state.userID}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
                                 <div ref={this.state.essagesEndRef} />
                             </div>   
-                        ))}       
-                    
+                        ))}   
+                              
                     </div>
-                
-                    <div className="message_input_container" style={{boxShadow: this.state.theme.effects.elevation8}}>
+                    {this.renderModal()}
+               
+                    <div className="message_input_container" >
                         <div className="message_input_box">
                             <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
                         </div>
+                        
+                        {this.renderSelectedImage()}  
                         <div className="message_input_buttons">
                             <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
-                            <DefaultButton text="Upload Image" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} disabled={true}/>      
+                            <DefaultButton style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} text="Upload Image" onClick={()=> 
+                            this.setState({
+                                imageModal: true
+                            })
+                            }/>
                         </div>    
                     </div>
                 </div>
@@ -242,6 +324,7 @@ class Messages extends React.Component{
                             <div className="message_input_box">
                                 <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
                             </div>
+                            
                             <div>
                                 <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
                             </div>    
