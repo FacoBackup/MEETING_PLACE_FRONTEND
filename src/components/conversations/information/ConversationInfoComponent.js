@@ -3,10 +3,10 @@ import { NeutralColors } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
 import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import "./ConversationInfoStyle.css"
-import Host from '../../Host'
+import "../../../style/conversation/ConversationInfoStyle.css"
+import Host from '../../../Host'
 
-class ConversationInfo extends Component {
+class ConversationInfoComponent extends Component {
     constructor(params){
         super()
         this.state={
@@ -126,4 +126,4 @@ class ConversationInfo extends Component {
     }
 }
 
-export default ConversationInfo;
+export default ConversationInfoComponent;

@@ -1,8 +1,9 @@
-import "./MessageBoxStyle.css";
+import "../../../style/messages/MessageBoxStyle.css";
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
 import React from 'react'
-class MessageBox extends React.Component {
+
+class MessageBoxComponent extends React.Component {
     constructor(params){
         super()
         this.state={
@@ -47,4 +48,4 @@ class MessageBox extends React.Component {
     }   
    
 }
-export default MessageBox;
+export default MessageBoxComponent;

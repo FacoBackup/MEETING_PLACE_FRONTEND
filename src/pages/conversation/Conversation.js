@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
 import Cookies from 'universal-cookie';
-import "./ChatStyle.css"
+import "../../style/conversation/ChatStyle.css"
 import {Redirect} from 'react-router-dom'
-import Messages from "../../components/messages/Messages"
-import "../../style/PageModel.css"
-import ProfileBar from "../../components/profile/ProfileBar.js"
-import Conversations from "../../components/conversations/ConversationBar";
-import { NeutralColors } from '@fluentui/theme';
-import { getTheme } from '@fluentui/react';
-import ConversationInfo from "../../components/conversations/ConversationInfo"
+import Messages from "../../components/messages/MessagesComponent"
+import "../../style/universal/PageModel.css"
+import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
+import ConversationsBar from "../../components/conversations/bar/ConversationBarComponent";
 
-class Chat extends Component{
+import { getTheme } from '@fluentui/react';
+import ConversationInfo from "../../components/conversations/information/ConversationInfoComponent"
+
+class Conversation extends Component{
     
     constructor({match}){
         super()
@@ -54,8 +54,8 @@ class Chat extends Component{
 
                     </div>
                     
-                        <div style={{backgroundColor: NeutralColors.white}} className="right_components" >
-                            <Conversations/>
+                        <div className="right_components" >
+                            <ConversationsBar/>
                         </div>
                 </div>
             );
@@ -66,4 +66,4 @@ class Chat extends Component{
     }
 }   
 
-export default Chat;
+export default Conversation;

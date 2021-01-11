@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "./ProfileBarStyle.css";
+import "../../../style/profile/ProfileBarStyle.css";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Dexie from "dexie";
-import Host from '../../Host'
+import Host from '../../../Host'
 
-class ProfileBar extends Component{
+class ProfileBarComponent extends Component{
     constructor(params){
         super()
         this.state={
@@ -104,4 +104,4 @@ class ProfileBar extends Component{
     }   
 }
 
-export default ProfileBar;
+export default ProfileBarComponent;

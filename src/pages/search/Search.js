@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import UserSearch from "../../components/search/user/NewUserSearch"
-import ProfileBar from "../../components/profile/ProfileBar.js"
-import Conversations from "../../components/conversations/ConversationBar"
-import "../../style/PageModel.css"
+import UserSearch from "../../components/search/user/UserSearchComponent"
+import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
+import Conversations from "../../components/conversations/bar/ConversationBarComponent"
+import "../../style/universal/PageModel.css"
 import { Redirect } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 

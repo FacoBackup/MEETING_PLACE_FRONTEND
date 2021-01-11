@@ -1,20 +1,19 @@
-// import "./ProfileStyle.css"
 import React from 'react';
 import Cookies from 'universal-cookie';
-import "../../style/PageModel.css"
-import "../../style/DedicatedPagesStyle.css"
-import Conversations from "../../components/conversations/ConversationBar"
+import "../../style/universal/PageModel.css"
+import "../../style/universal/DedicatedPagesStyle.css"
+import Conversations from "../../components/conversations/bar/ConversationBarComponent"
 import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton } from 'office-ui-fabric-react';
 import TopicComponent from '../../components/topics/TopicComponent'
-import AboutComponent from '../../components/profile/AboutProfileComponent'
-import Followers from '../../components/social/followers/Followers'
-import Following from '../../components/social/following/Following'
-import UserCommunitiesComponent from '../../components/community/UserCommunitiesComponent'
+import AboutComponent from '../../components/profile/options/UserAboutComponent'
+import Followers from '../../components/social/followers/FollowersComponent'
+import Following from '../../components/social/following/FollowingComponent'
+import UserCommunitiesComponent from '../../components/profile/options/UserCommunitiesComponent'
 import Dexie from "dexie";
 import Host from '../../Host'
-import ProfileBar from '../../components/profile/ProfileBar'
+import ProfileBar from '../../components/profile/bar/ProfileBarComponent'
 
 class Profile extends React.Component{
     constructor({match}){

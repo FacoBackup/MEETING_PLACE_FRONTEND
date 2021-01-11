@@ -1,7 +1,7 @@
 import React from 'react'
-import ProfileBar from "../../components/profile/ProfileBar.js"
-import Conversations from "../../components/conversations/ConversationBar"
-import "../../style/PageModel.css"
+import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
+import Conversations from "../../components/conversations/bar/ConversationBarComponent"
+import "../../style/universal/PageModel.css"
 import { Redirect } from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import CommunityComponent from '../../components/community/CommunityComponent'

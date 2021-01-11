@@ -3,14 +3,14 @@ import axios from 'axios';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import React from 'react'
-import "../../social/SocialStyle.css"
+import "../../../style/profile/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
-import "../../community/UserCommunitiesStyle.css"
-import "./SearchComponentStyle.css"
+import "../../../style/profile/UserCommunitiesStyle.css"
+import "../../../style/search/SearchComponentStyle.css"
 import Host from '../../../Host'
-import FollowUser from './FollowUser'
-import UnfollowUser from './UnfollowUser'
+import FollowUser from '../../../functions/social/FollowUser'
+import UnfollowUser from '../../../functions/social/UnfollowUser'
 
 class UserSearchComponent extends React.Component{
     constructor(params){

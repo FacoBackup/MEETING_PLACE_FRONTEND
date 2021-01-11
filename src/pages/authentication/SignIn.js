@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
-import "./SigninStyle.css"
+import "../../style/authentication/SigninStyle.css"
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';

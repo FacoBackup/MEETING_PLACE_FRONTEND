@@ -2,13 +2,13 @@
 import axios from 'axios';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import "./UserCommunitiesStyle.css"
+import "../../../style/profile/UserCommunitiesStyle.css"
 import React from 'react'
-import "../social/SocialStyle.css"
+import "../../../style/profile/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField } from '@fluentui/react';
-import Host from '../../Host'
-import FollowCommunity from './FollowCommunity'
+import Host from '../../../Host'
+import FollowCommunity from '../../../functions/community/FollowCommunity'
 
 class CommunitySearchComponent extends React.Component{
     constructor(params){

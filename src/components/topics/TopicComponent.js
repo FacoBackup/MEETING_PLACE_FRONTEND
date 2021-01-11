@@ -1,5 +1,5 @@
 import React from 'react';
-import "./TopicCreationStyle.css"
+import "../../style/topics/TopicCreationStyle.css"
 import { DefaultButton,Modal, PrimaryButton, TextField } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import axios from 'axios';

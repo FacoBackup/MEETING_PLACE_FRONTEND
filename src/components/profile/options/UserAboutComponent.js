@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "./ProfileBarStyle.css";
+import "../../../style/profile/ProfileBarStyle.css";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 // import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
-import Host from '../../Host'
-import "./AboutProfileComponentStyle.css"
+import Host from '../../../Host'
+import "../../../style/profile/UserAboutComponentStyle.css"
 
 class AboutProfileComponent extends Component{
     constructor(params){

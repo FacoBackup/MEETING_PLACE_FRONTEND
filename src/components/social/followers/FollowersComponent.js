@@ -1,21 +1,20 @@
 import React from 'react';
+import { FontSizes, FontWeights } from '@fluentui/theme';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "../../../style/PageModel.css"
-import "../SocialStyle.css"
+import "../../../style/universal/PageModel.css"
+import "../../../style/profile/SocialStyle.css"
 import { getTheme } from '@fluentui/react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
-import { FontSizes, FontWeights } from '@fluentui/theme';
-import {  Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Host from '../../../Host'
-
-class Following extends React.Component{
+class FollowersComponent extends React.Component{
     constructor(params){
         super()
         this.state={
             cookies: new Cookies(),
-            following: [],
+            followers: [],
             userID: params.userID,
             date: new Date(),
             theme: getTheme(),
@@ -26,7 +25,6 @@ class Following extends React.Component{
     }
     componentDidMount(){
         this.fetchData();
-        
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -41,24 +39,35 @@ class Following extends React.Component{
             date: new Date(),
         });
     }
-    async fetchData() {
+    async fetchData(){
+        
         await axios({
             method: 'patch',
-            url: Host()+'api/get/following',
+            url: Host()+'api/get/followers',
             headers: {"Authorization": 'Bearer ' + this.state.cookies.get("JWT")},
             data:{
                 userID: this.state.userID
             }
         }).then(res=>{
+            
             this.setState({
-                following: res.data
+                followers: res.data
             })
         })
         .catch(error => {
             console.log(error);
         });
     }
-
+    async setRedirect(userID){
+    
+        await this.fetchConversation(userID)
+        this.setState({
+            redirect: true,
+            redirectUserID:userID
+        },()=>{
+            console.log("STATE => " + JSON.stringify(this.state.redirectUserID))    
+        })
+    }
     async fetchConversation (param){
         await axios({
             method: 'patch',
@@ -68,7 +77,7 @@ class Following extends React.Component{
                 userID: param
             }
         }).then(res=>{
-            console.log(JSON.stringify(res.data))
+            
             this.setState({
                 conversations: res.data
             })
@@ -79,60 +88,47 @@ class Following extends React.Component{
             return null
         });
     }
-    async setRedirect(userID){
-        console.log("PARAMS => " + userID)
-        await this.fetchConversation(userID)
-        this.setState({
-            redirect: true,
-            redirectUserID:userID
-        },()=>{
-            console.log("STATE => " + JSON.stringify(this.state.redirectUserID))    
-        })
-    }
-
     render(){
         if(this.state.redirect === false)
             return(
                 <div>
-        
-                    <div className="social_component_container">
-                        <div >
-                        <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Following</p>
-                        {(this.state.following.length === 0 && this.state.userID === (new Cookies()).get("ID"))  ? 
-                        <div>
-                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like you don't follow anyone yet, try searching for a friend.</p>
-                        </div>
-                        :this.state.following.map((flw)=> 
+                    <div className="social_component_container" >
+                        <div className="socail_info_container">
+                        <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Followers</p>
+                        {(this.state.followers.length === 0 && this.state.userID === (new Cookies()).get("ID")) ? 
+                            <div>
+                                <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one follows you yet.</p>
+                            </div>
+                            :this.state.followers.map((follower)=> 
                             <div className="personas_container"> 
                                 <Persona
                                 {...{
-                                    imageUrl: (flw.imageURL === null) ?  flw.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
-                                    text: flw.name,
-                                    secondaryText: flw.email,
-                                    tertiaryText: flw.phoneNumber
+                                    imageUrl: (follower.imageURL === null) ?  follower.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                    text: follower.name,
+                                    secondaryText: follower.email,
+                                    tertiaryText: follower.phoneNumber
                                 }}
                                 size={PersonaSize.size72}
                                 imageAlt="Conversation picture"
                                 />
-                                <DefaultButton text ="See Profile"  href={"/profile/"+flw.email+'/0'}/>
-                                <PrimaryButton onClick={() => this.setRedirect(flw.email)} text="Send Message"/>
+                                <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>
+                                <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
                             </div>
                         )}
                         </div>
                     </div>
-        
+    
                 </div>
             );
             else{
-            
+                
                 return(
                     <Redirect to={'/chat/'+this.state.redirectUserID+"/false/"+(typeof this.state.conversations.conversationID === 'undefined'? this.state.redirectUserID: this.state.conversations.conversationID)}/>
                 )
                 
             }
-        }
+    }
     
 }
 
-
-export default Following;
+export default FollowersComponent;

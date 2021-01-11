@@ -2,11 +2,11 @@
 import axios from 'axios';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import "./UserCommunitiesStyle.css"
+import "../../../style/profile/UserCommunitiesStyle.css"
 import React from 'react'
-import "../social/SocialStyle.css"
+import "../../../style/profile/SocialStyle.css"
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import Host from '../../Host'
+import Host from '../../../Host'
 import Cookies from 'universal-cookie';
 
 class UserCommunitiesComponent extends React.Component{

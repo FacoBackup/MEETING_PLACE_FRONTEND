@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
-import "./ConversationBarStyle.css";
+import "./../../../style/conversation/ConversationBarStyle.css";
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Link } from 'react-router-dom';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { getTheme } from '@fluentui/react';
-import Host from '../../Host'
+import Host from '../../../Host'
 
-class ConversationBar extends Component{
+class ConversationBarComponent extends Component{
     constructor(){
         super()
         this.state={
@@ -177,4 +177,4 @@ class ConversationBar extends Component{
     }
 }   
 
-export default ConversationBar;
+export default ConversationBarComponent;

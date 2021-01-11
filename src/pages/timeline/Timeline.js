@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import ProfileBar from "../../components/profile/ProfileBar.js"
-import Conversations from "../../components/conversations/ConversationBar";
-import "../timeline/TimelineStyle.css";
-import "../../style/PageModel.css"
+import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
+import Conversations from "../../components/conversations/bar/ConversationBarComponent";
+import "../../style/topics/TimelineStyle.css";
+import "../../style/universal/PageModel.css"
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import TopicCreation from '../../components/topics/TopicCreation'
+import TopicCreation from '../../components/topics/creation/TopicCreationComponent'
 import TopicComponent from '../../components/topics/TopicComponent'
 
 class Timeline extends Component{

@@ -1,14 +1,14 @@
 import React from 'react';
-import "./TopicCreationStyle.css"
+import "../../../style/topics/TopicCreationStyle.css"
 import { DefaultButton,Modal, PrimaryButton, Persona,PersonaSize } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
-import CommunitySearchComponent from '../community/CommunitySearchComponent'
-import Host from '../../Host'
+import CommunitySearchComponent from '../../search/community/CommunitySearchComponent'
+import Host from '../../../Host'
 
-class TopicCreation extends React.Component{
+class TopicCreationComponent extends React.Component{
     constructor(params){
         super(params)
         this.state={
@@ -262,4 +262,4 @@ class TopicCreation extends React.Component{
        
 }
 
-export default TopicCreation;
+export default TopicCreationComponent;

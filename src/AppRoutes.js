@@ -4,10 +4,11 @@ import SignUp from "./pages/user/Signup";
 import Community from "./pages/community/Community"
 import Home from "./pages/timeline/Timeline";
 import Search from "./pages/search/Search";
-import Chat from "./pages/chat/Chat";
+import Conversation from "./pages/conversation/Conversation";
 import SignIn from "./pages/authentication/SignIn"
-import CommunityOptions from "./pages/community/CommunityOptions"
+import CommunityOptions from "./pages/community/options/CommunityOptions"
 import Profile from "./pages/profile/Profile"
+
 function AppRoutes() {
   return (
     <div>
@@ -17,7 +18,7 @@ function AppRoutes() {
               <Route path="/community/:id" exact component={Community}/>
               <Route path="/communities" exact component={CommunityOptions}/>
               <Route path="/" exact component={Home}/>
-              <Route path="/chat/:username/:isGroup/:absoluteid" exact component={Chat}/>
+              <Route path="/chat/:username/:isGroup/:absoluteid" exact component={Conversation}/>
               <Route path="/search_user" exact component={Search}/>
               <Route path="/authenticate" exact component={SignIn}/>
               <Route path="/creation" exact component={SignUp}/>

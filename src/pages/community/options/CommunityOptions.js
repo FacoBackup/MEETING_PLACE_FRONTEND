@@ -1,13 +1,13 @@
 import React from 'react'
-import ProfileBar from "../../components/profile/ProfileBar.js"
-import Conversations from "../../components/conversations/ConversationBar"
-import "../../style/PageModel.css"
-import "./CommunityOptionsStyle.css"
+import ProfileBar from "../../../components/profile/bar/ProfileBarComponent.js"
+import Conversations from "../../../components/conversations/bar/ConversationBarComponent"
+import "../../../style/universal/PageModel.css"
+import "../../../style/community/CommunityOptionsStyle.css"
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { Redirect } from 'react-router-dom'
-import CommunityCreationComponent from '../../components/community/CommunityCreationComponent'
+import CommunityCreationComponent from '../../../components/community/creation/CommunityCreationComponent'
 import Cookies from 'universal-cookie';
-import CommunitySearchComponent from "../../components/community/CommunitySearchComponent"
+import CommunitySearchComponent from "../../../components/search/community/CommunitySearchComponent"
 
 class CommunityOptions extends React.Component{
     constructor(){

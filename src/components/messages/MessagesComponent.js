@@ -1,7 +1,7 @@
 import React from 'react';
-import "./MessagesStyle.css";
+import "../../style/messages/MessagesStyle.css";
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import MessageBox from "./box/MessageBox";
+import MessageBox from "./box/MessageBoxComponent";
 import { DefaultButton, Modal, PrimaryButton } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
@@ -10,7 +10,7 @@ import Host from '../../Host'
 import { Redirect } from 'react-router-dom';
 
 
-class Messages extends React.Component{
+class MessagesComponent extends React.Component{
     constructor(params){
         super()
         this.state={
@@ -336,4 +336,4 @@ class Messages extends React.Component{
     }    
 }   
 
-export default Messages;
+export default MessagesComponent;

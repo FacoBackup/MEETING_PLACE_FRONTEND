@@ -3,10 +3,10 @@ import axios from 'axios';
 import { DefaultButton,Modal, Persona,PersonaSize, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import "./CommunityCreationComponentStyle.css"
+import "../../../style/community/CommunityCreationComponentStyle.css"
 import React from 'react'
-import CommunitySearchComponent from '../community/CommunitySearchComponent'
-import Host from '../../Host'
+import CommunitySearchComponent from '../../search/community/CommunitySearchComponent'
+import Host from '../../../Host'
 
 class CommunityCreationComponent extends React.Component{
     constructor(params){

@@ -4,10 +4,11 @@ import TopicComponent from '../topics/TopicComponent'
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
-import "../../style/DedicatedPagesStyle.css"
+import "../../style/universal/DedicatedPagesStyle.css"
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import Cookies from 'universal-cookie';
-import FollowCommunity from './FollowCommunity';
+import FollowCommunity from '../../functions/community/FollowCommunity';
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 
 class CommunityComponent extends React.Component{
     constructor(params){
@@ -17,12 +18,16 @@ class CommunityComponent extends React.Component{
             token: params.token,
             communityID: params.communityID,
             membersOption: false,
+            all: false,
+            mods:false,
+            followers:false,
             topic: true,
             date:new Date(),
             members:[],
             related: false,
             about: false,
-            relatedCommunities: []
+            relatedCommunities: [],
+            dropdownSelectedOption: null
         }
     }
 
@@ -87,7 +92,7 @@ class CommunityComponent extends React.Component{
                 communityID: this.state.communityID
             }
         }).then(res=>{
-            console.log("FETCHED RELATED COMMUNITIES -> " + JSON.stringify(res.data))
+        
             this.setState({
                 relatedCommunities: res.data
             })
@@ -124,6 +129,15 @@ class CommunityComponent extends React.Component{
                     </div>
         
                 )
+            }
+            case this.state.followers:{
+
+            }
+            case this.state.mods:{
+
+            }
+            case this.state.all:{
+
             }
             case this.state.membersOption:{
                 
@@ -199,7 +213,26 @@ class CommunityComponent extends React.Component{
                             size={PersonaSize.size72}
                             imageAlt="Community"
                         />
-                        
+                        <Dropdown 
+                            placeholder="Selected Options"
+                            
+                            options={[
+                                { key: 'members', text: 'Members'},
+                                { key: 'followers', text: 'Followers',  },
+                                { key: 'mods', text: 'Moderators' },
+                                { key: 'all', text: 'All' },
+                              ]}
+                            onChange={(e, selectedOption) => {
+                               
+                                if(selectedOption.key === 'members')
+                                    this.setState({
+                                        membersOption: true,
+                                        topic: false,
+                                        related: false,
+                                        about:false
+                                    })
+                            }}
+                        />
                         <div className="dedicated_action_bar_buttons">
 
                             {this.state.membersOption === true ? <PrimaryButton text='Members And Followers'/> : <DefaultButton text='Members And Followers' onClick={()=>
