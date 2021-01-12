@@ -132,7 +132,7 @@ class Profile extends React.Component{
                 <div className="center_component">
                     <div className="dedicated_component_container">
                         <div className='dedicated_image_container'>
-                            <img className='dedicated_image_style' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
+                            <img className='dedicated_image_style' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.backgroundImageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
                         </div>
                         <div className='dedicated_action_bar'>
                             <div>

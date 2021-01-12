@@ -5,8 +5,8 @@ import MessageBox from "./box/MessageBoxComponent";
 import { DefaultButton, Modal, PrimaryButton } from 'office-ui-fabric-react';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import axios from 'axios';
-import Dexie from "dexie";
 import Host from '../../Host'
+import Dexie from "dexie";
 import { Redirect } from 'react-router-dom';
 
 
@@ -173,17 +173,7 @@ class MessagesComponent extends React.Component{
         }   
     }
   
-    getFile(event) {
-        console.log(event)
-
-        let reader = new FileReader();
-        reader.readAsDataURL(event[0]);
-        reader.onload =() =>{
-          this.setState({
-              imageURL: reader.result
-          })
-        }
-    }
+    
     async SendMessage (){
         await axios({
             method: 'post',
@@ -218,6 +208,31 @@ class MessagesComponent extends React.Component{
             ) 
         }
     }
+
+    getFile(event) {
+        
+        this.setState({
+            imageURL: null
+        })
+        
+        let reader = new FileReader();
+      
+        if (!event[0].name.match(/.(jpg|jpeg|png|gif)$/i)){
+            alert('not an image')
+            this.setState({
+                imageURL: null
+            })
+        }
+        else{
+            reader.readAsDataURL(event[0]);
+            reader.onload =() =>{
+                this.setState({
+                    imageURL: reader.result
+                })
+              }
+        }
+    }
+    
     renderModal(){
         if(this.state.imageModal === true){
             return(
@@ -277,7 +292,7 @@ class MessagesComponent extends React.Component{
                     <div className="messages_component" style={{backgroundColor: 'white'}} ref={this.state.conversationContainer}>
                         {this.state.messages === [] ? <div></div> : this.state.messages.map((message,index) =>(
                             <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
-                                <MessageBox content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {this.state.userID}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
+                                <MessageBox token={this.state.token} messageID = {message.id} conversationID={this.state.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {this.state.userID}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
                                 <div ref={this.state.essagesEndRef} />
                             </div>   
                         ))}   
@@ -319,7 +334,7 @@ class MessagesComponent extends React.Component{
                         
                         
                         </div>
-                    
+                        {this.renderModal()}
                         <div className="message_input_container" >
                         <div className="message_input_box">
                             <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       

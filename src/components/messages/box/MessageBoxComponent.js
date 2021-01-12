@@ -2,6 +2,8 @@ import "../../../style/messages/MessageBoxStyle.css";
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { getTheme } from '@fluentui/react';
 import React from 'react'
+import axios from 'axios';
+import Host from '../../../Host'
 
 class MessageBoxComponent extends React.Component {
     constructor(params){
@@ -12,10 +14,55 @@ class MessageBoxComponent extends React.Component {
             creationDate: params.creationDate ,
             userID: params.userID,
             creatorID: params.creatorID,
-            read: params.read
+            read: params.read,
+            messageID: params.messageID,
+            conversationID: params.conversationID,
+            date: new Date(),
+            token: params.token
         }
     }
     
+    componentDidMount(){
+        this.timerID = setInterval(
+            () => this.tick(),
+            1000
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+    tick() {
+        if(this.state.read === false)
+            this.VerifySeenStatus();
+            
+        this.setState({
+            date: new Date(),
+        });
+    }
+    async VerifySeenStatus(){
+        
+        await axios({
+            method: 'patch',
+            url: Host()+ 'api/seen/by/everyone/check',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data: {
+                messageID: this.state.messageID,
+                conversationID: this.state.conversationID
+            }
+        })
+        .then(res=>{
+            
+            this.setState({
+                read: res.data
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    }
+
     renderImage (){
         
         if(typeof this.state.imageURL !== 'undefined')

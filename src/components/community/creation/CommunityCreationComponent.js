@@ -85,14 +85,26 @@ class CommunityCreationComponent extends React.Component{
         .catch(error => console.log(error))
     }
     getFile(event) {
-        console.log(event)
-
+        
+        this.setState({
+            imageURL: null
+        })
+        
         let reader = new FileReader();
-        reader.readAsDataURL(event[0]);
-        reader.onload =() =>{
-          this.setState({
-              imageURL: reader.result
-          })
+      
+        if (!event[0].name.match(/.(jpg|jpeg|png|gif)$/i)){
+            alert('not an image')
+            this.setState({
+                imageURL: null
+            })
+        }
+        else{
+            reader.readAsDataURL(event[0]);
+            reader.onload =() =>{
+                this.setState({
+                    imageURL: reader.result
+                })
+              }
         }
     }
     imageRender(){

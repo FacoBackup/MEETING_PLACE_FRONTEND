@@ -227,7 +227,7 @@ class TopicComponent extends React.Component{
                                 <div className="topic_creator_persona_container">
                                     <Persona
                                         {...{
-                                            imageUrl:(topic.subjectImageURL === null) ?  topic.subjectImageURL.imageURL :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                            imageUrl:  (typeof topic.subjectImageURL !== 'undefined')? topic.subjectImageURL : null,
                                             text: topic.subjectName,
                                             secondaryText: (typeof topic.communityID === 'undefined' ? topic.creatorID :  topic.communityName)
                                         }}
@@ -274,7 +274,7 @@ class TopicComponent extends React.Component{
                                 <div className="topic_creator_persona_container">
                                     <Persona
                                         {...{
-                                            imageUrl:(topic.subjectImageURL === null) ?  topic.subjectImageURL.imageURL :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                            imageUrl: (typeof topic.subjectImageURL !== 'undefined')? topic.subjectImageURL : null ,
                                             text: topic.subjectName,
                                             secondaryText: (typeof topic.communityID === 'undefined' ? topic.creatorID :  topic.communityName)
                                         }}

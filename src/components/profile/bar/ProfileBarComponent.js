@@ -47,7 +47,7 @@ class ProfileBarComponent extends Component{
     async signout() {
         Object.keys((new Cookies()).getAll()).forEach(name => (new Cookies()).remove(name))
         localStorage.clear()
-        Dexie.delete('api_web_db')
+        await Dexie.delete('api_web_db')
     
         window.location.reload()
     }
@@ -57,8 +57,8 @@ class ProfileBarComponent extends Component{
         return(
             <div className="profile_bar_container">
                 <div className="profile_bar_background_image_container">
-                    {/* <img className="profile_bar_background_image" alt="BACKGROUD" src= {(this.state.profile.imageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ?  this.state.profile.imageURL : "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/> */}
-                    <img className='profile_bar_background_image' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.imageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
+                  
+                    <img className='profile_bar_background_image' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.backgroundImageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
                 </div>
                     {/* <div  className="profile_qrcode_container">
                     <QRcode 
