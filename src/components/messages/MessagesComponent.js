@@ -191,8 +191,7 @@ class MessagesComponent extends React.Component{
         .then(()=>{
             this.FetchMessages()
             this.setState({
-                imageURL: null,
-                messageInput: null
+                imageURL: null
             })
         })
         .catch(error => {

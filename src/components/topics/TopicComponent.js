@@ -7,8 +7,8 @@ import Dexie from "dexie";
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
 import Cookies from 'universal-cookie';
-
-
+import DeleteTopic from '../../functions/topics/DeleteTopic'
+import UpdateTopic from '../../functions/topics/UpdateTopic'
 
 class TopicComponent extends React.Component{
     
@@ -26,6 +26,8 @@ class TopicComponent extends React.Component{
             headerInput: null,
             bodyInput: null
         }
+        this.updateTopic = this.updateTopic.bind(this)
+        this.deleteTopic = this.deleteTopic.bind(this)
         this.handleChange = this.handleChange.bind(this)
     }
 
@@ -35,43 +37,7 @@ class TopicComponent extends React.Component{
         else
             this.fetchTimeline()
     }
-    
-    async setTimeline(){      
-        // .sortBy('creationDate')
-        this.setState({
-            topics: await this.state.db.topics.orderBy('creationDate').reverse().toArray()
-        })        
-    }
 
-    async insertTimeline(res){
-        this.state.db.transaction('rw', this.state.db.topics, async() => {
-            
-            res.forEach(topic => {
-                const value = this.state.db.topics.where('id').equals(topic.id).toArray()
-                
-                if(value.length === 0 || typeof value.length === 'undefined')
-                    this.state.db.topics.add({
-                        id: topic.id, 
-                        header: topic.header, 
-                        body: topic.body, 
-                        approved: topic.approved, 
-                        creatorID: topic.creatorID,
-                        mainTopicID: topic.mainTopicID, 
-                        creationDate: topic.creationDate, 
-                        communityID: topic.communityID,
-                        imageURL: topic.imageURL,
-                        subjectName: topic.subjectName,
-                        communityName: topic.communityName,
-                        subjectImageURL: topic.subjectImageURL
-                    })
-            });
-
-            // this.state.db.topics.until('creationDate').equals(((new Date()).getTime())-259200000).delete() //delete all topics older than 3 days
-           
-        }).catch(error=>console.log(error))
-       
-    }
-    
     async fetchTimeline(){
 
         await axios({
@@ -114,41 +80,18 @@ class TopicComponent extends React.Component{
     }
 
     async deleteTopic(topicID){
-        await axios({
-            method: 'delete',
-            url: Host()+'api/topic',
-            headers: {"Authorization": 'Bearer ' + this.state.token},
-            data:{
-                topicID: topicID
-            }
-        }).then(res=>{
-  
-            window.location.reload()
-        })
-        .catch(error => console.log(error))
+        await DeleteTopic(topicID);
+    
+        (this.state.timeline === true )? this.fetchTimeline() : this.fetchSubjectTopics()
     }
 
     async updateTopic(topicID){
-        
-        await axios({
-            method: 'put',
-            url: Host()+'api/topic',
-            headers: {"Authorization": 'Bearer ' + this.state.token},
-            data:{
-                topicID: topicID,
-                header: this.state.headerInput,
-                body: this.state.bodyInput
-            }
-        }).then(()=>{
-            this.setState({
-                editMode: false,
-                headerInput: null,
-                bodyInput: null
-            })
-            this.fetchSubjectTopics()
-            
+        await UpdateTopic(topicID, this.state.headerInput, this.state.bodyInput);
+        this.setState({
+            editMode: false
         })
-        .catch(error => console.log(error))
+        (this.state.timeline === true )? this.fetchTimeline() : this.fetchSubjectTopics()
+        
     }
 
     renderEditButton(creator, topicID){
