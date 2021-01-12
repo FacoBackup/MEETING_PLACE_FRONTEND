@@ -103,7 +103,7 @@ class FollowersComponent extends React.Component{
                             <div className="personas_container"> 
                                 <Persona
                                 {...{
-                                    imageUrl: (follower.imageURL === null) ?  follower.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                    imageUrl: (typeof follower.imageURL !== 'undefined') ?  follower.imageURL : null,
                                     text: follower.name,
                                     secondaryText: follower.email,
                                     tertiaryText: follower.phoneNumber

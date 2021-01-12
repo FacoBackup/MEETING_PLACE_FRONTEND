@@ -5,7 +5,7 @@ import "../../style/universal/DedicatedPagesStyle.css"
 import Conversations from "../../components/conversations/bar/ConversationBarComponent"
 import axios from 'axios';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { CommandBarButton } from 'office-ui-fabric-react';
+import { CommandBarButton, DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import TopicComponent from '../../components/topics/TopicComponent'
 import AboutComponent from '../../components/profile/options/UserAboutComponent'
 import Followers from '../../components/social/followers/FollowersComponent'
@@ -100,12 +100,12 @@ class Profile extends React.Component{
         return(
             <div className="dedicated_action_bar_buttons">
                 
-                <CommandBarButton style={{fontSize: '16px'}} text='Send Message' href={'/chat/'+this.state.userID+"/false/"+this.state.userID}/>
-                <CommandBarButton style={{fontSize: '16px'}} text='Follow'/>
-                <CommandBarButton style={{fontSize: '16px'}} text='Topics' href={'/profile/'+this.state.userID+'/0'}/>
-                <CommandBarButton style={{fontSize: '16px'}} text='Followers' href={'/profile/'+this.state.userID+'/2'}/>
-                <CommandBarButton style={{fontSize: '16px'}} text='Following' href={'/profile/'+this.state.userID+'/1'}/>
-                <CommandBarButton style={{fontSize: '16px'}} text='Communities' href={'/profile/'+this.state.userID+'/3'}/>
+                <DefaultButton style={{fontSize: '16px'}} text='Send Message' href={'/chat/'+this.state.userID+"/false/"+this.state.userID}/>
+                <PrimaryButton style={{fontSize: '16px'}} text='Follow'/>
+                <DefaultButton style={{fontSize: '16px'}} text='Topics' href={'/profile/'+this.state.userID+'/0'}/>
+                <DefaultButton style={{fontSize: '16px'}} text='Followers' href={'/profile/'+this.state.userID+'/2'}/>
+                <DefaultButton style={{fontSize: '16px'}} text='Following' href={'/profile/'+this.state.userID+'/1'}/>
+                <DefaultButton style={{fontSize: '16px'}} text='Communities' href={'/profile/'+this.state.userID+'/3'}/>
 
             </div>
             

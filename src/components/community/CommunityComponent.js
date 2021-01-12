@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'; 
 import TopicComponent from '../topics/TopicComponent'
-import { CommandBarButton } from 'office-ui-fabric-react';
+import { CommandBarButton, DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../Host'
 import "../../style/universal/DedicatedPagesStyle.css"
@@ -64,7 +64,7 @@ class CommunityComponent extends React.Component{
                 console.log("MEMBERS")
                 return(
                     <div>
-                        <CommunityUsersComponent token={this.state.token} communityID={this.state.communityID} options={1}/>
+                        <CommunityUsersComponent token={this.state.token} role={this.state.community.role} communityID={this.state.communityID} options={1}/>
                     </div>
                 )
             }
@@ -72,7 +72,7 @@ class CommunityComponent extends React.Component{
                 console.log("ALL")
                 return(
                     <div>
-                        <CommunityUsersComponent token={this.state.token} communityID={this.state.communityID}/>
+                        <CommunityUsersComponent token={this.state.token} role={this.state.community.role} communityID={this.state.communityID}/>
                     </div>
                 ) 
             }
@@ -136,7 +136,7 @@ class CommunityComponent extends React.Component{
                         />
                         <div className="dedicated_action_bar_buttons">
 
-                            {this.state.membersOption === true ? <CommandBarButton text='Members'style={{fontSize: '16px'}}/> : <CommandBarButton style={{fontSize: '16px'}} text='Members' onClick={()=>
+                            {this.state.membersOption === true ? <PrimaryButton text='Members'style={{fontSize: '16px'}}/> : <DefaultButton style={{fontSize: '16px'}} text='Members' onClick={()=>
                                  this.setState({
                                     membersOption: true,
                                     topic:false,
@@ -148,7 +148,7 @@ class CommunityComponent extends React.Component{
                                 })
                             }/> }
 
-                            {this.state.followers === true ? <CommandBarButton text='Followers'style={{fontSize: '16px'}}/> : <CommandBarButton style={{fontSize: '16px'}} text='Followers' onClick={()=>
+                            {this.state.followers === true ? <PrimaryButton text='Followers'style={{fontSize: '16px'}}/> : <DefaultButton style={{fontSize: '16px'}} text='Followers' onClick={()=>
                                  this.setState({
                                     membersOption: false,
                                     topic:false,
@@ -159,7 +159,7 @@ class CommunityComponent extends React.Component{
                                     mods:false,
                                 })
                             }/> }
-                            {this.state.mods === true ? <CommandBarButton text='Moderators'style={{fontSize: '16px'}}/> : <CommandBarButton text='Moderators'style={{fontSize: '16px'}} onClick={()=>
+                            {this.state.mods === true ? <PrimaryButton text='Moderators'style={{fontSize: '16px'}}/> : <DefaultButton text='Moderators'style={{fontSize: '16px'}} onClick={()=>
                                     this.setState({
                                         membersOption: false,
                                         topic:false,
@@ -170,7 +170,7 @@ class CommunityComponent extends React.Component{
                                         mods:true,
                                     })
                             }/> }
-                            {this.state.all === true ? <CommandBarButton text='All Users'style={{fontSize: '16px'}}/> : <CommandBarButton text='All Users'style={{fontSize: '16px'}} onClick={()=>
+                            {this.state.all === true ? <PrimaryButton text='All Users'style={{fontSize: '16px'}}/> : <DefaultButton text='All Users'style={{fontSize: '16px'}} onClick={()=>
                                   this.setState({
                                     membersOption: false,
                                     topic:false,
@@ -181,7 +181,7 @@ class CommunityComponent extends React.Component{
                                     mods:false,
                                 })
                             }/> }
-                            {this.state.related === true ? <CommandBarButton text='Related Communities' style={{fontSize: '16px'}}/> : <CommandBarButton  style={{fontSize: '16px'}} text='Related Communities' onClick={()=>
+                            {this.state.related === true ? <PrimaryButton text='Related Communities' style={{fontSize: '16px'}}/> : <DefaultButton  style={{fontSize: '16px'}} text='Related Communities' onClick={()=>
                                 this.setState({
                                     membersOption: false,
                                     topic:false,
@@ -192,7 +192,7 @@ class CommunityComponent extends React.Component{
                                     mods:false,
                                 })  
                             }/> }
-                            {this.state.topic === true?  <CommandBarButton style={{fontSize: '16px'}} text='Topics'/> : <CommandBarButton style={{fontSize: '16px'}} text='Topics' onClick={()=>
+                            {this.state.topic === true?  <PrimaryButton style={{fontSize: '16px'}} text='Topics'/> : <DefaultButton style={{fontSize: '16px'}} text='Topics' onClick={()=>
                                 this.setState({
                                     membersOption: false,
                                     topic:true,
@@ -204,7 +204,7 @@ class CommunityComponent extends React.Component{
                                 })    
                             }/>                                
                             }
-                            {this.state.about === true?  <CommandBarButton style={{fontSize: '16px'}} text='About'/> : <CommandBarButton style={{fontSize: '16px'}} text='About' onClick={()=>
+                            {this.state.about === true?  <PrimaryButton style={{fontSize: '16px'}} text='About'/> : <DefaultButton style={{fontSize: '16px'}} text='About' onClick={()=>
         
                                 this.setState({
                                     membersOption: false,

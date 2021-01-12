@@ -2,14 +2,13 @@
 import React from 'react'
 import axios from 'axios'; 
 import { DefaultButton,PrimaryButton,Modal } from 'office-ui-fabric-react';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../../Host'
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import Cookies from 'universal-cookie';
-import FollowCommunity from '../../../functions/community/FollowCommunity';
 import "../../../style/topics/TopicCreationStyle.css"
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import "../../../style/community/CommunityOptionsStyle.css"
+
 class CommunityAboutComponent extends React.Component{
     constructor(params){
         super(params)
@@ -96,53 +95,61 @@ class CommunityAboutComponent extends React.Component{
                )
     
             }
+            else 
+                    break
            } 
            case 1: {
-            if(this.state.backgroundModal === true){
-                return(
-                    <Modal
-                    titleAriaId={"TESTE"}
-                    isOpen={true}
-                    onDismiss={true}
-                    isBlocking={false}
-                    
-                    containerClassName={"contentStyles.container"}
-                    >
-                        <div className='modal_container' >
-                            <div className="modal_title_component">
-                                <h2 >Upload a new background image</h2>
+                if(this.state.backgroundModal === true){
+                    return(
+                        <Modal
+                        titleAriaId={"TESTE"}
+                        isOpen={true}
+                        onDismiss={true}
+                        isBlocking={false}
+                        
+                        containerClassName={"contentStyles.container"}
+                        >
+                            <div className='modal_container' >
+                                <div className="modal_title_component">
+                                    <h2 >Upload a new background image</h2>
+                                </div>
+                                <div className="modal_top_component" style={{display:'flex', justifyContent:'center'}}>
+                                    <input type="file"  name="file"  onChange={event => this.getFile(event.target.files, "backgroundImageURL")}/>
+                                </div>
+                                <div className="modal_middle_component" >
+                                    {this.renderSelectedImage(1)}
+                                </div>
+                                <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between'}}>
+                                    {this.state.imageURL === null ? 
+                                    <DefaultButton text="Cancel" onClick={()=> this.setState({
+                                        imageModal: false,
+                                        backgroundModal: false
+                                    })}/> : 
+                                    <DefaultButton text="Remove Image" onClick={()=> this.setState({
+                                        imageModal: false,
+                                        backgroundModal: false,
+                                        backgroundImageURL: null
+                                    })}/>    
+                                }
+                                    
+                                    <PrimaryButton text="Choose" onClick={()=> this.setState({
+                                        imageModal: false,
+                                        backgroundModal: false
+                                    
+                                    })}/>
+                                </div>
                             </div>
-                            <div className="modal_top_component" style={{display:'flex', justifyContent:'center'}}>
-                                <input type="file"  name="file"  onChange={event => this.getFile(event.target.files, "backgroundImageURL")}/>
-                            </div>
-                            <div className="modal_middle_component" >
-                                {this.renderSelectedImage(1)}
-                            </div>
-                            <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between'}}>
-                                {this.state.imageURL === null ? 
-                                <DefaultButton text="Cancel" onClick={()=> this.setState({
-                                    imageModal: false,
-                                    backgroundModal: false
-                                })}/> : 
-                                <DefaultButton text="Remove Image" onClick={()=> this.setState({
-                                    imageModal: false,
-                                    backgroundModal: false,
-                                    backgroundImageURL: null
-                                })}/>    
-                            }
-                                
-                                <PrimaryButton text="Choose" onClick={()=> this.setState({
-                                    imageModal: false,
-                                    backgroundModal: false
-                                
-                                })}/>
-                            </div>
-                        </div>
-                    </Modal>
-               )
-    
-            } 
-           }
+                        </Modal>
+                )
+        
+                } 
+                else 
+                    break
+            }
+            default:{
+                alert("Some error occurred.")
+                
+            }
         }
         
     }
@@ -151,19 +158,28 @@ class CommunityAboutComponent extends React.Component{
         switch(option){
             case 0: {
                 if(this.state.imageURL !== null)
-                return(
-                    <div style={{display:'grid', alignContent:'center',justifyContent:'center', paddingLeft:'.3vw', paddingRight:'.3vw'}}>
-                        <img style={{margin:'auto',width:'300px', borderRadius:'8px'}} alt="message" src={this.state.imageURL}/>
-                    </div>  
-                ) 
+                    return(
+                        <div style={{display:'grid', alignContent:'center',justifyContent:'center', paddingLeft:'.3vw', paddingRight:'.3vw'}}>
+                            <img style={{margin:'auto',width:'300px', borderRadius:'8px'}} alt="message" src={this.state.imageURL}/>
+                        </div>  
+                    ) 
+                else 
+                    break
             }
             case 1:{
                 if(this.state.backgroundImageURL !== null)
+                    return(
+                        <div style={{display:'grid', alignContent:'center', justifyContent:'center', paddingLeft:'.3vw', paddingRight:'.3vw'}}>
+                            <img style={{margin:'auto',width:'300px', borderRadius:'8px'}} alt="message" src={this.state.backgroundImageURL}/>
+                        </div>  
+                    ) 
+                else 
+                    break
+            }
+            default:{
                 return(
-                    <div style={{display:'grid', alignContent:'center', justifyContent:'center', paddingLeft:'.3vw', paddingRight:'.3vw'}}>
-                        <img style={{margin:'auto',width:'300px', borderRadius:'8px'}} alt="message" src={this.state.backgroundImageURL}/>
-                    </div>  
-                ) 
+                    null
+                )
             }
         }
        
@@ -185,21 +201,19 @@ class CommunityAboutComponent extends React.Component{
         })
     }
     async submitChanges(){
+        alert(this.state.community.communityID)
         await axios({
             method: 'put',
             url: Host()+'api/update/community',
             headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
             data: {
-                communityID: this.state.community.id,
+                communityID: this.state.community.communityID,
                 about: this.state.about,
                 imageURL: this.state.imageURL,
                 backgroundImageURL: this.state.backgroundImageURL
             }
         }).then(res=>{
-        
-            this.setState({
-                fetchedID: res.data
-            })
+            window.location.reload()
         })
         .catch(error => {
             console.log(error)
@@ -216,7 +230,7 @@ class CommunityAboutComponent extends React.Component{
                 <div className="community_about_container">
                 <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>About this Community:</p>
                     <p style={{textAlign:'center', fontSize: FontSizes.size14, fontWeight:FontWeights.regular}}>{this.state.community.about}</p>
-                    {(this.state.community.role === "MODERATOR")? <TextField multiline onChange={this.handleChange} placeholder="About This Community"/> : <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Nothing yet</p>}
+                    {(this.state.community.role === "MODERATOR")? <TextField multiline onChange={this.handleChange} placeholder="About This Community"/> : null}
                 </div>
             
                 <div className="topic_image_container community_about_container"  >
@@ -224,7 +238,7 @@ class CommunityAboutComponent extends React.Component{
                     {(this.state.community.role === "MODERATOR")? <DefaultButton style={{margin:'auto'}} text="Upload a new image" onClick={() => this.setState({
                             backgroundModal: false,
                             imageModal: true
-                        })}/> : <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Nothing yet</p>}
+                        })}/> : <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Nothing here yet</p>}
                     {this.renderModal(0)}
                     {this.renderImage((this.state.imageURL !== null )? this.state.imageURL : this.state.community.imageURL)}
                     
@@ -234,7 +248,7 @@ class CommunityAboutComponent extends React.Component{
                     {(this.state.community.role === "MODERATOR")? <DefaultButton style={{margin:'auto'}} text="Upload a new background image" onClick={() => this.setState({
                             backgroundModal: true,
                             imageModal: false
-                        })}/> : <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Nothing yet</p>}
+                        })}/> : <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Nothing here yet</p>}
                     {this.renderModal(1)}
                     {this.renderImage((this.state.backgroundImageURL !== null )? this.state.backgroundImageURL : this.state.community.backgroundImageURL)}
                 </div>

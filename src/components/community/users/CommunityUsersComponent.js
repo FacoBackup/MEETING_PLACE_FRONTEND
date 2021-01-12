@@ -13,7 +13,8 @@ class CommunityUsersComponent extends React.Component{
             options: params.options,
             communityID: params.communityID,
             token: params.token,
-            members:[]
+            members:[],
+            role: params.role
         }
     }
     componentDidUpdate(lastParams){
@@ -140,6 +141,69 @@ class CommunityUsersComponent extends React.Component{
             }
         }
     }
+
+    async promote(userID, communityID){
+        await axios({
+            method: 'put',
+            url: Host()+'api/promote/member',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: communityID,
+                memberID: userID
+            }
+        }).then(res=>{
+            alert(JSON.stringify(res))
+            window.location.reload()
+        })
+        .catch(error=>console.log(error))
+    }
+
+    async lower(userID, communityID){
+        await axios({
+            method: 'put',
+            url: Host()+'api/lower/member',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: communityID,
+                memberID: userID
+            }
+        }).then(res=>{
+            alert(JSON.stringify(res))
+            window.location.reload()
+        })
+        .catch(error=>console.log(error))
+    }
+
+    async removeUser(userID, communityID){
+        
+        
+        await axios({
+            method: 'delete',
+            url: Host()+'api/remove/member',
+            headers: {"Authorization": 'Bearer ' + this.state.token},
+            data:{
+                communityID: communityID,
+                memberID: userID
+            }
+        }).then(res=>{
+            
+            window.location.reload()
+        })
+        .catch(error=>console.log(error))
+    }
+
+    renderButtons(userID, userRole, communityID){
+        console.log(userRole)
+        if(userID !== (new Cookies()).get("ID"))
+            return(
+                <div style={{display:'flex', justifyContent:'space-between', alignContent:'center'}}>
+                    <DefaultButton text="Send Message" href={"/chat/"+userID+"/false/"+userID}/>
+                    {(userRole !== "MODERATOR" && this.state.role === "MODERATOR") ? <DefaultButton text="Promote User" onClick={alert("CLICKED")}/>: null}
+                    {(userRole !== "FOLLOWER" && this.state.role === "MODERATOR") ? <DefaultButton text="Lower User" onClick={() => this.lower(userID, communityID)}/>: null}
+                    {(this.state.role === "MODERATOR") ? <DefaultButton style={{backgroundColor: "red", color:"white"}} text="Remove User" onClick={() => this.removeUser(userID, communityID)}/>: null}
+                </div>
+            )
+    }
     render(){
         return(
             <div className="dedicated_content_container">
@@ -147,17 +211,21 @@ class CommunityUsersComponent extends React.Component{
                 <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{this.renderPageName()}</p>
                 {this.state.members.map((member) => (
                     <div className='personas_container'>
-                            <Persona
-                                {...{
-                                    imageUrl: member.userImageURL,
-                                    text: member.userName,
-                                    secondaryText: (member.communityName !== null && typeof member.communityName !== 'undefined') ? "From Related Community : " +member.communityName: null,
-                                    tertiaryText: (member.role !== null && typeof member.role !== 'undefined') ? "Member Role : " + member.role : null
-                                }}
-                                size={PersonaSize.size72}
-                                imageAlt="user"
-                            />
-                            {member.userEmail !== (new Cookies()).get("ID") ? <DefaultButton text="Send Message" href={"/chat/"+member.userEmail+"/false/null"}/>: "" }
+                        <Persona
+                            {...{
+                                imageUrl: member.userImageURL,
+                                text: member.userName,
+                                secondaryText: (member.communityName !== null && typeof member.communityName !== 'undefined') ? "From Related Community : " +member.communityName: null,
+                                tertiaryText: (member.role !== null && typeof member.role !== 'undefined') ? "Member Role : " + member.role : null
+                            }}
+                            size={PersonaSize.size72}
+                            imageAlt="user"
+                        />
+                        { (member.userEmail!== (new Cookies()).get("ID"))? <DefaultButton text="Send Message" href={"/chat/"+member.userEmail+"/false/"+member.userEmail}/> : null}
+                        { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "MODERATOR" && this.state.role === "MODERATOR")? <DefaultButton text="Promote User" onClick={() => {this.promote(member.userEmail, member.affiliatedCommunityID)}}/>: null}
+                        { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "FOLLOWER" && this.state.role === "MODERATOR")?<DefaultButton text="Lower User" onClick={() => {this.lower(member.userEmail, member.affiliatedCommunityID)}}/>: null}
+                        { (member.userEmail!== (new Cookies()).get("ID") && this.state.role === "MODERATOR")? <DefaultButton style={{backgroundColor: "red", color:"white"}} text="Remove User" onClick={() => {this.removeUser(member.userEmail, member.affiliatedCommunityID)}}/>: null}
+                    
                     </div>
                 ))}       
             </div>

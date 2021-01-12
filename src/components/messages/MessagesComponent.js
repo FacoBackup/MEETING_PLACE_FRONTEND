@@ -91,14 +91,15 @@ class MessagesComponent extends React.Component{
     }
 
     async insertMessages(res){
-        this.state.db.transaction('rw', this.state.db.messages, async() => {
-            res.forEach(message => {
-                const value = this.state.db.messages.where('id').equals(message.id).toArray()
-                if((value.length === 0 || typeof value.length === 'undefined' ) && this.state.conversationID !== this.state.receiverName)
-                    this.state.db.messages.add({id: message.id, content: message.content,imageURL: message.imageURL, creatorID: message.creatorID, conversationID: message.conversationID, type: message.type, valid: message.valid , creationDate: message.creationDate,seenByEveryone: message.seenByEveryone ,receiverAsUserID: message.receiverAsUserID})
-
-            });
-        }).catch(error=>console.log(error))
+        res.forEach(message => {
+            const value = this.state.db.messages.where('id').equals(message.id).toArray()
+            if((value.length === 0 || typeof value.length === 'undefined' ) && this.state.conversationID !== this.state.receiverName){
+               
+                this.state.db.messages.add({id: message.id, content: message.content,imageURL: message.imageURL, creatorID: message.creatorID, conversationID: message.conversationID, type: message.type, valid: message.valid , creationDate: message.creationDate,seenByEveryone: message.seenByEveryone ,receiverAsUserID: message.receiverAsUserID})       
+            
+            }
+        })
+        
     }
 
     scrollToEnd (){
@@ -302,12 +303,12 @@ class MessagesComponent extends React.Component{
                
                     <div className="message_input_container" >
                         <div className="message_input_box">
-                            <TextField  placeholder="Message" multiline autoAdjustHeight onChange={this.handleChange} />                       
+                            <TextField  placeholder="Message" multiline autoAdjustHeight  resetValue={(this.state.messageInput === null)}  onChange={this.handleChange} />                       
                         </div>
                         
                         {this.renderSelectedImage()}  
                         <div className="message_input_buttons">
-                            <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
+                            <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }}onClick={() => this.SendMessage()}/>      
                             <DefaultButton style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} text="Upload Image" onClick={()=> 
                             this.setState({
                                 imageModal: true
@@ -342,7 +343,7 @@ class MessagesComponent extends React.Component{
                         
                         {this.renderSelectedImage()}  
                         <div className="message_input_buttons">
-                            <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={this.SendMessage}/>      
+                            <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} onClick={() => this.SendMessage()}/>      
                             <DefaultButton style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} text="Upload Image" onClick={()=> 
                             this.setState({
                                 imageModal: true

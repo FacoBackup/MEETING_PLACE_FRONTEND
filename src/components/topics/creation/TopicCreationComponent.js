@@ -128,7 +128,7 @@ class TopicCreationComponent extends React.Component{
                     
                        <Persona
                             {...{
-                                imageUrl: (this.state.selectedCommunity.imageURL === null) ?  this.state.selectedCommunity.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                                imageUrl: (typeof this.state.selectedCommunity.imageURL !== "undefined") ?  this.state.selectedCommunity.imageURL : null,
                                 text: this.state.selectedCommunity.name,
                                 secondaryText: this.state.selectedCommunity.role
                             }}

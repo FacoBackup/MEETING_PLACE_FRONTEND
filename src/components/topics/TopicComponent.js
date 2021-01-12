@@ -74,27 +74,16 @@ class TopicComponent extends React.Component{
     
     async fetchTimeline(){
 
-        if(this.state.db.isOpen() === false){
-            this.state.db.version(1).stores({
-                messages: "id,content,imageURL,creatorID, conversationID, type, valid, creationDate, seenByEveryone, receiverAsUserID",
-                topics: "id,header,body,approved, creatorID, mainTopicID, creationDate, communityID, imageURL,subjectName, communityName, subjectImageURL"
-            }) 
-        }
-        await this.state.db.open().catch((error) => {
-            console.log(error)
-        }) 
-
-        const data = await this.state.db.topics.toArray()
-
         await axios({
             method: 'get',
-            url:  Host()+((data.length === 0 || typeof data.length === 'undefined') ? 'api/timeline/all':'api/timeline/new') ,
+            url:  Host()+'api/timeline/all' ,
             headers: {"Authorization": 'Bearer ' +this.state.token},            
         }).then(res=>{
-            console.log("TIMELINE ITEMS -> "+ JSON.stringify(res.data))
-            if(typeof res.data != "undefined" && res.data != null && res.data.length != null && res.data.length !== 0)
-               this.insertTimeline(res.data)
-            this.setTimeline()
+            
+            this.setState({
+                topics: res.data
+            })
+          
         })
         .catch(error => {
             console.log(error)
@@ -148,7 +137,7 @@ class TopicComponent extends React.Component{
             data:{
                 topicID: topicID,
                 header: this.state.headerInput,
-                body: this.state.body
+                body: this.state.bodyInput
             }
         }).then(()=>{
             this.setState({

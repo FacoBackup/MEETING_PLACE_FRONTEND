@@ -7,7 +7,9 @@
 .dedicated_image_container{
     overflow: hidden;
     border-radius: 8px;
-    height: 40vh;
+    display: grid;
+    align-content: center;
+    height: 45vh;
 }
 .dedicated_image_style{
     width: 100%;
