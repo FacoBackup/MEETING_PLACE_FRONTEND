@@ -4,6 +4,7 @@ import { getTheme } from '@fluentui/react';
 import React from 'react'
 import axios from 'axios';
 import Host from '../../../Host'
+import Cookies from 'universal-cookie';
 
 class MessageBoxComponent extends React.Component {
     constructor(params){
@@ -18,7 +19,6 @@ class MessageBoxComponent extends React.Component {
             messageID: params.messageID,
             conversationID: params.conversationID,
             date: new Date(),
-            token: params.token
         }
     }
     
@@ -46,7 +46,7 @@ class MessageBoxComponent extends React.Component {
         await axios({
             method: 'patch',
             url: Host()+ 'api/seen/by/everyone/check',
-            headers: {"Authorization": 'Bearer ' + this.state.token},
+            headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
             data: {
                 messageID: this.state.messageID,
                 conversationID: this.state.conversationID

@@ -3,13 +3,13 @@ import Cookies from 'universal-cookie';
 import "../../style/conversation/ChatStyle.css"
 import {Redirect} from 'react-router-dom'
 // import Messages from "../../components/messages/MessagesComponent"
-import NewMessageComponent from '../../components/messages/NewMessageComponent'
+import NewMessageComponent from '../../components/messages/NewNewMessageComponent'
 import "../../style/universal/PageModel.css"
 import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
 import ConversationsBar from "../../components/conversations/bar/ConversationBarComponent";
 import { getTheme } from '@fluentui/react';
 import ConversationInfo from "../../components/conversations/information/ConversationInfoComponent"
-
+import SendMessageComponent from '../../components/messages/SendMessageComponent'
 class Conversation extends Component{
     
     constructor({match}){
@@ -17,7 +17,7 @@ class Conversation extends Component{
         this.state={
             conversationID: match.params.absoluteid,
             receiverName: match.params.username,
-            isGroup: match.params.isGroup,
+            isGroup: match.params.isGroup === 'true' ? true: false,
             token: (new Cookies()).get("JWT"),
             userID: (new Cookies()).get("ID"),
             date: new Date(),
@@ -49,7 +49,7 @@ class Conversation extends Component{
                         
                         <NewMessageComponent userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.conversationID} receiverName={this.state.receiverName} />
                     
-
+                        <SendMessageComponent subjectID={this.state.isGroup === true ? this.state.conversationID : this.state.receiverName} isGroup={this.state.isGroup}/>
 
                     </div>
                     

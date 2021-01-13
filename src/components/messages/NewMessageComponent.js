@@ -12,10 +12,10 @@ export default function MessageComponent(conversationID) {
 
         
 
-    async function setThings(params) {
-        const result =  await useMessage(conversationID,(pageNumber !== null && typeof pageNumber !== 'undefined') ? pageNumber: null)
+    // async function setThings(params) {
+    //     const result =  await useMessage(conversationID,(pageNumber !== null && typeof pageNumber !== 'undefined') ? pageNumber: null)
 
-    }
+    // }
     const observer = useRef()
     const lastMessageElementRef = useCallback(node => {
         if (loading) return
