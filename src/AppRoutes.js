@@ -4,21 +4,22 @@ import SignUp from "./pages/user/Signup";
 import Community from "./pages/community/Community"
 import Home from "./pages/timeline/Timeline";
 import Search from "./pages/search/Search";
-import Chat from "./pages/chat/Chat";
-import Followers from "./pages/social/followers/Followers";
-import Following from "./pages/social/following/Following";
+import Conversation from "./pages/conversation/Conversation";
 import SignIn from "./pages/authentication/SignIn"
+import CommunityOptions from "./pages/community/options/CommunityOptions"
+import Profile from "./pages/profile/Profile"
 
 function AppRoutes() {
   return (
     <div>
       <Router>
           <Switch>    
+              <Route path="/topic/:topicID/:likes" exact component={Profile}/>  
+              <Route path="/profile/:userID/:option" exact component={Profile}/>
               <Route path="/community/:id" exact component={Community}/>
-              <Route path="/following" exact component={Following}/>
-              <Route path="/followers" exact component={Followers}/>
+              <Route path="/communities" exact component={CommunityOptions}/>
               <Route path="/" exact component={Home}/>
-              <Route path="/chat/:username/:isGroup/:absoluteid" exact component={Chat}/>
+              <Route path="/chat/:username/:isGroup/:absoluteid" exact component={Conversation}/>
               <Route path="/search_user" exact component={Search}/>
               <Route path="/authenticate" exact component={SignIn}/>
               <Route path="/creation" exact component={SignUp}/>

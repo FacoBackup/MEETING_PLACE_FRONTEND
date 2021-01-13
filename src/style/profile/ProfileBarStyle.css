@@ -1,0 +1,89 @@
+.profile_bar_container{
+    display: grid;
+    overflow: hidden;   
+    width:100%;
+    row-gap: 5vh;
+    grid-template-rows: 1fr 1fr 1fr ;
+    max-height: 100%;
+    
+    
+}
+.profile_bar_background_image_container{
+    overflow: hidden;
+    display: grid;
+    align-content: center;
+    height: 20vh;
+    border-radius: 8px;
+}
+.profile_bar_background_image{
+    grid-row: 1;
+    width: 100%;
+    
+    border-radius: 8px;
+}
+/* .profile_image{
+    display: inline;
+    margin: 0 auto;
+    margin-left: -25%;
+    height: 100%;
+    width: auto;
+} */
+/* .profile_background_image_container{
+    width: 13vw;
+    height: 13vw;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 50%;
+} */
+
+.profile_qrcode_container{
+    
+    margin: auto;
+ 
+}
+.profile_bar_card_container{
+    grid-row: 3;
+    display: grid;
+    
+       
+    background-color:rgba(210, 208, 206, .5);
+    border-radius: 8px;
+    height: 60px;
+    align-items: center;
+    padding:.5vw;
+    justify-content: flex-start;
+    
+    width: 80%;
+    margin: auto;
+    
+}
+
+.profile_bar_buttons_container{
+    grid-row: 2;
+    display: grid;
+    align-items: center;
+    margin: auto;
+    row-gap: 3vh;
+    width: auto;
+    
+}
+/* .profile_edit_info_buttons{
+    grid-row: 3;
+
+    display: flex;
+    justify-content: space-around;
+    
+}
+.profile_edit_info{
+    grid-row: 3;
+    overflow-y: auto;
+    margin: auto;
+    
+    height: 35vh;
+    width: 15vw;
+    margin: auto;
+    overflow-y: auto;
+}
+ */
+
