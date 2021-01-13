@@ -1,0 +1,61 @@
+
+.center_component{
+    margin: auto;
+    width: 60%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.left_components{
+    border-radius: 8px;
+    bottom: 5px;
+    left: 5px;
+    position: fixed;
+    background-color: white;
+    margin: auto;
+    height: 99%;
+    overflow-y: hidden;
+    width: 18%;
+}
+.modal_container{
+    display: grid;
+    row-gap: 2vh;
+    grid-template-rows: 1fr 1fr 100fr 1fr;
+    justify-content: center;
+    margin: auto;
+    align-content: center;
+    width: 450px;
+    height: 450px;
+    padding: 3vh;
+}
+.modal_title_component{
+    grid-row: 1;
+    text-align: center;
+}
+.modal_top_component{
+    grid-row: 2;
+    width: 500px;
+
+    margin: auto;
+}
+.modal_middle_component{
+    grid-row: 3;
+    width: 200px;
+    margin: auto;
+}
+.modal_bottom_component{
+    grid-row: 4;
+    width: 350px;
+    margin: auto;
+}
+.right_components{
+    border-radius: 8px;
+    top: .15%;
+    bottom: .15%;
+    right: .3%;
+    margin: auto;
+    position: fixed;
+    background-color: white;
+    height: 99%;
+    overflow-y: hidden;
+    width: 18%;
+}

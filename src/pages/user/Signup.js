@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
-import "./SignupStyle.css";
+import "../../style/authentication/SignupStyle.css";
 import { getTheme } from '@fluentui/react';
 import { NeutralColors } from '@fluentui/theme';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
@@ -9,6 +9,7 @@ import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
 import Moment from 'moment';
+import Host from '../../Host'
 
 const genderOptions = [
     { key: 'male', text: 'Male'},
@@ -42,7 +43,7 @@ class SignUp extends Component{
         
         await axios({
             method: 'post',
-            url: 'http://192.168.15.35:8080/api/user',
+            url: Host()+'api/user',
             data: {
                 email: this.state.email,
                 password: this.state.password,
@@ -51,7 +52,7 @@ class SignUp extends Component{
                 nationality: '',
                 birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
                 cityOfBirth: '',
-                phoneNumber: this.state.phone,
+                phoneNumber: (this.state.phone).replace("_",""),
                 admin: false,
             }
             })
