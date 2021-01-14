@@ -10,7 +10,9 @@ async function DeleteTopic(topicID) {
         data:{
             topicID: topicID
         }
-    })
+    }).then(() => 
+        alert("Deleted With Success")
+    )
     .catch(error => {
         console.log(error)
         alert("Some error occurred")

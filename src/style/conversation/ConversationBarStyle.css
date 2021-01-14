@@ -18,12 +18,14 @@
 .conversation_persona_container{
     display: grid;
     justify-content: center;
+    
     align-content: center;
-   
+   margin: auto;
     margin-bottom: 1vh;
     border-radius: 8px;
     padding: 1vh;
-    
+    max-width: 90%;
+
     background-color: rgba(210, 208, 206, .5);
   
 }

@@ -6,6 +6,7 @@ import Host from '../../Host'
 import Dexie from "dexie";
 import Cookies from 'universal-cookie';
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { Shimmer } from 'office-ui-fabric-react/lib/Shimmer';
 
 class MessagesComponent extends React.Component{
     constructor(params){
@@ -74,13 +75,13 @@ class MessagesComponent extends React.Component{
     }
 
     scrollToLastHight(lastHight){
-        window.scrollTo(0, (window.outerHeight + lastHight))
+        window.scrollTo(0, lastHight)
     }
 
     splitMessagesArray(){
         const size = this.state.messages.length
         if(size >= 40){
-            const newMessages = this.state.messages.splice(0,size/2);
+            const newMessages = this.state.messages.splice(size/2,size);
             this.setState({
                 messages: newMessages
             })
@@ -105,7 +106,7 @@ class MessagesComponent extends React.Component{
     
                 if(res.data.length > 0 && typeof res.data.length !== 'undefined' && this.state.currentPage !== 1){
                 
-                    const lastHight = window.pageYOffset
+                    const lastHight = window.outerHeight
 
                     const newMessages = [...res.data,...this.state.messages]
                     this.setState({
@@ -137,11 +138,12 @@ class MessagesComponent extends React.Component{
         }).then(res=>{
             
             if(res.data.length > 0 && typeof res.data.length !== 'undefined'){
-            
+                
                 this.setState({
                     messages: [...this.state.messages, ...res.data],
                     currentPage:  typeof res.data[0] !== 'undefined' && typeof res.data[0].page !== 'undefined' ?  res.data[0].page : null
                 })
+                this.splitMessagesArray()
                 this.scrollToEnd()
             }
         })
@@ -150,19 +152,24 @@ class MessagesComponent extends React.Component{
         });
     }
     renderInfiniteScroll(){
-        console.log(this.state.messages)
+        
         return(
             <div className="messages_component_container">  
                 <div className="messages_component" style={{backgroundColor: 'white'}} ref={this.state.conversationContainer}>
+                    {this.state.isLoading === true ? <div style={{display:'grid', rowGap:'1vh'}}> 
+                        <Shimmer style={{width: '65%'}}/>
+                        <Shimmer style={{width: '55%'}}/>
+                        <Shimmer style={{width: '75%'}}/>
+                        <Shimmer style={{width: '55%'}}/>
+                    </div>: null}
                     <InfiniteScroll
-                        dataLength={this.state.messages.length} //This is important field to render the next data
+                        dataLength={this.state.messages.length} 
                         next={() => this.FetchMessagesByPage()}
-                        loader={<h4>Loading...</h4>}
-                        
+
                         inverse={true}
                         hasMore={this.state.currentPage > 1 ? true: false}
                         >
-                        {this.state.messages === [] ? <div></div> : this.state.messages.map((message, index) =>(
+                        {this.state.messages === [] ? <div></div> : this.state.messages.map((message) =>(
                             <div key ={message.id} className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
                                 <MessageBox messageID = {message.id} conversationID={message.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {(new Cookies()).get("ID")}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
                                 <div ref={this.state.essagesEndRef} />

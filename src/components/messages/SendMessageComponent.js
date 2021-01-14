@@ -17,7 +17,8 @@ class SendMessageComponent extends React.Component{
             isGroup: params.isGroup,
             imageURL: null, 
             subjectID: params.subjectID,
-            messageInput: ''
+            messageInput: '',
+            sending: false
         }
         this.SendMessage = this.SendMessage.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -30,7 +31,9 @@ class SendMessageComponent extends React.Component{
     }
 
     async SendMessage() {
-        
+        this.setState({
+            sending: true
+        })
         await axios({
             method: 'post',
             url: (this.state.isGroup === true) ? Host()+ 'api/message/group': Host()+ 'api/message/user',
@@ -50,7 +53,10 @@ class SendMessageComponent extends React.Component{
         })
         .catch(error => {
             console.log(error);
-        });       
+        });   
+        this.setState({
+            sending: false
+        })    
     }
     renderImageModal(){
         if(this.state.imageURL !== null){
@@ -142,7 +148,7 @@ class SendMessageComponent extends React.Component{
         return(
             <div className="message_input_container" >
                 <div className="message_input_box">
-                    <TextField  placeholder="Message" multiline autoAdjustHeight  resetValue={(this.state.messageInput === null)}  onChange={this.handleChange} />                       
+                    <TextField  placeholder="Message" label={this.state.sending === true ? "Sending...": null} multiline autoAdjustHeight  resetValue={(this.state.messageInput === null)}  onChange={this.handleChange} />                       
                 </div>
                 {this.renderModal()}
                 {this.renderSelectedImage()}  

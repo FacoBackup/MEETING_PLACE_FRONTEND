@@ -30,18 +30,25 @@ class ProfileBarComponent extends Component{
     }
 
     async fetchData(){
-        if(typeof (new Cookies()).get("JWT") !== 'undefined'){
-            await axios({
-                method: 'get',
-                url: Host()+'api/user',
-                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")}
-            }).then(res=>{
-                this.setState({
-                    profile: res.data
+        try{
+            if(typeof (new Cookies()).get("JWT") !== 'undefined'){
+                await axios({
+                    method: 'get',
+                    url: Host()+'api/user',
+                    headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")}
+                }).then(res=>{
+                    this.setState({
+                        profile: res.data
+                    })
                 })
-            })
-            .catch()
-        }         
+                .catch()
+            }         
+        }
+        catch(error){
+            console.log(error)
+        }
+        
+            
     }
 
     async signout() {

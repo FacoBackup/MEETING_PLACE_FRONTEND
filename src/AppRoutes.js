@@ -8,7 +8,7 @@ import Conversation from "./pages/conversation/Conversation";
 import SignIn from "./pages/authentication/SignIn"
 import CommunityOptions from "./pages/community/options/CommunityOptions"
 import Profile from "./pages/profile/Profile"
-
+import Front from './pages/front/Front'
 function AppRoutes() {
   return (
     <div>
@@ -19,6 +19,7 @@ function AppRoutes() {
               <Route path="/community/:id" exact component={Community}/>
               <Route path="/communities" exact component={CommunityOptions}/>
               <Route path="/" exact component={Home}/>
+              <Route path="/dashboard" exact component={Front}/>
               <Route path="/chat/:username/:isGroup/:absoluteid" exact component={Conversation}/>
               <Route path="/search_user" exact component={Search}/>
               <Route path="/authenticate" exact component={SignIn}/>

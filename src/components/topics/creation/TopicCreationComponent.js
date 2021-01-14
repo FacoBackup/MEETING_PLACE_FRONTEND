@@ -102,9 +102,9 @@ class TopicCreationComponent extends React.Component{
                 communityID: this.state.selectedCommunity.communityID,
                 mainTopicID: null
             }
-        }).then(res=>{
-  
-            window.location.reload()
+        }).then(()=>{
+            alert("Created With Success")
+            
         })
         .catch(error => console.log(error))
     }

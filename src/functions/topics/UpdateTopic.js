@@ -12,7 +12,9 @@ async function UpdateTopic(topicID, header, body){
             header: header,
             body: body
         }
-    })
+    }).then(() =>  
+        alert("Changes Saved")
+    )
     .catch(error => {
         console.log(error)
         alert("Some error occurred")

@@ -9,8 +9,6 @@
     padding-bottom: 2vh;
     margin-bottom: 1vh;
     padding-top: 2vh;
-   
-    
 }
 .topic_fields_container{
     width: 75%;
@@ -63,7 +61,7 @@
     border-radius: 8px;
     display: block;
     box-sizing: border-box;
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
     padding-top: 2vh;
     padding-bottom: 2vh;
 }

@@ -105,7 +105,7 @@ class ConversationBarComponent extends Component{
     renderPersona(data, isGroup){
         switch(isGroup){
             case true:{
-            
+
                 return(
 
                     <div>
