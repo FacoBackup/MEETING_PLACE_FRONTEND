@@ -1,6 +1,7 @@
 .my_message_box_container{
-    display: grid;
+    display: block;
     line-break:auto;
+    margin-left: auto;
     text-align: right;
     overflow-x: auto;
     border-radius: 8px;
@@ -8,8 +9,9 @@
     padding: 1vh;
 }
 .subject_message_box_container{
-    display: grid;
+    display: block;
     line-break:auto;
+    margin-right: auto;
     text-align: left;
     overflow-x: auto;
     border-radius: 8px;

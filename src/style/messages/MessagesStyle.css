@@ -9,8 +9,7 @@
     padding: 1%;
     margin-top: 3%;
     align-items: flex-start;
-    min-height: 75vh;
-    max-height: 75vh;
+    padding-bottom: 8vh;
     border-radius: 8px;
     overflow: auto;
 
@@ -26,14 +25,14 @@
 }
 
 .message_input_container{
-    
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 60%;
     border-radius: 8px;
-    background-color: white;
-    margin-top: 3%;
+    
+    top: 93%;
 }
 
 .message_input_buttons{

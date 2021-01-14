@@ -47,7 +47,7 @@ class Conversation extends Component{
                     <div className="center_component">
                         <ConversationInfo userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token}  conversationID={this.state.receiverName} />
                         
-                        <NewMessageComponent userID={this.state.userID} isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.conversationID} receiverName={this.state.receiverName} />
+                        <NewMessageComponent isGroup={this.state.isGroup} token={this.state.token} conversationID={this.state.conversationID} subjectID={this.state.receiverName} />
                     
                         <SendMessageComponent subjectID={this.state.isGroup === true ? this.state.conversationID : this.state.receiverName} isGroup={this.state.isGroup}/>
 

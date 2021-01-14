@@ -30,7 +30,7 @@ class SendMessageComponent extends React.Component{
     }
 
     async SendMessage() {
-        alert(this.state.subjectID)
+        
         await axios({
             method: 'post',
             url: (this.state.isGroup === true) ? Host()+ 'api/message/group': Host()+ 'api/message/user',
@@ -144,7 +144,7 @@ class SendMessageComponent extends React.Component{
                 <div className="message_input_box">
                     <TextField  placeholder="Message" multiline autoAdjustHeight  resetValue={(this.state.messageInput === null)}  onChange={this.handleChange} />                       
                 </div>
-                
+                {this.renderModal()}
                 {this.renderSelectedImage()}  
                 <div className="message_input_buttons">
                     <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }}onClick={() => this.SendMessage()}/>      
