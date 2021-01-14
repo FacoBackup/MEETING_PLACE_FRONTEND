@@ -5,6 +5,7 @@ import React from 'react'
 import axios from 'axios';
 import Host from '../../../Host'
 import Cookies from 'universal-cookie';
+import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 
 class MessageBoxComponent extends React.Component {
     constructor(params){
@@ -19,6 +20,8 @@ class MessageBoxComponent extends React.Component {
             messageID: params.messageID,
             conversationID: params.conversationID,
             date: new Date(),
+            conversation: params.conversation,
+            isGroup: params.isGroup
         }
     }
     
@@ -72,7 +75,42 @@ class MessageBoxComponent extends React.Component {
                 </div>
             )
     }
-    
+    renderPersona(){
+        switch(this.state.isGroup){
+            case true:{
+                return(
+                
+                    <Persona
+                        {...{
+                            text: (typeof this.state.conversation.name === 'undefined' ? this.state.conversationID : this.state.conversation.name),
+                           
+                        }}
+                        size={PersonaSize.size40}
+                        imageAlt="Conversation picture"
+                    />
+                   
+                    )
+            }
+            case false:{
+            
+                return(
+                    <Persona
+                        {...{
+                            text: this.state.conversation.name ,
+                            secondaryText: this.state.conversation.email
+                        }}
+                        size={PersonaSize.size40}
+                        imageAlt="Conversation picture"
+                    />
+                )
+            }
+            default:{
+                return(
+                    null
+                    )
+            }
+        }
+    }
     render(){
         if(this.state.creatorID === this.state.userID)
             return (
@@ -86,8 +124,10 @@ class MessageBoxComponent extends React.Component {
         else
             return (
                 <div className="subject_message_box_container" style={{boxShadow: (getTheme()).effects.elevation4 }}>
+                    {this.renderPersona()}
                     <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{this.state.content}</p>
                     {this.renderImage()}
+                    
                     <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Sent on: {(new Date(this.state.creationDate)).toLocaleString()}</p>
                     
                 </div>

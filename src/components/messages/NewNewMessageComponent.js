@@ -19,7 +19,7 @@ class MessagesComponent extends React.Component{
             subjectID: params.subjectID,
             isGroup: params.isGroup,
             date:new Date(),
-            
+            conversation: {},
             db:  new Dexie('api_web_db'),
             currentPage: null
         }
@@ -27,6 +27,7 @@ class MessagesComponent extends React.Component{
     }
  
     componentDidMount(){        
+        this.FetchConversation()
         this.timerID = setInterval(
             () => this.tick(),
             500
@@ -87,6 +88,45 @@ class MessagesComponent extends React.Component{
             })
         }       
     }
+
+    async FetchConversation (){
+        
+        if(this.state.isGroup === true)
+            await axios({
+                method: 'post',
+                url: Host()+'api/get/conversation/group',
+                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
+                data: {
+                    conversationID: this.state.subjectID
+                }
+            }).then(res=>{
+                if(res.data !== {})
+                    this.setState({
+                        conversation: res.data
+                    })
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        else
+            await axios({
+                method: 'patch',
+                url: Host()+'api/get/simplified/user/profile',
+                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
+                data: {
+                    userID: this.state.subjectID
+                }
+            }).then(res=>{
+                if(res.data !== {})
+                    this.setState({
+                        conversation: res.data
+                    })
+                
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    } 
 
     async FetchMessagesByPage(){
         this.setState({
@@ -171,7 +211,7 @@ class MessagesComponent extends React.Component{
                         >
                         {this.state.messages === [] ? <div></div> : this.state.messages.map((message) =>(
                             <div key ={message.id} className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
-                                <MessageBox messageID = {message.id} conversationID={message.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {(new Cookies()).get("ID")}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
+                                <MessageBox isGroup={this.state.isGroup} conversation={this.state.conversation} messageID = {message.id} conversationID={message.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {(new Cookies()).get("ID")}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
                                 <div ref={this.state.essagesEndRef} />
                             </div>   
                         ))}   

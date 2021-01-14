@@ -7,7 +7,7 @@
     display: grid;
     width: auto;
     padding: 1%;
-    margin-top: 3%;
+    /* margin-top: 3%; */
     align-items: flex-start;
     padding-bottom: 8vh;
     border-radius: 8px;
@@ -32,7 +32,7 @@
     width: 60%;
     border-radius: 8px;
     
-    bottom: 0px;
+    bottom: -.1px;
 }
 
 .message_input_buttons{
