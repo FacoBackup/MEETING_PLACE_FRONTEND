@@ -37,16 +37,9 @@ class MessagesComponent extends React.Component{
     }
 
     tick() {
-        // console.log("PAGE Y OFFSET " + window.pageYOffset)
-        // console.log("PAGE HEIGHT INNER " + window.innerHeight)
-        // console.log("PAGE HEIGHT OUTER " + window.outerHeight)
-        // console.log("DOCUMENT " + document.body.scrollHeight)
-        // console.log("DOCUMENT - OUTER  " +( document.body.scrollHeight - window.outerHeight))
-        console.log(window.outerHeight)
+        
         if(this.state.fetchedLastPage === false){ //ONLY RUNDS ON WHILE NO ONE SENDED A MESSAGE, GETS LAST PAGE
             this.FetchMessagesByPage()
-            
-            
             this.setState({
                 fetchedLastPage: true,
                 
@@ -67,7 +60,7 @@ class MessagesComponent extends React.Component{
             if(this.state.messages.length > lastSize)
                 this.scrollToEnd()
 
-            //this.splitMessagesArray()
+
         }    
         
         this.setState({
@@ -77,13 +70,11 @@ class MessagesComponent extends React.Component{
 
     scrollToEnd (){
         
-        window.scrollTo(0, (window.outerHeight * 100000000))
+        window.scrollTo(0, (window.outerHeight * 1000))
     }
 
     scrollToLastHight(lastHight){
-        console.log(lastHight)
-        console.log(window.outerHeight)
-        window.scrollTo(0, (window.outerHeight-lastHight))
+        window.scrollTo(0, (window.outerHeight + lastHight))
     }
 
     splitMessagesArray(){
@@ -115,7 +106,8 @@ class MessagesComponent extends React.Component{
                 if(res.data.length > 0 && typeof res.data.length !== 'undefined' && this.state.currentPage !== 1){
                 
                     const lastHight = window.pageYOffset
-                    const newMessages = [...this.state.messages,...res.data]
+
+                    const newMessages = [...res.data,...this.state.messages]
                     this.setState({
                         messages: newMessages,
                         currentPage:  typeof res.data[0] !== 'undefined' && typeof res.data[0].page !== 'undefined' ?  res.data[0].page : null,
@@ -158,7 +150,7 @@ class MessagesComponent extends React.Component{
         });
     }
     renderInfiniteScroll(){
-      
+        console.log(this.state.messages)
         return(
             <div className="messages_component_container">  
                 <div className="messages_component" style={{backgroundColor: 'white'}} ref={this.state.conversationContainer}>
@@ -171,7 +163,7 @@ class MessagesComponent extends React.Component{
                         hasMore={this.state.currentPage > 1 ? true: false}
                         >
                         {this.state.messages === [] ? <div></div> : this.state.messages.map((message, index) =>(
-                            <div className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
+                            <div key ={message.id} className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
                                 <MessageBox messageID = {message.id} conversationID={message.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {(new Cookies()).get("ID")}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
                                 <div ref={this.state.essagesEndRef} />
                             </div>   
