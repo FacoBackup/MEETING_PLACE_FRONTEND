@@ -19,6 +19,8 @@
 }
 .dedicated_action_bar{
     display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
     justify-content: space-between;
     align-items: center;
     background-color: white;
@@ -27,6 +29,7 @@
 }
 .dedicated_action_bar_buttons{
     display: flex;
+    width: 25%;
     justify-content: space-between;
     
 }

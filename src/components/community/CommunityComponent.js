@@ -8,7 +8,7 @@ import "../../style/universal/DedicatedPagesStyle.css"
 import CommunityUsersComponent from './users/CommunityUsersComponent'
 import CommunityAboutComponent from './about/CommunityAboutComponent'
 import CommunityRelatedComponent from './related/CommunityRelatedComponent'
-
+import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 class CommunityComponent extends React.Component{
     constructor(params){
         super()
@@ -136,62 +136,6 @@ class CommunityComponent extends React.Component{
                         />
                         <div className="dedicated_action_bar_buttons">
 
-                            {this.state.membersOption === true ? <PrimaryButton text='Members'style={{fontSize: '16px'}}/> : <DefaultButton style={{fontSize: '16px'}} text='Members' onClick={()=>
-                                 this.setState({
-                                    membersOption: true,
-                                    topic:false,
-                                    related: false,
-                                    about: false,
-                                    all: false,
-                                    followers:false,
-                                    mods:false,
-                                })
-                            }/> }
-
-                            {this.state.followers === true ? <PrimaryButton text='Followers'style={{fontSize: '16px'}}/> : <DefaultButton style={{fontSize: '16px'}} text='Followers' onClick={()=>
-                                 this.setState({
-                                    membersOption: false,
-                                    topic:false,
-                                    related: false,
-                                    about: false,
-                                    all: false,
-                                    followers:true,
-                                    mods:false,
-                                })
-                            }/> }
-                            {this.state.mods === true ? <PrimaryButton text='Moderators'style={{fontSize: '16px'}}/> : <DefaultButton text='Moderators'style={{fontSize: '16px'}} onClick={()=>
-                                    this.setState({
-                                        membersOption: false,
-                                        topic:false,
-                                        related: false,
-                                        about: false,
-                                        all: false,
-                                        followers:false,
-                                        mods:true,
-                                    })
-                            }/> }
-                            {this.state.all === true ? <PrimaryButton text='All Users'style={{fontSize: '16px'}}/> : <DefaultButton text='All Users'style={{fontSize: '16px'}} onClick={()=>
-                                  this.setState({
-                                    membersOption: false,
-                                    topic:false,
-                                    related: false,
-                                    about: false,
-                                    all: true,
-                                    followers:false,
-                                    mods:false,
-                                })
-                            }/> }
-                            {this.state.related === true ? <PrimaryButton text='Related Communities' style={{fontSize: '16px'}}/> : <DefaultButton  style={{fontSize: '16px'}} text='Related Communities' onClick={()=>
-                                this.setState({
-                                    membersOption: false,
-                                    topic:false,
-                                    related: true,
-                                    about: false,
-                                    all: false,
-                                    followers:false,
-                                    mods:false,
-                                })  
-                            }/> }
                             {this.state.topic === true?  <PrimaryButton style={{fontSize: '16px'}} text='Topics'/> : <DefaultButton style={{fontSize: '16px'}} text='Topics' onClick={()=>
                                 this.setState({
                                     membersOption: false,
@@ -204,6 +148,65 @@ class CommunityComponent extends React.Component{
                                 })    
                             }/>                                
                             }
+                              <Dropdown
+                                placeholder="Users"
+                                // style={{width:'100%'}}
+                                options={[
+                                    { key: 'members', text: 'Members'},
+                                    { key: 'followers', text: 'Followers' },
+                                    { key: 'mods', text: 'Moderators' },
+                                    { key: 'all', text: 'All Users'}]}
+                                onChange={(e, value)=>{
+                                    
+                                    console.log()
+                                    if(value.key === "members"){
+                                        this.setState({
+                                            membersOption: true,
+                                            topic:false,
+                                            related: false,
+                                            about: false,
+                                            all: false,
+                                            followers:false,
+                                            mods:false,
+                                        })  
+                                    }
+                                    else if(value.key === "followers"){
+                                        this.setState({
+                                            membersOption: false,
+                                            topic:false,
+                                            related: false,
+                                            about: false,
+                                            all: false,
+                                            followers:true,
+                                            mods:false,
+                                        })  
+                                    }
+                                    else if(value.key === "mods"){
+                                        this.setState({
+                                            membersOption: false,
+                                            topic:false,
+                                            related: false,
+                                            about: false,
+                                            all: false,
+                                            followers:false,
+                                            mods:true,
+                                        })  
+                                    }
+                                    else if(value.key === "all"){
+                                        this.setState({
+                                            membersOption: false,
+                                            topic:false,
+                                            related: false,
+                                            about: false,
+                                            all: true,
+                                            followers:false,
+                                            mods:false,
+                                        })  
+                                    }
+                                }
+
+                                }
+                             />
                             {this.state.about === true?  <PrimaryButton style={{fontSize: '16px'}} text='About'/> : <DefaultButton style={{fontSize: '16px'}} text='About' onClick={()=>
         
                                 this.setState({
@@ -217,6 +220,7 @@ class CommunityComponent extends React.Component{
                                 })  
                             }/>                                
                             }
+                           
                         </div>
                         
                     </div>

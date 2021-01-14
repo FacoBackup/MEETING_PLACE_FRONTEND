@@ -75,23 +75,23 @@ class MessageBoxComponent extends React.Component {
     
     render(){
         if(this.state.creatorID === this.state.userID)
-        return (
-            <div className="my_message_box_container" style={(this.state.read === true) ? {boxShadow: (getTheme()).effects.elevation4, border: '5px solid rgba(0, 255, 0, .5)'}  : {boxShadow: (getTheme()).effects.elevation4, border: '5px solid rgba(237,235,233, .3)'} } >
-                <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{this.state.content}</p>
-                {this.renderImage()}
-                <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular, color:"#3b3a39"}}>{(new Date(this.state.creationDate)).toLocaleString()}</p>
-                
-            </div>
-        )
-    else
-        return (
-            <div className="subject_message_box_container" style={{boxShadow: (getTheme()).effects.elevation4 }}>
-                <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{this.state.content}</p>
-                {this.renderImage()}
-                <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Sent on: {(new Date(this.state.creationDate)).toLocaleString()}</p>
-                
-            </div>
-        )
+            return (
+                <div className="my_message_box_container" style={(this.state.read === true) ? {boxShadow: (getTheme()).effects.elevation4, border: '5px solid rgba(0, 255, 0, .5)'}  : {boxShadow: (getTheme()).effects.elevation4, border: '5px solid rgba(237,235,233, .3)'} } >
+                    <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{this.state.content}</p>
+                    {this.renderImage()}
+                    <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular, color:"#3b3a39"}}>{(new Date(this.state.creationDate)).toLocaleString()}</p>
+                    
+                </div>
+            )
+        else
+            return (
+                <div className="subject_message_box_container" style={{boxShadow: (getTheme()).effects.elevation4 }}>
+                    <p style={{fontSize: FontSizes.size16, fontWeight:FontWeights.semibold}}>{this.state.content}</p>
+                    {this.renderImage()}
+                    <p style={{fontSize: FontSizes.size12, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Sent on: {(new Date(this.state.creationDate)).toLocaleString()}</p>
+                    
+                </div>
+            )
     }   
    
 }
