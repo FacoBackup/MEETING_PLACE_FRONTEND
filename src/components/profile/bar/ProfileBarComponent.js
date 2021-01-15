@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../../style/profile/ProfileBarStyle.css";
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Dexie from "dexie";
 import Host from '../../../Host'
+// import NavigationIcon from '@material-ui/icons/Navigation';
+import SvgIcon from '@material-ui/core/SvgIcon';
 
 class ProfileBarComponent extends Component{
     constructor(params){
@@ -22,7 +26,8 @@ class ProfileBarComponent extends Component{
             external: params.external,
             search: params.search,
             timeline: params.timeline,
-            communityOptions: params.communityOptions
+            communityOptions: params.communityOptions,
+            more: false,
         }
     }
     componentDidMount(){
@@ -81,8 +86,8 @@ class ProfileBarComponent extends Component{
                 
                 
                 <div className="profile_bar_buttons_container">
-                        
-                        {this.state.timeline === true? <PrimaryButton text ="Home"/>:<DefaultButton text ="Home"  href='/'/>} 
+                        {/* {this.state.timeline === true? <PrimaryButton iconProps={this.state.addIcon}  text ="Home"/>:<DefaultButton text ="Home" iconProps={this.state.addIcon} href='/'/>}  */}
+                        {/* {this.state.timeline === true? <PrimaryButton iconProps={this.state.addIcon}  text ="Home"/>:<DefaultButton text ="Home" iconProps={this.state.addIcon} href='/'/>} 
                         {this.state.followers === true? <PrimaryButton text ="Followers"/>:<DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/2'}/>} 
                         {this.state.following === true? <PrimaryButton text ="Following"/>:<DefaultButton text ="Following"  href={'/profile/'+this.state.profile.email+'/1'}/>} 
                         {this.state.search === true? <PrimaryButton text ="Search User"/>:<DefaultButton text ="Search User"  href='/search_user'/>} 
@@ -90,10 +95,18 @@ class ProfileBarComponent extends Component{
                         {this.state.communities === true? <PrimaryButton text ="Communities"/>:<DefaultButton text ="Communities"  href={'/profile/'+this.state.profile.email+'/3'}/>} 
                         {this.state.communityOptions === true? <PrimaryButton text ="Community Options"/>:<DefaultButton text ="Community Options"  href={'/communities'}/>} 
                         {this.state.about === true? <PrimaryButton text ="About Me"/>:<DefaultButton text ="About Me"  href={'/profile/'+this.state.profile.email+'/4'}/>} 
-                        <DefaultButton text="Sign out"  onClick={() => this.signout()} />                    
+                        <DefaultButton text="Sign out"  onClick={() => this.signout()} />                     */}
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>Timeline</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>EXPLORE</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>explore</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>ARCHIVE</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>PROFILE</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>COMMUNITIES</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>NOTIFICATIONS</Button>
                         {/* <DefaultButton  text ="Communities"  href="/communities"/>         */}
                         
                 </div>
+               
                 <div className="profile_bar_card_container" >
                 
                     <Persona

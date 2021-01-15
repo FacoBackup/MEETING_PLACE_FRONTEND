@@ -10,11 +10,11 @@
     bottom: 5px;
     left: 5px;
     position: fixed;
-    background-color: white;
+    background-color: #303741;
     margin: auto;
     height: 99%;
     overflow-y: hidden;
-    width: 18%;
+    width: 14%;
 }
 .modal_container{
     display: grid;
@@ -54,8 +54,8 @@
     right: .3%;
     margin: auto;
     position: fixed;
-    background-color: white;
+    background-color: #303741;
     height: 99%;
     overflow-y: hidden;
-    width: 18%;
+    width: 14%;
 }

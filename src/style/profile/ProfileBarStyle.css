@@ -1,19 +1,25 @@
 .profile_bar_container{
     display: grid;
+    justify-content: center;
+    align-content: space-between;
     overflow: hidden;   
     width:100%;
+    
     row-gap: 5vh;
-    grid-template-rows: 1fr 1fr 1fr ;
-    max-height: 100%;
+    grid-template-rows: 1fr 2fr 1fr ;
+    min-height: 100%;
     
     
 }
 .profile_bar_background_image_container{
     overflow: hidden;
     display: grid;
-    align-content: center;
+    margin: auto;
+
+    
     height: 20vh;
     border-radius: 8px;
+    width: 85%;
 }
 .profile_bar_background_image{
     grid-row: 1;
