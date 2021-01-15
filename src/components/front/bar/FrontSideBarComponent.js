@@ -1,5 +1,5 @@
 import React from 'react'
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { DefaultButton } from 'office-ui-fabric-react';
 // import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 
 class FrontNewsComponent extends React.Component{

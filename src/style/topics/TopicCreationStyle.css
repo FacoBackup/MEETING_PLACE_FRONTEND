@@ -4,7 +4,7 @@
 }
 
 .topic_container{
-    background-color: white;
+    background-color: #303741;
     border-radius: 8px;
     padding-bottom: 2vh;
     margin-bottom: 1vh;
@@ -26,7 +26,7 @@
     justify-content: space-between;
     padding: .8vw;
     border-radius: 8px;
-    background-color:rgba(210, 208, 206, .5);
+    background-color:#3b424c;
     margin: auto;
 }
 .topic_image_container{
@@ -47,7 +47,7 @@
     margin: auto;
 }
 .timeline_end_container{
-    background-color: white;
+    background-color: #303741;
     border-radius: 8px;
     text-align: center;
     padding-top: 2vh;
@@ -57,7 +57,7 @@
 
 
 .topic_creation_container{
-    background-color: white;
+    background-color: #303741;
     border-radius: 8px;
     display: block;
     box-sizing: border-box;

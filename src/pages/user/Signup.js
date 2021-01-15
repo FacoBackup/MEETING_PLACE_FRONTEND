@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import "../../style/authentication/SignupStyle.css";
-import { getTheme } from '@fluentui/react';
-import { NeutralColors } from '@fluentui/theme';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
-import { TextField, MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
 import Moment from 'moment';
 import Host from '../../Host'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField'
+import { MenuItem, Select } from '@material-ui/core';
 
 const genderOptions = [
-    { key: 'male', text: 'Male'},
-    { key: 'female', text: 'Female' },
+    { value: 'male', label: 'Male'},
+    { value: 'female', label: 'Female' },
   ];
 
 class SignUp extends Component{
@@ -27,7 +27,7 @@ class SignUp extends Component{
             phone: '',
             birth: '',
             gender:'',
-            theme: getTheme()
+            
                 }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -40,7 +40,11 @@ class SignUp extends Component{
     }
     
     async handleSubmit(){
-        
+        console.log(this.state.email)
+        console.log(this.state.password)
+        console.log(this.state.birth)
+        console.log(this.state.phone)
+        console.log(this.state.gender)
         await axios({
             method: 'post',
             url: Host()+'api/user',
@@ -77,9 +81,9 @@ class SignUp extends Component{
         if(!this.state.sent){
             return (
                 <div  className="sign_up_container">
-                    <div style={{backgroundColor: NeutralColors.white,  boxShadow: this.state.theme.effects.elevation8 }} className="sign_up_component">
+                    <div className="sign_up_component">
                         <div className="sign_up_title_container" >
-                            <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign up</p>
+                            <h2>Sign up</h2>
                         </div>
                         <div className="sign_up_input_container">
                             <TextField label="Full name" name="name" onChange={this.handleChange}></TextField>
@@ -94,22 +98,34 @@ class SignUp extends Component{
                                 description="Max length is 64"
                                 onGetErrorMessage={this.getErrorMessage}
                             />
-                            <MaskedTextField label="Phone number" name="phone" onChange={this.handleChange} mask="(99) 99999-9999" />
+                            <TextField label="Phone number" name="phone" onChange={this.handleChange} />
                     
-                            <MaskedTextField label="Birthday" name="birth" onChange={this.handleChange} mask="99/99/9999"/>
-                        
-                            <Dropdown
+                            <TextField label="Birthday" type="date" name="birth" onChange={this.handleChange} defaultValue="2020-01-15"/>
+                            
+                            <Select label="Gender" name="gender" value={this.state.gender} onChange={this.handleChange}> 
+                               
+                                    <MenuItem key={"male"} value="male"> 
+                                        Male
+                                    </MenuItem>
+                                        
+                                    
+                                    <MenuItem key={"female"} value="female">
+                                        Female
+                                    </MenuItem>
+                               
+                            </Select>
+                            {/* <Dropdown
                                 onChange={(event, option) =>  this.setState({
                                     gender: option.key
                                 })}
                                 placeholder="Select an option"
                                 label="Gender"
-                                options={genderOptions}/>
+                                options={genderOptions}/> */}
                         </div>
                       
                         <div className="sign_up_buttons_container" >
-                            <DefaultButton text="Sign in" href="/authenticate" />
-                            <PrimaryButton iconProps='Add' text="Create Account"  style={{ float: 'right'}}onClick={this.handleSubmit} />
+                            <Button disableElevation style={{fontWeight:'bold'}}  color="default " variant='contained'href="/authenticate"> Sign in</Button>
+                            <Button disableElevation style={{fontWeight:'bold'}}  color="primary" variant='contained' style={{ float: 'right'}}onClick={this.handleSubmit}>Create Account</Button>
                         </div>
                         
                     </div>

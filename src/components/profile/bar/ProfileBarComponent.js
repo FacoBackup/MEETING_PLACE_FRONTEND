@@ -3,13 +3,14 @@ import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../../style/profile/ProfileBarStyle.css";
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import MenuItem from '@material-ui/core/MenuItem';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Dexie from "dexie";
 import Host from '../../../Host'
+import { Avatar } from '@material-ui/core';
 // import NavigationIcon from '@material-ui/icons/Navigation';
-import SvgIcon from '@material-ui/core/SvgIcon';
+// import SvgIcon from '@material-ui/core/SvgIcon';
 
 class ProfileBarComponent extends Component{
     constructor(params){
@@ -68,10 +69,15 @@ class ProfileBarComponent extends Component{
         
         return(
             <div className="profile_bar_container">
-                <div className="profile_bar_background_image_container">
-                  
-                    <img className='profile_bar_background_image' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.backgroundImageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"}/>
-                </div>
+                 <div className="personas_container" style={{marginBottom: '85%', marginTop:'5%', width:'80%'}}>
+                
+                    <Avatar
+                        src = {this.state.profile.imageURL}
+                        alt="user"
+                    />
+                    <p>{this.state.profile.name}</p>
+                    
+                    </div>
                     {/* <div  className="profile_qrcode_container">
                     <QRcode 
                             value= {"BEGIN:VCARD" +
@@ -96,7 +102,7 @@ class ProfileBarComponent extends Component{
                         {this.state.communityOptions === true? <PrimaryButton text ="Community Options"/>:<DefaultButton text ="Community Options"  href={'/communities'}/>} 
                         {this.state.about === true? <PrimaryButton text ="About Me"/>:<DefaultButton text ="About Me"  href={'/profile/'+this.state.profile.email+'/4'}/>} 
                         <DefaultButton text="Sign out"  onClick={() => this.signout()} />                     */}
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>Timeline</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/'}>Timeline</Button>
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>EXPLORE</Button>
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>explore</Button>
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>ARCHIVE</Button>
@@ -107,18 +113,7 @@ class ProfileBarComponent extends Component{
                         
                 </div>
                
-                <div className="profile_bar_card_container" >
-                
-                    <Persona
-                        {...{
-                            imageUrl: this.state.profile.imageURL,
-                            text: this.state.profile.name,
-                            secondaryText: this.state.profile.email
-                        }}
-                        size={PersonaSize.size48}
-                        imageAlt="Conversation picture"
-                    />
-                </div>
+              
             </div>
         );  
     }   

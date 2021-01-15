@@ -168,9 +168,9 @@ class ConversationBarComponent extends Component{
                 )}
                     
                 </div>
-                <div className="conversation_search">
+                {/* <div className="conversation_search">
                     <TextField placeholder="Search conversation" onChange={this.handleChange} disabled={true}/>
-                </div>
+                </div> */}
                 
             </div>
         );

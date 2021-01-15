@@ -4,13 +4,16 @@ import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
 import "../../style/authentication/SigninStyle.css"
-import { getTheme } from '@fluentui/react';
-import { NeutralColors } from '@fluentui/theme';
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+// import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
-
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import Button from '@material-ui/core/Button';
+// import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import Host from '../../Host'
+import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core/styles'
+import { propTypes } from 'qrcode.react';
+
+
 
 class SignIn extends Component {
     constructor(){
@@ -20,7 +23,7 @@ class SignIn extends Component {
             password:'',
             accepted: false,
             cookies: new Cookies(),
-            theme: getTheme()
+            
         }
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -81,23 +84,25 @@ class SignIn extends Component {
     }
     
     render(){
+
         if(this.state.accepted)
             return (<Redirect to='/'/>);
         else{
             return (
                 <div className="sign_in_container">
-                    <div style={{ boxShadow: this.state.theme.effects.elevation8,backgroundColor: NeutralColors.white }}  className="sign_in_component">
+                    <div className="sign_in_component">
                         <div className="sign_in_title_container">
-                            <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign in</p>
+                            <h2>Sign In</h2>
+                            {/* <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign in</p> */}
                         </div>
                         <div className="sign_input_container">
-                            <TextField label="Email address" onChange={this.handleChangeEmail}/>
-                            <TextField type="password" label="Password" onChange={this.handleChangePassword}/>
+                            <TextField variant="outlined" label="Email address" multiline onChange={this.handleChangeEmail}/>
+                            <TextField variant="filled" type="password" autoComplete="current-password" label="Password" onChange={this.handleChangePassword}/>
                         </div>
 
                         <div className="sign_button_container">
-                            <PrimaryButton text="Sign in" onClick={this.handleSubmit}/>
-                            <DefaultButton text="Sign up" href="/creation"/>
+                            <Button disableElevation style={{fontWeight:'bold'}} variant='contained' color="primary" onClick={this.handleSubmit}>SIGN IN</Button>
+                            <Button disableElevation style={{fontWeight:'bold'}} variant='contained' color="default" href="/creation">CREATE AN ACCOUNT</Button>
                         </div>
 
                     </div>
@@ -108,4 +113,4 @@ class SignIn extends Component {
      
 }
 
-export default SignIn;
+export default (SignIn);

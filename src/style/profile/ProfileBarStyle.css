@@ -1,5 +1,5 @@
 .profile_bar_container{
-    display: grid;
+    display: block;
     justify-content: center;
     align-content: space-between;
     overflow: hidden;   
@@ -68,10 +68,10 @@
 .profile_bar_buttons_container{
     grid-row: 2;
     display: grid;
-    align-items: center;
-    margin: auto;
+    align-content: flex-start;
+    
     row-gap: 3vh;
-    width: auto;
+    
     
 }
 /* .profile_edit_info_buttons{

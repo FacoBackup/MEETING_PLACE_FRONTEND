@@ -15,6 +15,7 @@
     height: 99%;
     overflow-y: hidden;
     width: 14%;
+    box-shadow: 0px 5px 5px 5px #23282e;
 }
 .modal_container{
     display: grid;
@@ -54,6 +55,7 @@
     right: .3%;
     margin: auto;
     position: fixed;
+    box-shadow: 0px 5px 5px 5px #23282e;
     background-color: #303741;
     height: 99%;
     overflow-y: hidden;

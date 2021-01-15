@@ -8,7 +8,6 @@ import "../../style/universal/PageModel.css"
 import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
 import ConversationsBar from "../../components/conversations/bar/ConversationBarComponent";
 import { getTheme } from '@fluentui/react';
-import ConversationInfo from "../../components/conversations/information/ConversationInfoComponent"
 import SendMessageComponent from '../../components/messages/SendMessageComponent'
 class Conversation extends Component{
     

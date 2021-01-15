@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
 import Conversations from "../../components/conversations/bar/ConversationBarComponent";
-import "../../style/topics/TimelineStyle.css";
 import "../../style/universal/PageModel.css"
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';

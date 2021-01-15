@@ -2,7 +2,7 @@ import React from 'react';
 import "../../../style/topics/TopicCreationStyle.css"
 import { DefaultButton,Modal, PrimaryButton, Persona,PersonaSize } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import TextField from '@material-ui/core/TextField'
 import axios from 'axios';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import CommunitySearchComponent from '../../search/community/CommunitySearchComponent'
