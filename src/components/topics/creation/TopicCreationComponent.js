@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import CommunitySearchComponent from '../../search/community/CommunitySearchComponent'
 import Host from '../../../Host'
+import Button from '@material-ui/core/Button';
 
 class TopicCreationComponent extends React.Component{
     constructor(params){
@@ -224,27 +225,77 @@ class TopicCreationComponent extends React.Component{
             <div className="timeline_component_container">
                 <div className="topic_creation_container">
                     <div className="topic_creation_title">
-                        <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Express Yourself</p>
+                        <h3>Express Yourself</h3>
                     </div>
                     <div  className="topic_creation_top_buttons">
-                    
-                        <DefaultButton text="To Community" onClick={() => this.setState({
-                            openModal: true,
-                            imageModal:false,
-                            communityModal:true
-                        })}/> 
-            
-                        <Toggle label="Visibility" defaultChecked onText="Only Fans" offText="Public"/>
-                        <DefaultButton text="Upload Image" onClick={() => this.setState({
-                            openModal: true,
-                            imageModal:true,
-                            communityModal:false
-                        })}/> 
+                        
+                        <Button
+                            variant="contained"
+                            color="default"
+                            disableElevation
+                            onClick={() => 
+                                this.setState({
+                                    openModal: true,
+                                    imageModal:false,
+                                    communityModal:true
+                                })}>
+                            Community
+                        </Button>
+                        
+                        {/* <Toggle label="Visibility" defaultChecked onText="Only Fans" offText="Public"/> */}
+                        <input type="file" multiple style={{display:'none'}}/>
+                        <label>
+                            <Button 
+                                variant="contained"
+                                color="default"
+                                disableElevation
+                                onClick=
+                                {() => this.setState({
+                                    openModal: true,
+                                    imageModal:true,
+                                    communityModal:false
+
+                                })}>  
+                             Upload image   
+                            </Button>
+                        </label>
                         {this.modalRender()}
                     </div>
                     <div className="topic_creation_fields">
-                        <TextField placeholder="Title" multiline resizable={false} name='title' onChange={this.handleChange}/>
-                        <TextField  placeholder="Body" multiline autoAdjustHeight name='body' onChange={this.handleChange}/>    
+                        <TextField 
+                            placeholder="Title" 
+                            multiline 
+                            resizable={false} 
+                            variant ="outlined"
+                            name='title' 
+                            style={{
+                                backgroundColor:'#272e38',
+                                borderRadius:'2px'
+                            }}
+                            InputProps={{
+                                style:{
+                                    color:'white'
+                                }
+                            }}
+                            onChange={this.handleChange}/>
+                        <TextField  
+                            placeholder="Body"
+                            multiline 
+                            autoAdjustHeight 
+                            variant ="outlined"
+                            color='secondary'
+                            style={{
+                                backgroundColor:'#272e38',
+                                borderRadius:'2px'
+
+                            }}
+                            InputProps={{
+                                style:{
+                                    color:'white'
+                                }
+                            }}
+                            name='body' 
+                            onChange={this.handleChange}/>    
                         {typeof this.state.selectedCommunity.communityID === 'undefined' ? 
                             <div> 
                                 <div style={{marginBottom:'1vh'}}> 
@@ -263,7 +314,12 @@ class TopicCreationComponent extends React.Component{
                             }
                     </div>
                     <div className="topic_creation_bottom_buttons">
-                        <PrimaryButton text="Create" onClick={() => this.createTopic()}/> 
+                        <Button 
+                         disableElevation 
+                         style={{}} 
+                         variant='contained' 
+                         color="primary" 
+                         onClick={() => this.createTopic()}>Create</Button>
                     </div>                   
                 </div>
             </div>

@@ -79,6 +79,7 @@
     align-items: center;
     justify-content: space-between;
     margin: auto;
+    padding-bottom: 3vh;
 }
 .topic_creation_bottom_buttons{
     width: 75%;

@@ -5,15 +5,10 @@ import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
 import "../../style/authentication/SigninStyle.css"
 // import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
-import { FontSizes, FontWeights } from '@fluentui/theme';
 import Button from '@material-ui/core/Button';
 // import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import Host from '../../Host'
 import TextField from '@material-ui/core/TextField'
-import { withStyles } from '@material-ui/core/styles'
-import { propTypes } from 'qrcode.react';
-
-
 
 class SignIn extends Component {
     constructor(){
@@ -101,7 +96,11 @@ class SignIn extends Component {
                         </div>
 
                         <div className="sign_button_container">
-                            <Button disableElevation style={{fontWeight:'bold'}} variant='contained' color="primary" onClick={this.handleSubmit}>SIGN IN</Button>
+                            <Button 
+                                disableElevation 
+                                style={{fontWeight:'bold'}} 
+                                variant='contained' 
+                                color="primary" onClick={this.handleSubmit}>SIGN IN</Button>
                             <Button disableElevation style={{fontWeight:'bold'}} variant='contained' color="default" href="/creation">CREATE AN ACCOUNT</Button>
                         </div>
 

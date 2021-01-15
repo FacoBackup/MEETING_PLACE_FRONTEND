@@ -7,6 +7,7 @@ import Host from '../../Host'
 import TopicBoxComponent from './box/TopicBoxComponet'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Shimmer } from 'office-ui-fabric-react/lib/Shimmer';
+import Skeleton from '@material-ui/lab/Skeleton'
 
 class TopicComponent extends React.Component{
     
@@ -119,14 +120,13 @@ class TopicComponent extends React.Component{
                   
                 </div>
                    
-                {this.state.isLoading === true ? <div className="topic_container" style={{height: "150px",display:'grid', alignContent:"center", rowGap:'1vh'}}> 
-                        
-                        <Shimmer style={{ margin: 'auto',width: '75%'}}/>
-                        <Shimmer style={{ margin: 'auto',width: '65%'}}/>
-                        <Shimmer style={{ margin: 'auto',width: '75%'}}/>
-                        <Shimmer style={{ margin: 'auto',width: '55%'}}/>
-                        <Shimmer style={{ margin: 'auto',width: '75%'}}/>
-                        <Shimmer style={{ margin: 'auto',width: '45%'}}/>
+                {this.state.isLoading === true ? <div className="topic_container" style={{display:'grid',justifyContent:'center', alignContent:"center", rowGap:'1vh'}}> 
+                    <Skeleton variant="rect" width={700} height={100} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
+                    <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
+                    <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
+                    
+                    <Skeleton variant="rect" width={700} height={500} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
+                    
                     </div>: null}
                 <div className="timeline_end_container">
                     <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>You are all caught up for now</p>

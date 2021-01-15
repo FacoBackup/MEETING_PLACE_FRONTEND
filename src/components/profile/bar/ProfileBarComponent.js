@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Dexie from "dexie";
 import Host from '../../../Host'
-import { Avatar } from '@material-ui/core';
+import { Avatar, Fab } from '@material-ui/core';
 // import NavigationIcon from '@material-ui/icons/Navigation';
 // import SvgIcon from '@material-ui/core/SvgIcon';
 
@@ -103,12 +103,13 @@ class ProfileBarComponent extends Component{
                         {this.state.about === true? <PrimaryButton text ="About Me"/>:<DefaultButton text ="About Me"  href={'/profile/'+this.state.profile.email+'/4'}/>} 
                         <DefaultButton text="Sign out"  onClick={() => this.signout()} />                     */}
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/'}>Timeline</Button>
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>EXPLORE</Button>
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>explore</Button>
+                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/dashboard'}>EXPLORE</Button>
+                        
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>ARCHIVE</Button>
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>PROFILE</Button>
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>COMMUNITIES</Button>
                         <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>NOTIFICATIONS</Button>
+
                         {/* <DefaultButton  text ="Communities"  href="/communities"/>         */}
                         
                 </div>
