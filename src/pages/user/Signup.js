@@ -2,19 +2,21 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import "../../style/authentication/SignupStyle.css";
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
-import { FontSizes, FontWeights } from '@fluentui/theme';
-import { Dropdown} from 'office-ui-fabric-react/lib/Dropdown';
+
 import Moment from 'moment';
 import Host from '../../Host'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField'
 import { MenuItem, Select } from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 
-const genderOptions = [
-    { value: 'male', label: 'Male'},
-    { value: 'female', label: 'Female' },
-  ];
+const theme = createMuiTheme({
+    palette: {
+      type: "dark"
+    }
+  });
 
 class SignUp extends Component{
     constructor(){
@@ -26,8 +28,8 @@ class SignUp extends Component{
             name: '',
             phone: '',
             birth: '',
-            gender:'',
-            
+            gender:'Gender',
+            nationality: ''
                 }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -53,7 +55,7 @@ class SignUp extends Component{
                 password: this.state.password,
                 userName: this.state.name,
                 gender: this.state.gender,
-                nationality: '',
+                nationality: this.state.nationality,
                 birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
                 cityOfBirth: '',
                 phoneNumber: (this.state.phone).replace("_",""),
@@ -78,49 +80,88 @@ class SignUp extends Component{
     };
 
     render(){
+        
         if(!this.state.sent){
             return (
                 <div  className="sign_up_container">
+                    <ThemeProvider theme={theme}>
                     <div className="sign_up_component">
                         <div className="sign_up_title_container" >
                             <h2>Sign up</h2>
                         </div>
                         <div className="sign_up_input_container">
-                            <TextField label="Full name" name="name" onChange={this.handleChange}></TextField>
-                     
-                            <TextField label="Email address" name="email" onChange={this.handleChange}></TextField>
+                            
+                                
+                                <TextField 
+                                    label="Name" 
+                                    name="name" 
+                                    variant="outlined"
+                                    onChange={this.handleChange}
+                                
+                                />
+                            
+                            <TextField 
+                                label="Email address" 
+                                name="email" 
+                                variant="outlined"
+                                onChange={this.handleChange}
+                               
+                                />
                       
                             <TextField
                                 type="password"
                                 label="Password"
                                 name="password"
+                                variant="outlined"
                                 onChange={this.handleChange}
-                                description="Max length is 64"
-                                onGetErrorMessage={this.getErrorMessage}
+                                                                
                             />
-                            <TextField label="Phone number" name="phone" onChange={this.handleChange} />
-                    
-                            <TextField label="Birthday" type="date" name="birth" onChange={this.handleChange} defaultValue="2020-01-15"/>
-                            
-                            <Select label="Gender" name="gender" value={this.state.gender} onChange={this.handleChange}> 
+                            <TextField 
+                                label="Phone number" 
+                                name="phone" 
+                                variant="outlined"
+                                onChange={this.handleChange} 
+                                
+                                />
+                            <TextField 
+                                label="Nationality" 
+                                type="date" 
+                                name="nationality" 
+                                variant="outlined"
+                                onChange={this.handleChange} 
+                                defaultValue="2020-01-15"
                                
-                                    <MenuItem key={"male"} value="male"> 
-                                        Male
-                                    </MenuItem>
-                                        
+                            />
+                            <TextField 
+                                label="Birthday" 
+                                type="date" 
+                                name="birth" 
+                                variant="outlined"
+                                onChange={this.handleChange} 
+                                defaultValue="2020-01-15"
+                               
+                                />
+                            <InputLabel id="select-id">Gender</InputLabel>
+                            <Select 
+                                labelId="select-id"
+                                name="gender" 
+                               
+                                variant="standard"
+                                value={this.state.gender} 
+                                
+                                onChange={this.handleChange}> 
+
+                                <MenuItem key={"male"} value="male"> 
+                                    Male
+                                </MenuItem>
                                     
-                                    <MenuItem key={"female"} value="female">
-                                        Female
-                                    </MenuItem>
+                                
+                                <MenuItem key={"female"} value="female">
+                                    Female
+                                </MenuItem>
                                
                             </Select>
-                            {/* <Dropdown
-                                onChange={(event, option) =>  this.setState({
-                                    gender: option.key
-                                })}
-                                placeholder="Select an option"
-                                label="Gender"
-                                options={genderOptions}/> */}
+                   
                         </div>
                       
                         <div className="sign_up_buttons_container" >
@@ -129,6 +170,7 @@ class SignUp extends Component{
                         </div>
                         
                     </div>
+                    </ThemeProvider>
                 </div>
             );  
         }
@@ -136,5 +178,5 @@ class SignUp extends Component{
             return (<Redirect to={'/authenticate'}/>);
     } 
 }
-
+ 
 export default SignUp;

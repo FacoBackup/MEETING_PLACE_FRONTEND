@@ -13,7 +13,7 @@
     display:grid;
     grid-template-columns: 1fr 98fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    box-shadow: 0px 5px 5px 5px #23282e;
+    box-shadow: 0px 5px 5px  #23282e;
     align-items: center;
     border-radius: 8px;
     row-gap: 1vh;

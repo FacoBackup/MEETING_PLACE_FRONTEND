@@ -6,8 +6,15 @@ import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Cookies from 'universal-cookie';
 import DeleteTopic from '../../../functions/topics/DeleteTopic'
 import UpdateTopic from '../../../functions/topics/UpdateTopic'
-
-
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ArchiveIcon from '@material-ui/icons/Archive';
+import EditIcon from '@material-ui/icons/Edit';
+import Avatar from '@material-ui/core/Avatar'
 class TopicBoxComponent extends React.Component{
     constructor(params){
         super()
@@ -73,11 +80,9 @@ class TopicBoxComponent extends React.Component{
     renderEditButton(creator){
         if(creator === (new Cookies()).get("ID")){
             return(
-                <div >
-                    <DefaultButton text="Edit" onClick={() => this.setState({
-                        editMode: true
-                    })}/>
-                </div>
+                
+                <Button onClick={() => this.setState({ editMode: true})}><EditIcon/>Edit</Button>
+                
             )
         }
     }
@@ -85,11 +90,7 @@ class TopicBoxComponent extends React.Component{
         
         if(creator === (new Cookies()).get("ID"))
             return(
-                <div>
-                     <DefaultButton text="Delete" style ={{color: "white",backgroundColor:'red'}} onClick={() => this.setState({
-                        deleteModal: true
-                    })}/>
-                </div>
+                <Button onClick={() => this.setState({ deleteModal: true})}><DeleteIcon/>Delete</Button>
             )
     }
     renderEditMode(){
@@ -100,7 +101,13 @@ class TopicBoxComponent extends React.Component{
                 <div>  
                     <div className="topic_container"> 
                         <div className="topic_creator_persona_container">
-                        <Persona
+                        <Avatar
+                            style={{ margin:'auto',height: '85px', width: '85px' }}
+                            src = {(typeof this.state.topic.communityImageURL !== 'undefined')? this.state.topic.communityImageURL  : (typeof this.state.topic.creatorImageURL !== 'undefined')? this.state.topic.creatorImageURL: null }
+                            alt="user"
+                        />
+                        <p>{(typeof this.state.topic.communityName !== 'undefined')? this.state.topic.communityName  : this.state.topic.creatorName} {this.state.topic.creatorID}</p>                                    
+                        {/* <Persona
                             {...{
                                 imageUrl: (typeof this.state.topic.communityImageURL !== 'undefined')? this.state.topic.communityImageURL  : (typeof this.state.topic.creatorImageURL !== 'undefined')? this.state.topic.creatorImageURL: null ,
                                 text: (typeof this.state.topic.communityName !== 'undefined')? this.state.topic.communityName  : this.state.topic.creatorName,
@@ -108,7 +115,7 @@ class TopicBoxComponent extends React.Component{
                             }}
                             size={PersonaSize.size56}
                             imageAlt="Subject"
-                        />
+                        /> */}
                             
                             <p style={{ fontSize: FontSizes.size14, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Created on: {(new Date(this.state.topic.creationDate)).toLocaleString()}</p>
                         </div>
@@ -143,11 +150,12 @@ class TopicBoxComponent extends React.Component{
    
     render(){
         return(
-            <>
+            <div className="profile_topics_container">
                 {this.renderEditMode()}
+                
                 <div className="topic_container"> 
                     <div className="topic_creator_persona_container">
-                        <Persona
+                        {/* <Persona
                             {...{
                                 imageUrl: (typeof this.state.topic.communityImageURL !== 'undefined')? this.state.topic.communityImageURL  : (typeof this.state.topic.creatorImageURL !== 'undefined')? this.state.topic.creatorImageURL: null ,
                                 text: (typeof this.state.topic.communityName !== 'undefined')? this.state.topic.communityName  : this.state.topic.creatorName,
@@ -155,9 +163,14 @@ class TopicBoxComponent extends React.Component{
                             }}
                             size={PersonaSize.size56}
                             imageAlt="Subject"
+                        /> */}
+                        <Avatar
+                            style={{ marginRight:'1vw',height: '85px', width: '85px' }}
+                            src = {(typeof this.state.topic.communityImageURL !== 'undefined')? this.state.topic.communityImageURL  : (typeof this.state.topic.creatorImageURL !== 'undefined')? this.state.topic.creatorImageURL: null }
+                            alt="user"
                         />
-                        
-                        <p style={{ fontSize: FontSizes.size14, fontWeight:FontWeights.regular, color:"#3b3a39"}}>Created on: {(new Date(this.state.topic.creationDate)).toLocaleString()}</p>
+                        <h4 style={{fontWeight:'500'}}>{(typeof this.state.topic.communityName !== 'undefined')? this.state.topic.communityName  : this.state.topic.creatorName}</h4>                                    
+                        <h5 style={{fontWeight:'500', color:'#aaadb1'}}>Created on: {(new Date(this.state.topic.creationDate)).toLocaleString()}</h5>
                     </div>
                     <div className="topic_fields_container">
                         <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{this.state.topic.header}</p>
@@ -166,15 +179,23 @@ class TopicBoxComponent extends React.Component{
                     {this.renderModal(this.state.topic.id)}
                     {this.renderImage(this.state.topic)}  
                     <div className="topic_buttons_container">
-                        <DefaultButton text="Like" disabled={true}/> 
+                        <ButtonGroup size="large" variant="text">
+                            <Button> <ThumbUpIcon/>0</Button>
+                            <Button> <ThumbDownAltIcon/>0</Button>
+                            <Button> <ChatBubbleIcon/>0</Button>
+                            <Button> <ArchiveIcon/>Archive</Button>
+                            {this.renderEditButton(this.state.topic.creatorID)}
+                            {this.renderDeleteButton(this.state.topic.creatorID)}
+                            
+                        </ButtonGroup>
+                        {/* <DefaultButton text="Like" disabled={true}/> 
                         <DefaultButton text="Dislike" disabled={true}/> 
                         <DefaultButton text="Comment" disabled={true}/> 
-                        <DefaultButton text="Share" disabled={true}/> 
-                        {this.renderEditButton(this.state.topic.creatorID)}
-                        {this.renderDeleteButton(this.state.topic.creatorID)}
+                        <DefaultButton text="Share" disabled={true}/>  */}
+                        
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import "../../../style/topics/TopicCreationStyle.css"
 import { DefaultButton,Modal, PrimaryButton, Persona,PersonaSize } from 'office-ui-fabric-react';
-import { FontSizes, FontWeights } from '@fluentui/theme';
+
 import TextField from '@material-ui/core/TextField'
 import axios from 'axios';
-import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
+
 import CommunitySearchComponent from '../../search/community/CommunitySearchComponent'
 import Host from '../../../Host'
 import Button from '@material-ui/core/Button';
@@ -223,6 +223,7 @@ class TopicCreationComponent extends React.Component{
     render(){
         return(
             <div className="timeline_component_container">
+                {this.modalRender()}
                 <div className="topic_creation_container">
                     <div className="topic_creation_title">
                         <h3>Express Yourself</h3>
@@ -243,23 +244,20 @@ class TopicCreationComponent extends React.Component{
                         </Button>
                         
                         {/* <Toggle label="Visibility" defaultChecked onText="Only Fans" offText="Public"/> */}
-                        <input type="file" multiple style={{display:'none'}}/>
-                        <label>
+                        <input  id="contained-button-file" type="file" style={{display:'none'}} onChange={event => this.getFile(event.target.files)}/>
+                        <label htmlFor="contained-button-file">
+                            
                             <Button 
+                            component="span"
                                 variant="contained"
                                 color="default"
                                 disableElevation
-                                onClick=
-                                {() => this.setState({
-                                    openModal: true,
-                                    imageModal:true,
-                                    communityModal:false
-
-                                })}>  
+                            >  
+                            
                              Upload image   
                             </Button>
                         </label>
-                        {this.modalRender()}
+                    
                     </div>
                     <div className="topic_creation_fields">
                         <TextField 
@@ -283,7 +281,7 @@ class TopicCreationComponent extends React.Component{
                             multiline 
                             autoAdjustHeight 
                             variant ="outlined"
-                            color='secondary'
+                            
                             style={{
                                 backgroundColor:'#272e38',
                                 borderRadius:'2px'

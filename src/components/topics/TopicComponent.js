@@ -102,7 +102,7 @@ class TopicComponent extends React.Component{
     renderTopic(){
         
         return(
-            <div>
+            <div >
                 <div >
                  
                     <InfiniteScroll
@@ -120,15 +120,17 @@ class TopicComponent extends React.Component{
                   
                 </div>
                    
-                {this.state.isLoading === true ? <div className="topic_container" style={{display:'grid',justifyContent:'center', alignContent:"center", rowGap:'1vh'}}> 
-                    <Skeleton variant="rect" width={700} height={100} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
-                    <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
-                    <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
-                    
-                    <Skeleton variant="rect" width={700} height={500} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
-                    
-                    </div>: null}
-                <div className="timeline_end_container">
+                {this.state.isLoading === true ? 
+                    <div className="profile_topics_container"> 
+                        <div className="topic_container" style={{display:'grid',justifyContent:'center', alignContent:"center", rowGap:'1vh'}}> 
+                            <Skeleton variant="rect" width={700} height={100} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
+                            <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
+                            <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
+                            <Skeleton variant="rect" width={700} height={500} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
+                        </div>
+                    </div>
+                    : null}
+                <div className="timeline_end_container topic_container">
                     <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>You are all caught up for now</p>
                 </div>
             </div>

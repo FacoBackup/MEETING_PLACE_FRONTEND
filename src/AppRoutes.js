@@ -15,7 +15,7 @@ function AppRoutes() {
       <Router>
           <Switch>    
               <Route path="/topic/:topicID/:likes" exact component={Profile}/>  
-              <Route path="/profile/:userID/:option" exact component={Profile}/>
+              <Route path="/profile/:userID" exact component={Profile}/>
               <Route path="/community/:id" exact component={Community}/>
               <Route path="/communities" exact component={CommunityOptions}/>
               <Route path="/" exact component={Home}/>

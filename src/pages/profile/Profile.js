@@ -1,6 +1,7 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 import "../../style/universal/PageModel.css"
+import "../../style/profile/DedicatedProfile.css"
 import "../../style/universal/DedicatedPagesStyle.css"
 import Conversations from "../../components/conversations/bar/ConversationBarComponent"
 import axios from 'axios';
@@ -14,7 +15,10 @@ import UserCommunitiesComponent from '../../components/profile/options/UserCommu
 import Dexie from "dexie";
 import Host from '../../Host'
 import ProfileBar from '../../components/profile/bar/ProfileBarComponent'
-
+import Avatar from '@material-ui/core/Avatar'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Button from '@material-ui/core/Button'
+import PlaceIcon from '@material-ui/icons/Place';
 class Profile extends React.Component{
     constructor({match}){
         super()
@@ -112,50 +116,55 @@ class Profile extends React.Component{
         )
     }
 
-    renderProfileBar(){
-        if(this.state.userID === (new Cookies()).get("ID"))
-            return(
-                <ProfileBar followers={this.state.followers} following={this.state.following} topics={this.state.topics} about={this.state.aboutOption} communities={this.state.community}/>
-            )
-        else
-            return(
-                <ProfileBar/>
-            )
-    }
+   
+   
     render(){
         
         return(
             <div>
-                <div className="left_components">
-                    {this.renderProfileBar()}
-                </div>
-                <div className="center_component">
-                    <div className="dedicated_component_container">
-                        <div className='dedicated_image_container'>
-                            <img className='dedicated_image_style' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.backgroundImageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
-                        </div>
-                        <div className='dedicated_action_bar'>
-                            <div>
-                                <Persona
-                                    {...{
-                                        imageUrl: this.state.profile.imageURL,
-                                        text: this.state.profile.name,
-                                        secondaryText:  this.state.profile.email,
-                                        tertiaryText: (this.state.profile.phoneNumber),
-                                    }}
-                                    size={PersonaSize.size72}
-                                    imageAlt="USER"
-                                
-                                />
-                            </div>
-                            
-                            {this.renderFollowButton()}
-                            
-                        </div>
-                        <div >
-                            {this.optionSelect()}                            
-                        </div>
+               
+                <div className="profile_center_component">
+                    <div className='profile_background_image_container'>
+                        <img className='profile_background_image' alt="BACKGROUD"src= {(this.state.profile.backgroundImageURL !== null && typeof this.state.profile.backgroundImageURL !== 'undefined') ? this.state.profile.backgroundImageURL: "https://www.beautycolorcode.com/2f2f2f-1440x900.png"} />
                     </div>
+                    <div className="dedicated_component_container">
+                        
+                        <div className="profile_content_container">
+                            <div className='profile_container'>
+                                <div style={{marginTop:'1vh',textAlign:'center'}}>
+                                    <Avatar
+                                        style={{ margin:'auto',height: '85px', width: '85px' }}
+                                        src = {this.state.profile.imageURL}
+                                        alt="user"
+                                    />
+                                    <p style={{fontSize:'22px',fontWeight:'500'}}>{this.state.profile.name}</p>
+                                    <h4 style={{fontWeight:'500', color:'#aaadb1'}}>{this.state.profile.email}</h4>
+                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center'}} >
+                                        <PlaceIcon/>
+                                        {this.state.profile.nationality}
+                                    </div>
+                                </div>
+                                <div >
+                                    <ButtonGroup size="large" variant="text" >
+                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>Topics <p style={{color:'#aaadb1'}}>{this.state.profile.topics}</p></Button>
+                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>Followers <p style={{color:'#aaadb1'}}>{this.state.profile.followers}</p></Button>
+                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>Following <p style={{color:'#aaadb1'}}>{this.state.profile.following}</p></Button>
+                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>communities <p style={{color:'#aaadb1'}}>0</p></Button>
+                                    </ButtonGroup>
+                                </div>
+                            </div>
+                            <div className='options_container'>
+                                
+                            </div>
+                            <div >
+                                {this.optionSelect()}                            
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div className="left_components">
+                    <ProfileBar home={true}/>
                 </div>
                 <div className="right_components">
                     <Conversations />

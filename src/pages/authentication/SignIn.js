@@ -9,6 +9,16 @@ import Button from '@material-ui/core/Button';
 // import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import Host from '../../Host'
 import TextField from '@material-ui/core/TextField'
+import Alert from '@material-ui/lab/Alert';
+
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+
+const theme = createMuiTheme({
+    palette: {
+      type: "dark"
+    }
+  });
 
 class SignIn extends Component {
     constructor(){
@@ -79,37 +89,54 @@ class SignIn extends Component {
     }
     
     render(){
-
+    
         if(this.state.accepted)
-            return (<Redirect to='/'/>);
+            return (    
+                <Redirect to='/'/>
+            );
         else{
             return (
                 <div className="sign_in_container">
+                    <ThemeProvider theme={theme}>
                     <div className="sign_in_component">
                         <div className="sign_in_title_container">
                             <h2>Sign In</h2>
                             {/* <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign in</p> */}
                         </div>
                         <div className="sign_input_container">
-                            <TextField variant="outlined" label="Email address" multiline onChange={this.handleChangeEmail}/>
-                            <TextField variant="filled" type="password" autoComplete="current-password" label="Password" onChange={this.handleChangePassword}/>
+                            <TextField 
+                                variant="outlined" 
+                                label="Email address" 
+                                
+                                multiline 
+                            
+                                onChange={this.handleChangeEmail}/>
+                            <TextField
+                                variant="filled" 
+                                type="password" 
+                        
+                                autoComplete="current-password" 
+                                label="Password" 
+                                onChange={this.handleChangePassword}/>
                         </div>
 
                         <div className="sign_button_container">
                             <Button 
                                 disableElevation 
-                                style={{fontWeight:'bold'}} 
+                                
                                 variant='contained' 
                                 color="primary" onClick={this.handleSubmit}>SIGN IN</Button>
                             <Button disableElevation style={{fontWeight:'bold'}} variant='contained' color="default" href="/creation">CREATE AN ACCOUNT</Button>
                         </div>
 
                     </div>
+                    </ThemeProvider>
                 </div>
             );    
         }  
     }
-     
 }
 
-export default (SignIn);
+
+
+export default (SignIn)

@@ -10,7 +10,22 @@ import Dexie from "dexie";
 import Host from '../../../Host'
 import { Avatar, Fab } from '@material-ui/core';
 // import NavigationIcon from '@material-ui/icons/Navigation';
-// import SvgIcon from '@material-ui/core/SvgIcon';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import { ThemeProvider } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+import LocationSearchingRoundedIcon from '@material-ui/icons/LocationSearchingRounded';
+import StorageRoundedIcon from '@material-ui/icons/StorageRounded';
+import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
+import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
+
+const theme = createMuiTheme({
+    palette: {
+      type: "dark"
+    }
+  });
+
 
 class ProfileBarComponent extends Component{
     constructor(params){
@@ -69,13 +84,16 @@ class ProfileBarComponent extends Component{
         
         return(
             <div className="profile_bar_container">
-                 <div className="personas_container" style={{marginBottom: '85%', marginTop:'5%', width:'80%'}}>
+                <ThemeProvider theme={theme}>
+                 <div className="profile_info_container">
                 
                     <Avatar
+                        style={{ height: '65px', width: '65px' }}
                         src = {this.state.profile.imageURL}
                         alt="user"
+                       
                     />
-                    <p>{this.state.profile.name}</p>
+                    <p style={{fontSize:'19px',fontWeight:'500'}}>{this.state.profile.name}</p>
                     
                     </div>
                     {/* <div  className="profile_qrcode_container">
@@ -92,28 +110,51 @@ class ProfileBarComponent extends Component{
                 
                 
                 <div className="profile_bar_buttons_container">
-                        {/* {this.state.timeline === true? <PrimaryButton iconProps={this.state.addIcon}  text ="Home"/>:<DefaultButton text ="Home" iconProps={this.state.addIcon} href='/'/>}  */}
-                        {/* {this.state.timeline === true? <PrimaryButton iconProps={this.state.addIcon}  text ="Home"/>:<DefaultButton text ="Home" iconProps={this.state.addIcon} href='/'/>} 
-                        {this.state.followers === true? <PrimaryButton text ="Followers"/>:<DefaultButton text ="Followers"  href={'/profile/'+this.state.profile.email+'/2'}/>} 
-                        {this.state.following === true? <PrimaryButton text ="Following"/>:<DefaultButton text ="Following"  href={'/profile/'+this.state.profile.email+'/1'}/>} 
-                        {this.state.search === true? <PrimaryButton text ="Search User"/>:<DefaultButton text ="Search User"  href='/search_user'/>} 
-                        {this.state.topics === true? <PrimaryButton text ="My Topics"/>:<DefaultButton text ="My Topics"  href={'/profile/'+this.state.profile.email+'/0'}/>} 
-                        {this.state.communities === true? <PrimaryButton text ="Communities"/>:<DefaultButton text ="Communities"  href={'/profile/'+this.state.profile.email+'/3'}/>} 
-                        {this.state.communityOptions === true? <PrimaryButton text ="Community Options"/>:<DefaultButton text ="Community Options"  href={'/communities'}/>} 
-                        {this.state.about === true? <PrimaryButton text ="About Me"/>:<DefaultButton text ="About Me"  href={'/profile/'+this.state.profile.email+'/4'}/>} 
-                        <DefaultButton text="Sign out"  onClick={() => this.signout()} />                     */}
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/'}>Timeline</Button>
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/dashboard'}>EXPLORE</Button>
-                        
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>ARCHIVE</Button>
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>PROFILE</Button>
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>COMMUNITIES</Button>
-                        <Button style={{color:'white', fontSize:'15px', fontWeight:"bold"}} href={'/profile/'+this.state.profile.email+'/0'}>NOTIFICATIONS</Button>
-
-                        {/* <DefaultButton  text ="Communities"  href="/communities"/>         */}
-                        
+                        <div className="profile_bar_buttons">
+                           <SvgIcon>
+                               <HomeRoundedIcon/>
+                           </SvgIcon>
+                           
+                            <Button 
+                                color={this.state.timeline === true? "primary": 'default'}
+                                disableElevation          
+                                href={'/'}>Home</Button>
+                        </div>
+                        <div className="profile_bar_buttons">
+                            <SvgIcon>
+                               <LocationSearchingRoundedIcon/>
+                           </SvgIcon>
+                            <Button  href={'/dashboard'}>EXPLORE</Button>
+                        </div>
+                        <div className="profile_bar_buttons">
+                            <SvgIcon>
+                               <StorageRoundedIcon/>
+                           </SvgIcon>
+                            <Button disabled>ARCHIVE</Button>
+                        </div>
+                        <div className="profile_bar_buttons">
+                            <SvgIcon>
+                               <PersonRoundedIcon/>
+                           </SvgIcon>
+                           
+                            <Button 
+                                color={this.state.home === true? "primary": 'default'}
+                                href={'/profile/'+this.state.profile.email+'/0'}>PROFILE</Button>
+                        </div>
+                        <div className="profile_bar_buttons">  
+                            <SvgIcon>
+                               <PeopleAltRoundedIcon/>
+                           </SvgIcon>
+                            <Button href={'/communities'}>COMMUNITIES</Button>
+                        </div>
+                        <div className="profile_bar_buttons">
+                            <SvgIcon>
+                               <NotificationsRoundedIcon/>
+                           </SvgIcon>
+                            <Button disabled>NOTIFICATIONS</Button>                        
+                        </div>
                 </div>
-               
+                </ThemeProvider>
               
             </div>
         );  

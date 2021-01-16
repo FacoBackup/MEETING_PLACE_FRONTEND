@@ -1,95 +1,38 @@
 .profile_bar_container{
-    display: block;
+    display: grid;
     justify-content: center;
     align-content: space-between;
     overflow: hidden;   
-    width:100%;
-    
-    row-gap: 5vh;
-    grid-template-rows: 1fr 2fr 1fr ;
+    row-gap: 3vh;
+    grid-template-rows: 10% 13% 1fr ;
     min-height: 100%;
-    
-    
-}
-.profile_bar_background_image_container{
-    overflow: hidden;
-    display: grid;
-    margin: auto;
-
-    
-    height: 20vh;
-    border-radius: 8px;
     width: 85%;
-}
-.profile_bar_background_image{
-    grid-row: 1;
-    width: 100%;
-    
-    border-radius: 8px;
-}
-/* .profile_image{
-    display: inline;
-    margin: 0 auto;
-    margin-left: -25%;
-    height: 100%;
-    width: auto;
-} */
-/* .profile_background_image_container{
-    width: 13vw;
-    height: 13vw;
-    position: relative;
     margin: auto;
-    overflow: hidden;
-    border-radius: 50%;
-} */
+    
+}
 
 .profile_qrcode_container{
     
     margin: auto;
  
 }
-.profile_bar_card_container{
-    grid-row: 3;
+.profile_info_container{
+    grid-row: 1;
     display: grid;
-    
-       
-    background-color:rgba(210, 208, 206, .5);
-    border-radius: 8px;
-    height: 60px;
-    align-items: center;
-    padding:.5vw;
-    justify-content: flex-start;
-    
-    width: 80%;
-    margin: auto;
-    
+    padding: 10px;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    font-weight: 600;
 }
 
 .profile_bar_buttons_container{
-    grid-row: 2;
-    display: grid;
-    align-content: flex-start;
-    
-    row-gap: 3vh;
-    
+    grid-row:3 ;
+    display: block;
     
 }
-/* .profile_edit_info_buttons{
-    grid-row: 3;
-
+.profile_bar_buttons{
     display: flex;
-    justify-content: space-around;
-    
+    margin-bottom: 3vh;
+    align-items: center;
 }
-.profile_edit_info{
-    grid-row: 3;
-    overflow-y: auto;
-    margin: auto;
-    
-    height: 35vh;
-    width: 15vw;
-    margin: auto;
-    overflow-y: auto;
-}
- */
-
