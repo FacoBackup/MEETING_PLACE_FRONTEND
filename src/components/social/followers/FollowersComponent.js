@@ -9,6 +9,7 @@ import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
 import { Redirect } from 'react-router-dom';
 import Host from '../../../Host'
+import "../../../style/profile/DedicatedProfile.css"
 class FollowersComponent extends React.Component{
     constructor(params){
         super()
@@ -90,34 +91,29 @@ class FollowersComponent extends React.Component{
     }
     render(){
         if(this.state.redirect === false)
-            return(
+            return(    
                 <div>
-                    <div className="social_component_container" >
-                        <div className="socail_info_container">
-                        <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Followers</p>
-                        {(this.state.followers.length === 0 && this.state.userID === (new Cookies()).get("ID")) ? 
-                            <div>
-                                <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one follows you yet.</p>
-                            </div>
-                            :this.state.followers.map((follower)=> 
-                            <div className="personas_container"> 
-                                <Persona
-                                {...{
-                                    imageUrl: (typeof follower.imageURL !== 'undefined') ?  follower.imageURL : null,
-                                    text: follower.name,
-                                    secondaryText: follower.email,
-                                    tertiaryText: follower.phoneNumber
-                                }}
-                                size={PersonaSize.size72}
-                                imageAlt="Conversation picture"
-                                />
-                                <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>
-                                <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
-                            </div>
-                        )}
+                    <p style={{fontSize:'20px',fontWeight:'500', textAlign:'center'}}>Followers</p>
+                    {(this.state.followers.length === 0 && this.state.userID === (new Cookies()).get("ID")) ? 
+                        <div>
+                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one follows you yet.</p>
                         </div>
-                    </div>
-    
+                        :this.state.followers.map((follower)=> 
+                        <div className="personas_container"> 
+                            <Persona
+                            {...{
+                                imageUrl: (typeof follower.imageURL !== 'undefined') ?  follower.imageURL : null,
+                                text: follower.name,
+                                secondaryText: follower.email,
+                                tertiaryText: follower.phoneNumber
+                            }}
+                            size={PersonaSize.size72}
+                            imageAlt="Conversation picture"
+                            />
+                            <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>
+                            <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
+                        </div>
+                    )}
                 </div>
             );
             else{

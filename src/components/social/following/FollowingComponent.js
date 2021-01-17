@@ -93,35 +93,34 @@ class FollowingComponent extends React.Component{
     render(){
         if(this.state.redirect === false)
             return(
-                <div>
+                
         
-                    <div className="social_component_container">
-                        <div >
-                        <p style={{ fontSize: FontSizes.size18, fontWeight:FontWeights.regular, textAlign:'center'}}>Following</p>
-                        {(this.state.following.length === 0 && this.state.userID === (new Cookies()).get("ID"))  ? 
-                        <div>
-                            <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like you don't follow anyone yet, try searching for a friend.</p>
-                        </div>
-                        :this.state.following.map((flw)=> 
-                            <div className="personas_container"> 
-                                <Persona
-                                {...{
-                                    imageUrl: (typeof flw.imageURL !== 'undefined') ?  flw.imageURL : null,
-                                    text: flw.name,
-                                    secondaryText: flw.email,
-                                    tertiaryText: flw.phoneNumber
-                                }}
-                                size={PersonaSize.size72}
-                                imageAlt="Conversation picture"
-                                />
-                                <DefaultButton text ="See Profile"  href={"/profile/"+flw.email+'/0'}/>
-                                <PrimaryButton onClick={() => this.setRedirect(flw.email)} text="Send Message"/>
-                            </div>
-                        )}
-                        </div>
+                    
+                <div >
+                     <p style={{fontSize:'20px',fontWeight:'500', textAlign:'center'}}>Following</p>
+                    
+                    {(this.state.following.length === 0 && this.state.userID === (new Cookies()).get("ID"))  ? 
+                    <div>
+                        <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like you don't follow anyone yet, try searching for a friend.</p>
                     </div>
-        
+                    :this.state.following.map((flw)=> 
+                        <div className="personas_container"> 
+                            <Persona
+                            {...{
+                                imageUrl: (typeof flw.imageURL !== 'undefined') ?  flw.imageURL : null,
+                                text: flw.name,
+                                secondaryText: flw.email,
+                                tertiaryText: flw.phoneNumber
+                            }}
+                            size={PersonaSize.size72}
+                            imageAlt="Conversation picture"
+                            />
+                            <DefaultButton text ="See Profile"  href={"/profile/"+flw.email+'/0'}/>
+                            <PrimaryButton onClick={() => this.setRedirect(flw.email)} text="Send Message"/>
+                        </div>
+                    )}
                 </div>
+                
             );
             else{
             

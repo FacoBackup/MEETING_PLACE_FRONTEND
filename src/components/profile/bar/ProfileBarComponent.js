@@ -116,13 +116,14 @@ class ProfileBarComponent extends Component{
                            </SvgIcon>
                            
                             <Button 
+                            
                                 color={this.state.timeline === true? "primary": 'default'}
                                 disableElevation          
                                 href={'/'}>Home</Button>
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
-                               <LocationSearchingRoundedIcon/>
+                               <LocationSearchingRoundedIcon />
                            </SvgIcon>
                             <Button  href={'/dashboard'}>EXPLORE</Button>
                         </div>
@@ -139,7 +140,7 @@ class ProfileBarComponent extends Component{
                            
                             <Button 
                                 color={this.state.home === true? "primary": 'default'}
-                                href={'/profile/'+this.state.profile.email+'/0'}>PROFILE</Button>
+                                href={'/profile/'+this.state.profile.email}>PROFILE</Button>
                         </div>
                         <div className="profile_bar_buttons">  
                             <SvgIcon>

@@ -103,7 +103,7 @@ class TopicComponent extends React.Component{
         
         return(
             <div >
-                <div >
+                <div>
                  
                     <InfiniteScroll
                         dataLength={this.state.topics.length} 

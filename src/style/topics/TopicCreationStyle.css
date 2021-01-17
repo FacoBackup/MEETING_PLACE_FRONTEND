@@ -2,7 +2,23 @@
     display: block;
     overflow-y: auto;
 }
+.timeline_content_container{
+    box-shadow: 0px 5px 5px  #23282e;
+    background-color: #303741;
 
+    justify-content: center;
+    justify-items: center;
+    position:initial;
+    
+    border-radius: 8px;
+    /* max-height: 65.6vh; */
+
+    width:42vw;
+    padding-bottom: 2vh;
+    /* overflow-x: hidden; */
+    position: sticky;
+    
+}
 .topic_container{
     margin: auto;
     background-color: #3b424c;
@@ -60,6 +76,7 @@
 
 
 .topic_creation_container{
+    margin: auto;
     background-color: #3b424c;
     border-radius: 8px;
     display: block;
@@ -67,6 +84,8 @@
     margin-bottom: 1vh;
     padding-top: 2vh;
     padding-bottom: 2vh;
+    width: 90%;
+    
 }
 .topic_creation_fields{
     width: 75%;

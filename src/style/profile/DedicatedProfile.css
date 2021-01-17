@@ -48,22 +48,36 @@
 } 
 .options_container{
     position: fixed;
-    top: 76vh;
+    top: 74.4vh;
     left: 16.5vw;
     
     display: grid;
-    
-    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: space-between;
+    column-gap: 1vw;
+    row-gap: 1vh;
     align-content: space-between;
     /* row-gap: vh; */
     border-radius: 8px;
     /* grid-template-rows: 1fr 1fr 1fr; */
-    overflow: hidden;
-    background-color: #303741;
-    box-shadow: 0px 5px 5px  #23282e;
+    
+    
+    
     width: 23vw;
     height: 24vh;
 }
+.option_content{
+    /* margin: auto; */
+    display: grid;
+    /* column-gap: .5vw; */
+    justify-items: space-between;
+    align-items: center;
+    /* width: 11vw; */
+    height: 11vh;
+    
+}
+
 .profile_container{
     position: fixed;
     top: 35.111vh;

@@ -28,11 +28,13 @@
 
 .profile_bar_buttons_container{
     grid-row:3 ;
-    display: block;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    height: 83%;
     
 }
 .profile_bar_buttons{
     display: flex;
-    margin-bottom: 3vh;
     align-items: center;
 }

@@ -222,7 +222,7 @@ class TopicCreationComponent extends React.Component{
 
     render(){
         return(
-            <div className="timeline_component_container">
+            <div className="">
                 {this.modalRender()}
                 <div className="topic_creation_container">
                     <div className="topic_creation_title">

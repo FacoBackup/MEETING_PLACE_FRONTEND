@@ -5,7 +5,7 @@ import "../../style/profile/DedicatedProfile.css"
 import "../../style/universal/DedicatedPagesStyle.css"
 import Conversations from "../../components/conversations/bar/ConversationBarComponent"
 import axios from 'axios';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import TopicComponent from '../../components/topics/TopicComponent'
 import AboutComponent from '../../components/profile/options/UserAboutComponent'
@@ -19,6 +19,10 @@ import Avatar from '@material-ui/core/Avatar'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Button from '@material-ui/core/Button'
 import PlaceIcon from '@material-ui/icons/Place';
+import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import HighlightIcon from '@material-ui/icons/Highlight';
+import HelpIcon from '@material-ui/icons/Help';
+
 class Profile extends React.Component{
     constructor({match}){
         super()
@@ -26,11 +30,11 @@ class Profile extends React.Component{
             userID: match.params.userID,
             token: (new Cookies()).get("JWT"),
             profile: {},
-            topics: (typeof match.params.option === 'undefined' || match.params.option === '0'? true: false),
-            followers: (match.params.option === '2'? true: false),
-            following: (match.params.option === '1'? true: false),
-            community: match.params.option === '3' ? true: false,
-            aboutOption: match.params.option === '4' ? true: false
+            topics: true,
+            followers: false,
+            following: false,
+            community: false,
+            aboutOption: false
         }
     }
     componentDidMount(){
@@ -146,15 +150,71 @@ class Profile extends React.Component{
                                 </div>
                                 <div >
                                     <ButtonGroup size="large" variant="text" >
-                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>Topics <p style={{color:'#aaadb1'}}>{this.state.profile.topics}</p></Button>
-                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>Followers <p style={{color:'#aaadb1'}}>{this.state.profile.followers}</p></Button>
-                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>Following <p style={{color:'#aaadb1'}}>{this.state.profile.following}</p></Button>
-                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'13px'}}>communities <p style={{color:'#aaadb1'}}>0</p></Button>
+                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'15px'}} color={this.state.topics === true? "primary": "default"}
+                                            onClick={() => this.setState({
+                                                topics: true,
+                                                followers: false,
+                                                following: false,
+                                                community: false
+                                            })}
+                                        >Topics <p style={{color:'#aaadb1'}}>{this.state.profile.topics}</p></Button>
+                                        
+                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'15px'}} color={this.state.followers === true? "primary": "default"}
+                                            onClick={() => this.setState({
+                                                topics: false,
+                                                followers: true,
+                                                following: false,
+                                                community: false
+                                            })}
+                                        >Followers <p style={{color:'#aaadb1'}}>{this.state.profile.followers}</p></Button>
+                                        
+                                        <Button style={{display:'grid',lineHeight:'7px', fontSize:'15px'}} color={this.state.following === true? "primary": "default"}
+                                            onClick={() => this.setState({
+                                                topics: false,
+                                                followers: false,
+                                                following: true,
+                                                community: false
+                                            })}
+                                        >Following <p style={{color:'#aaadb1'}}>{this.state.profile.following}</p></Button>
+                                        
+                                        {/* <Button style={{display:'grid',lineHeight:'7px', fontSize:'15px'}} color={this.state.community === true? "primary": "default"}
+                                            onClick={() => this.setState({
+                                                topics: false,
+                                                followers: false,
+                                                following: false,
+                                                community: true
+                                            })}
+                                        >communities <p style={{color:'#aaadb1'}}>0</p></Button> */}
                                     </ButtonGroup>
                                 </div>
                             </div>
                             <div className='options_container'>
-                                
+                                <Button variant="outlined" disabled style={{gridColumn:'1', gridRow:'1'}} className='option_content'>
+                                    
+                                    <HighlightIcon style={{height:'33px', width:'33px', color: '#aaadb1'}}/>
+                                    Highlights
+                                </Button>
+                                <Button variant="outlined" disabled style={{gridColumn:'1', gridRow:'2'}} className='option_content'>
+                                    
+                                    <HelpIcon style={{height:'33px', width:'33px', color: '#aaadb1'}}/>
+                                    help
+                                </Button>
+                                <Button  variant={this.state.community === true? "filled":"outlined"} style={{gridColumn:'2', gridRow: '1', backgroundColor:(this.state.community === true ? "#303741" : 'transparent')}} className='option_content' 
+                                    onClick={() => this.setState({
+                                        topics: false,
+                                        followers: false,
+                                        following: false,
+                                        community: true
+                                    })}
+                                >
+                                    <PeopleAltRoundedIcon style={{height:'33px', width:'33px', color: '#aaadb1'}}/>
+                                    MY Communities
+                                </Button>
+                                <Button variant="outlined" disabled style={{gridColumn:'2', gridRow:'2'}} className='option_content'>
+                                    <SettingsIcon style={{height:'33px', width:'33px', color: '#aaadb1'}}/>
+                                    
+                                    Edit Profile
+                                </Button>
                             </div>
                             <div >
                                 {this.optionSelect()}                            

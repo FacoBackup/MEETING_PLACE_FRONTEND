@@ -13,9 +13,11 @@ class Timeline extends Component{
     if(typeof (new Cookies()).get("JWT") !== 'undefined'){
       return (
         <div className="page_container">
-            <div  className="center_component">
+            <div  className="center_component timeline_content_container">
               <TopicCreation token={( new Cookies()).get("JWT")}/>
+              
               <TopicComponent token={( new Cookies()).get("JWT")} timeline={true} subjectID={( new Cookies()).get("ID")} community={false}/>
+              
             </div>
             <div className="left_components">
               <ProfileBar timeline={true}/>
