@@ -1,13 +1,21 @@
 import React from 'react';
 import "../../style/messages/MessagesStyle.css";
-import { FontSizes, FontWeights } from '@fluentui/theme';
-
-import { DefaultButton, Modal, PrimaryButton } from 'office-ui-fabric-react';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import TextField from '@material-ui/core/TextField'
+import Button from "@material-ui/core/Button"
 import axios from 'axios';
 import Host from '../../Host'
-
+import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Cookies from 'universal-cookie';
+import EmojiEmotionsRoundedIcon from '@material-ui/icons/EmojiEmotionsRounded';
+import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
+const theme = createMuiTheme({
+    palette: {
+      type: "dark"
+    }
+  });
 
 
 class SendMessageComponent extends React.Component{
@@ -48,7 +56,8 @@ class SendMessageComponent extends React.Component{
         })
         .then(()=>{
             this.setState({
-                imageURL: null
+                imageURL: null,
+                // messageInput:null
             })
         })
         .catch(error => {
@@ -92,75 +101,69 @@ class SendMessageComponent extends React.Component{
               }
         }
     }
-    
-    renderModal(){
-        if(this.state.imageModal === true){
-            return(
-                <Modal
-                titleAriaId={"TESTE"}
-                isOpen={true}
-                onDismiss={true}
-                isBlocking={false}
-                
-                containerClassName={"contentStyles.container"}
-                >
-                    <div className='modal_container' >
-                        <div className="modal_title_component">
-                            <h2 >Upload an image for your message</h2>
-                        </div>
-                        <div className="modal_top_component" style={{display:'flex', justifyContent:'center'}}>
-                            <input type="file"  name="file"  onChange={event => this.getFile(event.target.files)}/>
-                        </div>
-                        <div className="modal_middle_component" >
-                            {this.renderImageModal()}
-                        </div>
-                        <div className="modal_bottom_component" style={{display:'flex', justifyContent:'space-between'}}>
-                            {this.state.imageURL === null ? 
-                            <DefaultButton text="Cancel" onClick={()=> this.setState({
-                                imageModal: false
-                            })}/> : 
-                            <DefaultButton text="Remove Image" onClick={()=> this.setState({
-                                imageURL: null
-                            })}/>    
-                        }
-                            
-                            <PrimaryButton text="Choose" onClick={()=> this.setState({
-                                imageModal: false,
-                                communityModal:false,
-                                openModal:false
-                            })}/>
-                        </div>
-                    </div>
-                </Modal>
-           )
 
-        }
-    }
     renderSelectedImage(){
         if(this.state.imageURL !== null)
             return(
-                <div style={{display:'grid', alignContent:'center', paddingLeft:'.3vw', paddingRight:'.3vw'}}>
-                    <img style={{margin:'auto',width:'100px', borderRadius:'8px'}} alt="message" src={this.state.imageURL}/>
-                </div>  
+                <div style={{margin:'1vh', display: "flex", justifyContent:'flex-start'}}>
+                    <img alt="message" style={{borderRadius:'8px', maxWidth: '20vw', maxHeight:"20vh"}} src={this.state.imageURL}/>
+                    <Button onClick={() => this.setState({
+                        imageURL: null
+                    })}>
+                        <DeleteRoundedIcon/>
+                    </Button>
+
+                </div>
             ) 
     }
     render(){
         return(
+            <ThemeProvider> 
+            <div className="message_input_content_container" >
+                {this.renderSelectedImage()}
             <div className="message_input_container" >
+            
                 <div className="message_input_box">
-                    <TextField  placeholder="Message" label={this.state.sending === true ? "Sending...": null} multiline autoAdjustHeight  resetValue={(this.state.messageInput === null)}  onChange={this.handleChange} />                       
+                    
+                    <TextField  
+                        placeholder="Message" 
+                        variant="outlined" 
+                        label={this.state.sending === true ? "Sending...": null} 
+                        multiline autoAdjustHeight  
+                        // defaultValue={this.state.messageInput === null ? "":this.state.messageInput }  
+                        style={{
+                            backgroundColor:'#303741',
+                            borderRadius:'2px',
+                            width:'39vw'
+                        }}
+                        InputProps={{
+                            style:{
+                                color:'white'
+                            }
+                        }}
+                        onChange={this.handleChange} />                       
+                    
                 </div>
-                {this.renderModal()}
-                {this.renderSelectedImage()}  
-                <div className="message_input_buttons">
-                    <PrimaryButton text="Send" style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }}onClick={() => this.SendMessage()}/>      
-                    <DefaultButton style={{ fontSize: FontSizes.size14, fontWeight: FontWeights.semibold }} text="Upload Image" onClick={()=> 
-                    this.setState({
-                        imageModal: true
-                    })
-                    }/>
-                </div>    
+            
+                <Button disabled>
+                    <EmojiEmotionsRoundedIcon/>
+                </Button>
+
+                <input  id="contained-button-file" type="file" style={{display:'none'}} onChange={event => this.getFile(event.target.files)}/>
+                <label htmlFor="contained-button-file">
+                    <Button 
+                        component="span"
+                    >  
+                        <ImageRoundedIcon/>  
+                    </Button>
+                </label>
+
+                <Button onClick={() => this.SendMessage()}>
+                    <SendRoundedIcon style={{color:'#3eaef3'}}/>
+                </Button>
             </div>
+            </div>
+            </ThemeProvider>
         )
     }
     

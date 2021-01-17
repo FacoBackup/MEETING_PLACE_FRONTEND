@@ -1,44 +1,92 @@
 
 .messages_component_container{
-    display: block;
+    display: grid;
+    justify-content: center;
+    margin: auto;
 }
-.messages_component{
+.messages_component{ 
+    
+    width: 48vw;
+    
+    padding: 1vw;
+    box-shadow: 0px 5px 5px  #23282e;
+    background-color: #303741;
+    padding-bottom: 80px;
+    min-height: 95vh;
+    border-radius: 8px;
+
+}
+
+.my_message_content_container{
+    
+    line-break:normal;
+    word-break: break-all;
+    /* width: 100; */
+    text-align: right;
+    
+    border-radius: 8px;
+    background-color: #3b424c;
+    padding: 10px;
+    
+}
+.my_message_container{
+    text-align: right;
+    margin-left: auto;
+    width: 49%;
     
     display: grid;
-    width: auto;
-    padding: 1%;
-    /* margin-top: 3%; */
-    align-items: flex-start;
-    padding-bottom: 8vh;
-    border-radius: 8px;
-    overflow: auto;
-
+    row-gap: 1vh;
+    
 }
-.my_message_container{ 
-    display: flex;
-    justify-content: flex-end;
-}
-
 .subject_message_container{
-    justify-content: flex-start;
-    display: flex;
+    display: grid;
+    row-gap: 1vh;
+    margin-right: auto;
+    width: 49%;
+}
+.subject_message_box_container{
+    line-break:normal;
+    word-break: break-all;
+    text-align: left;
+    
+    border-radius: 8px;
+    
+    background-color: #3eaef3;
+    
+    padding: 10px;
+    
 }
 
+.message_input_content_container{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50vw;
+    padding-bottom: 75px;
+    /* padding:.5vw; */
+    border-radius: 8px;
+    box-shadow: 0px 5px 5px  #23282e;
+    background-color: #3b424c;
+    bottom: -.1px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
 .message_input_container{
     position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 60%;
+    width: 49vw;
+    padding:.5vw;
     border-radius: 8px;
-    
+    /* box-shadow: 0px 5px 5px  #23282e; */
+    background-color: #3b424c;
     bottom: -.1px;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
-
-.message_input_buttons{
+/* .message_input_buttons{
     display: grid;
  
-}
-.message_input_box{
-    width:100%;
-}
+} */

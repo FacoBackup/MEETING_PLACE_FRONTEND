@@ -212,8 +212,7 @@ class Profile extends React.Component{
                                 </Button>
                                 <Button variant="outlined" disabled style={{gridColumn:'2', gridRow:'2'}} className='option_content'>
                                     <SettingsIcon style={{height:'33px', width:'33px', color: '#aaadb1'}}/>
-                                    
-                                    Edit Profile
+                                    Settings
                                 </Button>
                             </div>
                             <div >

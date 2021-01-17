@@ -6,7 +6,7 @@ import Host from '../../Host'
 import Dexie from "dexie";
 import Cookies from 'universal-cookie';
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Shimmer } from 'office-ui-fabric-react/lib/Shimmer';
+import Skeleton from '@material-ui/lab/Skeleton'
 
 class MessagesComponent extends React.Component{
     constructor(params){
@@ -27,7 +27,7 @@ class MessagesComponent extends React.Component{
     }
  
     componentDidMount(){        
-        this.FetchConversation()
+        
         this.timerID = setInterval(
             () => this.tick(),
             500
@@ -89,44 +89,6 @@ class MessagesComponent extends React.Component{
         }       
     }
 
-    async FetchConversation (){
-        
-        if(this.state.isGroup === true)
-            await axios({
-                method: 'post',
-                url: Host()+'api/get/conversation/group',
-                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
-                data: {
-                    conversationID: this.state.subjectID
-                }
-            }).then(res=>{
-                if(res.data !== {})
-                    this.setState({
-                        conversation: res.data
-                    })
-            })
-            .catch(error => {
-                console.log(error)
-            });
-        else
-            await axios({
-                method: 'patch',
-                url: Host()+'api/get/simplified/user/profile',
-                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
-                data: {
-                    userID: this.state.subjectID
-                }
-            }).then(res=>{
-                if(res.data !== {})
-                    this.setState({
-                        conversation: res.data
-                    })
-                
-            })
-            .catch(error => {
-                console.log(error)
-            });
-    } 
 
     async FetchMessagesByPage(){
         this.setState({
@@ -191,16 +153,38 @@ class MessagesComponent extends React.Component{
             console.log(error)
         });
     }
+
+    renderSkeleton(){
+        return(
+            <>         
+            <div className="subject_message_container" style={{marginTop:'100%'}}>
+                    <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+                        
+                        <Skeleton variant="circle" style={{backgroundColor:'rgba(255,255,255,.2)',width:'50px', height:'50px'}}/>
+                        <div style={{width:'85%'}}>
+                        <Skeleton style={{backgroundColor:'rgba(255,255,255,.2)',width:'85%', height:'20px'}}/>
+                        <Skeleton style={{backgroundColor:'rgba(255,255,255,.2)',width:'55%', height:'20px'}}/>
+                        </div>
+                        
+                        
+                    </div>
+                    <div className="subject_message_box_container" style={{backgroundColor:'transparent'}}>
+                    
+                        <Skeleton variant="rect" style={{backgroundColor:'rgba(255,255,255,.2)',height:'300px', borderRadius:'8px', width:'100%'}}/>
+                    </div>
+                
+                </div>
+            </>
+        )
+    }
+
     renderInfiniteScroll(){
         
         return(
             <div className="messages_component_container">  
-                <div className="messages_component" style={{backgroundColor: 'white'}} ref={this.state.conversationContainer}>
+                <div className="messages_component " ref={this.state.conversationContainer}>
                     {this.state.isLoading === true ? <div style={{display:'grid', rowGap:'1vh'}}> 
-                        <Shimmer style={{width: '65%'}}/>
-                        <Shimmer style={{width: '55%'}}/>
-                        <Shimmer style={{width: '75%'}}/>
-                        <Shimmer style={{width: '55%'}}/>
+                        {this.renderSkeleton()}
                     </div>: null}
                     <InfiniteScroll
                         dataLength={this.state.messages.length} 
@@ -210,8 +194,8 @@ class MessagesComponent extends React.Component{
                         hasMore={this.state.currentPage > 1 ? true: false}
                         >
                         {this.state.messages === [] ? <div></div> : this.state.messages.map((message) =>(
-                            <div key ={message.id} className={(message.creatorID === this.state.userID) ? "my_message_container" : "subject_message_container"} style={{padding: '1vh'}}>
-                                <MessageBox isGroup={this.state.isGroup} conversation={this.state.conversation} messageID = {message.id} conversationID={message.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {(new Cookies()).get("ID")}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
+                            <div key ={message.id}>
+                                <MessageBox conversation={this.state.conversation} messageID = {message.id} conversationID={message.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {(new Cookies()).get("ID")}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
                                 <div ref={this.state.essagesEndRef} />
                             </div>   
                         ))}   

@@ -3,9 +3,7 @@ import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "../../../style/profile/ProfileBarStyle.css";
 import Button from '@material-ui/core/Button';
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import Dexie from "dexie";
 import Host from '../../../Host'
 import { Avatar, Fab } from '@material-ui/core';
@@ -19,6 +17,7 @@ import StorageRoundedIcon from '@material-ui/icons/StorageRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
+import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 
 const theme = createMuiTheme({
     palette: {
@@ -154,6 +153,25 @@ class ProfileBarComponent extends Component{
                            </SvgIcon>
                             <Button disabled>NOTIFICATIONS</Button>                        
                         </div>
+                        <div className="profile_bar_buttons">
+                            <SvgIcon>
+                               <SearchRoundedIcon/>
+                           </SvgIcon>
+                           
+                            <Button 
+                                href="/search_user"
+                                >search user</Button>
+                        </div>
+                        <div className="profile_bar_buttons">
+                            <SvgIcon>
+                               <ExitToAppRoundedIcon/>
+                           </SvgIcon>
+                           
+                            <Button 
+                            
+                                onClick={() => this.signout()}>sign out</Button>
+                        </div>
+                       
                 </div>
                 </ThemeProvider>
               

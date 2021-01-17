@@ -6,7 +6,7 @@ import Dexie from "dexie";
 import Host from '../../Host'
 import TopicBoxComponent from './box/TopicBoxComponet'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Shimmer } from 'office-ui-fabric-react/lib/Shimmer';
+
 import Skeleton from '@material-ui/lab/Skeleton'
 
 class TopicComponent extends React.Component{
@@ -27,6 +27,7 @@ class TopicComponent extends React.Component{
     }
 
     componentDidMount(){ //here
+    
         if(this.state.timeline === false)
             this.fetchSubjectTopics()
         else
@@ -37,30 +38,36 @@ class TopicComponent extends React.Component{
         this.setState({
             isLoading: true
         })
-        await axios({
-            method: 'patch',
-            url:  Host()+'api/fetch/timeline' ,
-            headers: {"Authorization": 'Bearer ' +this.state.token},      
-            data:{
-                timePeriod: this.state.lastPage
-            }     
-        }).then(res=>{
-            const size = res.data.length
-            
-            if(size !== 'undefined' && size > 0)
+        console.log(this.state.hasMore)
+        if(this.state.hasMore === true){
+            await axios({
+                method: 'patch',
+                url:  Host()+'api/fetch/timeline' ,
+                headers: {"Authorization": 'Bearer ' +this.state.token},      
+                data:{
+                    timePeriod: this.state.lastPage
+                }     
+            }).then(res=>{
+                const size = res.data.length
+                
+                if(size !== 'undefined' && size > 0 && this.state.hasMore === true)
+                    this.setState({
+                        topics:[...this.state.topics, ...res.data],
+                        lastPage: res.data[size-1].creationDate-1
+                        
+                    })
+    
                 this.setState({
-                    topics:[...this.state.topics, ...res.data],
-                    lastPage: res.data[size-1].creationDate-1,
-                    hasMore: size < 10 ? false: true
+                    isLoading: false,
+                    hasMore: size < 5 ? false: true
                 })
-
-            this.setState({
-                isLoading: false
+                
             })
-        })
-        .catch(error => {
-            console.log(error)
-        });
+            .catch(error => {
+                console.log(error)
+            });
+        }
+       
         
     }
 
@@ -123,10 +130,10 @@ class TopicComponent extends React.Component{
                 {this.state.isLoading === true ? 
                     <div className="profile_topics_container"> 
                         <div className="topic_container" style={{display:'grid',justifyContent:'center', alignContent:"center", rowGap:'1vh'}}> 
-                            <Skeleton variant="rect" width={700} height={100} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
+                            <Skeleton variant="rect" width={'35vw'} height={'10vh'} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
                             <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
                             <Skeleton variant="text" style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}} />
-                            <Skeleton variant="rect" width={700} height={500} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
+                            <Skeleton variant="rect" width={'35vw'} height={'40vh'} style={{backgroundColor:'rgba(255,255,255,.2)', borderRadius:'8px'}}/>
                         </div>
                     </div>
                     : null}
@@ -139,9 +146,9 @@ class TopicComponent extends React.Component{
     render(){
         
         return(
-            <div>
+            <>
                 {this.renderTopic()}  
-            </div>
+            </>
         )
     }
 }

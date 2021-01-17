@@ -25,7 +25,7 @@
     display: flex;
     justify-content: center;
     justify-items: center;
-    position:initial;
+    /* position:initial; */
     
     border-radius: 8px;
     /* max-height: 65.6vh; */

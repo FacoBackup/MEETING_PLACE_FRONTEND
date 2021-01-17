@@ -125,11 +125,11 @@ class SignUp extends Component{
                                 />
                             <TextField 
                                 label="Nationality" 
-                                type="date" 
+                            
                                 name="nationality" 
                                 variant="outlined"
                                 onChange={this.handleChange} 
-                                defaultValue="2020-01-15"
+                            
                                
                             />
                             <TextField 

@@ -222,9 +222,10 @@ class TopicCreationComponent extends React.Component{
 
     render(){
         return(
-            <div className="">
-                {this.modalRender()}
-                <div className="topic_creation_container">
+            
+            
+                <div className="topic_creation_container" >
+                        {this.modalRender()}
                     <div className="topic_creation_title">
                         <h3>Express Yourself</h3>
                     </div>
@@ -263,11 +264,11 @@ class TopicCreationComponent extends React.Component{
                         <TextField 
                             placeholder="Title" 
                             multiline 
-                            resizable={false} 
+                            
                             variant ="outlined"
                             name='title' 
                             style={{
-                                backgroundColor:'#272e38',
+                                backgroundColor:'#303741',
                                 borderRadius:'2px'
                             }}
                             InputProps={{
@@ -283,7 +284,7 @@ class TopicCreationComponent extends React.Component{
                             variant ="outlined"
                             
                             style={{
-                                backgroundColor:'#272e38',
+                                backgroundColor:'#303741',
                                 borderRadius:'2px'
 
                             }}
@@ -320,7 +321,7 @@ class TopicCreationComponent extends React.Component{
                          onClick={() => this.createTopic()}>Create</Button>
                     </div>                   
                 </div>
-            </div>
+            
         );  
     }
         
