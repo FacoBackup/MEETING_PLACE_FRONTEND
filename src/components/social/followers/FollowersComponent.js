@@ -6,7 +6,7 @@ import "../../../style/universal/PageModel.css"
 import "../../../style/profile/SocialStyle.css"
 import { getTheme } from '@fluentui/react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
+import Avatar from '@material-ui/core/Avatar'
 import { Redirect } from 'react-router-dom';
 import Host from '../../../Host'
 import "../../../style/profile/DedicatedProfile.css"
@@ -99,20 +99,28 @@ class FollowersComponent extends React.Component{
                             <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like no one follows you yet.</p>
                         </div>
                         :this.state.followers.map((follower)=> 
-                        <div className="personas_container"> 
-                            <Persona
-                            {...{
-                                imageUrl: (typeof follower.imageURL !== 'undefined') ?  follower.imageURL : null,
-                                text: follower.name,
-                                secondaryText: follower.email,
-                                tertiaryText: follower.phoneNumber
-                            }}
-                            size={PersonaSize.size72}
-                            imageAlt="Conversation picture"
-                            />
-                            <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>
-                            <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
-                        </div>
+
+                            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center', backgroundColor:'#3b424c', borderRadius:'8px', paddingRight:'10px', paddingLeft:'10px'}}>
+                                <Avatar
+                                    style={{ height: '55px', width: '55px' }}
+                                    src = {follower.imageURL}
+                                    alt="user"
+                                
+                                />
+                                <ul>
+                                    <li style={{fontSize:'17px',fontWeight:'400'}}>
+                                        {follower.name} 
+                                    </li>
+                                    <li style={{fontSize:'17px',fontWeight:'400', color:'#aaadb1'}}>
+                                        {follower.email}
+                                    </li>
+                                </ul>
+                            </div>
+                        // <div className="personas_container"> 
+                        
+                        //     <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>
+                        //     <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
+                        // </div>
                     )}
                 </div>
             );

@@ -11,7 +11,7 @@ class MessageBoxComponent extends React.Component {
         this.state={
             content: params.content ,
             imageURL: params.imageURL ,
-            creationDate:  ((((new Date()).getTime() - params.creationDate) / (1000*60*60))%24).toFixed(0),
+            creationDate:  ((((new Date()).getTime() - params.creationDate) / (1000*60*60))).toFixed(0),
             userID: params.userID,
             creatorID: params.creatorID,
             read: params.read,

@@ -5,7 +5,7 @@ import "../../../style/universal/PageModel.css"
 import "../../../style/profile/SocialStyle.css"
 import { getTheme } from '@fluentui/react';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { PrimaryButton,DefaultButton } from 'office-ui-fabric-react';
+import Avatar from '@material-ui/core/Avatar'
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import {  Redirect } from 'react-router-dom';
 import Host from '../../../Host'
@@ -104,20 +104,27 @@ class FollowingComponent extends React.Component{
                         <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>Looks like you don't follow anyone yet, try searching for a friend.</p>
                     </div>
                     :this.state.following.map((flw)=> 
-                        <div className="personas_container"> 
-                            <Persona
-                            {...{
-                                imageUrl: (typeof flw.imageURL !== 'undefined') ?  flw.imageURL : null,
-                                text: flw.name,
-                                secondaryText: flw.email,
-                                tertiaryText: flw.phoneNumber
-                            }}
-                            size={PersonaSize.size72}
-                            imageAlt="Conversation picture"
+
+                        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center', backgroundColor:'#3b424c', borderRadius:'8px', paddingRight:'10px', paddingLeft:'10px'}}>
+                            <Avatar
+                                style={{ height: '55px', width: '55px' }}
+                                src = {flw.imageURL}
+                                alt="user"
+                            
                             />
-                            <DefaultButton text ="See Profile"  href={"/profile/"+flw.email+'/0'}/>
-                            <PrimaryButton onClick={() => this.setRedirect(flw.email)} text="Send Message"/>
+                            <ul>
+                                <li style={{fontSize:'17px',fontWeight:'400'}}>
+                                    {flw.name} 
+                                </li>
+                                <li style={{fontSize:'17px',fontWeight:'400', color:'#aaadb1'}}>
+                                    {flw.email}
+                                </li>
+                            </ul>
                         </div>
+                  
+                        //     <DefaultButton text ="See Profile"  href={"/profile/"+flw.email+'/0'}/>
+                        //     <PrimaryButton onClick={() => this.setRedirect(flw.email)} text="Send Message"/>
+                
                     )}
                 </div>
                 

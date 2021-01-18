@@ -5,9 +5,10 @@ import { FontSizes, FontWeights } from '@fluentui/theme';
 import "../../../style/profile/UserCommunitiesStyle.css"
 import React from 'react'
 import "../../../style/profile/SocialStyle.css"
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import Avatar from '@material-ui/core/Avatar'
 import Host from '../../../Host'
 import Cookies from 'universal-cookie';
+import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 
 class UserCommunitiesComponent extends React.Component{
     constructor(params){
@@ -64,21 +65,39 @@ class UserCommunitiesComponent extends React.Component{
                     
                     <p style={{ fontSize: FontSizes.size16, fontWeight:FontWeights.regular, textAlign:'center'}}>Looks like you are not a member of any community, try searching by one.</p>
                     
-                    :this.state.communities.map((community)=> 
-                    <div className="personas_container"> 
-                        <Persona
-                        {...{
-                            imageUrl: (community.imageURL !== null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
-                            text: community.name,
-                            secondaryText: community.about,
-                            tertiaryText: community.role
-                        }}
-                        size={PersonaSize.size72}
-                        imageAlt="Conversation picture"
-                        />
-                        <DefaultButton text="Quit Community" disabled={true}/>
-                        <PrimaryButton text="See Community" href={'/community/'+community.communityID}/>
+                :this.state.communities.map((community)=> 
+
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center', backgroundColor:'#3b424c', borderRadius:'8px', paddingRight:'10px', paddingLeft:'10px'}}>
+                        <Avatar
+                            style={{ height: '55px', width: '55px' }}
+                            src = {community.imageURL}
+                            alt="community"
+                        
+                        >{typeof community.imageURL !== 'undefined' && community.imageURL !==null ? null: <PeopleAltRoundedIcon/>}</Avatar>
+                        <ul>
+                            <li style={{fontSize:'17px',fontWeight:'400'}}>
+                                {community.name} 
+                            </li>
+                            <li style={{fontSize:'17px',fontWeight:'400', color:'#aaadb1'}}>
+                                {community.about}
+                            </li>
+                        </ul>
                     </div>
+
+                    // <div className="personas_container"> 
+                    //     <Persona
+                    //     {...{
+                    //         imageUrl: (community.imageURL !== null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
+                    //         text: community.name,
+                    //         secondaryText: community.about,
+                    //         tertiaryText: community.role
+                    //     }}
+                    //     size={PersonaSize.size72}
+                    //     imageAlt="Conversation picture"
+                    //     />
+                    //     <DefaultButton text="Quit Community" disabled={true}/>
+                    //     <PrimaryButton text="See Community" href={'/community/'+community.communityID}/>
+                    // </div>
                 )}
             </div>      
         );
