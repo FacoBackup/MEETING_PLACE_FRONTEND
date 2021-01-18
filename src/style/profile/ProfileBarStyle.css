@@ -29,8 +29,8 @@
     grid-row:3 ;
     display: grid;
     justify-content: center;
-    justify-items: center;
-    height: 83%;
+    justify-items: flex-start;
+    height: 85%;
     
 }
 .profile_bar_buttons{

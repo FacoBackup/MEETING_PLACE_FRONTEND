@@ -4,7 +4,7 @@ import axios from 'axios';
 import "../../../style/universal/PageModel.css"
 import "../../../style/profile/SocialStyle.css"
 import { getTheme } from '@fluentui/react';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+// import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Avatar from '@material-ui/core/Avatar'
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import {  Redirect } from 'react-router-dom';

@@ -92,7 +92,7 @@ class ProfileBarComponent extends Component{
                         alt="user"
                        
                     />
-                    <p style={{fontSize:'17px',fontWeight:'400'}}>Hi, {(""+this.state.profile.name).substr(0,(""+this.state.profile.name).indexOf(' '))}</p>
+                    <p style={{marginLeft:'5px',fontSize:'17px',fontWeight:'400', textTransform:'capitalize'}}>Hi, {(""+this.state.profile.name).substr(0,(""+this.state.profile.name).indexOf(' '))}</p>
                     
                 </div>
                     {/* <div  className="profile_qrcode_container">
@@ -115,22 +115,22 @@ class ProfileBarComponent extends Component{
                            </SvgIcon>
                            
                             <Button 
-                            
+                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
                                 color={this.state.timeline === true? "primary": 'default'}
                                 disableElevation          
-                                href={'/'}>Home</Button>
+                                href={'/'}>home</Button>
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
                                <LocationSearchingRoundedIcon />
                            </SvgIcon>
-                            <Button  href={'/dashboard'}>EXPLORE</Button>
+                            <Button  style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/dashboard'}>explore</Button>
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
                                <StorageRoundedIcon/>
                            </SvgIcon>
-                            <Button disabled>ARCHIVE</Button>
+                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>archive</Button>
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
@@ -138,20 +138,21 @@ class ProfileBarComponent extends Component{
                            </SvgIcon>
                            
                             <Button 
+                            style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
                                 color={this.state.home === true? "primary": 'default'}
-                                href={'/profile/'+this.state.profile.email}>PROFILE</Button>
+                                href={'/profile/'+this.state.profile.email}>profile</Button>
                         </div>
                         <div className="profile_bar_buttons">  
                             <SvgIcon>
                                <PeopleAltRoundedIcon/>
                            </SvgIcon>
-                            <Button href={'/communities'}>COMMUNITIES</Button>
+                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/communities'}>communities</Button>
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
                                <NotificationsRoundedIcon/>
                            </SvgIcon>
-                            <Button disabled>NOTIFICATIONS</Button>                        
+                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>notifications</Button>                        
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
@@ -159,8 +160,9 @@ class ProfileBarComponent extends Component{
                            </SvgIcon>
                            
                             <Button 
+                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
                                 href="/search_user"
-                                >search user</Button>
+                                >search</Button>
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
@@ -168,7 +170,7 @@ class ProfileBarComponent extends Component{
                            </SvgIcon>
                            
                             <Button 
-                            
+                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
                                 onClick={() => this.signout()}>sign out</Button>
                         </div>
                        

@@ -142,7 +142,7 @@ class Profile extends React.Component{
                                         src = {this.state.profile.imageURL}
                                         alt="user"
                                     />
-                                    <p style={{fontSize:'22px',fontWeight:'500'}}>{this.state.profile.name}</p>
+                                    <p style={{fontSize:'22px',fontWeight:'500', textTransform:'capitalize'}}>{(""+this.state.profile.name)}</p>
                                     <h4 style={{fontWeight:'500', color:'#aaadb1'}}>{this.state.profile.email}</h4>
                                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}} >
                                         <PlaceIcon/>

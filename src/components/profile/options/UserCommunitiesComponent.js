@@ -1,6 +1,4 @@
-
 import axios from 'axios';
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import "../../../style/profile/UserCommunitiesStyle.css"
 import React from 'react'

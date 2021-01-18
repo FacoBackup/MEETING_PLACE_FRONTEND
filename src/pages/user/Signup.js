@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import "../../style/authentication/SignupStyle.css";
-
+import Snackbar from '@material-ui/core/Snackbar'
 import Moment from 'moment';
 import Host from '../../Host'
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,7 @@ import { MenuItem, Select } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import MuiAlert from '@material-ui/lab/Alert'
 
 const theme = createMuiTheme({
     palette: {
@@ -22,15 +23,15 @@ class SignUp extends Component{
     constructor(){
         super()
         this.state={
-            sent: false,
             email: '',
             password: '', 
             name: '',
             phone: '',
             birth: '',
             gender:'Gender',
-            nationality: ''
-                }
+            success: null,
+            redirect: false
+            }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -42,20 +43,16 @@ class SignUp extends Component{
     }
     
     async handleSubmit(){
-        console.log(this.state.email)
-        console.log(this.state.password)
-        console.log(this.state.birth)
-        console.log(this.state.phone)
-        console.log(this.state.gender)
+     
         await axios({
             method: 'post',
             url: Host()+'api/user',
             data: {
                 email: this.state.email,
                 password: this.state.password,
-                userName: this.state.name,
+                userName: this.state.name.toLowerCase(),
                 gender: this.state.gender,
-                nationality: this.state.nationality,
+                nationality: '',
                 birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
                 cityOfBirth: '',
                 phoneNumber: (this.state.phone).replace("_",""),
@@ -64,24 +61,22 @@ class SignUp extends Component{
             })
         .then(() => {   
             this.setState({
-               sent: true
+               success: true
             });
         })
         .catch(error => {
             console.log(error)
-            if(this.state.email !== '')
-                alert("Some error occurred, maybe this email is already taken.")
-            else alert("Some error occurred.")
+            this.setState({
+                success: false
+             });
         })
     }
-
-    getErrorMessage (value) {
-        return value.length >= 8 ? '' : `Input value must be more or equal to 8 characters.`;
-    };
-
+    Alert(props){
+        return(<MuiAlert elevation={4} variant="filled" {...props}/>)
+    }
     render(){
         
-        if(!this.state.sent){
+        if(!this.state.success && this.state.redirect === false){
             return (
                 <div  className="sign_up_container">
                     <ThemeProvider theme={theme}>
@@ -92,13 +87,13 @@ class SignUp extends Component{
                         <div className="sign_up_input_container">
                             
                                 
-                                <TextField 
-                                    label="Name" 
-                                    name="name" 
-                                    variant="outlined"
-                                    onChange={this.handleChange}
-                                
-                                />
+                            <TextField 
+                                label="Name" 
+                                name="name" 
+                                variant="outlined"
+                                onChange={this.handleChange}
+                            
+                            />
                             
                             <TextField 
                                 label="Email address" 
@@ -123,15 +118,7 @@ class SignUp extends Component{
                                 onChange={this.handleChange} 
                                 
                                 />
-                            <TextField 
-                                label="Nationality" 
-                            
-                                name="nationality" 
-                                variant="outlined"
-                                onChange={this.handleChange} 
-                            
-                               
-                            />
+                       
                             <TextField 
                                 label="Birthday" 
                                 type="date" 
@@ -145,8 +132,8 @@ class SignUp extends Component{
                             <Select 
                                 labelId="select-id"
                                 name="gender" 
-                               
-                                variant="standard"
+
+                                variant="outlined"
                                 value={this.state.gender} 
                                 
                                 onChange={this.handleChange}> 
@@ -171,10 +158,16 @@ class SignUp extends Component{
                         
                     </div>
                     </ThemeProvider>
+                    <Snackbar open={this.state.success !== null} autoHideDuration={6000} onClose={() => this.setState({
+                        redirect: this.state.success === true? true : false,
+                        success: null
+                    })}>
+                        <this.Alert severity={this.state.success === true ? "success" : "error"}>{this.state.success === true ? "Success, we are redirecting you to sign in.":"Some error occurred, maybe try later."}</this.Alert>
+                    </Snackbar>
                 </div>
             );  
         }
-        else
+        else if(this.state.redirect === true)
             return (<Redirect to={'/authenticate'}/>);
     } 
 }

@@ -61,7 +61,7 @@ class UserSearchComponent extends React.Component{
                 url: Host()+'api/search/user',
                 headers: {"Authorization": 'Bearer ' + this.state.token},
                 data:{
-                    userID: this.state.searchInput
+                    userID: this.state.searchInput.toLowerCase()
                 }
             }).then(res=>{
                 

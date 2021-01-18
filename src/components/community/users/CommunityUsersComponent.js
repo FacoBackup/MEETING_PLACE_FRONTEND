@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'; 
 import { DefaultButton } from 'office-ui-fabric-react';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+// import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../../Host'
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import Cookies from 'universal-cookie';

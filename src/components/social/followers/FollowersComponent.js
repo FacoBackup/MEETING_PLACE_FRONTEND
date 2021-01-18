@@ -5,11 +5,11 @@ import axios from 'axios';
 import "../../../style/universal/PageModel.css"
 import "../../../style/profile/SocialStyle.css"
 import { getTheme } from '@fluentui/react';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Avatar from '@material-ui/core/Avatar'
 import { Redirect } from 'react-router-dom';
 import Host from '../../../Host'
 import "../../../style/profile/DedicatedProfile.css"
+
 class FollowersComponent extends React.Component{
     constructor(params){
         super()
