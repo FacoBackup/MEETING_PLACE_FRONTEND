@@ -9,6 +9,7 @@ import CommunityUsersComponent from './users/CommunityUsersComponent'
 import CommunityAboutComponent from './about/CommunityAboutComponent'
 import CommunityRelatedComponent from './related/CommunityRelatedComponent'
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+
 class CommunityComponent extends React.Component{
     constructor(params){
         super()

@@ -67,6 +67,23 @@ class Profile extends React.Component{
         window.location.reload()
     }
 
+    renderFollowButton(){
+        if(this.state.userID !== (new Cookies()).get("ID"))
+        return(
+            <div className="dedicated_action_bar_buttons">
+                
+                <DefaultButton style={{fontSize: '16px'}} text='Send Message' href={'/chat/'+this.state.userID+"/false/"+this.state.userID}/>
+                <PrimaryButton style={{fontSize: '16px'}} text='Follow'/>
+                <DefaultButton style={{fontSize: '16px'}} text='Topics' href={'/profile/'+this.state.userID+'/0'}/>
+                <DefaultButton style={{fontSize: '16px'}} text='Followers' href={'/profile/'+this.state.userID+'/2'}/>
+                <DefaultButton style={{fontSize: '16px'}} text='Following' href={'/profile/'+this.state.userID+'/1'}/>
+                <DefaultButton style={{fontSize: '16px'}} text='Communities' href={'/profile/'+this.state.userID+'/3'}/>
+
+            </div>
+            
+        )
+    }
+
     optionSelect(){
         switch(true){
             case this.state.followers:{
@@ -103,23 +120,7 @@ class Profile extends React.Component{
             }            
         }
     }
-    renderFollowButton(){
-        if(this.state.userID !== (new Cookies()).get("ID"))
-        return(
-            <div className="dedicated_action_bar_buttons">
-                
-                <DefaultButton style={{fontSize: '16px'}} text='Send Message' href={'/chat/'+this.state.userID+"/false/"+this.state.userID}/>
-                <PrimaryButton style={{fontSize: '16px'}} text='Follow'/>
-                <DefaultButton style={{fontSize: '16px'}} text='Topics' href={'/profile/'+this.state.userID+'/0'}/>
-                <DefaultButton style={{fontSize: '16px'}} text='Followers' href={'/profile/'+this.state.userID+'/2'}/>
-                <DefaultButton style={{fontSize: '16px'}} text='Following' href={'/profile/'+this.state.userID+'/1'}/>
-                <DefaultButton style={{fontSize: '16px'}} text='Communities' href={'/profile/'+this.state.userID+'/3'}/>
-
-            </div>
-            
-        )
-    }
-
+ 
    
    
     render(){

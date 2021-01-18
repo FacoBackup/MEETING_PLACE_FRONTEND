@@ -15,23 +15,34 @@
     grid-row: 1;
     text-align: center;
 }
-.conversation_persona_container{
+.conversation_box_container{
     display: grid;
     justify-content: center;
-    
     align-content: center;
-   margin: auto;
+    
+    width: 80%; 
+    
+    margin: auto;
     margin-bottom: 1vh;
     border-radius: 8px;
     padding: 1vh;
-    max-width: 90%;
-
-    background-color: rgba(210, 208, 206, .5);
+    /* max-width: 90%; */
+    
+    background-color: #3b424c;
   
 }
-div.conversation_persona_container:hover{
+div.conversation_box_container:hover{
     transform: scale(1.02);
-    box-shadow:  1px 1px 10px #b2b2b2;
+
+}
+.conversation_box_content{
+    /* text-align: center; */
+    display: flex;
+    justify-content: space-between;
+    justify-items: space-between;
+    align-content: center;
+    align-items: center;
+    
 }
 .conversation_personas{
     grid-row: 2;

@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import Dexie from "dexie";
 import Host from '../../../Host'
-import { Avatar, Fab } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
 // import NavigationIcon from '@material-ui/icons/Navigation';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { ThemeProvider } from "@material-ui/styles";
@@ -84,17 +84,17 @@ class ProfileBarComponent extends Component{
         return(
             <div className="profile_bar_container">
                 <ThemeProvider theme={theme}>
-                 <div className="profile_info_container">
+                <div className="profile_info_container">
                 
                     <Avatar
-                        style={{ height: '65px', width: '65px' }}
+                        style={{ height: '55px', width: '55px' }}
                         src = {this.state.profile.imageURL}
                         alt="user"
                        
                     />
-                    <p style={{fontSize:'19px',fontWeight:'500'}}>{this.state.profile.name}</p>
+                    <p style={{fontSize:'17px',fontWeight:'400'}}>Hi, {(""+this.state.profile.name).substr(0,(""+this.state.profile.name).indexOf(' '))}</p>
                     
-                    </div>
+                </div>
                     {/* <div  className="profile_qrcode_container">
                     <QRcode 
                             value= {"BEGIN:VCARD" +

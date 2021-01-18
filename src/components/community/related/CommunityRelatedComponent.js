@@ -40,7 +40,7 @@ class CommunityRelatedComponent extends React.Component{
 
     render(){
         return(
-            <div className="dedicated_content_container">
+            <div className="">
                 <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>Related Communities</p>
                 {(this.state.relatedCommunities.length === 0) ? <div>
                     <p style={{textAlign:'center', fontSize: FontSizes.size16, fontWeight:FontWeights.regular}}>No communities are related to this one.</p>

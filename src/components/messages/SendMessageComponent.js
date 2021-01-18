@@ -8,14 +8,10 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Cookies from 'universal-cookie';
 import EmojiEmotionsRoundedIcon from '@material-ui/icons/EmojiEmotionsRounded';
 import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
-import { createMuiTheme } from "@material-ui/core/styles";
+
 import { ThemeProvider } from "@material-ui/styles";
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
-const theme = createMuiTheme({
-    palette: {
-      type: "dark"
-    }
-  });
+
 
 
 class SendMessageComponent extends React.Component{

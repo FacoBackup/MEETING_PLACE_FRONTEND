@@ -166,7 +166,7 @@ class SignUp extends Component{
                       
                         <div className="sign_up_buttons_container" >
                             <Button disableElevation style={{fontWeight:'bold'}}  color="default " variant='contained'href="/authenticate"> Sign in</Button>
-                            <Button disableElevation style={{fontWeight:'bold'}}  color="primary" variant='contained' style={{ float: 'right'}}onClick={this.handleSubmit}>Create Account</Button>
+                            <Button disableElevation style={{fontWeight:'bold', float: 'right'}}  color="primary" variant='contained' onClick={this.handleSubmit}>Create Account</Button>
                         </div>
                         
                     </div>

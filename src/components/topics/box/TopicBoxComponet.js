@@ -1,8 +1,6 @@
 import React from 'react';
 import "../../../style/topics/TopicCreationStyle.css"
-// import { DefaultButton,Modal, PrimaryButton } from 'office-ui-fabric-react';
-// import { FontSizes, FontWeights } from '@fluentui/theme';
-// import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+
 import Cookies from 'universal-cookie';
 import DeleteTopic from '../../../functions/topics/DeleteTopic'
 import UpdateTopic from '../../../functions/topics/UpdateTopic'
@@ -16,14 +14,6 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import EditIcon from '@material-ui/icons/Edit';
 import Avatar from '@material-ui/core/Avatar'
 import TextField from '@material-ui/core/TextField'
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-const theme = createMuiTheme({
-    palette: {
-      type: "dark"
-    }
-  });
-
 
 class TopicBoxComponent extends React.Component{
     constructor(params){

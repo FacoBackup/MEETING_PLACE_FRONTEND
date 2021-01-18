@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios'; 
 import "./../../../style/conversation/ConversationBarStyle.css";
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import Badge from '@material-ui/core/Badge';
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import { Link } from 'react-router-dom';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import Avatar from '@material-ui/core/Avatar'
 import { getTheme } from '@fluentui/react';
 import Host from '../../../Host'
+import { MailRounded } from '@material-ui/icons';
 
 class ConversationBarComponent extends Component{
     constructor(){
@@ -17,7 +18,8 @@ class ConversationBarComponent extends Component{
             conversations: [],
             theme: getTheme(),
             searchInput:"",
-            profiles:[]
+            profiles:[],
+            lastPage: null
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -102,48 +104,39 @@ class ConversationBarComponent extends Component{
         })
         .catch(error => console.log(error));
     }
+
     renderPersona(data, isGroup){
         switch(isGroup){
             case true:{
 
                 return(
-
-                    <div>
+                    <div className="conversation_box_container " >
+                    
+                    <Link className="conversation_box_content" style={{textDecoration: 'none', color:'white'}} to ={"/chat/" + ((data.name).replace(this.state.cookies.get('ID'), "")) +"/"+JSON.stringify(isGroup) +"/"+data.id}>
                         
-                        <Link style={{textDecoration: 'none'}} to ={"/chat/" + ((data.name).replace(this.state.cookies.get('ID'), "")) +"/"+JSON.stringify(isGroup) +"/"+data.id}>
-                            <Persona
-                                {...{
-                                    imageUrl:(data.imageURL !== "" ? data.imageURL : null),
-                                    text:data.name ,
-                                    secondaryText: "Group"
-                                }}
-                                size={PersonaSize.size40}
-                                imageAlt="Conversation"
-                            />
-                            { typeof data.latestMessage !== 'undefined'? <p style={{ color:"#3b3a39" ,fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>{(new Date(data.latestMessage).toTimeString())}</p>: ""}
-                       
-                        </Link>
-                            
-                        
-                    </div>
+                        <Avatar src={data.imageURL}/>
+                        <p style={{fontWeight:'500',margin:'auto', marginLeft:'1vw', }}>{data.name}</p>
+                        <Badge color="secondary" badgeContent={data.unreadMessages}>
+                            <MailRounded/>
+                        </Badge>
+                    
+                    </Link>
+                </div>
                     )
             }
             case false:{
-                console.log("LATEST MESSAGE -> " + data.latestMessage)
+                
                 return(
-                    <div className="conversation_persona_container" >
-                        <Link style={{textDecoration: 'none'}} to ={"/chat/" + ((data.name).replace(this.state.cookies.get('ID'), "")) +"/"+JSON.stringify(isGroup) +"/"+data.id}>
-                            <Persona
-                                {...{
-                                    imageUrl:(data.imageURL !== "" ? data.imageURL : null),
-                                    text: data.userName,
-                                    secondaryText: (data.unreadMessages === 0 ? "Private" : "Unseen Messages: " +data.unreadMessages)
-                                }}
-                                size={PersonaSize.size48}
-                                imageAlt="Conversation"
-                            />
+                    <div className="conversation_box_container " >
+                    
+                        <Link className="conversation_box_content" style={{textDecoration: 'none', color:'white'}} to ={"/chat/" + ((data.name).replace(this.state.cookies.get('ID'), "")) +"/"+JSON.stringify(isGroup) +"/"+data.id}>
                             
-                            {typeof data.latestMessage !== 'undefined'? <p style={{color:"#3b3a39",textAlign:'center', fontSize: FontSizes.size12, fontWeight:FontWeights.regular}}>{(new Date(data.latestMessage).toString()).substring(0,24)}</p>: ""}
+                            <Avatar src={data.imageURL}/>
+                            <p style={{fontWeight:'500',margin:'auto', marginLeft:'1vw', }}>{data.userName}</p>
+                            <Badge color="secondary" badgeContent={data.unreadMessages}>
+                                <MailRounded/>
+                            </Badge>
+                        
                         </Link>
                     </div>
                 )

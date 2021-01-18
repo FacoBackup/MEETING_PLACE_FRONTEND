@@ -4,7 +4,7 @@ import Conversations from "../../components/conversations/bar/ConversationBarCom
 import "../../style/universal/PageModel.css"
 import { Redirect } from 'react-router-dom'
 import Cookies from 'universal-cookie';
-import CommunityComponent from '../../components/community/CommunityComponent'
+import NewCommunityComponent from '../../components/community/NewCommunityComponent'
 
 class Community extends React.Component{
     constructor({match}){
@@ -17,8 +17,8 @@ class Community extends React.Component{
         if(typeof (new Cookies()).get("JWT") !== 'undefined'){
             return (
                 <div>
-                <div className="center_component">
-                    <CommunityComponent communityID={this.state.communityID} token={(new Cookies()).get("JWT")}/>
+                <div >
+                    <NewCommunityComponent communityID={this.state.communityID} token={(new Cookies()).get("JWT")}/>
                 </div>
                 <div className="left_components">
                     <ProfileBar/>

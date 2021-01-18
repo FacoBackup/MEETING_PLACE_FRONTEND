@@ -4,13 +4,10 @@ import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import localIpUrl from 'local-ip-url';
 import "../../style/authentication/SigninStyle.css"
-// import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
 import Button from '@material-ui/core/Button';
-// import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import Host from '../../Host'
 import TextField from '@material-ui/core/TextField'
-import Alert from '@material-ui/lab/Alert';
-
+// import Alert from '@material-ui/lab/Alert';
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 

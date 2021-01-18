@@ -5,7 +5,7 @@ import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Host from '../../../Host'
 import { FontSizes, FontWeights } from '@fluentui/theme';
 import Cookies from 'universal-cookie';
-
+import Avatar from '@material-ui/core/Avatar'
 class CommunityUsersComponent extends React.Component{
     constructor(params){
         super(params)
@@ -206,27 +206,38 @@ class CommunityUsersComponent extends React.Component{
     }
     render(){
         return(
-            <div className="dedicated_content_container">
+            <div className="">
                 
                 <p style={{textAlign:'center', fontSize: FontSizes.size18, fontWeight:FontWeights.regular}}>{this.renderPageName()}</p>
-                {this.state.members.map((member) => (
-                    <div className='personas_container'>
-                        <Persona
-                            {...{
-                                imageUrl: member.userImageURL,
-                                text: member.userName,
-                                secondaryText: (member.communityName !== null && typeof member.communityName !== 'undefined') ? "From Related Community : " +member.communityName: null,
-                                tertiaryText: (member.role !== null && typeof member.role !== 'undefined') ? "Member Role : " + member.role : null
-                            }}
-                            size={PersonaSize.size72}
-                            imageAlt="user"
+                {this.state.members.map((member) => (            
+                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center', backgroundColor:'#3b424c', borderRadius:'8px', paddingRight:'10px', paddingLeft:'10px'}}>
+                        
+                        <Avatar
+                            style={{ height: '55px', width: '55px' }}
+                            src = {member.userImageURL}
+                            alt="user"
+                        
                         />
-                        { (member.userEmail!== (new Cookies()).get("ID"))? <DefaultButton text="Send Message" href={"/chat/"+member.userEmail+"/false/"+member.userEmail}/> : null}
-                        { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "MODERATOR" && this.state.role === "MODERATOR")? <DefaultButton text="Promote User" onClick={() => {this.promote(member.userEmail, member.affiliatedCommunityID)}}/>: null}
-                        { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "FOLLOWER" && this.state.role === "MODERATOR")?<DefaultButton text="Lower User" onClick={() => {this.lower(member.userEmail, member.affiliatedCommunityID)}}/>: null}
-                        { (member.userEmail!== (new Cookies()).get("ID") && this.state.role === "MODERATOR")? <DefaultButton style={{backgroundColor: "red", color:"white"}} text="Remove User" onClick={() => {this.removeUser(member.userEmail, member.affiliatedCommunityID)}}/>: null}
+                        <ul>
+                            <li style={{fontSize:'17px',fontWeight:'400'}}>
+                                {member.userName} 
+                            </li>
+                            <li style={{textTransform:'capitalize',fontSize:'17px',fontWeight:'400', color:'#aaadb1'}}>
+                                {member.role.toLowerCase()}
+                            </li>
+                          {typeof member.communityName !== 'undefined' && member.communityName !== null ? <li style={{fontSize:'17px',fontWeight:'400' , color:'#aaadb1'}}>
+                                {member.communityName}
+                            </li>: null}
+                        </ul>
                     
+                        
                     </div>
+                        // { (member.userEmail!== (new Cookies()).get("ID"))? <DefaultButton text="Send Message" href={"/chat/"+member.userEmail+"/false/"+member.userEmail}/> : null}
+                        // { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "MODERATOR" && this.state.role === "MODERATOR")? <DefaultButton text="Promote User" onClick={() => {this.promote(member.userEmail, member.affiliatedCommunityID)}}/>: null}
+                        // { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "FOLLOWER" && this.state.role === "MODERATOR")?<DefaultButton text="Lower User" onClick={() => {this.lower(member.userEmail, member.affiliatedCommunityID)}}/>: null}
+                        // { (member.userEmail!== (new Cookies()).get("ID") && this.state.role === "MODERATOR")? <DefaultButton style={{backgroundColor: "red", color:"white"}} text="Remove User" onClick={() => {this.removeUser(member.userEmail, member.affiliatedCommunityID)}}/>: null}
+                    
+                    // </div>
                 ))}       
             </div>
 

@@ -18,12 +18,11 @@
 }
 .profile_info_container{
     grid-row: 1;
-    display: grid;
-    padding: 10px;
-    justify-content: center;
+    display: flex;
+    margin-top: 1vh;
+    justify-content: space-between;
     justify-items: center;
-    text-align: center;
-    font-weight: 600;
+    align-content: center;
 }
 
 .profile_bar_buttons_container{
