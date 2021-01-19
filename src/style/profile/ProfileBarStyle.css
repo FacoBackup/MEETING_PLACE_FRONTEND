@@ -37,3 +37,14 @@
     display: flex;
     align-items: center;
 }
+
+.notification_modal_container{
+    width: 40vw;
+    height: 40vh;
+    margin: auto;
+    display: grid;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 20px;
+    background-color: #303741;
+}

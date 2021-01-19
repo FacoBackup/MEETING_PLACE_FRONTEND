@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import Dexie from "dexie";
 import Host from '../../../Host'
-import { Avatar, Badge } from '@material-ui/core';
+import { Avatar, Badge, Modal } from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -17,7 +17,7 @@ import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
-
+import NotificationComponent from '../notification/NotificationComponent'
 const theme = createMuiTheme({
     palette: {
       type: "dark"
@@ -43,8 +43,10 @@ class ProfileBarComponent extends Component{
             communityOptions: params.communityOptions,
             more: false,
             notificationsQuantity: null,
-            date: new Date()
+            date: new Date(),
+            notificationModal: false
         }
+        this.renderNotificationModal = this.renderNotificationModal.bind(this)
     }
     
     componentDidMount(){
@@ -114,12 +116,30 @@ class ProfileBarComponent extends Component{
     
         window.location.reload()
     }
-
+    renderNotificationModal(){
+        if(this.state.notificationModal === true)
+            return(
+                <Modal
+                    style={{display:'grid', justifyContent:"center", alignContent:"center"}}
+                    open={this.state.notificationModal === true}
+                    onClose={() => this.setState({
+                        notificationModal: false
+                    })}
+                >
+                    <div className="notification_modal_container">
+                        <NotificationComponent/>
+                    </div>
+                    
+                </Modal>
+            )
+        else return null
+    }
     render(){
         
         return(
             <div className="profile_bar_container">
                 <ThemeProvider theme={theme}>
+                <this.renderNotificationModal/>
                 <div className="profile_info_container">
                 
                     <Avatar
@@ -188,7 +208,9 @@ class ProfileBarComponent extends Component{
                             <Badge color="secondary" badgeContent={this.state.notificationsQuantity}>
                                <NotificationsRoundedIcon/>
                            </Badge>
-                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>notifications</Button>                        
+                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} onClick={() => this.setState({
+                                notificationModal: true
+                            })}>notifications</Button>                        
                         </div>
                         <div className="profile_bar_buttons">
                             <SvgIcon>
