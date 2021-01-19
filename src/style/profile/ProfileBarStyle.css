@@ -4,7 +4,7 @@
     align-content: space-between;
     overflow: hidden;   
     row-gap: 3vh;
-    grid-template-rows: 10% 13% 1fr ;
+    grid-template-rows: 1% 13% 1fr ;
     min-height: 100%;
     width: 85%;
     margin: auto;

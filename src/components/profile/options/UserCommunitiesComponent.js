@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Host from '../../../Host'
 import Cookies from 'universal-cookie';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import Button from '@material-ui/core/Button'
 
 class UserCommunitiesComponent extends React.Component{
     constructor(params){
@@ -65,21 +66,24 @@ class UserCommunitiesComponent extends React.Component{
                     
                 :this.state.communities.map((community)=> 
 
-                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center', backgroundColor:'#3b424c', borderRadius:'8px', paddingRight:'10px', paddingLeft:'10px'}}>
-                        <Avatar
-                            style={{ height: '55px', width: '55px' }}
-                            src = {community.imageURL}
-                            alt="community"
-                        
-                        >{typeof community.imageURL !== 'undefined' && community.imageURL !==null ? null: <PeopleAltRoundedIcon/>}</Avatar>
-                        <ul>
-                            <li style={{fontSize:'17px',fontWeight:'400'}}>
-                                {community.name} 
-                            </li>
-                            <li style={{fontSize:'17px',fontWeight:'400', color:'#aaadb1'}}>
-                                {community.about}
-                            </li>
-                        </ul>
+                    <div style={{width:'20vw',display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center', backgroundColor:'#3b424c', borderRadius:'8px', paddingRight:'10px', paddingLeft:'10px'}}>
+                        <div style={{display:'flex', alignItems:'center', alignContent:'center'}}>
+                            <Avatar
+                                style={{ height: '55px', width: '55px' }}
+                                src = {community.imageURL}
+                                alt="community"
+                            
+                            >{typeof community.imageURL !== 'undefined' && community.imageURL !==null ? null: <PeopleAltRoundedIcon/>}</Avatar>
+                            <ul>
+                                <li style={{fontSize:'17px',fontWeight:'400'}}>
+                                    {community.name} 
+                                </li>
+                                <li style={{fontSize:'17px',fontWeight:'400', color:'#aaadb1'}}>
+                                    {community.about}
+                                </li>
+                            </ul>
+                        </div>
+                        <Button style={{marginLeft:'10px'}} variant="contained" disableElevation color="default" href={"/community/"+community.communityID }>See</Button>
                     </div>
 
                     // <div className="personas_container"> 

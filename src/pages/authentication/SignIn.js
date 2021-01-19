@@ -7,9 +7,10 @@ import "../../style/authentication/SigninStyle.css"
 import Button from '@material-ui/core/Button';
 import Host from '../../Host'
 import TextField from '@material-ui/core/TextField'
-// import Alert from '@material-ui/lab/Alert';
+import MuiAlert from '@material-ui/lab/Alert'
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import Snackbar from '@material-ui/core/Snackbar'
 
 const theme = createMuiTheme({
     palette: {
@@ -23,15 +24,19 @@ class SignIn extends Component {
         this.state={
             email: '',
             password:'',
-            accepted: false,
+            accepted: null,
             cookies: new Cookies(),
             
         }
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
     
-    
+    Alert(props){
+        return(<MuiAlert elevation={4} variant="filled" {...props}/>)
+    }
+     
     componentDidMount(){
         this.checkToken()
     }
@@ -58,8 +63,8 @@ class SignIn extends Component {
         event.preventDefault();
     }
 
-    handleSubmit = async () => {
-    
+    async handleSubmit (){
+        console.log("teste")
         await axios({
             method: 'put',
             url: Host()+'api/login',
@@ -78,16 +83,21 @@ class SignIn extends Component {
                 })    
             })
             .catch(error => {
-                if(typeof error.response !== 'undefined' && error.response.status === 401)
-                    alert("Wrong password or email")
-                else
-                    alert("Some error occurred ("+error+ ").")
+                console.log(error)
+                this.setState({
+                    accepted:false
+                })  
+            })
+        console.log("2")
+        if(this.state.accepted === null)
+            this.setState({
+                accepted: false
             })
     }
     
     render(){
     
-        if(this.state.accepted)
+        if(this.state.accepted === true)
             return (    
                 <Redirect to='/'/>
             );
@@ -122,10 +132,12 @@ class SignIn extends Component {
                                 disableElevation 
                                 
                                 variant='contained' 
-                                color="primary" onClick={this.handleSubmit}>SIGN IN</Button>
+                                color="primary" onClick={() => this.handleSubmit()}>SIGN IN</Button>
                             <Button disableElevation style={{fontWeight:'bold'}} variant='contained' color="default" href="/creation">CREATE AN ACCOUNT</Button>
                         </div>
-
+                        <Snackbar open={this.state.accepted === false} autoHideDuration={6000} onClose={() => this.setState({accepted: null})}>
+                            <this.Alert severity="error">Some error occurred, maybe try later.</this.Alert>
+                        </Snackbar>
                     </div>
                     </ThemeProvider>
                 </div>
