@@ -72,7 +72,7 @@ class MessagesComponent extends React.Component{
 
     scrollToEnd (){
         
-        window.scrollTo(0, (window.outerHeight * 1000))
+        window.scrollTo(0, (window.outerHeight * 99999))
     }
 
     scrollToLastHight(lastHight){

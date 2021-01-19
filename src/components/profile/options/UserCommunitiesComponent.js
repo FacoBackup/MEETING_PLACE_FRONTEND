@@ -85,21 +85,6 @@ class UserCommunitiesComponent extends React.Component{
                         </div>
                         <Button style={{marginLeft:'10px'}} variant="contained" disableElevation color="default" href={"/community/"+community.communityID }>See</Button>
                     </div>
-
-                    // <div className="personas_container"> 
-                    //     <Persona
-                    //     {...{
-                    //         imageUrl: (community.imageURL !== null) ?  community.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
-                    //         text: community.name,
-                    //         secondaryText: community.about,
-                    //         tertiaryText: community.role
-                    //     }}
-                    //     size={PersonaSize.size72}
-                    //     imageAlt="Conversation picture"
-                    //     />
-                    //     <DefaultButton text="Quit Community" disabled={true}/>
-                    //     <PrimaryButton text="See Community" href={'/community/'+community.communityID}/>
-                    // </div>
                 )}
             </div>      
         );

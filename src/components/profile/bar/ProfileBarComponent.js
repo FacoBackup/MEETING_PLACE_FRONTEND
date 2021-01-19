@@ -6,8 +6,7 @@ import Button from '@material-ui/core/Button';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import Dexie from "dexie";
 import Host from '../../../Host'
-import { Avatar } from '@material-ui/core';
-// import NavigationIcon from '@material-ui/icons/Navigation';
+import { Avatar, Badge } from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -43,10 +42,29 @@ class ProfileBarComponent extends Component{
             timeline: params.timeline,
             communityOptions: params.communityOptions,
             more: false,
+            notificationsQuantity: null,
+            date: new Date()
         }
     }
+    
     componentDidMount(){
         this.fetchData()
+        this.fetchNotifications()
+        this.timerID = setInterval(
+            () => this.tick(),
+            1500
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+    tick() {
+        this.fetchNotifications()
+        this.setState({
+            date: new Date(),
+        });
     }
 
     async fetchData(){
@@ -66,9 +84,27 @@ class ProfileBarComponent extends Component{
         }
         catch(error){
             console.log(error)
+        }     
+    }
+
+    async fetchNotifications(){
+        try{
+            if(typeof (new Cookies()).get("JWT") !== 'undefined'){
+                await axios({
+                    method: 'get',
+                    url: Host()+'api/fetch/quantity/message/notifications',
+                    headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")}
+                }).then(res=>{
+                    this.setState({
+                        notificationsQuantity: res.data
+                    })
+                })
+                .catch()
+            }         
         }
-        
-            
+        catch(error){
+            console.log(error)
+        }     
     }
 
     async signout() {
@@ -149,9 +185,9 @@ class ProfileBarComponent extends Component{
                             <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/communities'}>communities</Button>
                         </div>
                         <div className="profile_bar_buttons">
-                            <SvgIcon>
+                            <Badge color="secondary" badgeContent={this.state.notificationsQuantity}>
                                <NotificationsRoundedIcon/>
-                           </SvgIcon>
+                           </Badge>
                             <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>notifications</Button>                        
                         </div>
                         <div className="profile_bar_buttons">
