@@ -18,6 +18,7 @@ import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import NotificationComponent from '../notification/NotificationComponent'
+import {Redirect} from 'react-router-dom'
 const theme = createMuiTheme({
     palette: {
       type: "dark"
@@ -44,7 +45,8 @@ class ProfileBarComponent extends Component{
             more: false,
             notificationsQuantity: null,
             date: new Date(),
-            notificationModal: false
+            notificationModal: false,
+            signOut: false
         }
         this.renderNotificationModal = this.renderNotificationModal.bind(this)
     }
@@ -109,13 +111,6 @@ class ProfileBarComponent extends Component{
         }     
     }
 
-    async signout() {
-        Object.keys((new Cookies()).getAll()).forEach(name => (new Cookies()).remove(name))
-        localStorage.clear()
-        await Dexie.delete('api_web_db')
-    
-        window.location.reload()
-    }
     renderNotificationModal(){
         if(this.state.notificationModal === true)
             return(
@@ -135,108 +130,112 @@ class ProfileBarComponent extends Component{
         else return null
     }
     render(){
-        
-        return(
-            <div className="profile_bar_container">
-                <ThemeProvider theme={theme}>
-                <this.renderNotificationModal/>
-                <div className="profile_info_container">
-                
-                    <Avatar
-                        style={{ height: '55px', width: '55px' }}
-                        src = {this.state.profile.imageURL}
-                        alt="user"
-                       
-                    />
-                    <p style={{marginLeft:'5px',fontSize:'17px',fontWeight:'400', textTransform:'capitalize'}}>Hi, {(""+this.state.profile.name).substr(0,(""+this.state.profile.name).indexOf(' '))}</p>
+        if(this.state.signOut === false)
+            return(
+                <div className="profile_bar_container">
+                    <ThemeProvider theme={theme}>
+                    <this.renderNotificationModal/>
+                    <div className="profile_info_container">
                     
-                </div>
-                    {/* <div  className="profile_qrcode_container">
-                    <QRcode 
-                            value= {"BEGIN:VCARD" +
-                            "VERSION:4.0" +
-                            "N:{profile.name}" +
-                            "FN:"+ this.state.profile.name +
-                            "TEL;TYPE#work,voice;VALUE#uri:tel:" + this.state.profile.phoneNumber +
-                            "ADR;TYPE#HOME;LABEL#" + this.state.profile.nationality + "/" + this.state.profile.cityOfBirth +
-                            "EMAIL:" + this.state.profile.email + "END:VCARD"}
-                            />
-                    </div> */}
+                        <Avatar
+                            style={{ height: '55px', width: '55px' }}
+                            src = {this.state.profile.imageURL}
+                            alt="user"
+                        
+                        />
+                        <p style={{marginLeft:'5px',fontSize:'17px',fontWeight:'400', textTransform:'capitalize'}}>Hi, {(""+this.state.profile.name).substr(0,(""+this.state.profile.name).indexOf(' '))}</p>
+                        
+                    </div>
+                        {/* <div  className="profile_qrcode_container">
+                        <QRcode 
+                                value= {"BEGIN:VCARD" +
+                                "VERSION:4.0" +
+                                "N:{profile.name}" +
+                                "FN:"+ this.state.profile.name +
+                                "TEL;TYPE#work,voice;VALUE#uri:tel:" + this.state.profile.phoneNumber +
+                                "ADR;TYPE#HOME;LABEL#" + this.state.profile.nationality + "/" + this.state.profile.cityOfBirth +
+                                "EMAIL:" + this.state.profile.email + "END:VCARD"}
+                                />
+                        </div> */}
+                    
+                    
+                    <div className="profile_bar_buttons_container">
+                            <div className="profile_bar_buttons">
+                            <SvgIcon>
+                                <HomeRoundedIcon/>
+                            </SvgIcon>
+                            
+                                <Button 
+                                    style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    color={this.state.timeline === true? "primary": 'default'}
+                                    disableElevation          
+                                    href={'/'}>home</Button>
+                            </div>
+                            <div className="profile_bar_buttons">
+                                <SvgIcon>
+                                <LocationSearchingRoundedIcon />
+                            </SvgIcon>
+                                <Button  style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/dashboard'}>explore</Button>
+                            </div>
+                            <div className="profile_bar_buttons">
+                                <SvgIcon>
+                                <StorageRoundedIcon/>
+                            </SvgIcon>
+                                <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>archive</Button>
+                            </div>
+                            <div className="profile_bar_buttons">
+                                <SvgIcon>
+                                <PersonRoundedIcon/>
+                            </SvgIcon>
+                            
+                                <Button 
+                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    color={this.state.home === true? "primary": 'default'}
+                                    href={'/profile/'+this.state.profile.email}>profile</Button>
+                            </div>
+                            <div className="profile_bar_buttons">  
+                                <SvgIcon>
+                                <PeopleAltRoundedIcon/>
+                            </SvgIcon>
+                                <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/communities'}>communities</Button>
+                            </div>
+                            <div className="profile_bar_buttons">
+                                <Badge color="secondary" badgeContent={this.state.notificationsQuantity}>
+                                <NotificationsRoundedIcon/>
+                            </Badge>
+                                <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} onClick={() => this.setState({
+                                    notificationModal: true
+                                })}>notifications</Button>                        
+                            </div>
+                            <div className="profile_bar_buttons">
+                                <SvgIcon>
+                                <SearchRoundedIcon/>
+                            </SvgIcon>
+                            
+                                <Button 
+                                    style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    href="/search_user"
+                                    >search</Button>
+                            </div>
+                            <div className="profile_bar_buttons">
+                                <SvgIcon>
+                                <ExitToAppRoundedIcon/>
+                            </SvgIcon>
+                            
+                                <Button 
+                                    style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    onClick={() => this.setState({
+                                        signOut: true
+                                    })}>sign out</Button>
+                            </div>
+                        
+                    </div>
+                    </ThemeProvider>
                 
-                
-                <div className="profile_bar_buttons_container">
-                        <div className="profile_bar_buttons">
-                           <SvgIcon>
-                               <HomeRoundedIcon/>
-                           </SvgIcon>
-                           
-                            <Button 
-                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
-                                color={this.state.timeline === true? "primary": 'default'}
-                                disableElevation          
-                                href={'/'}>home</Button>
-                        </div>
-                        <div className="profile_bar_buttons">
-                            <SvgIcon>
-                               <LocationSearchingRoundedIcon />
-                           </SvgIcon>
-                            <Button  style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/dashboard'}>explore</Button>
-                        </div>
-                        <div className="profile_bar_buttons">
-                            <SvgIcon>
-                               <StorageRoundedIcon/>
-                           </SvgIcon>
-                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>archive</Button>
-                        </div>
-                        <div className="profile_bar_buttons">
-                            <SvgIcon>
-                               <PersonRoundedIcon/>
-                           </SvgIcon>
-                           
-                            <Button 
-                            style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
-                                color={this.state.home === true? "primary": 'default'}
-                                href={'/profile/'+this.state.profile.email}>profile</Button>
-                        </div>
-                        <div className="profile_bar_buttons">  
-                            <SvgIcon>
-                               <PeopleAltRoundedIcon/>
-                           </SvgIcon>
-                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/communities'}>communities</Button>
-                        </div>
-                        <div className="profile_bar_buttons">
-                            <Badge color="secondary" badgeContent={this.state.notificationsQuantity}>
-                               <NotificationsRoundedIcon/>
-                           </Badge>
-                            <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} onClick={() => this.setState({
-                                notificationModal: true
-                            })}>notifications</Button>                        
-                        </div>
-                        <div className="profile_bar_buttons">
-                            <SvgIcon>
-                               <SearchRoundedIcon/>
-                           </SvgIcon>
-                           
-                            <Button 
-                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
-                                href="/search_user"
-                                >search</Button>
-                        </div>
-                        <div className="profile_bar_buttons">
-                            <SvgIcon>
-                               <ExitToAppRoundedIcon/>
-                           </SvgIcon>
-                           
-                            <Button 
-                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
-                                onClick={() => this.signout()}>sign out</Button>
-                        </div>
-                       
                 </div>
-                </ThemeProvider>
-              
-            </div>
-        );  
+            );  
+        else
+            return(<Redirect to="/authenticate"/>)
     }   
 }
 

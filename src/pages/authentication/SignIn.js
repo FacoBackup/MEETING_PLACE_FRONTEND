@@ -37,17 +37,11 @@ class SignIn extends Component {
         return(<MuiAlert elevation={4} variant="filled" {...props}/>)
     }
      
-    componentDidMount(){
-        this.checkToken()
+    componentDidMount(){   
+        Object.keys((new Cookies()).getAll()).forEach(name => (new Cookies()).remove(name))
+        localStorage.clear()
     }
-    
-    checkToken (){     
-        if(typeof this.state.cookies.get("JWT") !== 'undefined'){
-            this.setState({
-                accepted:true
-            })
-        }
-    }
+
 
     handleChangeEmail (event)  {
         

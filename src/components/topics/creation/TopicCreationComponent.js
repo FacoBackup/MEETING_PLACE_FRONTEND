@@ -75,7 +75,7 @@ class TopicCreationComponent extends React.Component{
         
         let reader = new FileReader();
       
-        if (!event[0].name.match(/.(jpg|jpeg|png|gif)$/i)){
+        if (!event[0].name.match(/.(jpg|jpeg|png|gif|webp)$/i)){
             alert('not an image')
             this.setState({
                 imageURL: null
