@@ -156,8 +156,7 @@ class Profile extends React.Component{
                                         {this.state.profile.phoneNumber}
                                     </div>
                                     <div style={{display:'flex', justifyContent:'center', alignItems:'center',  color:'#aaadb1'}} >
-                                    
-
+                                
                                         {this.state.profile.about}
                                     </div>
                                 </div>

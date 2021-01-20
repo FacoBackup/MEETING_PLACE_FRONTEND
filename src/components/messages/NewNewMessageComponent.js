@@ -71,12 +71,21 @@ class MessagesComponent extends React.Component{
     }
 
     scrollToEnd (){
+        var length = this.state.messages.length
         
-        window.scrollTo(0, (window.outerHeight * 99999))
+        if(length > 0){
+
+            var element = document.getElementsByClassName("class").length;
+            
+            document.getElementsByClassName("class")[element-1].scrollIntoView({block:'end'})
+            window.scrollTo(0, document.body.scrollHeight)
+        }
+        
     }
 
-    scrollToLastHight(lastHight){
-        window.scrollTo(0, lastHight)
+    scrollToLastHight(lastIndex){
+        document.getElementsByClassName("class")[lastIndex].scrollIntoView({behavior:'smooth'});
+    
     }
 
     splitMessagesArray(){
@@ -108,15 +117,22 @@ class MessagesComponent extends React.Component{
     
                 if(res.data.length > 0 && typeof res.data.length !== 'undefined' && this.state.currentPage !== 1){
                 
-                    const lastHight = window.outerHeight
+                    
 
                     const newMessages = [...res.data,...this.state.messages]
+                    
                     this.setState({
                         messages: newMessages,
                         currentPage:  typeof res.data[0] !== 'undefined' && typeof res.data[0].page !== 'undefined' ?  res.data[0].page : null,
                         isLoading: false
                     })    
-                    this.scrollToLastHight(lastHight)    
+                    if((this.state.messages.length-res.data.length) === 0){
+
+                        this.scrollToEnd()
+                    }
+                        
+                    if((this.state.messages.length-res.data.length) !== 0)
+                        this.scrollToLastHight(res.data.length-1)    
                 }
             })
             .catch(error => {
@@ -157,7 +173,7 @@ class MessagesComponent extends React.Component{
     renderSkeleton(){
         return(
             <>         
-            <div className="subject_message_container" style={{marginTop:'100%'}}>
+            <div className="subject_message_container" >
                     <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
                         
                         <Skeleton variant="circle" style={{backgroundColor:'rgba(255,255,255,.2)',width:'50px', height:'50px'}}/>
@@ -194,7 +210,7 @@ class MessagesComponent extends React.Component{
                         hasMore={this.state.currentPage > 1 ? true: false}
                         >
                         {this.state.messages === [] ? <div></div> : this.state.messages.map((message) =>(
-                            <div key ={message.id}>
+                            <div key ={message.id} className="class">
                                 <MessageBox conversation={this.state.conversation} messageID = {message.id} conversationID={message.conversationID} content= {message.content} imageURL={message.imageURL} creationDate= {message.creationDate} userID= {(new Cookies()).get("ID")}  creatorID={message.creatorID}  read={message.seenByEveryone}/>
                                 <div ref={this.state.essagesEndRef} />
                             </div>   
