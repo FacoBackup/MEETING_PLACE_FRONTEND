@@ -39,7 +39,7 @@ class ProfileSettingsComponent extends React.Component{
     async updateProfile(){
         try{
             await axios({
-                method: 'patch',
+                method: 'put',
                 url: Host()+'api/profile',
                 headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
                 data:{
