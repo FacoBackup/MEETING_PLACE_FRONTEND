@@ -92,22 +92,26 @@ class TopicCreationComponent extends React.Component{
     }
     
     async createTopic(){
-        await axios({
-            method: 'post',
-            url: Host()+'api/topic',
-            headers: {"Authorization": 'Bearer ' + this.state.token},
-            data:{
-                header: this.state.title,
-                body: this.state.body,
-                imageURL: this.state.imageURL,
-                communityID: this.state.selectedCommunity.communityID,
-                mainTopicID: null
-            }
-        }).then(()=>{
-            alert("Created With Success")
-            
-        })
-        .catch(error => console.log(error))
+        try{
+            await axios({
+                method: 'post',
+                url: Host()+'api/topic',
+                headers: {"Authorization": 'Bearer ' + this.state.token},
+                data:{
+                    header: this.state.title,
+                    body: this.state.body,
+                    imageURL: this.state.imageURL,
+                    communityID: this.state.selectedCommunity.communityID,
+                    mainTopicID: null
+                }
+            }).then(()=>{
+                alert("Created With Success")
+                
+            })
+            .catch(error => console.log(error))
+        }catch(error){
+            console.log(error)
+        }
     }
 
     imageRender(){

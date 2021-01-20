@@ -4,7 +4,7 @@ import axios from 'axios';
 import "../../../style/profile/ProfileBarStyle.css";
 import Button from '@material-ui/core/Button';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-import Dexie from "dexie";
+// import Dexie from "dexie";
 import Host from '../../../Host'
 import { Avatar, Badge, Modal } from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
