@@ -117,29 +117,26 @@ class SendMessageComponent extends React.Component{
             <ThemeProvider> 
             <div className="message_input_content_container" >
                 {this.renderSelectedImage()}
-            <div className="message_input_container" >
-            
-                <div className="message_input_box">
+            <div className="message_input_container" >    
+                <TextField  
+                    placeholder="Message" 
+                    variant="outlined" 
+                    label={this.state.sending === true ? "Sending...": null} 
+                    multiline autoAdjustHeight  
+                    // defaultValue={this.state.messageInput === null ? "":this.state.messageInput }  
+                    style={{
+                        backgroundColor:'#303741',
+                        borderRadius:'2px',
+                        width:'35vw'
+                    }}
+                    InputProps={{
+                        style:{
+                            color:'white'
+                        }
+                    }}
+                    onChange={this.handleChange} />                       
                     
-                    <TextField  
-                        placeholder="Message" 
-                        variant="outlined" 
-                        label={this.state.sending === true ? "Sending...": null} 
-                        multiline autoAdjustHeight  
-                        // defaultValue={this.state.messageInput === null ? "":this.state.messageInput }  
-                        style={{
-                            backgroundColor:'#303741',
-                            borderRadius:'2px',
-                            width:'39vw'
-                        }}
-                        InputProps={{
-                            style:{
-                                color:'white'
-                            }
-                        }}
-                        onChange={this.handleChange} />                       
-                    
-                </div>
+                
             
                 <Button disabled>
                     <EmojiEmotionsRoundedIcon/>

@@ -19,12 +19,12 @@ import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import NotificationComponent from '../notification/NotificationComponent'
 import {Redirect} from 'react-router-dom'
+
 const theme = createMuiTheme({
     palette: {
       type: "dark"
     }
   });
-
 
 class ProfileBarComponent extends Component{
     constructor(params){
@@ -175,7 +175,7 @@ class ProfileBarComponent extends Component{
                                 <SvgIcon>
                                 <LocationSearchingRoundedIcon />
                             </SvgIcon>
-                                <Button  style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/dashboard'}>explore</Button>
+                                <Button  style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>explore</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <SvgIcon>

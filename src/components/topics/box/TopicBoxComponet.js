@@ -26,7 +26,8 @@ class TopicBoxComponent extends React.Component{
             liked: params.topic.liked,
             disliked: params.topic.disliked,
             archived: params.topic.archived,
-            
+            fetchedLike: false,
+            fetchedDislike: false
         }
         this.updateTopic = this.updateTopic.bind(this)
         this.deleteTopic = this.deleteTopic.bind(this)
@@ -72,7 +73,12 @@ class TopicBoxComponent extends React.Component{
                 data:{
                     topicID: topicID
                 }
-            }).then(res => console.log(res))
+            }).then(res => {
+                console.log(res)
+                this.setState({
+                    fetchedLike: true
+                })
+            })
             .catch(error => console.log(error))
         }catch(error){
             console.log(error)
@@ -92,7 +98,12 @@ class TopicBoxComponent extends React.Component{
                 data:{
                     topicID: topicID
                 }
-            }).catch(error => console.log(error))
+            }).catch(error => {
+                console.log(error)
+                this.setState({
+                    fetchedDislike: true
+                })
+            })
         }catch(error){
             console.log(error)
         }
@@ -142,7 +153,7 @@ class TopicBoxComponent extends React.Component{
         
         if(creator === (new Cookies()).get("ID"))
             return(
-                <Button onClick={() => this.deleteTopic(this.state.topic.id)}><DeleteIcon/>Delete</Button>
+                <Button style={{backgroundColor: 'red', color:'white'}} disableElevation variant="contained" onClick={() => this.deleteTopic(this.state.topic.id)}><DeleteIcon/>Delete</Button>
             )
     }
 
@@ -254,20 +265,20 @@ class TopicBoxComponent extends React.Component{
                     {this.renderImage(this.state.topic)}  
                     <div className="topic_buttons_container">
                     
-                        <Button  style={{color:(this.state.liked === true ? "red": "white"),display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center'}} 
+                        <Button  style={{color:(this.state.liked === true ?  "#39adf6": "white"),display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center'}} 
                             onClick={() => this.likeTopic(this.state.topic.id)}>     
                             <ThumbUpIcon/>
-                            {this.state.topic.likes + (this.state.liked === true && this.state.topic.liked === false ? 1 : 0)}
+
                         </Button>
                         
                         <Button 
                             style={{color:(this.state.disliked === true ? "red": "white"),display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center'}} 
                             onClick={() => this.dislikeTopic(this.state.topic.id)}> 
-                                <ThumbDownAltIcon/>{this.state.topic.dislikes + (this.state.disliked === true && this.state.topic.disliked === false ? 1 : 0)}
+                                <ThumbDownAltIcon/>
                             </Button>
                         <Button style={{display:'flex', justifyContent:'space-between', alignItems:'center', alignContent:'center'}}> <ChatBubbleIcon/>{this.state.topic.comments}</Button>
 
-                        <Button style={{color: (this.state.archived === true ? "red": "white")}} 
+                        <Button style={{color: (this.state.archived === true ? "#39adf6": "white")}} 
                             onClick={() => this.archiveTopic(this.state.topic.id)}>
                                 <ArchiveIcon/>
                             </Button>

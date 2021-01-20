@@ -1,6 +1,6 @@
 
 function Host(){
-    const hostAddress = 'http://localhost:8080/'
+    const hostAddress = 'http://192.168.68.80:8080/'
     return hostAddress
 }
 

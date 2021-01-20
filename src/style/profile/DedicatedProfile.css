@@ -103,3 +103,14 @@
 .background_image{
     width: 100%;
 }
+
+.profile_settings_container{
+    margin-top: 2vh;
+    
+    display:grid;
+    align-content: center;
+    justify-content: center;
+    /* justify-content: left; */
+    width: 30vw;
+    row-gap: 2vh;
+}

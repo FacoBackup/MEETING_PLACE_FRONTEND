@@ -44,39 +44,46 @@ class SignUp extends Component{
     
     async handleSubmit(){
      
-        await axios({
-            method: 'post',
-            url: Host()+'api/user',
-            data: {
-                email: this.state.email,
-                password: this.state.password,
-                userName: this.state.name.toLowerCase(),
-                gender: this.state.gender,
-                nationality: '',
-                birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
-                cityOfBirth: '',
-                phoneNumber: (this.state.phone).replace("_",""),
-                admin: false,
-            }
+        try{
+            await axios({
+                method: 'post',
+                url: Host()+'api/user',
+                data: {
+                    email: this.state.email,
+                    password: this.state.password,
+                    userName: this.state.name.toLowerCase(),
+                    gender: this.state.gender,
+                    nationality: '',
+                    birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
+                    cityOfBirth: '',
+                    phoneNumber: (this.state.phone).replace("_",""),
+                    admin: false,
+                }
+                })
+            .then(() => {   
+                this.setState({
+                   success: true
+                });
             })
-        .then(() => {   
-            this.setState({
-               success: true
-            });
-        })
-        .catch(error => {
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    success: false
+                 });
+            })
+        }catch(error){
             console.log(error)
             this.setState({
                 success: false
              });
-        })
+        }
     }
     Alert(props){
         return(<MuiAlert elevation={4} variant="filled" {...props}/>)
     }
     render(){
         
-        if(!this.state.success && this.state.redirect === false){
+        if((this.state.success === false || this.state.success  === null) && this.state.redirect === false){
             return (
                 <div  className="sign_up_container">
                     <ThemeProvider theme={theme}>

@@ -4,7 +4,7 @@ import { DefaultButton,Modal, PrimaryButton, Persona,PersonaSize } from 'office-
 
 import TextField from '@material-ui/core/TextField'
 import axios from 'axios';
-
+import DeleteRounded from '@material-ui/icons/DeleteRounded'
 import CommunitySearchComponent from '../../search/community/CommunitySearchComponent'
 import Host from '../../../Host'
 import Button from '@material-ui/core/Button';
@@ -106,7 +106,7 @@ class TopicCreationComponent extends React.Component{
                 }
             }).then(()=>{
                 alert("Created With Success")
-                
+                window.location.reload()
             })
             .catch(error => console.log(error))
         }catch(error){
@@ -117,10 +117,15 @@ class TopicCreationComponent extends React.Component{
     imageRender(){
         if(this.state.imageURL !== null)
             return(
-                <div style={{display:'flex', justifyContent:'center'}}>
-                    <img style={{margin:'auto',width:'70%', borderRadius:'8px'}} alt="topic" src={this.state.imageURL}/>
+                <div style={{display:'grid', justifyContent:'center'}}>
+                    <div style={{display:'flex', justifyContent:'center'}}>
+                        <img style={{margin:'auto',width:'100%', borderRadius:'8px'}} alt="topic" src={this.state.imageURL}/>
+                        
+                    </div>
+                    <Button style={{backgroundColor:'red', color:'white'}} variant="contained" onClick={() => this.setState({
+                        imageURL: null
+                    })}><DeleteRounded/> Remove</Button>
                 </div>
-                
             )
     }
 
@@ -231,7 +236,7 @@ class TopicCreationComponent extends React.Component{
                 <div className="topic_creation_container" >
                         {this.modalRender()}
                     <div className="topic_creation_title">
-                        <h3>Express Yourself</h3>
+                        <h3 style={{fontWeight:'400'}}>Express Yourself</h3>
                     </div>
                     <div  className="topic_creation_top_buttons">
                         

@@ -12,16 +12,17 @@ import AboutComponent from '../../components/profile/options/UserAboutComponent'
 import Followers from '../../components/social/followers/FollowersComponent'
 import Following from '../../components/social/following/FollowingComponent'
 import UserCommunitiesComponent from '../../components/profile/options/UserCommunitiesComponent'
-import Dexie from "dexie";
 import Host from '../../Host'
 import ProfileBar from '../../components/profile/bar/ProfileBarComponent'
 import Avatar from '@material-ui/core/Avatar'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Button from '@material-ui/core/Button'
-import PlaceIcon from '@material-ui/icons/Place';
+import PhoneRoundedIcon from '@material-ui/icons/PhoneRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import HighlightIcon from '@material-ui/icons/Highlight';
 import HelpIcon from '@material-ui/icons/Help';
+import ProfileSettingsComponent from '../../components/profile/options/ProfileSettingsComponent'
+import AboutProfileComponent from '../../components/profile/options/UserAboutComponent'
 
 class Profile extends React.Component{
     constructor({match}){
@@ -34,14 +35,16 @@ class Profile extends React.Component{
             followers: false,
             following: false,
             community: false,
-            aboutOption: false
+            aboutOption: false,
+            settings: false
         }
     }
     componentDidMount(){
         this.fetchData()
     }
+
     async fetchData () {
-        if(typeof this.state.token !== 'undefined'){
+        try{
             await axios({
                 method: 'patch',
                 url: Host()+'api/get/profile',
@@ -55,16 +58,10 @@ class Profile extends React.Component{
                     profile: res.data
                 })
             })
-            .catch()
-        }         
-    }
-    async signout() {
-        console.log(this.state.cookies.get("JWT"))
-        Object.keys(this.state.cookies.getAll()).forEach(name => this.state.cookies.remove(name))
-        localStorage.clear()
-        Dexie.delete('api_web_db')
-    
-        window.location.reload()
+            .catch(error => console.log(error))
+        }catch(error){
+            console.log(error)
+        }
     }
 
     renderFollowButton(){
@@ -112,6 +109,16 @@ class Profile extends React.Component{
                     <UserCommunitiesComponent token={(new Cookies()).get('JWT')} userID={this.state.userID}/>
                 )
             }
+            case this.state.settings:{
+                if(this.state.userID === (new Cookies()).get("ID"))
+                    return(
+                        <ProfileSettingsComponent profile={this.state.profile} />
+                    )
+                else 
+                    return(
+                        <AboutProfileComponent />
+                    )
+            }
             default:{
                 return(
                     <TopicComponent community={false} timeline={false} subjectID={this.state.userID} topics={true} token={(new Cookies()).get('JWT')}/>
@@ -144,9 +151,9 @@ class Profile extends React.Component{
                                     />
                                     <p style={{fontSize:'22px',fontWeight:'500', textTransform:'capitalize'}}>{(""+this.state.profile.name)}</p>
                                     <h4 style={{fontWeight:'500', color:'#aaadb1'}}>{this.state.profile.email}</h4>
-                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center'}} >
-                                        <PlaceIcon/>
-                                        {this.state.profile.nationality}
+                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center',  color:'#aaadb1'}} >
+                                        <PhoneRoundedIcon style={{marginRight:'10px'}}/>
+                                        {this.state.profile.phoneNumber}
                                     </div>
                                 </div>
                                 <div >
@@ -156,7 +163,8 @@ class Profile extends React.Component{
                                                 topics: true,
                                                 followers: false,
                                                 following: false,
-                                                community: false
+                                                community: false,
+                                                settings: false
                                             })}
                                         >Topics <p style={{color:'#aaadb1'}}>{this.state.profile.topics}</p></Button>
                                         
@@ -165,7 +173,8 @@ class Profile extends React.Component{
                                                 topics: false,
                                                 followers: true,
                                                 following: false,
-                                                community: false
+                                                community: false,
+                                                settings: false
                                             })}
                                         >Followers <p style={{color:'#aaadb1'}}>{this.state.profile.followers}</p></Button>
                                         
@@ -174,18 +183,10 @@ class Profile extends React.Component{
                                                 topics: false,
                                                 followers: false,
                                                 following: true,
-                                                community: false
+                                                community: false,
+                                                settings: false
                                             })}
                                         >Following <p style={{color:'#aaadb1'}}>{this.state.profile.following}</p></Button>
-                                        
-                                        {/* <Button style={{display:'grid',lineHeight:'7px', fontSize:'15px'}} color={this.state.community === true? "primary": "default"}
-                                            onClick={() => this.setState({
-                                                topics: false,
-                                                followers: false,
-                                                following: false,
-                                                community: true
-                                            })}
-                                        >communities <p style={{color:'#aaadb1'}}>0</p></Button> */}
                                     </ButtonGroup>
                                 </div>
                             </div>
@@ -205,13 +206,25 @@ class Profile extends React.Component{
                                         topics: false,
                                         followers: false,
                                         following: false,
-                                        community: true
+                                        community: true,
+                                        settings: false
                                     })}
                                 >
                                     <PeopleAltRoundedIcon style={{height:'33px', width:'33px', color: '#aaadb1'}}/>
                                     MY Communities
                                 </Button>
-                                <Button variant="outlined" disabled style={{gridColumn:'2', gridRow:'2'}} className='option_content'>
+                                <Button 
+                                    variant={this.state.settings === true? "filled":"outlined"} 
+                                    style={{gridColumn:'2', gridRow:'2', backgroundColor:(this.state.settings === true ? "#303741" : 'transparent')}} 
+                                    className='option_content'
+                                    onClick={() => this.setState({
+                                        topics: false,
+                                        followers: false,
+                                        following: false,
+                                        community: false,
+                                        settings: true
+                                    })}
+                                    >
                                     <SettingsIcon style={{height:'33px', width:'33px', color: '#aaadb1'}}/>
                                     Settings
                                 </Button>
