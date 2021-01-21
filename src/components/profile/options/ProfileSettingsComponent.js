@@ -7,6 +7,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import Host from '../../../Host'
+import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 
 const theme = createMuiTheme({
     palette: {
@@ -139,6 +140,9 @@ class ProfileSettingsComponent extends React.Component{
                         <div style={{display: 'flex', justifyContent:'center', alignContent:'center', alignItems:'center'}}>
                             <Avatar alt="pic" src={this.state.pic} style={{width:'60px', height:'60px'}}/>
                             <p style={{marginLeft:'10px', fontSize:'15px', fontWeight:'500'}}>Selected Pic</p>
+                            <Button variant="contained" style={{marginLeft:'10px',backgroundColor:'red', color:'white'}} disableElevation onClick={() => this.setState({
+                                    pic: null
+                                })}><DeleteRoundedIcon/> </Button>
                         </div>: null}
                         
                             
@@ -148,7 +152,7 @@ class ProfileSettingsComponent extends React.Component{
                                 <img alt="background" style={{maxWidth:'30vw', borderRadius:'8px'}} src={this.state.backgroundImage}/>
                                 <Button variant="contained" style={{backgroundColor:'red', color:'white'}} disableElevation onClick={() => this.setState({
                                     backgroundImage: null
-                                })}>Remove</Button>
+                                })}> <DeleteRoundedIcon/> Remove</Button>
                             </div> : null}
                         
                     <Button variant="contained" style={{textTransform:'capitalize', width:'15vw', margin:'auto'}} color="primary" disableElevation onClick={() => this.updateProfile()}>save</Button>

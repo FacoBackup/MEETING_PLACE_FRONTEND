@@ -77,14 +77,14 @@ class MessagesComponent extends React.Component{
 
             var element = document.getElementsByClassName("class").length;
             
-            document.getElementsByClassName("class")[element-1].scrollIntoView({block:'end'})
+            document.getElementsByClassName("class")[element-1].scrollIntoView({behavior:'smooth',block:'end'})
             window.scrollTo(0, document.body.scrollHeight)
         }
         
     }
 
     scrollToLastHight(lastIndex){
-        document.getElementsByClassName("class")[lastIndex].scrollIntoView({behavior:'smooth'});
+        document.getElementsByClassName("class")[lastIndex].scrollIntoView();
     
     }
 
