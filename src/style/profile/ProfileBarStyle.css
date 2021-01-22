@@ -1,22 +1,23 @@
-.profile_bar_container{
+.profile_bar_container {
     display: grid;
     justify-content: center;
     align-content: space-between;
-    overflow: hidden;   
+    overflow: hidden;
     row-gap: 3vh;
-    grid-template-rows: 1% 13% 1fr ;
+    grid-template-rows: 1% 13% 1fr;
     min-height: 100%;
     width: 85%;
     margin: auto;
-    
+
 }
 
-.profile_qrcode_container{
-    
-    margin: auto;
- 
-}
-.profile_info_container{
+/*.profile_qrcode_container {*/
+
+/*    margin: auto;*/
+
+/*}*/
+
+.profile_info_container {
     grid-row: 1;
     display: flex;
     margin-top: 1vh;
@@ -25,20 +26,21 @@
     align-content: center;
 }
 
-.profile_bar_buttons_container{
-    grid-row:3 ;
+.profile_bar_buttons_container {
+    grid-row: 3;
     display: grid;
     justify-content: center;
     justify-items: flex-start;
     height: 85%;
-    
+
 }
-.profile_bar_buttons{
+
+.profile_bar_buttons {
     display: flex;
     align-items: center;
 }
 
-.notification_modal_container{
+.notification_modal_container {
     width: 40vw;
     height: 40vh;
     margin: auto;

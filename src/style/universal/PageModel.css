@@ -1,47 +1,43 @@
 
-.center_component{
+.center_component {
     margin: auto;
     width: 45%;
-    
+
 }
-.left_components{
-    
+
+.left_components {
+
     position: fixed;
     bottom: 0;
-    left:0;
-    
+    left: 0;
     background-color: #303741;
-    box-shadow: 0px 5px 5px  #23282e;
-
+    box-shadow: 0 5px 5px #23282e;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    
-    
     height: 100%;
     width: 14%;
-    
     overflow: hidden;
 }
 
-.right_components{
+.right_components {
     position: fixed;
     bottom: 0;
-    right:0;
-    
+    right: 0;
+
     background-color: #303741;
-    box-shadow: 0px 5px 5px  #23282e;
+    box-shadow: 0 5px 5px #23282e;
 
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    
-    
+
+
     height: 100%;
     width: 14%;
-    
+
     overflow: hidden;
 }
 
-.modal_container{
+.modal_container {
     display: grid;
     row-gap: 2vh;
     grid-template-rows: 1fr 1fr 100fr 1fr;
@@ -52,22 +48,26 @@
     height: 450px;
     padding: 3vh;
 }
-.modal_title_component{
+
+.modal_title_component {
     grid-row: 1;
     text-align: center;
 }
-.modal_top_component{
+
+.modal_top_component {
     grid-row: 2;
     width: 500px;
 
     margin: auto;
 }
-.modal_middle_component{
+
+.modal_middle_component {
     grid-row: 3;
     width: 200px;
     margin: auto;
 }
-.modal_bottom_component{
+
+.modal_bottom_component {
     grid-row: 4;
     width: 350px;
     margin: auto;

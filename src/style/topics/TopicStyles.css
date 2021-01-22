@@ -1,55 +1,50 @@
-.timeline_component_container{
+.timeline_component_container {
     display: block;
     overflow-y: auto;
 }
-.timeline_content_container{
-    box-shadow: 0px 5px 5px  #23282e;
+
+.timeline_content_container {
+    box-shadow: 0 5px 5px #23282e;
     background-color: #303741;
     padding-top: 3vh;
     padding-bottom: 3vh;
     justify-content: center;
     justify-items: center;
-    position:initial;
-    
     border-radius: 8px;
-    /* max-height: 65.6vh; */
-
-    width:42vw;
-    
-    /* overflow-x: hidden; */
+    width: 42vw;
     position: sticky;
-    
+
 }
-.topic_container{
-    margin: auto;
+
+.topic_container {
     background-color: #3b424c;
     border-radius: 8px;
     padding-bottom: 2vh;
-    
-    margin-top: 2vh;
+    margin: 2vh auto auto;
     padding-top: 2vh;
     width: 90%;
 }
-.topic_fields_container{
+
+.topic_fields_container {
     width: 75%;
-    margin: auto;
     display: grid;
     row-gap: 1vh;
     text-align: center;
-    margin-bottom: 1vh;
-    margin-top: 1vh;
+    margin: 1vh auto;
 }
-.topic_creator_persona_container{
+
+.topic_creator_info_container {
     width: 75%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: .8vw;
     border-radius: 8px;
-    background-color:#3b424c;
+    background-color: #3b424c;
     margin: auto;
 }
-.topic_image_container{
+
+.topic_image_container {
     max-width: 90%;
 
     margin: auto;
@@ -59,14 +54,15 @@
 
 }
 
-.topic_buttons_container{
+.topic_buttons_container {
     margin: auto;
     display: flex;
-    
+
     justify-content: center;
-    
+
 }
-.timeline_end_container{
+
+.timeline_end_container {
     background-color: #3b424c;
     border-radius: 8px;
     text-align: center;
@@ -75,28 +71,28 @@
 }
 
 
-
-.topic_creation_container{
-    margin: auto;
+.topic_creation_container {
     background-color: #3b424c;
     border-radius: 8px;
     display: block;
     box-sizing: border-box;
-    margin-bottom: 1vh;
+    margin: auto auto 1vh;
     padding-top: 2vh;
     padding-bottom: 2vh;
     width: 90%;
-    
+
 }
-.topic_creation_fields{
+
+.topic_creation_fields {
     width: 75%;
     display: grid;
     row-gap: 1vh;
     margin: auto;
     padding-bottom: 1vh;
 }
-.topic_creation_top_buttons{
-    
+
+.topic_creation_top_buttons {
+
     width: 75%;
     display: flex;
     align-items: center;
@@ -104,14 +100,15 @@
     margin: auto;
     padding-bottom: 3vh;
 }
-.topic_creation_bottom_buttons{
+
+.topic_creation_bottom_buttons {
     width: 75%;
     margin: auto;
     display: flex;
-    
     place-content: center;
 }
-.topic_creation_title{
+
+.topic_creation_title {
     padding-bottom: 1vh;
     text-align: center;
 }

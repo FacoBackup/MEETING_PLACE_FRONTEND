@@ -1,4 +1,4 @@
-.community_creation_component{
+.community_creation_component {
     display: grid;
     padding-top: 2vh;
     padding-bottom: 2vh;
@@ -8,7 +8,8 @@
     margin: auto;
     row-gap: 1vh;
 }
-.community_creation_buttons{
+
+.community_creation_buttons {
     width: 75%;
     padding-top: 1vh;
     display: flex;
@@ -16,12 +17,14 @@
     align-items: center;
     margin: auto;
 }
-.community_creation_fields{
+
+.community_creation_fields {
     width: 75%;
     display: grid;
     row-gap: 1vh;
     margin: auto;
 }
-.community_creation_title{
+
+.community_creation_title {
     text-align: center;
 }

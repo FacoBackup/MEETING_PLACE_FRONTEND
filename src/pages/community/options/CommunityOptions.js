@@ -3,87 +3,58 @@ import ProfileBar from "../../../components/profile/bar/ProfileBarComponent.js"
 import Conversations from "../../../components/conversations/bar/ConversationBarComponent"
 import "../../../style/universal/PageModel.css"
 import "../../../style/community/CommunityOptionsStyle.css"
-import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
-import { Redirect } from 'react-router-dom'
+// import {DefaultButton, PrimaryButton} from 'office-ui-fabric-react';
+import Button from "@material-ui/core/Button";
 import CommunityCreationComponent from '../../../components/community/creation/CommunityCreationComponent'
 import Cookies from 'universal-cookie';
 import CommunitySearchComponent from "../../../components/search/community/CommunitySearchComponent"
-
-class CommunityOptions extends React.Component{
-    constructor(){
-        super()
-        this.state={
-            create: false,
-            join: true,
-            
-        }
+const cookies = new Cookies()
+class CommunityOptions extends React.Component {
+    state = {
+        create: false
     }
-    render(){
-        switch(true){
-            default: {
-                return(
-                    <Redirect to='/'/>
-                )
-            }
-            case this.state.create: {
-                return(
+
+    render() {
+
+        return (
+            <div>
+                <div className="center_component">
+                    {this.state.create === true ?
+                        <div className="community_options_buttons">
+                            <Button variant="contained" color={this.state.create === true ? "primary" : "default"} disableElevation>Create</Button>
+                            <Button variant="contained"  color={this.state.create === false ? "primary" : "default"} disableElevation onClick={() =>
+                                this.setState({
+                                    create: false
+                                })}>
+                                Join
+                            </Button>
+                        </div>:
+                        <div className="community_options_buttons">
+
+                            <Button variant="contained" disableElevation color={this.state.create === true ? "primary" : "default"} onClick={() =>
+                                this.setState({
+                                    create: true
+                                })}>
+                                create
+                            </Button>
+                            <Button variant="contained" color={this.state.create === false ? "primary" : "default"} disableElevation>join</Button>
+                        </div>
+
+                    }
                     <div>
-                        <div className="center_component">                   
-                            <div className="community_options_buttons">     
-                                <PrimaryButton text ="Create"/>
-                                <DefaultButton text ="Join" onClick={()=>
-                                    this.setState({
-                                        create: false,
-                                        join: true
-                                    })
-                                }/>
-                                
-                            </div>
-                            <div>
-                                <CommunityCreationComponent token={(new Cookies()).get("JWT")}/>
-                            </div>
-                        </div>
-                      
-                        <div className="left_components">
-                            <ProfileBar communityOptions={true}/>
-                        </div>
-                        <div  className="right_components" >
-                            <Conversations/>
-                        </div>
+                        {this.state.create === true ?  <CommunityCreationComponent token={cookies.get("JWT")}/>:<CommunitySearchComponent token={(cookies).get("JWT")} isModal={false}/>}
                     </div>
-                   
-                )        
-            }
-            case this.state.join:{
-                return(
-                    <div>
-                        <div className="center_component">
-                            <div  className="community_options_buttons">
-                                <DefaultButton text ="Create" onClick={()=>
-                                    this.setState({
-                                        create: true,
-                                 
-                                        join: false
-                                    })
-                                }/>
-                                <PrimaryButton text ="Join"/>
-                               
-                            </div>
-                            <div>
-                                <CommunitySearchComponent token={(new Cookies()).get("JWT")} isModal={false}/>
-                            </div>
-                        </div>
-                      
-                        <div className="left_components">
-                            <ProfileBar communityOptions={true}/>
-                        </div>
-                        <div  className="right_components" >
-                            <Conversations/>
-                        </div>
-                    </div>
-                    )
-            }
-        }
+                </div>
+
+                <div className="left_components">
+                    <ProfileBar/>
+                </div>
+                <div className="right_components">
+                    <Conversations/>
+                </div>
+            </div>
+
+        )
     }
 }
 

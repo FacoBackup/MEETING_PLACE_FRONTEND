@@ -1,7 +1,5 @@
-
-function Host(){
-    const hostAddress = 'http://localhost:8080/'
-    return hostAddress
+function Host() {
+    return 'http://localhost:8080/'
 }
 
 export default Host

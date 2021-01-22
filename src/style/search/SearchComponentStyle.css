@@ -1,14 +1,16 @@
-.search_component{
+.search_component {
     background-color: white;
     border-radius: 8px;
     padding-bottom: 2vh;
     overflow: auto;
 }
-.search_box_container{
+
+.search_box_container {
     width: 50%;
     margin: auto;
 }
-.search_personas_container{
+
+.search_personas_container {
     width: 100%;
     display: flex;
     margin-top: 5%;
@@ -18,7 +20,8 @@
     align-items: center;
     justify-content: space-around;
 }
-.search_result_container{
+
+.search_result_container {
     margin: auto;
     width: 100%;
     display: block;

@@ -1,10 +1,11 @@
-.chat_page_container{
+.chat_page_container {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
 
 }
-.chat_conversation_component{
+
+.chat_conversation_component {
 
     width: auto;
 }

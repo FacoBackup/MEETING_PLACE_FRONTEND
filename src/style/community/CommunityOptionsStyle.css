@@ -1,14 +1,14 @@
-.community_options_buttons{
+.community_options_buttons {
     display: flex;
     justify-content: space-around;
-    margin: auto;
     background-color: white;
     padding-bottom: 1vh;
     padding-top: 1vh;
     border-radius: 8px;
-    margin-bottom: 1vh;
+    margin: auto auto 1vh;
 }
-.community_about_container{
+
+.community_about_container {
     display: grid;
     justify-content: center;
     row-gap: 1vh;

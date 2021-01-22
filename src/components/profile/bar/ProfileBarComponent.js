@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Cookies from 'universal-cookie';
-import axios from 'axios'; 
+import axios from 'axios';
 import "../../../style/profile/ProfileBarStyle.css";
 import Button from '@material-ui/core/Button';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 // import Dexie from "dexie";
 import Host from '../../../Host'
-import { Avatar, Badge, Modal } from '@material-ui/core';
+import {Avatar, Badge, Modal} from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import { ThemeProvider } from "@material-ui/styles";
-import { createMuiTheme } from "@material-ui/core/styles";
+import {ThemeProvider} from "@material-ui/styles";
+import {createMuiTheme} from "@material-ui/core/styles";
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import LocationSearchingRoundedIcon from '@material-ui/icons/LocationSearchingRounded';
 import StorageRoundedIcon from '@material-ui/icons/StorageRounded';
@@ -22,14 +22,16 @@ import {Redirect} from 'react-router-dom'
 
 const theme = createMuiTheme({
     palette: {
-      type: "dark"
+        type: "dark"
     }
-  });
+});
 
-class ProfileBarComponent extends Component{
-    constructor(params){
-        super()
-        this.state={
+const cookies = new Cookies()
+
+class ProfileBarComponent extends Component {
+    constructor(params) {
+        super(params)
+        this.state = {
             profile: {},
             followers: params.followers,
             following: params.following,
@@ -50,8 +52,9 @@ class ProfileBarComponent extends Component{
         }
         this.renderNotificationModal = this.renderNotificationModal.bind(this)
     }
-    
-    componentDidMount(){
+
+    componentDidMount() {
+
         this.fetchData()
         this.fetchNotifications()
         this.timerID = setInterval(
@@ -71,51 +74,49 @@ class ProfileBarComponent extends Component{
         });
     }
 
-    async fetchData(){
-        try{
-            if(typeof (new Cookies()).get("JWT") !== 'undefined'){
+    async fetchData() {
+        try {
+            if (typeof (cookies).get("JWT") !== 'undefined') {
                 await axios({
                     method: 'get',
-                    url: Host()+'api/user',
-                    headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")}
-                }).then(res=>{
+                    url: Host() + 'api/user',
+                    headers: {"Authorization": 'Bearer ' + (cookies).get("JWT")}
+                }).then(res => {
+                    console.log(res.data)
                     this.setState({
                         profile: res.data
                     })
-                })
-                .catch()
-            }         
-        }
-        catch(error){
+                }).catch(e => console.log(e))
+            }
+        } catch (error) {
             console.log(error)
-        }     
+        }
     }
 
-    async fetchNotifications(){
-        try{
-            if(typeof (new Cookies()).get("JWT") !== 'undefined'){
+    async fetchNotifications() {
+        try {
+            if (typeof (cookies).get("JWT") !== 'undefined') {
                 await axios({
                     method: 'get',
-                    url: Host()+'api/fetch/quantity/message/notifications',
-                    headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")}
-                }).then(res=>{
+                    url: Host() + 'api/fetch/quantity/message/notifications',
+                    headers: {"Authorization": 'Bearer ' + (cookies).get("JWT")}
+                }).then(res => {
                     this.setState({
                         notificationsQuantity: res.data
                     })
                 })
-                .catch()
-            }         
-        }
-        catch(error){
+                    .catch()
+            }
+        } catch (error) {
             console.log(error)
-        }     
+        }
     }
 
-    renderNotificationModal(){
-        if(this.state.notificationModal === true)
-            return(
+    renderNotificationModal() {
+        if (this.state.notificationModal === true)
+            return (
                 <Modal
-                    style={{display:'grid', justifyContent:"center", alignContent:"center"}}
+                    style={{display: 'grid', justifyContent: "center", alignContent: "center"}}
                     open={this.state.notificationModal === true}
                     onClose={() => this.setState({
                         notificationModal: false
@@ -124,28 +125,36 @@ class ProfileBarComponent extends Component{
                     <div className="notification_modal_container">
                         <NotificationComponent/>
                     </div>
-                    
+
                 </Modal>
             )
         else return null
     }
-    render(){
-        if(this.state.signOut === false)
-            return(
+
+    render() {
+        if (this.state.signOut === false)
+            return (
                 <div className="profile_bar_container">
                     <ThemeProvider theme={theme}>
-                    <this.renderNotificationModal/>
-                    <div className="profile_info_container">
-                    
-                        <Avatar
-                            style={{ height: '55px', width: '55px' }}
-                            src = {this.state.profile.imageURL}
-                            alt="user"
-                        
-                        />
-                        <p style={{marginLeft:'5px',fontSize:'17px',fontWeight:'400', textTransform:'capitalize'}}>Hi, {(""+this.state.profile.name).substr(0,(""+this.state.profile.name).indexOf(' '))}</p>
-                        
-                    </div>
+                        <this.renderNotificationModal/>
+                        <div className="profile_info_container">
+
+                            <Avatar
+                                style={{height: '55px', width: '55px'}}
+                                src={this.state.profile.imageURL}
+                                alt="user"
+
+                            />
+                            <p style={{
+                                marginLeft: '5px',
+                                fontSize: '17px',
+                                fontWeight: '400',
+                                lineBreak:'auto',
+                                wordBreak:'break-all',
+                                textTransform: 'capitalize'
+                            }}>Hi, {("" + this.state.profile.name).substr(0, ("" + this.state.profile.name).indexOf(' '))}</p>
+
+                        </div>
                         {/* <div  className="profile_qrcode_container">
                         <QRcode 
                                 value= {"BEGIN:VCARD" +
@@ -157,86 +166,90 @@ class ProfileBarComponent extends Component{
                                 "EMAIL:" + this.state.profile.email + "END:VCARD"}
                                 />
                         </div> */}
-                    
-                    
-                    <div className="profile_bar_buttons_container">
+
+
+                        <div className="profile_bar_buttons_container">
                             <div className="profile_bar_buttons">
-                            <SvgIcon>
-                                <HomeRoundedIcon/>
-                            </SvgIcon>
-                            
-                                <Button 
-                                    style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
-                                    color={this.state.timeline === true? "primary": 'default'}
-                                    disableElevation          
+                                <SvgIcon>
+                                    <HomeRoundedIcon/>
+                                </SvgIcon>
+
+                                <Button
+                                    style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    color={this.state.timeline === true ? "primary" : 'default'}
+                                    disableElevation
                                     href={'/'}>home</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <SvgIcon>
-                                <LocationSearchingRoundedIcon />
-                            </SvgIcon>
-                                <Button  style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>explore</Button>
+                                    <LocationSearchingRoundedIcon/>
+                                </SvgIcon>
+                                <Button style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                        disabled>explore</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <SvgIcon>
-                                <StorageRoundedIcon/>
-                            </SvgIcon>
-                                <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} disabled>archive</Button>
+                                    <StorageRoundedIcon/>
+                                </SvgIcon>
+                                <Button style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                        disabled>archive</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <SvgIcon>
-                                <PersonRoundedIcon/>
-                            </SvgIcon>
-                            
-                                <Button 
-                                style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
-                                    color={this.state.home === true? "primary": 'default'}
-                                    href={'/profile/'+this.state.profile.email}>profile</Button>
+                                    <PersonRoundedIcon/>
+                                </SvgIcon>
+
+                                <Button
+                                    style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    color={this.state.home === true ? "primary" : 'default'}
+                                    href={'/profile/' + this.state.profile.id}>profile</Button>
                             </div>
-                            <div className="profile_bar_buttons">  
+                            <div className="profile_bar_buttons">
                                 <SvgIcon>
-                                <PeopleAltRoundedIcon/>
-                            </SvgIcon>
-                                <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} href={'/communities'}>communities</Button>
+                                    <PeopleAltRoundedIcon/>
+                                </SvgIcon>
+                                <Button style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                        href={'/communities'}>communities</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <Badge color="secondary" badgeContent={this.state.notificationsQuantity}>
-                                <NotificationsRoundedIcon/>
-                            </Badge>
-                                <Button style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}} onClick={() => this.setState({
-                                    notificationModal: true
-                                })}>notifications</Button>                        
+                                    <NotificationsRoundedIcon/>
+                                </Badge>
+                                <Button style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                        onClick={() => this.setState({
+                                            notificationModal: true
+                                        })}>notifications</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <SvgIcon>
-                                <SearchRoundedIcon/>
-                            </SvgIcon>
-                            
-                                <Button 
-                                    style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    <SearchRoundedIcon/>
+                                </SvgIcon>
+
+                                <Button
+                                    style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
                                     href="/search_user"
-                                    >search</Button>
+                                >search</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <SvgIcon>
-                                <ExitToAppRoundedIcon/>
-                            </SvgIcon>
-                            
-                                <Button 
-                                    style={{textTransform:'capitalize', fontSize: '17px', fontWeight: '500'}}
+                                    <ExitToAppRoundedIcon/>
+                                </SvgIcon>
+
+                                <Button
+                                    style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
                                     onClick={() => this.setState({
                                         signOut: true
                                     })}>sign out</Button>
                             </div>
-                        
-                    </div>
+
+                        </div>
                     </ThemeProvider>
-                
+
                 </div>
-            );  
+            );
         else
-            return(<Redirect to="/authenticate"/>)
-    }   
+            return (<Redirect to="/authenticate"/>)
+    }
 }
 
 export default ProfileBarComponent;

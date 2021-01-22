@@ -1,13 +1,14 @@
-.social_component_container{
-    
+.social_component_container {
+
     background-color: #3b424c;
     border-radius: 8px;
     padding-bottom: 2vh;
     width: 38vw;
-    
+
     margin-top: 5px;
 }
-.personas_container{
+
+.personas_container {
     width: 65%;
     background-color: #3b424c;
     padding: 1vh;

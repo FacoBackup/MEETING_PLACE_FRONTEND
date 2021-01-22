@@ -1,21 +1,21 @@
-.sign_up_container{
-    display:grid;
-    grid-template-rows: 1 1 1;
-    grid-template-columns: 1 1 1;
+.sign_up_container {
+    display: grid;
+    justify-content: center;
+    align-content: center;
     width: 100vw;
-   
     height: 100vh;
 }
-.sign_up_component{
+
+.sign_up_component {
     background-color: #3b424c;
-    box-shadow: 0px 5px 5px  #23282e;
-    grid-row: 2; 
+    box-shadow: 0 5px 5px #23282e;
+    grid-row: 2;
     grid-column: 2;
     overflow: hidden;
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr 98fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    
+
     align-items: center;
     border-radius: 8px;
     row-gap: 5vh;
@@ -23,12 +23,14 @@
     width: 400px;
     height: 80vh;
 }
-.sign_up_title_container{
+
+.sign_up_title_container {
     grid-column: 2;
     grid-row: 1;
     text-align: center;
 }
-.sign_up_input_container{
+
+.sign_up_input_container {
     grid-column: 2;
     grid-row: 2;
     display: grid;
@@ -36,11 +38,12 @@
     width: 90%;
     margin: auto;
 }
-.sign_up_buttons_container{
+
+.sign_up_buttons_container {
     grid-row: 3;
     grid-column: 2;
     display: inline-block;
-    
+
     width: 300px;
     margin: auto;
 }

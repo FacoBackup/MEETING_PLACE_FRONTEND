@@ -1,23 +1,23 @@
 
-.news_component_container{
-    
+.news_component_container {
     display: grid;
-    
     column-gap: .3vw;
-    grid-template-columns: 1fr 1fr ;
-}
-.news_container{
-    display: grid;
-    row-gap:.3vw;
+    grid-template-columns: 1fr 1fr;
 }
 
-.center_news_content_container{
+.news_container {
+    display: grid;
+    row-gap: .3vw;
+}
+
+.center_news_content_container {
     background-color: white;
     border-radius: 8px;
     height: 700px;
     width: 32.2vw;
 }
-.right_news_content_container{
+
+.right_news_content_container {
     background-color: white;
     border-radius: 8px;
     height: 346px;
