@@ -66,7 +66,7 @@ class UserSearchComponent extends React.Component {
                         userName: this.state.searchInput.toLowerCase()
                     }
                 }).then(res => {
-
+                    
                     if(typeof res.data.length !== 'undefined' && res.data.length > 0){
                         this.setState({
                             users: res.data
@@ -117,11 +117,11 @@ class UserSearchComponent extends React.Component {
                                     size={PersonaSize.size72}
                                     imageAlt="Conversation picture"
                                 />
-                                <DefaultButton text="See Profile" href={"/profile/" + user.email + '/0'}/>
+                                <DefaultButton text="See Profile" href={"/profile/" + user.userID }/>
                                 <PrimaryButton href={"/chat/"+user.userID+"/false/"} text="Send Message"/>
                                 {user.isFollowing === true ?
-                                    <DefaultButton onClick={() => this.unfollow(user.email)} text="Unfollow"/> :
-                                    <PrimaryButton onClick={() => this.follow(user.email)} text="Follow"/>}
+                                    <DefaultButton onClick={() => this.unfollow(user.userID)} text="Unfollow"/> :
+                                    <PrimaryButton onClick={() => this.follow(user.userID)} text="Follow"/>}
                             </div>
                         )}
                     </div>

@@ -132,7 +132,7 @@ class FollowersComponent extends React.Component {
                                             {follower.name}
                                         </li>
                                         <li style={{fontSize: '17px', fontWeight: '400', color: '#aaadb1'}}>
-                                            {follower.email}
+                                            {follower.userName}
                                         </li>
                                     </ul>
                                 </div>

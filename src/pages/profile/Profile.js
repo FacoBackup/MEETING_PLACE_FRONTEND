@@ -162,7 +162,7 @@ class Profile extends React.Component {
                                         fontWeight: '500',
                                         textTransform: 'capitalize'
                                     }}>{("" + this.state.profile.name)}</p>
-                                    <h4 style={{fontWeight: '500', color: '#aaadb1'}}>{this.state.profile.email}</h4>
+                                    <h4 style={{fontWeight: '500', color: '#aaadb1'}}>{this.state.profile.userName}</h4>
                                     <div style={{
                                         display: 'flex',
                                         justifyContent: 'center',
@@ -179,12 +179,12 @@ class Profile extends React.Component {
                                     {/*    alignItems: 'center',*/}
                                     {/*    color: '#aaadb1'*/}
                                     {/*}}>*/}
-                                    <p>{this.state.profile.about}</p>
+                                    
 
                                 </div>
-                                <div>
+                                <div style={{margin:'auto'}}>
                                     <ButtonGroup size="large" variant="text">
-                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px'}}
+                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px', width:'7.666666667vw'}}
                                                 color={this.state.topics === true ? "primary" : "default"}
                                                 onClick={() => this.setState({
                                                     topics: true,
@@ -195,7 +195,7 @@ class Profile extends React.Component {
                                                 })}
                                         >Topics <p style={{color: '#aaadb1'}}>{this.state.profile.topics}</p></Button>
 
-                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px'}}
+                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px',width:'7.666666667vw'}}
                                                 color={this.state.followers === true ? "primary" : "default"}
                                                 onClick={() => this.setState({
                                                     topics: false,
@@ -207,7 +207,7 @@ class Profile extends React.Component {
                                         >Followers <p style={{color: '#aaadb1'}}>{this.state.profile.followers}</p>
                                         </Button>
 
-                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px'}}
+                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px',width:'7.666666667vw'}}
                                                 color={this.state.following === true ? "primary" : "default"}
                                                 onClick={() => this.setState({
                                                     topics: false,

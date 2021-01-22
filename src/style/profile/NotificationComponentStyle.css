@@ -1,0 +1,7 @@
+.notification_buttons_modal_container{
+    display: flex;
+    justify-content: space-between;
+
+    width: 40vw;
+    
+}

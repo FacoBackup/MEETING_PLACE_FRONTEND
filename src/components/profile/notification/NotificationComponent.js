@@ -3,7 +3,7 @@ import axios from 'axios'
 import Cookies from 'universal-cookie';
 import Host from '../../../Host';
 import {Button, ButtonGroup} from '@material-ui/core';
-
+import "../../../style/profile/NotificationComponentStyle.css"
 class NotificationComponent extends React.Component {
     constructor() {
         super()
@@ -48,7 +48,7 @@ class NotificationComponent extends React.Component {
                             <p>new message from: {notification.subjectName}</p>
 
                             <p>at</p>
-                        </div>) : null}
+                        </div>) : "No new Notifications"}
 
                 </div>
 
@@ -59,11 +59,13 @@ class NotificationComponent extends React.Component {
     render() {
         return (
             <div>
-                <ButtonGroup>
+                <div className="notification_buttons_modal_container">
                     <Button color={this.state.messageOption === true ? "primary" : "default"}
+                            variant="contained"
+                            disableElevation
                             onClick={() => this.setState({
                                 messageOption: true,
-                                topicOption: false,
+                                topicsOption: false,
                                 communitiesOption: false,
                                 page: null,
 
@@ -71,9 +73,11 @@ class NotificationComponent extends React.Component {
                         Messages
                     </Button>
                     <Button color={this.state.topicsOption === true ? "primary" : "default"}
+                            variant="contained"
+                            disableElevation
                             onClick={() => this.setState({
                                 messageOption: false,
-                                topicOption: true,
+                                topicsOption: true,
                                 communitiesOption: false,
                                 page: null,
 
@@ -81,16 +85,18 @@ class NotificationComponent extends React.Component {
                         Topics
                     </Button>
                     <Button color={this.state.communitiesOption === true ? "primary" : "default"}
+                            variant="contained"
+                            disableElevation
                             onClick={() => this.setState({
                                 messageOption: false,
-                                topicOption: true,
-                                communitiesOption: false,
+                                topicsOption: false,
+                                communitiesOption: true,
                                 page: null,
 
                             })}>
                         Communities
                     </Button>
-                </ButtonGroup>
+                </div>
                 {this.renderMessages()}
             </div>
         )
