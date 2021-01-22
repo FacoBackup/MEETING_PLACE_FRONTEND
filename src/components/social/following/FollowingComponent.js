@@ -134,7 +134,7 @@ class FollowingComponent extends React.Component {
                                             {flw.name}
                                         </li>
                                         <li style={{fontSize: '17px', fontWeight: '400', color: '#aaadb1'}}>
-                                            {flw.email}
+                                            {flw.userName}
                                         </li>
                                     </ul>
                                 </div>
