@@ -4,7 +4,7 @@ import {DefaultButton, PrimaryButton} from 'office-ui-fabric-react';
 import {FontSizes, FontWeights} from '@fluentui/theme';
 import React from 'react'
 import "../../../style/profile/SocialStyle.css"
-import {Persona, PersonaSize} from 'office-ui-fabric-react/lib/Persona';
+import Avatar from '@material-ui/core/Avatar'
 import {TextField} from '@fluentui/react';
 import "../../../style/profile/UserCommunitiesStyle.css"
 import "../../../style/search/SearchComponentStyle.css"
@@ -105,23 +105,58 @@ class UserSearchComponent extends React.Component {
                     </div>
                     <div>
                         {this.state.users.map((user) =>
-                            <div className="personas_container">
-                                <Persona
-                                    {...{
-                                        imageUrl: user.imageURL,
-                                        text: user.name,
-                                        secondaryText: user.email,
-                                        tertiaryText: user.phoneNumber
+                            // <div className="personas_container">
+                            //     <Persona
+                            //         {...{
+                            //             imageUrl: user.imageURL,
+                            //             text: user.name,
+                            //             secondaryText: user.email,
+                            //             tertiaryText: user.phoneNumber
 
-                                    }}
-                                    size={PersonaSize.size72}
-                                    imageAlt="Conversation picture"
-                                />
-                                <DefaultButton text="See Profile" href={"/profile/" + user.userID }/>
-                                <PrimaryButton href={"/chat/"+user.userID+"/false/"} text="Send Message"/>
-                                {user.isFollowing === true ?
+                            //         }}
+                            //         size={PersonaSize.size72}
+                            //         imageAlt="Conversation picture"
+                            //     />
+                            //     <DefaultButton text="See Profile" href={"/profile/" + user.userID }/>
+                            //     <PrimaryButton href={"/chat/"+user.userID+"/false/"} text="Send Message"/>
+                            //     {user.isFollowing === true ?
+                            //         <DefaultButton onClick={() => this.unfollow(user.userID)} text="Unfollow"/> :
+                            //         <PrimaryButton onClick={() => this.follow(user.userID)} text="Follow"/>}
+                            // </div>
+
+                            <div>                       
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    alignContent: 'center',
+                                    backgroundColor: '#3b424c',
+                                    borderRadius: '8px',
+                                    paddingRight: '10px',
+                                    paddingLeft: '10px'
+                                }}>
+                                    <Avatar
+                                        style={{height: '55px', width: '55px'}}
+                                        src={user.imageURL}
+                                        alt="user"
+
+                                    />
+                                    <ul>
+                                        <li style={{fontSize: '17px', fontWeight: '400'}}>
+                                            {user.name}
+                                        </li>
+                                        <li style={{fontSize: '17px', fontWeight: '400', color: '#aaadb1'}}>
+                                            {user.userName}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <DefaultButton text="See Profile" href={"/profile/" + user.userID }/>
+                                    <PrimaryButton href={"/chat/"+user.userID+"/false/"} text="Send Message"/>
+                                    {user.isFollowing === true ?
                                     <DefaultButton onClick={() => this.unfollow(user.userID)} text="Unfollow"/> :
                                     <PrimaryButton onClick={() => this.follow(user.userID)} text="Follow"/>}
+                                </div>
                             </div>
                         )}
                     </div>
