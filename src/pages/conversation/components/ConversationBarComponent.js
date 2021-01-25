@@ -135,9 +135,9 @@ class ConversationBarComponent extends Component {
             <div className="right_top_half_container">
                 <div className="conversation_title_container">
                     <p style={{
-                        marginLeft: '5px',
-                        fontSize: '17px',
+                        marginLeft: '1vw',
                         fontWeight: '400',
+                        color:'#ededed',
                         textTransform: 'capitalize'
                     }}>Conversations</p>
                 </div>

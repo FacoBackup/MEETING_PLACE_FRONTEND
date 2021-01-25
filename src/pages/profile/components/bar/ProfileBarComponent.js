@@ -191,32 +191,39 @@ class ProfileBarComponent extends Component {
 
                         <div className="profile_bar_buttons_container">
                             <div className={this.state.timeline === true ? "clicked_button_style" : null} >
-                                <Button href={"/"} style={{textTransform:"capitalize",   color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}><HomeRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/> home</Button>
+                                <Button href={"/"} style={{textTransform:"capitalize",   color:(this.state.timeline === true ? "#39adf6":'#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}>
+                                    <HomeRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:(this.state.timeline === true ? "#39adf6":'#62666f')}}/> home</Button>
                             </div>
 
                             <div className={this.state.external === true ? "clicked_button_style" : null} >
-                                <Button disabled style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}> <CompassRounded style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>explore</Button>
+                                <Button disabled style={{textTransform:"capitalize",  color:(this.state.external === true ? "#39adf6":'#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}>
+                                    <CompassRounded style={{marginRight:'10px', fontSize:'27px',color:(this.state.external === true ? "#39adf6":'#62666f')}}/>explore</Button>
                             </div>
 
                             <div className={this.state.archive === true ? "clicked_button_style" : null} >
-                                <Button disabled style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}> <StorageRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>archive</Button>
+                                <Button disabled style={{textTransform:"capitalize",  color:(this.state.archive === true ? "#39adf6":'#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}>
+                                    <StorageRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>archive</Button>
                             </div>
                             <div className={this.state.home === true ? "clicked_button_style" : null} >
-                                <Button style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} href={"/profile/"+this.state.profile.id}> <PersonRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>profile</Button>
+                                <Button style={{textTransform:"capitalize", color:(this.state.home === true ? "#39adf6":'#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} href={"/profile/"+this.state.profile.id}>
+                                    <PersonRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:(this.state.home === true ? "#39adf6":'#62666f')}}/>profile
+                                </Button>
                             </div>
                             <div className={this.state.communityCreationModal === true ? "clicked_button_style" : null} >
-                                <Button  style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} onClick={() => this.setState({
+                                <Button  style={{color:('#ededed'),textTransform:"capitalize", fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} onClick={() => this.setState({
                                     communityCreationModal: true
-                                })}> <GroupAddRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>create community</Button>
+                                })}> <GroupAddRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:('#62666f')}}/>create community</Button>
                             </div>
 
                             <div className={this.state.notificationModal === true ? "clicked_button_style" : null} >
-                                <Button  style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} onClick={() => this.setState({
+                                <Button  style={{textTransform:"capitalize",  color:('#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} onClick={() => this.setState({
                                     notificationModal: true
-                                })}> <NotificationsRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>notifications</Button>
+                                })}> <NotificationsRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:('#62666f')}}/>notifications</Button>
                             </div>
                             <div className={this.state.search === true ? "clicked_button_style" : null} >
-                                <Button style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} href="/search_user"> <SearchRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>search</Button>
+                                <Button style={{textTransform:"capitalize",  color:(this.state.search === true ? "#39adf6":'#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}} href="/search_user">
+                                    <SearchRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:(this.state.search === true ? "#39adf6":'#62666f'),}}/>search
+                                </Button>
                             </div>
                             <div >
                                 <Button style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}> <ExitToAppRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>sign out</Button>

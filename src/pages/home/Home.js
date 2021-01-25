@@ -8,6 +8,7 @@ import TopicCreation from '../topic/components/creation/TopicCreationComponent'
 import TopicComponent from '../topic/components/TopicComponent'
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import {TextField} from "@material-ui/core";
+import TrendingComponent from "../topic/components/trending/TrendingComponent";
 
 const cookies = new Cookies()
 
@@ -41,6 +42,7 @@ class Home extends Component {
                         </div>
                         <div className="right_components">
                             <Conversations/>
+                            <TrendingComponent/>
                         </div>
                     </ThemeProvider>
                 </div>

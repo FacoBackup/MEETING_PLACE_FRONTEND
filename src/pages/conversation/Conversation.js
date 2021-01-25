@@ -8,6 +8,7 @@ import ConversationsBar from "./components/ConversationBarComponent";
 import {getTheme} from '@fluentui/react';
 import SendMessageComponent from './components/SendMessageComponent'
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+import TrendingComponent from "../topic/components/trending/TrendingComponent";
 
 const theme = createMuiTheme({
     palette: {
@@ -69,9 +70,7 @@ class Conversation extends Component {
 
                         <div className="right_components">
                             <ConversationsBar/>
-                            <div className={"right_bottom_half_container"}>
-
-                            </div>
+                            <TrendingComponent/>
                         </div>
                     </div>
                 </ThemeProvider>

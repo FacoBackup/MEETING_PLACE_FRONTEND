@@ -28,6 +28,7 @@
 .profile_info_container {
     /*grid-row: 1;*/
     display: flex;
+
     margin: 1vh auto auto;
     max-width:90%;
     width: fit-content;

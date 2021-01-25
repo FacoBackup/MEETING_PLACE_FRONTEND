@@ -5,7 +5,9 @@
 
 .conversation_title_container {
     grid-row: 1;
-    text-align: center;
+    text-align: left;
+    border-bottom: #262d37 2px solid;
+    width: 15vw;
 }
 
 .conversation_box_container {

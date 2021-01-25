@@ -24,6 +24,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import ProfileSettingsComponent from './components/options/ProfileSettingsComponent'
 import Follow from '../shared/functions/social/FollowUser'
 import Unfollow from '../shared/functions/social/UnfollowUser'
+import TrendingComponent from "../topic/components/trending/TrendingComponent";
 
 class Profile extends React.Component {
     isFollower;
@@ -291,6 +292,7 @@ class Profile extends React.Component {
                 </div>
                 <div className="right_components">
                     <Conversations/>
+                    <TrendingComponent/>
                 </div>
             </div>
         )

@@ -6,6 +6,7 @@ import "../shared/styles/PageModel.css"
 import {Redirect} from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+import TrendingComponent from "../topic/components/trending/TrendingComponent";
 
 const theme = createMuiTheme({
     palette: {
@@ -27,6 +28,7 @@ class Search extends Component {
                     </div>
                     <div className="right_components">
                         <Conversations/>
+                        <TrendingComponent/>
                     </div>
                 </ThemeProvider>
             );

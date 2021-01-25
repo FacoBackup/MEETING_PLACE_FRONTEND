@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import NewCommunityComponent from './component/NewCommunityComponent'
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+import TrendingComponent from "../topic/components/trending/TrendingComponent";
 
 const theme = createMuiTheme({
     palette: {
@@ -33,6 +34,7 @@ class Community extends React.Component {
                     </div>
                     <div className="right_components">
                         <Conversations/>
+                        <TrendingComponent/>
                     </div>
                 </ThemeProvider>
             );
