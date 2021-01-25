@@ -69,6 +69,9 @@ class Conversation extends Component {
 
                         <div className="right_components">
                             <ConversationsBar/>
+                            <div className={"right_bottom_half_container"}>
+
+                            </div>
                         </div>
                     </div>
                 </ThemeProvider>

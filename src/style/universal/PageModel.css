@@ -15,26 +15,43 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     height: 100%;
-    width: 14%;
+    width: 15vw;
     overflow: hidden;
 }
-
 .right_components {
     position: fixed;
     bottom: 0;
     right: 0;
 
-    background-color: #303741;
-    box-shadow: 0 5px 5px #23282e;
+    height: 100%;
+    width: 15vw;
+
+    overflow: hidden;
+}
+
+.right_top_half_container{
+    display: grid;
+    grid-template-rows: 1fr 13.8fr 1fr;
+    row-gap: 1vh;
+    justify-content: space-around;
+    height: 49.5%;
 
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-
-
-    height: 100%;
-    width: 14%;
-
+    background-color: #303741;
+    box-shadow: 0 5px 5px #23282e;
+    margin: auto;
+    align-items: flex-start;
     overflow: hidden;
+
+}
+.right_bottom_half_container{
+    height: 49.5%;
+    margin-top: 3%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: red;
+    box-shadow: 0 5px 5px #23282e;
 }
 
 .modal_container {

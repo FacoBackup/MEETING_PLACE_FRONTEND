@@ -132,7 +132,7 @@ class ConversationBarComponent extends Component {
 
     render() {
         return (
-            <div className="conversation_bar_component_container">
+            <div className="right_top_half_container">
                 <div className="conversation_title_container">
                     <p style={{
                         marginLeft: '5px',

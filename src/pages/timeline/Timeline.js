@@ -7,6 +7,7 @@ import Cookies from 'universal-cookie';
 import TopicCreation from '../../components/topics/creation/TopicCreationComponent'
 import TopicComponent from '../../components/topics/TopicComponent'
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+import {TextField} from "@material-ui/core";
 
 const cookies = new Cookies()
 
@@ -23,7 +24,12 @@ class Timeline extends Component {
             return (
                 <div className="page_container">
                     <ThemeProvider theme={theme}>
+
                         <div className="center_component timeline_content_container">
+                            <div className={"tag_search_container"}>
+                                <TextField variant={"outlined"} style={{width:'90%'}} label={"Search for a tag"} disabled/>
+                            </div>
+
                             <TopicCreation token={(cookies).get("JWT")}/>
 
                             <TopicComponent token={(cookies).get("JWT")} timeline={true}

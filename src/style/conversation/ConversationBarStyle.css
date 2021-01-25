@@ -1,13 +1,5 @@
 
 .conversation_bar_component_container {
-    display: grid;
-    grid-template-rows: 1fr 13.8fr 1fr;
-    row-gap: 1vh;
-    justify-content: space-around;
-    height: 100%;
-    margin: auto;
-    align-items: flex-start;
-    overflow: hidden;
 
 }
 
@@ -38,7 +30,7 @@ div.conversation_box_container:hover {
     /* text-align: center; */
     display: flex;
     justify-content: space-between;
-    justify-items: space-between;
+    /*justify-items: space-between;*/
     align-content: center;
     align-items: center;
 
