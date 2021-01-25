@@ -24,14 +24,6 @@ import HelpIcon from '@material-ui/icons/Help';
 import ProfileSettingsComponent from '../../components/profile/options/ProfileSettingsComponent'
 import Follow from '../../functions/social/FollowUser'
 import Unfollow from '../../functions/social/UnfollowUser'
-import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
-
-
-const theme = createMuiTheme({
-    palette: {
-        type: "dark"
-    }
-});
 
 class Profile extends React.Component {
     isFollower;

@@ -19,6 +19,7 @@ import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import NotificationComponent from '../notification/NotificationComponent'
 import {Redirect} from 'react-router-dom'
 import CommunityCreationComponent from "../../community/creation/CommunityCreationComponent";
+import Zoom from '@material-ui/core/Zoom'
 
 const theme = createMuiTheme({
     palette: {
@@ -153,6 +154,7 @@ class ProfileBarComponent extends Component {
     render() {
         if (this.state.signOut === false)
             return (
+
                 <div className="profile_bar_container">
                     <ThemeProvider theme={theme}>
                         <this.renderNotificationModal/>

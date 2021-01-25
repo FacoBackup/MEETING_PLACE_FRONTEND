@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import Avatar from "@material-ui/core/Avatar";
-import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 
 class TopicCreationComponent extends React.Component {
     constructor(params) {
