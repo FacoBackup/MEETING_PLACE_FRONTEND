@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import UserSearch from "../../components/search/SearchComponent"
-import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
-import Conversations from "../../components/conversations/bar/ConversationBarComponent"
-import "../../style/universal/PageModel.css"
+import UserSearch from "./components/SearchComponent"
+import ProfileBar from "../profile/components/bar/ProfileBarComponent.js"
+import Conversations from "../conversation/components/ConversationBarComponent"
+import "../shared/styles/PageModel.css"
 import {Redirect} from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";

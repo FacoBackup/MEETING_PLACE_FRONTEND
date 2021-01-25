@@ -1,10 +1,10 @@
 import React from 'react'
-import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
-import Conversations from "../../components/conversations/bar/ConversationBarComponent"
-import "../../style/universal/PageModel.css"
+import ProfileBar from "../profile/components/bar/ProfileBarComponent.js"
+import Conversations from "../conversation/components/ConversationBarComponent"
+import "../shared/styles/PageModel.css"
 import {Redirect} from 'react-router-dom'
 import Cookies from 'universal-cookie';
-import NewCommunityComponent from '../../components/community/NewCommunityComponent'
+import NewCommunityComponent from './component/NewCommunityComponent'
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 
 const theme = createMuiTheme({

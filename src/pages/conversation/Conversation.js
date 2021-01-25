@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import Cookies from 'universal-cookie';
 import {Redirect} from 'react-router-dom'
-import NewMessageComponent from '../../components/messages/NewNewMessageComponent'
-import "../../style/universal/PageModel.css"
-import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
-import ConversationsBar from "../../components/conversations/bar/ConversationBarComponent";
+import NewMessageComponent from './components/NewNewMessageComponent'
+import "../shared/styles/PageModel.css"
+import ProfileBar from "../profile/components/bar/ProfileBarComponent.js"
+import ConversationsBar from "./components/ConversationBarComponent";
 import {getTheme} from '@fluentui/react';
-import SendMessageComponent from '../../components/messages/SendMessageComponent'
+import SendMessageComponent from './components/SendMessageComponent'
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 
 const theme = createMuiTheme({

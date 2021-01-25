@@ -1,0 +1,27 @@
+.notification_buttons_modal_container{
+    display: flex;
+    justify-content: space-between;
+
+    width: 40vw;
+    
+}
+.notification_modal_container {
+    width: 40vw;
+    height: 40vh;
+    margin: auto;
+    display: grid;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 20px;
+    background-color: #303741;
+}
+.notification_content_container{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    background-color: #3b424c;
+    padding: 10px;
+    margin-top: 1vh;
+    border-radius: 8px;
+}
