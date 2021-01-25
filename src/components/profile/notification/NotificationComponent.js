@@ -2,9 +2,11 @@ import React from 'react'
 import axios from 'axios'
 import Cookies from 'universal-cookie';
 import Host from '../../../Host';
-import {Button, ButtonGroup} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import "../../../style/profile/NotificationComponentStyle.css"
+import Avatar from "@material-ui/core/Avatar";
 class NotificationComponent extends React.Component {
+    subjectImageURL;
     constructor() {
         super()
         this.state = {
@@ -17,7 +19,7 @@ class NotificationComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchMessageNotifications()
+        this.fetchMessageNotifications().catch(r => console.log(r))
     }
 
     async fetchMessageNotifications() {
@@ -44,11 +46,16 @@ class NotificationComponent extends React.Component {
             return (
                 <div>
                     {this.state.messageNotifications.length > 0 ? this.state.messageNotifications.map(notification =>
-                        <div style={{backgroundColor: 'red', borderRadius: '8px'}}>
-                            <p>new message from: {notification.subjectName}</p>
+                        <div className={"notification_content_container"}>
+                            <Avatar src={notification.subjectImageURL} alt={notification.subjectName} style={{width:'60px', height:'60px'}}/>
+                            <p style={{textTransform:'capitalize'}}>New messages from: {notification.subjectName}</p>
 
-                            <p>at</p>
-                        </div>) : "No new Notifications"}
+                            <p style={{color:'#aaadb1'}}>{(new Date(notification.creationDate)).toString().substr(4,17)}</p>
+                            <Button variant={"contained"} disableElevation color={"primary"} href={"/chat/"+notification.subjectID +"/false/null"}>See</Button>
+                        </div>) :
+                        <div style={{marginTop:'1vh',backgroundColor:'#3b424c', borderRadius:'8px', paddingBottom:'10px', paddingTop:'10px'}}>
+                            <p style={{textAlign:'center'}}>No new notifications</p>
+                        </div>}
 
                 </div>
 

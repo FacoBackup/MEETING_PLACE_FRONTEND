@@ -4,7 +4,7 @@ import axios from 'axios';
 import "../../../style/profile/ProfileBarStyle.css";
 import Button from '@material-ui/core/Button';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-// import Dexie from "dexie";
+import GroupAddRoundedIcon from '@material-ui/icons/GroupAddRounded';
 import Host from '../../../Host'
 import {Avatar, Badge, Modal} from '@material-ui/core';
 import SvgIcon from '@material-ui/core/SvgIcon';
@@ -14,11 +14,11 @@ import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import LocationSearchingRoundedIcon from '@material-ui/icons/LocationSearchingRounded';
 import StorageRoundedIcon from '@material-ui/icons/StorageRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
-import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import NotificationsRoundedIcon from '@material-ui/icons/NotificationsRounded';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import NotificationComponent from '../notification/NotificationComponent'
 import {Redirect} from 'react-router-dom'
+import CommunityCreationComponent from "../../community/creation/CommunityCreationComponent";
 
 const theme = createMuiTheme({
     palette: {
@@ -48,15 +48,17 @@ class ProfileBarComponent extends Component {
             notificationsQuantity: null,
             date: new Date(),
             notificationModal: false,
-            signOut: false
+            signOut: false,
+            communityCreationModal:false
         }
+        this.renderCommunityCreationModal = this.renderCommunityCreationModal.bind(this)
         this.renderNotificationModal = this.renderNotificationModal.bind(this)
     }
 
     componentDidMount() {
 
-        this.fetchData()
-        this.fetchNotifications()
+        this.fetchData().catch(r => console.log(r))
+        this.fetchNotifications().catch(r => console.log(r))
         this.timerID = setInterval(
             () => this.tick(),
             1500
@@ -68,7 +70,7 @@ class ProfileBarComponent extends Component {
     }
 
     tick() {
-        this.fetchNotifications()
+        this.fetchNotifications().catch(r => console.log(r))
         this.setState({
             date: new Date(),
         });
@@ -130,13 +132,31 @@ class ProfileBarComponent extends Component {
             )
         else return null
     }
+    renderCommunityCreationModal() {
+        if (this.state.communityCreationModal === true)
+            return (
+                <Modal
+                    style={{display: 'grid', justifyContent: "center", alignContent: "center"}}
+                    open={this.state.communityCreationModal === true}
+                    onClose={() => this.setState({
+                        communityCreationModal: false
+                    })}
+                >
+                    <div className="community_modal_container">
+                        <CommunityCreationComponent/>
+                    </div>
 
+                </Modal>
+            )
+        else return null
+    }
     render() {
         if (this.state.signOut === false)
             return (
                 <div className="profile_bar_container">
                     <ThemeProvider theme={theme}>
                         <this.renderNotificationModal/>
+                        <this.renderCommunityCreationModal/>
                         <div className="profile_info_container">
 
                             <Avatar
@@ -206,10 +226,12 @@ class ProfileBarComponent extends Component {
                             </div>
                             <div className="profile_bar_buttons">
                                 <SvgIcon>
-                                    <PeopleAltRoundedIcon/>
+                                    <GroupAddRoundedIcon/>
                                 </SvgIcon>
-                                <Button style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}}
-                                        href={'/communities'}>communities</Button>
+                                <Button style={{textTransform: 'capitalize', fontSize: '17px', fontWeight: '500'}} onClick={() => this.setState({
+                                    communityCreationModal: true
+                                })}
+                                        >Create Community</Button>
                             </div>
                             <div className="profile_bar_buttons">
                                 <Badge color="secondary" badgeContent={this.state.notificationsQuantity}>

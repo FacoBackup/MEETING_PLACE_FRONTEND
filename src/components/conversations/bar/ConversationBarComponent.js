@@ -10,6 +10,7 @@ import Host from '../../../Host'
 import {MailRounded} from '@material-ui/icons';
 
 class ConversationBarComponent extends Component {
+    unreadMessages;
     constructor() {
         super(null)
         this.state = {
@@ -23,7 +24,7 @@ class ConversationBarComponent extends Component {
     }
 
     componentDidMount() {
-        this.fetchConversations()
+        this.fetchConversations().catch(r => console.log(r))
         this.timerID = setInterval(
             () => this.tick(),
             60000
@@ -72,13 +73,20 @@ class ConversationBarComponent extends Component {
                               to={"/chat/" + ((data.name).replace(this.state.cookies.get('ID'), "")) + "/" + JSON.stringify(isGroup) + "/" + data.id}>
 
                             <Avatar src={data.imageURL}/>
-                            <p style={{
-                                fontWeight: '500',
-                                margin: 'auto',
-                                marginLeft: '1vw',
-                                textTransform: "capitalize"
-                            }}>{("" + data.name)}</p>
-                            <Badge color="secondary" badgeContent={data.unreadMessages}>
+                            <ul>
+                                <li style={{
+                                    fontWeight: '500',
+                                    textTransform: "capitalize"
+                                }}>{("" + data.name)}</li>
+                                <li style={{
+                                    fontWeight: '300',
+                                    fontSize:'15px',
+                                    textTransform: "capitalize",
+                                    color:'#aaadb1'
+                                }}>Group</li>
+                            </ul>
+
+                            <Badge color="secondary" style={{marginLeft:'10%'}} badgeContent={data.unreadMessages}>
                                 <MailRounded/>
                             </Badge>
 
@@ -93,16 +101,22 @@ class ConversationBarComponent extends Component {
 
                         <Link className="conversation_box_content" key={data.conversationID}
                               style={{textDecoration: 'none', color: 'white'}}
-                              to={"/chat/" + ((data.name).replace(this.state.cookies.get('ID'), "")) + "/" + JSON.stringify(isGroup) + "/" + data.id}>
+                              to={"/chat/" + (data.userID) + "/" + JSON.stringify(isGroup) + "/" + data.id}>
 
                             <Avatar src={data.imageURL}/>
-                            <p style={{
-                                fontWeight: '500',
-                                margin: 'auto',
-                                marginLeft: '1vw',
-                                textTransform: "capitalize"
-                            }}>{data.userName}</p>
-                            <Badge color="secondary" badgeContent={data.unreadMessages}>
+                            <ul>
+                                <li style={{
+                                    fontWeight: '500',
+                                    textTransform: "capitalize"
+                                }}>{("" + data.userName)}</li>
+                                <li style={{
+                                    fontWeight: '300',
+                                    fontSize:'15px',
+                                    textTransform: "capitalize",
+                                    color:'#aaadb1'
+                                }}>Private</li>
+                            </ul>
+                            <Badge color="secondary" style={{marginLeft:'10%'}} badgeContent={data.unreadMessages}>
                                 <MailRounded/>
                             </Badge>
 

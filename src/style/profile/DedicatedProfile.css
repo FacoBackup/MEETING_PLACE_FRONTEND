@@ -69,7 +69,7 @@
     /* margin: auto; */
     display: grid;
     /* column-gap: .5vw; */
-    justify-items: space-between;
+    /*justify-items: space-between;*/
     align-items: center;
     /* width: 11vw; */
     height: 11vh;

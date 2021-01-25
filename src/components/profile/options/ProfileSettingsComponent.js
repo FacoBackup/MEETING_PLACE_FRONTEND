@@ -26,11 +26,14 @@ class ProfileSettingsComponent extends React.Component {
             privacy: null,
             name: params.profile.name,
             backgroundImage: params.profile.backgroundImageURL,
-            pic: params.profile.imageURL
+            pic: params.profile.imageURL,
+            category: params.profile.category
         }
         this.handleChange = this.handleChange.bind(this)
     }
-
+    componentDidMount(){
+        console.log(this.state.category)
+    }
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
@@ -49,11 +52,11 @@ class ProfileSettingsComponent extends React.Component {
                     nationality: this.state.nationality,
                     phoneNumber: this.state.phoneNumber,
                     backgroundImageURL: this.state.backgroundImage,
-                    imageURL: this.state.pic
+                    imageURL: this.state.pic,
+                    category: this.state.category
                 }
             }).then(res => {
                 console.log(res)
-                alert("Done")
                 window.location.reload()
             })
                 .catch(error => console.log(error))
@@ -66,7 +69,6 @@ class ProfileSettingsComponent extends React.Component {
 
         this.setState({
             [name]: null,
-
         })
 
         let reader = new FileReader();
@@ -97,24 +99,30 @@ class ProfileSettingsComponent extends React.Component {
                         }}>Settings</p>
                     </div>
                     <div>
-                        <TextField variant="outlined" multiline defaultValue={this.state.profile.name}
+                        <TextField variant="outlined" multiline defaultValue={this.state.name}
                                    style={{width: '30vw'}} label="Name" name="name" onChange={this.handleChange}/>
 
                     </div>
                     <div>
-                        <TextField variant="outlined" multiline defaultValue={this.state.profile.about}
+                        <TextField variant="outlined" multiline defaultValue={this.state.about}
                                    style={{width: '30vw'}} label="About you" name="about" onChange={this.handleChange}/>
 
                     </div>
                     <div>
-                        <TextField variant="outlined" multiline defaultValue={this.state.profile.nationality}
+                        <TextField variant="outlined" multiline defaultValue={this.state.nationality}
                                    style={{width: '30vw'}} label="Your nationality" name="nationality"
                                    onChange={this.handleChange}/>
 
                     </div>
                     <div>
-                        <TextField variant="outlined" multiline defaultValue={this.state.profile.phoneNumber}
+                        <TextField variant="outlined" multiline defaultValue={this.state.phoneNumber}
                                    style={{width: '30vw'}} label="Your Phone number" name="phoneNumber"
+                                   onChange={this.handleChange}/>
+
+                    </div>
+                    <div>
+                        <TextField variant="outlined" multiline defaultValue={this.state.category}
+                                   style={{width: '30vw'}} label="Where you work" name="category"
                                    onChange={this.handleChange}/>
 
                     </div>

@@ -1,6 +1,6 @@
 .search_component {
     background-color: #303741;
-    
+
     border-radius: 8px;
     padding-bottom: 2vh;
     overflow: auto;
@@ -8,9 +8,13 @@
 }
 
 .search_box_container {
-    width: 45vw;
-    display: grid;
-    justify-content: center;
+    width: 40vw;
+    display: flex;
+    margin: auto;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+
 }
 
 .search_personas_container {

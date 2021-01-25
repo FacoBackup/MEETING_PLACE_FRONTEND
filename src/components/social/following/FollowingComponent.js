@@ -4,11 +4,20 @@ import axios from 'axios';
 import "../../../style/universal/PageModel.css"
 import "../../../style/profile/SocialStyle.css"
 import {getTheme} from '@fluentui/react';
-// import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import Avatar from '@material-ui/core/Avatar'
 import {FontSizes, FontWeights} from '@fluentui/theme';
 import {Redirect} from 'react-router-dom';
 import Host from '../../../Host'
+import Button from "@material-ui/core/Button";
+import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
+import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+    palette: {
+        type: "dark"
+    }
+});
+
 
 class FollowingComponent extends React.Component {
     constructor(params) {
@@ -99,8 +108,8 @@ class FollowingComponent extends React.Component {
         if (this.state.redirect === false)
             return (
 
-
                 <div>
+                <ThemeProvider theme={theme}>
                     <p style={{fontSize: '20px', fontWeight: '500', textAlign: 'center'}}>Following</p>
 
                     {(this.state.following.length === 0 && this.state.userID === (new Cookies()).get("ID")) ?
@@ -137,14 +146,20 @@ class FollowingComponent extends React.Component {
                                             {flw.userName}
                                         </li>
                                     </ul>
+                                    {parseInt((new Cookies()).get("ID")) !== flw.userID?
+                                        <Button variant={"contained"} href={"/profile/" + flw.userID} disableElevation
+                                                style={{marginLeft: '15px'}}>SEE</Button>: null}
+                                    {parseInt((new Cookies()).get("ID")) !== flw.userID?
+                                        <Button variant={"contained"} color={"primary"} href={"/chat/" + flw.userID+"/false/null"} disableElevation
+                                                style={{marginLeft: '15px'}}><ChatRoundedIcon/></Button>: null}
                                 </div>
 
                             //     <DefaultButton text ="See Profile"  href={"/profile/"+flw.email+'/0'}/>
                             //     <PrimaryButton onClick={() => this.setRedirect(flw.email)} text="Send Message"/>
 
                         )}
+                </ThemeProvider>
                 </div>
-
             );
         else {
 

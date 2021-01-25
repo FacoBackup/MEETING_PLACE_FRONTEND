@@ -6,8 +6,15 @@ import {Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import TopicCreation from '../../components/topics/creation/TopicCreationComponent'
 import TopicComponent from '../../components/topics/TopicComponent'
+import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 
 const cookies = new Cookies()
+
+const theme = createMuiTheme({
+    palette: {
+        type: "dark"
+    }
+});
 
 class Timeline extends Component {
 
@@ -15,19 +22,21 @@ class Timeline extends Component {
         if (typeof (cookies).get("JWT") !== 'undefined') {
             return (
                 <div className="page_container">
-                    <div className="center_component timeline_content_container">
-                        <TopicCreation token={(cookies).get("JWT")}/>
+                    <ThemeProvider theme={theme}>
+                        <div className="center_component timeline_content_container">
+                            <TopicCreation token={(cookies).get("JWT")}/>
 
-                        <TopicComponent token={(cookies).get("JWT")} timeline={true}
-                                        subjectID={(cookies).get("ID")} community={false}/>
+                            <TopicComponent token={(cookies).get("JWT")} timeline={true}
+                                            subjectID={(cookies).get("ID")} community={false}/>
 
-                    </div>
-                    <div className="left_components">
-                        <ProfileBar timeline={true}/>
-                    </div>
-                    <div className="right_components">
-                        <Conversations/>
-                    </div>
+                        </div>
+                        <div className="left_components">
+                            <ProfileBar timeline={true}/>
+                        </div>
+                        <div className="right_components">
+                            <Conversations/>
+                        </div>
+                    </ThemeProvider>
                 </div>
             );
         } else

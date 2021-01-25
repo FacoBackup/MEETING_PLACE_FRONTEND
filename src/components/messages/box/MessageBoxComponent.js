@@ -101,7 +101,7 @@ class MessageBoxComponent extends React.Component {
         return (
             <div style={{
                 display: 'flex',
-                justifyContent: (this.state.creatorID === this.state.userID ? 'flex-end' : 'flex-start'),
+                justifyContent: (this.state.creatorID === parseInt(this.state.userID) ? 'flex-end' : 'flex-start'),
                 alignItems: 'center'
             }}>
                 <Avatar style={{marginRight: '10px'}} alt={this.state.creatorInfo.name}
@@ -113,7 +113,7 @@ class MessageBoxComponent extends React.Component {
     }
 
     render() {
-        if (this.state.creatorID === this.state.userID)
+        if (this.state.creatorID === parseInt(this.state.userID))
             return (
 
                 <div className="my_message_container">
@@ -131,7 +131,7 @@ class MessageBoxComponent extends React.Component {
 
 
             )
-        else if (this.state.creatorID !== this.state.userID)
+        else if (this.state.creatorID !== parseInt(this.state.userID))
             return (
                 <div className="subject_message_container">
                     {this.renderCreatorInfo()}

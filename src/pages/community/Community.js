@@ -5,6 +5,13 @@ import "../../style/universal/PageModel.css"
 import {Redirect} from 'react-router-dom'
 import Cookies from 'universal-cookie';
 import NewCommunityComponent from '../../components/community/NewCommunityComponent'
+import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+    palette: {
+        type: "dark"
+    }
+});
 
 class Community extends React.Component {
     constructor({match}) {
@@ -17,7 +24,7 @@ class Community extends React.Component {
     render() {
         if (typeof (new Cookies()).get("JWT") !== 'undefined') {
             return (
-                <div>
+                <ThemeProvider theme={theme}>
                     <div>
                         <NewCommunityComponent communityID={this.state.communityID} token={(new Cookies()).get("JWT")}/>
                     </div>
@@ -27,7 +34,7 @@ class Community extends React.Component {
                     <div className="right_components">
                         <Conversations/>
                     </div>
-                </div>
+                </ThemeProvider>
             );
         } else
             return (<Redirect to="/authenticate"/>);

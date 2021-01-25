@@ -17,25 +17,21 @@
 }
 
 .conversation_box_container {
-    display: grid;
+    display: flex;
     justify-content: center;
-    align-content: center;
+    width: 10vw;
 
-    width: 80%;
-
-    margin: auto;
-    margin-bottom: 1vh;
+    overflow: hidden;
+    margin: auto auto 1vh;
     border-radius: 8px;
-    padding: 1vh;
-    /* max-width: 90%; */
-
+    padding: 10px;
     background-color: #3b424c;
 
 }
 
 div.conversation_box_container:hover {
     transform: scale(1.02);
-
+    box-shadow: 0 5px 5px #23282e;
 }
 
 .conversation_box_content {

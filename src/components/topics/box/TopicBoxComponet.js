@@ -27,8 +27,8 @@ class TopicBoxComponent extends React.Component {
             liked: params.topic.liked,
             disliked: params.topic.disliked,
             archived: params.topic.archived,
-            fetchedLike: false,
-            fetchedDislike: false
+            likes: null,
+            dislikes: null
         }
         this.updateTopic = this.updateTopic.bind(this)
         this.deleteTopic = this.deleteTopic.bind(this)
@@ -36,6 +36,10 @@ class TopicBoxComponent extends React.Component {
         this.renderDeleteButton = this.renderDeleteButton.bind(this)
     }
 
+    componentDidMount() {
+        this.fetchDislikes(this.state.topic.id).catch(r => console.log(r))
+        this.fetchLikes(this.state.topic.id).catch(r => console.log(r))
+    }
 
     //UPDATES
     async deleteTopic(topicID) {
@@ -73,18 +77,54 @@ class TopicBoxComponent extends React.Component {
                 data: {
                     topicID: topicID
                 }
-            }).then(res => {
-                console.log(res)
-                this.setState({
-                    fetchedLike: true
-                })
-            })
-                .catch(error => console.log(error))
+            }).then(() => {
+                this.fetchLikes(this.state.topic.id).catch(r => console.log(r))
+            }).catch(error => console.log(error))
         } catch (error) {
             console.log(error)
         }
     }
+    async fetchLikes(topicID) {
+        try {
+            await axios({
+                method: 'patch',
+                url: Host() + 'api/fetch/quantity/likes',
+                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
+                data: {
+                    topicID: topicID
+                }
+            }).then(r=>{
+                this.setState({
+                    likes: r.data
+                })
+            }).catch(error => {
+                console.log(error)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async fetchDislikes(topicID) {
+        try {
+            await axios({
+                method: 'patch',
+                url: Host() + 'api/fetch/quantity/dislikes',
+                headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
+                data: {
+                    topicID: topicID
+                }
+            }).then(r=>{
+                this.setState({
+                    dislikes: r.data
+                })
+            }).catch(error => {
+                console.log(error)
 
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     async dislikeTopic(topicID) {
         try {
             this.setState({
@@ -98,11 +138,10 @@ class TopicBoxComponent extends React.Component {
                 data: {
                     topicID: topicID
                 }
+            }).then(() => {
+                this.fetchDislikes(this.state.topic.id).catch(r => console.log(r))
             }).catch(error => {
                 console.log(error)
-                this.setState({
-                    fetchedDislike: true
-                })
             })
         } catch (error) {
             console.log(error)
@@ -132,6 +171,7 @@ class TopicBoxComponent extends React.Component {
 
     //RENDER
     creatorName;
+    communityImageURL;
     renderImage(topic) {
         if (typeof topic.imageURL !== 'undefined')
             return (
@@ -286,7 +326,7 @@ class TopicBoxComponent extends React.Component {
                             }}
                                     onClick={() => this.likeTopic(this.state.topic.id)}>
                                 <ThumbUpIcon/>
-
+                                {this.state.likes}
                             </Button>
 
                             <Button
@@ -299,6 +339,7 @@ class TopicBoxComponent extends React.Component {
                                 }}
                                 onClick={() => this.dislikeTopic(this.state.topic.id)}>
                                 <ThumbDownAltIcon/>
+                                {this.state.dislikes}
                             </Button>
                             <Button style={{
                                 display: 'flex',

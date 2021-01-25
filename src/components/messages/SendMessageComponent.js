@@ -8,12 +8,13 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import Cookies from 'universal-cookie';
 import EmojiEmotionsRoundedIcon from '@material-ui/icons/EmojiEmotionsRounded';
 import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
-
-import {ThemeProvider} from "@material-ui/styles";
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 
 class SendMessageComponent extends React.Component {
+
     constructor(params) {
         super(params)
         this.state = {
@@ -21,7 +22,9 @@ class SendMessageComponent extends React.Component {
             imageURL: null,
             subjectID: params.subjectID,
             messageInput: '',
-            sending: false
+            sending: false,
+            errorMessage: null,
+            error: false
         }
         this.SendMessage = this.SendMessage.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -32,47 +35,59 @@ class SendMessageComponent extends React.Component {
             messageInput: event.target.value
         })
     }
-
-    async SendMessage() {
-        this.setState({
-            sending: true
-        })
-        await axios({
-            method: 'post',
-            url: (this.state.isGroup === true) ? Host() + 'api/message/group' : Host() + 'api/message/user',
-            headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
-            data: {
-                message: this.state.messageInput,
-                imageURL: this.state.imageURL,
-                receiverID: this.state.isGroup === true ? null : this.state.subjectID,
-                isGroup: this.state.isGroup,
-                conversationID: this.state.isGroup === true ? this.state.subjectID : ""
-            }
-        })
-            .then(() => {
-                this.setState({
-                    imageURL: null,
-                    // messageInput:null
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        this.setState({
-            sending: false
-        })
+    Alert(props) {
+        return (<MuiAlert elevation={4} variant="filled" {...props}/>)
     }
+    async SendMessage() {
+       try{
+           if(this.state.messageInput.length > 0){
+               this.setState({
+                   sending: true,
+               })
 
-    renderImageModal() {
-        if (this.state.imageURL !== null) {
-            return (
-                <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <img style={{margin: 'auto', width: '70%', borderRadius: '8px'}} alt="message"
-                         src={this.state.imageURL}/>
-                </div>
+               await axios({
+                   method: 'post',
+                   url: (this.state.isGroup === true) ? Host() + 'api/message/group' : Host() + 'api/message/user',
+                   headers: {"Authorization": 'Bearer ' + (new Cookies()).get("JWT")},
+                   data: {
+                       message: this.state.messageInput,
+                       imageURL: this.state.imageURL,
+                       receiverID: this.state.isGroup === true ? null : this.state.subjectID,
+                       isGroup: this.state.isGroup,
+                       conversationID: this.state.isGroup === true ? this.state.subjectID : null
+                   }
+               })
+                   .then(() => {
+                       this.setState({
+                           imageURL: null,
+                           messageInput: ''
+                       })
+                   })
+                   .catch(error => {
+                       this.setState({
+                           error: true,
+                           errorMessage: error.message
+                       })
+                       console.log(error);
 
-            )
-        }
+                   });
+               this.setState({
+                   sending: false
+               })
+           }
+           else{
+               this.setState({
+                   error: true,
+                   errorMessage: "No Content"
+               })
+           }
+       }catch (e) {
+            this.setState({
+                error: true,
+                errorMessage: e.message
+            })
+           console.log(e)
+       }
     }
 
     getFile(event) {
@@ -116,7 +131,7 @@ class SendMessageComponent extends React.Component {
 
     render() {
         return (
-            <ThemeProvider>
+
                 <div className="message_input_content_container">
                     {this.renderSelectedImage()}
                     <div className="message_input_container">
@@ -125,7 +140,7 @@ class SendMessageComponent extends React.Component {
                             variant="outlined"
                             label={this.state.sending === true ? "Sending..." : null}
                             multiline autoAdjustHeight
-                            // defaultValue={this.state.messageInput === null ? "":this.state.messageInput }
+                            value={this.state.messageInput}
                             style={{
                                 backgroundColor: '#303741',
                                 borderRadius: '2px',
@@ -157,8 +172,13 @@ class SendMessageComponent extends React.Component {
                             <SendRoundedIcon style={{color: '#3eaef3'}}/>
                         </Button>
                     </div>
+                    <Snackbar open={this.state.error === true} autoHideDuration={6000} onClose={() => this.setState({
+                        error: false
+                    })}>
+                        <this.Alert
+                            severity={this.state.errorMessage === "No Content" ? "warning":"error"}>{this.state.errorMessage === "No Content" ? "No Content":"Some error occurred, maybe try later("+this.state.errorMessage+")."}</this.Alert>
+                    </Snackbar>
                 </div>
-            </ThemeProvider>
         )
     }
 

@@ -1,23 +1,28 @@
 import axios from 'axios';
-import {DefaultButton, PrimaryButton} from 'office-ui-fabric-react';
-import {FontSizes, FontWeights} from '@fluentui/theme';
 import "../../../style/profile/UserCommunitiesStyle.css"
 import React from 'react'
 import "../../../style/profile/SocialStyle.css"
-import {Persona, PersonaSize} from 'office-ui-fabric-react/lib/Persona';
-import {TextField} from '@fluentui/react';
+import {createMuiTheme} from "@material-ui/core/styles";
+import {ThemeProvider} from "@material-ui/styles";
 import Host from '../../../Host'
-import FollowCommunity from '../../../functions/community/FollowCommunity'
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+
+const theme = createMuiTheme({
+    palette: {
+        type: "dark"
+    }
+});
 
 class CommunitySearchComponent extends React.Component {
     constructor(params) {
         super(params)
         this.state = {
             token: params.token,
-            isModal: params.isModal,
             communities: [],
             date: new Date(),
-            searchInput: ''
+            searchInput: '',
+            maxID: null
         }
         this.fetchData = this.fetchData.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -37,7 +42,7 @@ class CommunitySearchComponent extends React.Component {
 
     tick() {
 
-        this.fetchData();
+        this.fetchData().then(r => console.log(r))
         this.setState({
             date: new Date(),
         });
@@ -48,26 +53,25 @@ class CommunitySearchComponent extends React.Component {
         this.setState({
             searchInput: event.target.value
         })
-        this.fetchData()
+        this.fetchData().then(r => console.log(r))
     }
 
     async fetchData() {
-
-        if (this.state.searchInput !== '') {
+        try{
             await axios({
-                method: 'patch',
-                url: Host() + 'api/search/community',
-                headers: {"Authorization": 'Bearer ' + this.state.token},
-                data: {
-                    communityID: this.state.searchInput
-                }
+                method: 'get',
+                url: Host() + 'api/moderator/in',
+                headers: {"Authorization": 'Bearer ' + this.state.token}
             }).then(res => {
-                console.log("RESPONSE -> " + JSON.stringify(res.data))
-                this.setState({
-                    communities: res.data
-                })
-            })
-                .catch(error => console.log(error))
+                const size = res.data.length
+                if(typeof size !== 'undefined' && size > 0){
+                    this.setState({
+                        communities: res.data
+                    })
+                }
+            }).catch(error => console.log(error))
+        }catch (e) {
+            console.log(e)
         }
     }
 
@@ -75,68 +79,34 @@ class CommunitySearchComponent extends React.Component {
         sessionStorage.setItem("SELECTED_COMMUNITY", JSON.stringify(community))
     }
 
-    renderButtons(community) {
-        console.log("COMMUNITY FOUND -> " + JSON.stringify(community))
-        if (this.state.isModal === false)
-            return (
-                <div>
-                    {(community.role === "") ? <PrimaryButton text="Follow Community"
-                                                              onClick={() => FollowCommunity(community.communityID)}/> :
-                        <DefaultButton text="Quit Community"/>}
-                    <DefaultButton text="See Community" href={'/community/' + community.communityID}/>
-                </div>
-            )
-        else
-            return (
-                <div>
-                    <PrimaryButton text="Select" onClick={() => this.selectCommunity(community)}/>
-                </div>
-            )
-    }
-
     render() {
-
         return (
-            <div>
-                <div className="search_component">
-                    <div>
-                        <p style={{
-                            fontSize: FontSizes.size18,
-                            fontWeight: FontWeights.regular,
-                            textAlign: 'center'
-                        }}>Search Community</p>
-                    </div>
-                    <div className="search_box_container">
-                        <TextField placeholder="Search Community" onChange={this.handleChange}/>
-                    </div>
+            <ThemeProvider theme={theme}>
+                <div >
+                    {this.state.communities.map((subject) =>
+                        <div className={"subject_content_container"}>
 
+                            <Avatar
+                                style={{height: '55px', width: '55px'}}
+                                src={subject.imageURL}
+                                alt="community"
 
-                    <div className="socail_info_container">
+                            />
+                            <ul>
+                                <li style={{fontSize: '17px', fontWeight: '400'}}>
+                                    {subject.name}
+                                </li>
+                                <li style={{fontWeight: '400', color: '#aaadb1', fontSize:'17px'}}>
+                                    {subject.about}
+                                </li>
+                            </ul>
 
-                        {this.state.communities.map((community) =>
-                            <div className="personas_container">
-                                <Persona
-                                    {...{
-                                        imageUrl: community.imageURL,
-                                        text: community.name,
-                                        secondaryText: community.role,
-                                        tertiaryText: community.about
-                                    }}
-                                    size={PersonaSize.size72}
-                                    imageAlt="Conversation picture"
-                                />
-                                {this.renderButtons(community)}
-
-                            </div>
-                        )}
-                    </div>
+                            <Button variant="contained" color="primary" onClick={() => this.selectCommunity(subject)} disableElevation>Select</Button>
+                        </div>
+                    )}
                 </div>
-
-            </div>
-
-
-        );
-
+            </ThemeProvider>
+        )
     }
 }
 

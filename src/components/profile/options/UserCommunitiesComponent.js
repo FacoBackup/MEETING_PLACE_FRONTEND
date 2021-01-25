@@ -70,6 +70,7 @@ class UserCommunitiesComponent extends React.Component {
                     : this.state.communities.map((community) =>
 
                         <div style={{
+                            marginTop:'1vh',
                             width: '20vw',
                             display: 'flex',
                             justifyContent: 'space-between',

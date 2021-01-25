@@ -42,3 +42,14 @@
     border-radius: 8px;
     padding-bottom: 2vh;
 }
+.subject_content_container{
+    width:65%;
+    margin:1vh auto;
+    display:flex;
+    justify-content:space-between;
+    justify-items: center;
+    align-items:center;
+    background-color: #3b424c;
+    border-radius: 8px;
+    padding:10px;
+}

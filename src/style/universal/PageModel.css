@@ -39,14 +39,12 @@
 
 .modal_container {
     display: grid;
-    row-gap: 2vh;
-    grid-template-rows: 1fr 1fr 100fr 1fr;
     justify-content: center;
-    margin: auto;
-    align-content: center;
-    width: 450px;
-    height: 450px;
-    padding: 3vh;
+    padding: 20px;
+    width: 30vw;
+    height: 30vh;
+    margin: 2% auto auto;
+    background-color: #303741;
 }
 
 .modal_title_component {

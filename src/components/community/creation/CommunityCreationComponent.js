@@ -1,27 +1,30 @@
 import {Redirect} from "react-router-dom"
 import axios from 'axios';
-import {DefaultButton, Modal, Persona, PersonaSize, PrimaryButton} from 'office-ui-fabric-react';
-import {FontSizes, FontWeights} from '@fluentui/theme';
-import {TextField} from 'office-ui-fabric-react/lib/TextField';
+import Button from '@material-ui/core/Button'
+import Modal from "@material-ui/core/Modal"
+import Avatar from '@material-ui/core/Avatar'
+import TextField from '@material-ui/core/TextField';
 import "../../../style/community/CommunityCreationComponentStyle.css"
 import React from 'react'
 import CommunitySearchComponent from '../../search/community/CommunitySearchComponent'
 import Host from '../../../Host'
+import Cookies from 'universal-cookie';
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 class CommunityCreationComponent extends React.Component {
     constructor(params) {
         super(params)
         this.state = {
-            token: params.token,
+            token: (new Cookies()).get("JWT"),
             name: '',
             about: '',
-            imageURL: null,
+            communityPic: null,
             relatedCommunity: {},
-            created: false,
-            openModal: false,
-            imageModal: false,
+            created: null,
             date: new Date(),
-            communityModal: false
+            communityModal: false,
+            errorMessage: null
         }
         this.handleChange = this.handleChange.bind(this)
         this.createCommunity = this.createCommunity.bind(this)
@@ -41,12 +44,13 @@ class CommunityCreationComponent extends React.Component {
     }
 
     tick() {
+
         const parsedCommunity = (sessionStorage.getItem("SELECTED_COMMUNITY") !== null) ? JSON.parse(sessionStorage.getItem("SELECTED_COMMUNITY")) : null
         if (typeof this.state.relatedCommunity.communityID === 'undefined')
             this.setState({
                 date: new Date(),
                 relatedCommunity: (parsedCommunity !== null) ? parsedCommunity : this.state.relatedCommunity,
-            }, () => console.log("related COMMUNITY -------------------------> " + JSON.stringify(this.state.relatedCommunity)));
+            });
 
         if (typeof this.state.relatedCommunity.communityID !== 'undefined') {
             sessionStorage.removeItem("SELECTED_COMMUNITY")
@@ -66,29 +70,42 @@ class CommunityCreationComponent extends React.Component {
     }
 
     async createCommunity() {
-        console.log(this.state.token)
-        await axios({
-            method: 'post',
-            url: Host() + 'api/community',
-            headers: {"Authorization": 'Bearer ' + this.state.token},
-            data: {
-                about: this.state.about,
-                name: this.state.name,
-                relatedCommunityID: this.state.relatedCommunity.communityID !== 'undefined' ? this.state.relatedCommunity.communityID : null,
-                imageURL: this.state.imageURL
-            }
-        }).then(() => {
-            this.setState({
-                created: true
+        try{
+            await axios({
+                method: 'post',
+                url: Host() + 'api/community',
+                headers: {"Authorization": 'Bearer ' + this.state.token},
+                data: {
+                    about: this.state.about,
+                    name: this.state.name,
+                    relatedCommunityID: this.state.relatedCommunity.communityID !== 'undefined' ? this.state.relatedCommunity.communityID : null,
+                    pic: this.state.communityPic
+                }
+            }).then(() => {
+                this.setState({
+                    created: true
+                })
+            }).catch(error => {
+                this.setState({
+                    created: false,
+                    errorMessage: error.message
+                })
+                console.log(error)
             })
-        })
-            .catch(error => console.log(error))
+        }catch (e){
+            this.setState({
+                created: false,
+                errorMessage: e.message
+            })
+            console.log(e)
+        }
+
     }
 
-    getFile(event) {
+    getPic(event) {
 
         this.setState({
-            imageURL: null
+            communityPic: null
         })
 
         let reader = new FileReader();
@@ -96,193 +113,136 @@ class CommunityCreationComponent extends React.Component {
         if (!event[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
             alert('not an image')
             this.setState({
-                imageURL: null
+                communityPic: null
             })
         } else {
             reader.readAsDataURL(event[0]);
             reader.onload = () => {
                 this.setState({
-                    imageURL: reader.result
+                    communityPic: reader.result
                 })
             }
         }
     }
 
     imageRender() {
-        if (this.state.imageURL !== null)
+        if (this.state.communityPic !== null)
             return (
                 <div>
                     <h5 style={{textAlign: 'center'}}>Selected Image</h5>
                     <div style={{display: 'flex', justifyContent: 'center'}}>
 
-                        <img style={{margin: 'auto', width: '70%', borderRadius: '8px'}} alt="topic"
-                             src={this.state.imageURL}/>
+                        <img style={{margin: 'auto', width: '20vw', borderRadius: '8px'}} alt="topic"
+                             src={this.state.communityPic}/>
                     </div>
                 </div>
 
 
             )
     }
-
+    Alert(props) {
+        return (<MuiAlert elevation={4} variant="filled" {...props}/>)
+    }
     renderSelectedCommunity() {
-        if (typeof this.state.relatedCommunity.communityID !== 'undefined')
+        if (typeof this.state.relatedCommunity.communityID !== 'undefined' && (this.state.relatedCommunity.role !== null && typeof this.state.relatedCommunity.role !== 'undefined') )
             return (
-                <div>
-                    <h5 style={{textAlign: 'center'}}>Selected Community</h5>
-                    <div className="personas_container">
-
-                        <Persona
-                            {...{
-                                imageUrl: (this.state.relatedCommunity.imageURL === null) ? this.state.relatedCommunity.imageURL : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaNwMYAh1BP0Zhiy6r_gvjMMegcosFo70BUw&usqp=CAU",
-                                text: this.state.relatedCommunity.name,
-                                secondaryText: this.state.relatedCommunity.role
-                            }}
-                            size={PersonaSize.size48}
-                            imageAlt="Community picture"
-                        />
-                    </div>
+                <div className="personas_container">
+                    <Avatar src={this.state.relatedCommunity.imageURL} style={{height:'65px', width:'65px'}} alt={"community"}/>
+                    <ul>
+                        <li>{this.state.relatedCommunity.name}</li>
+                        <li>{this.state.relatedCommunity.about}</li>
+                    </ul>
                 </div>
-
             )
     }
 
     modalRender() {
 
-        if (this.state.imageModal === true && this.state.communityModal === false)
-            return (
-                <Modal
-                    titleAriaId={"TESTE"}
-                    isOpen={true}
-                    onDismiss={true}
-                    isBlocking={false}
-
-
-                >
-                    <div className='modal_container'>
-                        <div className="modal_title_component">
-                            <h2>Upload an pic for your new community</h2>
-                        </div>
-                        <div className="modal_top_component" style={{display: 'flex', justifyContent: 'center'}}>
-                            <input type="file" name="file" onChange={event => this.getFile(event.target.files)}/>
-                        </div>
-                        <div className="modal_middle_component">
-                            {this.imageRender()}
-                        </div>
-                        <div className="modal_bottom_component"
-                             style={{display: 'flex', justifyContent: 'space-between'}}>
-                            {this.state.imageURL === null ?
-                                <DefaultButton text="Cancel" onClick={() => this.setState({
-                                    imageModal: false,
-                                    communityModal: false,
-                                    openModal: false,
-
-                                })}/> :
-                                <DefaultButton text="Remove Image" onClick={() => this.setState({
-                                    imageModal: false,
-                                    communityModal: false,
-                                    openModal: false,
-                                    imageURL: null
-                                })}/>
-                            }
-
-                            <PrimaryButton text="Choose" onClick={() => this.setState({
-                                imageModal: false,
-                                communityModal: false,
-                                openModal: false
-                            })}/>
-                        </div>
+        return (
+            <Modal
+                open={this.state.communityModal}
+                onClose={() => this.setState({
+                    communityModal: false
+                })}
+            >
+                <div className='modal_container'>
+                    <div style={{textAlign:'center'}}>
+                        <h3 style={{fontWeight: '500'}}>Link your community to another one</h3>
+                        <p style={{fontWeight: '500', color: '#aaadb1'}}>The members of this community will appear in the main community too.</p>
+                        <p style={{fontWeight: '500', color: '#aaadb1'}}>You have to be a moderator in the main community to be able to link the two.</p>
                     </div>
-                </Modal>
-            )
+                    <CommunitySearchComponent token={this.state.token}/>
+                    <Button onClick={() => this.setState({
+                        communityModal: false
+                    })} variant="contained" disableElevation>Cancel</Button>
 
-        else if (this.state.communityModal === true && this.state.imageModal === false)
-            return (
-                <Modal
-                    titleAriaId={"TESTE"}
-                    isOpen={true}
-                    onDismiss={true}
-                    isBlocking={false}
-
-                >
-                    <div className='modal_container'>
-                        <div className="modal_title_component">
-                            <h2>Link your community to another one</h2>
-                            <p>The members of this community will apear in the main community too.</p>
-                            <p>You have to be a moderator in the main community to be able to link the two.</p>
-                        </div>
-                        <div className="modal_top_component">
-                            <CommunitySearchComponent token={this.state.token} isModal={true}/>
-                        </div>
-                        <div className="modal_bottom_component" style={{margin: 'auto'}}>
-                            <DefaultButton text="Cancel" onClick={() => this.setState({
-                                imageModal: false,
-                                communityModal: false,
-                                openModal: false,
-                                imageURL: null
-                            })}/>
-                        </div>
-                    </div>
-                </Modal>
-            )
+                </div>
+            </Modal>
+        )
     }
 
+
     render() {
-        if (this.state.created === false)
-            return (
-                <div>
-                    <div className="community_creation_component">
-                        <div className="community_creation_title">
-                            <p style={{fontSize: FontSizes.size20, fontWeight: FontWeights.regular}}>Create Your Own
-                                Community</p>
-                        </div>
-                        <div className="community_creation_fields">
-                            <TextField placeholder="Name" name='name' onChange={this.handleChange}/>
-                            <TextField placeholder="About This Community" name='about' onChange={this.handleChange}/>
-                            {typeof this.state.relatedCommunity.communityID === 'undefined' ?
-                                <div>
-                                    {this.imageRender()}
-                                    {this.renderSelectedCommunity()}
-                                </div> :
-                                <div>
-                                    {this.renderSelectedCommunity()}
-                                    {this.imageRender()}
-                                </div>
-                            }
-                        </div>
-                        <div className="community_creation_buttons">
-                            {this.modalRender()}
-                            {(typeof this.state.relatedCommunity.communityID === 'undefined') ?
-                                <DefaultButton text="Related Community" onClick={() => this.setState({
+        return (
 
-                                    imageModal: false,
-                                    communityModal: true
-                                })}/> :
-                                <DefaultButton text="Remove Community" onClick={() => this.setState({
-                                    relatedCommunity: {}
-                                })}/>
-                            }
-                            {this.state.imageURL === null ?
-                                <DefaultButton text="Upload Image" onClick={() => this.setState({
-
-                                    imageModal: true,
-                                    communityModal: false
-                                })}/> :
-                                <DefaultButton text="Remove Image" onClick={() => this.setState({
-                                    imageURL: null
-                                })}/>
-                            }
-                            <PrimaryButton text="Create" onClick={this.createCommunity}/>
-                        </div>
-                    </div>
+            <div className="community_creation_component">
+                <div className="community_creation_title">
+                    <p>Create a
+                        Community</p>
                 </div>
-            )
-        else {
-            alert("Created With Success")
-            return (
-                <Redirect to={'/'}/>
-            )
-        }
+                <div className="community_creation_fields">
+                    <TextField variant="outlined" label="Name" name='name' style={{width:'35vw'}} onChange={this.handleChange}/>
+                    <TextField variant="outlined" label="About This Community" name='about' onChange={this.handleChange}/>
 
+                    {this.imageRender()}
+                    {this.renderSelectedCommunity()}
+
+
+                </div>
+                <div className="community_creation_buttons">
+                    {this.modalRender()}
+                    {(typeof this.state.relatedCommunity.communityID === 'undefined') ?
+                        <Button  variant="contained" disableElevation onClick={() => this.setState({
+
+                            imageModal: false,
+                            communityModal: true
+                        })}>Set Main Community</Button> :
+                        <Button variant="contained" disableElevation style={{color:'white', backgroundColor:'red'}} onClick={() => this.setState({
+                            relatedCommunity: {}
+                        })}>Remove Community</Button>
+                    }
+                    {this.state.communityPic === null ?
+                        <div>
+                            <input id="community_pic" type="file" style={{display: 'none'}}
+                                   onChange={event => this.getPic(event.target.files)}/>
+                            <label htmlFor="community_pic">
+
+                                <Button
+                                    component="span"
+                                    variant="contained"
+                                    color="default"
+                                    disableElevation
+                                >
+
+                                    Upload image
+                                </Button>
+                            </label>
+                        </div>:
+                        <Button variant="contained" disableElevation style={{color:'white', backgroundColor:'red'}} onClick={() => this.setState({
+                            communityPic: null
+                        })}>Remove Image</Button>
+                    }
+                    <Button variant="contained" disableElevation color="primary" onClick={this.createCommunity}>Create</Button>
+                </div>
+                <Snackbar open={this.state.created !== null} autoHideDuration={4000} onClose={() => this.setState({
+                    created: null,
+                    errorMessage: null
+                })}>
+                    <this.Alert
+                        severity={this.state.created? "success":"error"}>{!this.state.created ? ("Some error occurred ("+this.state.errorMessage+")") : "Created With Success"}</this.Alert>
+                </Snackbar>
+            </div>
+        )
     }
 }
 

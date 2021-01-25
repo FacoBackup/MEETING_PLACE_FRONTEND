@@ -1,5 +1,4 @@
 import React from 'react';
-import {FontSizes, FontWeights} from '@fluentui/theme';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import "../../../style/universal/PageModel.css"
@@ -9,6 +8,15 @@ import Avatar from '@material-ui/core/Avatar'
 import {Redirect} from 'react-router-dom';
 import Host from '../../../Host'
 import "../../../style/profile/DedicatedProfile.css"
+import Button from '@material-ui/core/Button'
+import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
+
+const theme = createMuiTheme({
+    palette: {
+        type: "dark"
+    }
+});
 
 class FollowersComponent extends React.Component {
     constructor(params) {
@@ -26,7 +34,7 @@ class FollowersComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchData();
+        this.fetchData().catch(r => console.log(r))
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -100,13 +108,13 @@ class FollowersComponent extends React.Component {
         if (this.state.redirect === false)
             return (
                 <div>
+                <ThemeProvider theme={theme}>
                     <p style={{fontSize: '20px', fontWeight: '500', textAlign: 'center'}}>Followers</p>
                     {(this.state.followers.length === 0 && this.state.userID === (new Cookies()).get("ID")) ?
                         <div>
                             <p style={{
                                 textAlign: 'center',
-                                fontSize: FontSizes.size16,
-                                fontWeight: FontWeights.regular
+                                fontWeight: '500'
                             }}>Looks like no one follows you yet.</p>
                         </div>
                         : this.state.followers.map((follower) =>
@@ -135,13 +143,16 @@ class FollowersComponent extends React.Component {
                                             {follower.userName}
                                         </li>
                                     </ul>
+                                    {parseInt((new Cookies()).get("ID")) !== follower.userID?
+                                        <Button variant={"contained"} href={"/profile/" + follower.userID} disableElevation
+                                             style={{marginLeft: '15px'}}>SEE</Button>: null}
+                                    {parseInt((new Cookies()).get("ID")) !== follower.userID?
+                                        <Button variant={"contained"} color={"primary"} href={"/chat/" + follower.userID+"/false/null"} disableElevation
+                                                style={{marginLeft: '15px'}}><ChatRoundedIcon/></Button>: null}
                                 </div>
-                            // <div className="personas_container">
 
-                            //     <DefaultButton  text ="See Profile"  href={"/profile/"+follower.email+'/0'}/>
-                            //     <PrimaryButton onClick={() => this.setRedirect(follower.email)} text="Send Message"/>
-                            // </div>
                         )}
+                </ThemeProvider>
                 </div>
             );
         else {

@@ -39,7 +39,12 @@
     display: flex;
     align-items: center;
 }
+.community_modal_container {
+    min-width: 45vw;
 
+    padding: 20px;
+    background-color: #303741;
+}
 .notification_modal_container {
     width: 40vw;
     height: 40vh;

@@ -6,8 +6,11 @@ import Host from '../../../Host'
 import {FontSizes, FontWeights} from '@fluentui/theme';
 import Cookies from 'universal-cookie';
 import Avatar from '@material-ui/core/Avatar'
+import Button from "@material-ui/core/Button";
 
 class CommunityUsersComponent extends React.Component {
+    communityName;
+    userImageURL;
     constructor(params) {
         super(params)
         this.state = {
@@ -20,19 +23,20 @@ class CommunityUsersComponent extends React.Component {
     }
 
     componentDidUpdate(lastParams) {
+
         console.log(JSON.stringify(lastParams.options !== this.props.options))
         if (lastParams.options !== this.props.options) {
             this.setState({
                 members: [],
                 options: this.props.options
             })
-            this.fetchOptions(this.props.options)
+            this.fetchOptions(this.props.options).catch(r => console.log(r))
         }
 
     }
 
     componentDidMount() {
-        this.fetchOptions()
+        this.fetchOptions().catch(r => console.log(r))
     }
 
     renderPageName() {
@@ -230,7 +234,8 @@ class CommunityUsersComponent extends React.Component {
                         backgroundColor: '#3b424c',
                         borderRadius: '8px',
                         paddingRight: '10px',
-                        paddingLeft: '10px'
+                        paddingLeft: '10px',
+                        marginTop:'1vh'
                     }}>
 
                         <Avatar
@@ -256,15 +261,11 @@ class CommunityUsersComponent extends React.Component {
                                     {member.communityName}
                                 </li> : null}
                         </ul>
-
+                        {parseInt((new Cookies()).get("ID")) !== member.userID?
+                            <Button variant={"contained"} href={"/profile/" + member.userID} disableElevation
+                                    style={{marginLeft: '15px'}}>SEE</Button>: null}
 
                     </div>
-                    // { (member.userEmail!== (new Cookies()).get("ID"))? <DefaultButton text="Send Message" href={"/chat/"+member.userEmail+"/false/"+member.userEmail}/> : null}
-                    // { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "MODERATOR" && this.state.role === "MODERATOR")? <DefaultButton text="Promote User" onClick={() => {this.promote(member.userEmail, member.affiliatedCommunityID)}}/>: null}
-                    // { (member.userEmail!== (new Cookies()).get("ID") && member.role !== "FOLLOWER" && this.state.role === "MODERATOR")?<DefaultButton text="Lower User" onClick={() => {this.lower(member.userEmail, member.affiliatedCommunityID)}}/>: null}
-                    // { (member.userEmail!== (new Cookies()).get("ID") && this.state.role === "MODERATOR")? <DefaultButton style={{backgroundColor: "red", color:"white"}} text="Remove User" onClick={() => {this.removeUser(member.userEmail, member.affiliatedCommunityID)}}/>: null}
-
-                    // </div>
                 ))}
             </div>
 

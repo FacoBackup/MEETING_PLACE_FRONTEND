@@ -5,3 +5,13 @@
     width: 40vw;
     
 }
+.notification_content_container{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    background-color: #3b424c;
+    padding: 10px;
+    margin-top: 1vh;
+    border-radius: 8px;
+}

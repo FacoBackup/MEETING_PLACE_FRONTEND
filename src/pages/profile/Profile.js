@@ -6,7 +6,6 @@ import "../../style/universal/DedicatedPagesStyle.css"
 import Conversations from "../../components/conversations/bar/ConversationBarComponent"
 import axios from 'axios';
 import SettingsIcon from '@material-ui/icons/Settings';
-import {DefaultButton, PrimaryButton} from 'office-ui-fabric-react';
 import TopicComponent from '../../components/topics/TopicComponent'
 import AboutComponent from '../../components/profile/options/UserAboutComponent'
 import AboutProfileComponent from '../../components/profile/options/UserAboutComponent'
@@ -23,10 +22,21 @@ import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import HighlightIcon from '@material-ui/icons/Highlight';
 import HelpIcon from '@material-ui/icons/Help';
 import ProfileSettingsComponent from '../../components/profile/options/ProfileSettingsComponent'
+import Follow from '../../functions/social/FollowUser'
+import Unfollow from '../../functions/social/UnfollowUser'
+import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+
+
+const theme = createMuiTheme({
+    palette: {
+        type: "dark"
+    }
+});
 
 class Profile extends React.Component {
+    isFollower;
     constructor({match}) {
-        super()
+        super({match})
         this.state = {
             userID: match.params.userID,
             token: (new Cookies()).get("JWT"),
@@ -41,7 +51,7 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchData()
+        this.fetchData().catch(r => console.log(r))
     }
 
     async fetchData() {
@@ -58,35 +68,11 @@ class Profile extends React.Component {
                 this.setState({
                     profile: res.data
                 })
-            })
-                .catch(error => console.log(error))
+            }).catch(error => console.log(error))
         } catch (error) {
             console.log(error)
         }
     }
-
-    renderFollowButton() {
-        if (this.state.userID !== (new Cookies()).get("ID"))
-            return (
-                <div className="dedicated_action_bar_buttons">
-
-                    <DefaultButton style={{fontSize: '16px'}} text='Send Message'
-                                   href={'/chat/' + this.state.userID + "/false/" + this.state.userID}/>
-                    <PrimaryButton style={{fontSize: '16px'}} text='Follow'/>
-                    <DefaultButton style={{fontSize: '16px'}} text='Topics'
-                                   href={'/profile/' + this.state.userID + '/0'}/>
-                    <DefaultButton style={{fontSize: '16px'}} text='Followers'
-                                   href={'/profile/' + this.state.userID + '/2'}/>
-                    <DefaultButton style={{fontSize: '16px'}} text='Following'
-                                   href={'/profile/' + this.state.userID + '/1'}/>
-                    <DefaultButton style={{fontSize: '16px'}} text='Communities'
-                                   href={'/profile/' + this.state.userID + '/3'}/>
-
-                </div>
-
-            )
-    }
-
     optionSelect() {
         switch (true) {
             case this.state.followers: {
@@ -135,13 +121,19 @@ class Profile extends React.Component {
             }
         }
     }
+    unfollow(){
 
+        Unfollow(this.state.profile.id).catch(r => console.log(r))
+        window.location.reload()
+    }
+    follow(){
 
+        Follow(this.state.profile.id).catch(r => console.log(r))
+        window.location.reload()
+    }
     render() {
-
         return (
             <div>
-
                 <div className="profile_center_component">
                     <div className='profile_background_image_container'>
                         <img className='profile_background_image' alt="BACKGROUD"
@@ -153,7 +145,7 @@ class Profile extends React.Component {
                             <div className='profile_container'>
                                 <div style={{marginTop: '1vh', textAlign: 'center'}}>
                                     <Avatar
-                                        style={{margin: 'auto', height: '85px', width: '85px'}}
+                                        style={{margin: 'auto', height: '4vw', width: '4vw'}}
                                         src={this.state.profile.imageURL}
                                         alt="user"
                                     />
@@ -172,15 +164,6 @@ class Profile extends React.Component {
                                         <PhoneRoundedIcon style={{marginRight: '10px'}}/>
                                         {this.state.profile.phoneNumber}
                                     </div>
-
-                                    {/*<div style={{*/}
-                                    {/*    display: 'flex',*/}
-                                    {/*    justifyContent: 'center',*/}
-                                    {/*    alignItems: 'center',*/}
-                                    {/*    color: '#aaadb1'*/}
-                                    {/*}}>*/}
-                                    
-
                                 </div>
                                 <div style={{margin:'auto'}}>
                                     <ButtonGroup size="large" variant="text">
@@ -228,12 +211,33 @@ class Profile extends React.Component {
                                     <HighlightIcon style={{height: '33px', width: '33px', color: '#aaadb1'}}/>
                                     Highlights
                                 </Button>
-                                <Button variant="outlined" disabled style={{gridColumn: '1', gridRow: '2'}}
-                                        className='option_content'>
+                                {parseInt((new Cookies()).get("ID")) !== this.state.profile.id?
+                                    <Button
+                                        disableElevation
+                                        variant={"contained"}
+                                        style={{backgroundColor: (!this.state.profile.isFollower ?"" : "red"),
+                                            color:(!this.state.profile.isFollower ?"" : "white"),
+                                            gridColumn: '1',
+                                            gridRow: '2'}}
+                                        color={(!this.state.profile.isFollower ? "primary" : "")}
+                                        className='option_content'
+                                        onClick={() => (this.state.profile.isFollower? this.unfollow():this.follow())}>
 
-                                    <HelpIcon style={{height: '33px', width: '33px', color: '#aaadb1'}}/>
-                                    help
-                                </Button>
+                                        {this.state.profile.isFollower === true ? "UNFOLLOW" : "FOLLOW"}
+                                    </Button>
+                                    : <Button
+                                            disableElevation
+                                            disabled
+                                            variant={"outlined"}
+                                            style={{gridColumn: '1', gridRow: '2'}}
+                                            className='option_content'
+                                            >
+                                            <div style={{display:'flex', alignContent:'center', alignItems:'center'}}>
+                                                <HelpIcon style={{height: '33px', width: '33px', color: '#aaadb1'}}/>
+                                                help
+                                            </div>
+                                        </Button>}
+
                                 <Button variant={this.state.community === true ? "filled" : "outlined"} style={{
                                     gridColumn: '2',
                                     gridRow: '1',
@@ -248,8 +252,11 @@ class Profile extends React.Component {
                                         })}
                                 >
                                     <PeopleAltRoundedIcon style={{height: '33px', width: '33px', color: '#aaadb1'}}/>
-                                    MY Communities
+                                    {parseInt((new Cookies()).get("ID") )=== this.state.profile.id ? "Communities": "Communities"}
                                 </Button>
+
+
+
                                 <Button
                                     variant={this.state.settings === true ? "filled" : "outlined"}
                                     style={{

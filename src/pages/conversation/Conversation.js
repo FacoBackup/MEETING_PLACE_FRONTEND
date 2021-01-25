@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Cookies from 'universal-cookie';
-import "../../style/conversation/ChatStyle.css"
 import {Redirect} from 'react-router-dom'
 import NewMessageComponent from '../../components/messages/NewNewMessageComponent'
 import "../../style/universal/PageModel.css"
@@ -8,13 +7,23 @@ import ProfileBar from "../../components/profile/bar/ProfileBarComponent.js"
 import ConversationsBar from "../../components/conversations/bar/ConversationBarComponent";
 import {getTheme} from '@fluentui/react';
 import SendMessageComponent from '../../components/messages/SendMessageComponent'
+import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+    palette: {
+        type: "dark"
+    }
+});
+
 
 class Conversation extends Component {
+    subjectID;
 
     constructor({match}) {
         super({match})
         this.state = {
-            receiverEmail: match.params.username,
+            subjectID: match.params.subjectID,
+            conversationID: match.params.conversationID,
             isGroup: match.params.isGroup === 'true',
             token: (new Cookies()).get("JWT"),
             userID: (new Cookies()).get("ID"),
@@ -38,29 +47,31 @@ class Conversation extends Component {
     render() {
         if (typeof this.state.token !== 'undefined') {
             return (
-                <div className="page_container">
+                <ThemeProvider theme={theme}>
+                    <div className="page_container">
 
-                    <div className="left_components">
-                        <ProfileBar/>
+                        <div className="left_components">
+                            <ProfileBar/>
 
+                        </div>
+                        <div className="center_component">
+
+
+                            <NewMessageComponent isGroup={this.state.isGroup} token={this.state.token}
+                                                 conversationID={this.state.conversationID}
+                                                 subjectID={this.state.subjectID}/>
+
+                            <SendMessageComponent
+                                subjectID={this.state.isGroup === true ? this.state.conversationID : this.state.subjectID}
+                                isGroup={this.state.isGroup}/>
+
+                        </div>
+
+                        <div className="right_components">
+                            <ConversationsBar/>
+                        </div>
                     </div>
-                    <div className="center_component">
-
-
-                        <NewMessageComponent isGroup={this.state.isGroup} token={this.state.token}
-                                             conversationID={this.state.conversationID}
-                                             subjectID={this.state.receiverName}/>
-
-                        <SendMessageComponent
-                            subjectID={this.state.isGroup === true ? this.state.conversationID : this.state.receiverName}
-                            isGroup={this.state.isGroup}/>
-
-                    </div>
-
-                    <div className="right_components">
-                        <ConversationsBar/>
-                    </div>
-                </div>
+                </ThemeProvider>
             );
         } else
             return (<Redirect to="/authenticate"/>);
