@@ -281,36 +281,26 @@ class TopicCreationComponent extends React.Component {
                         }}
                         name='body'
                         onChange={this.handleChange}/>
-                   <div className={"tags_container"}>
-                       <div className={"tag_selection_container"}>
-                           <TextField
-                               placeholder="Tag"
-                               disabled
-                               name='tag'
-                               variant={"outlined"}
-                               style={{width:"81.5%"}}
-                               InputProps={{
-                                   style: {
-                                       color: 'white'
-                                   }
-                               }}
-                               onChange={this.handleChange}/>
-                           <Button disabled
-                                   disableElevation style={{color:'white', textTransform:'capitalize'}}
-                               variant='outlined'
-                           >add</Button>
-                       </div>
-                       {/*<div className={"tag_content_container"}>*/}
-
-                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
-                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
-                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
-                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
-                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
-                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
-
-                       {/*</div>*/}
-                   </div>
+                   {/*<div className={"tags_container"}>*/}
+                   {/*    <div className={"tag_selection_container"}>*/}
+                   {/*        <TextField*/}
+                   {/*            placeholder="Tag"*/}
+                   {/*            disabled*/}
+                   {/*            name='tag'*/}
+                   {/*            variant={"outlined"}*/}
+                   {/*            style={{width:"81.5%"}}*/}
+                   {/*            InputProps={{*/}
+                   {/*                style: {*/}
+                   {/*                    color: 'white'*/}
+                   {/*                }*/}
+                   {/*            }}*/}
+                   {/*            onChange={this.handleChange}/>*/}
+                   {/*        <Button disabled*/}
+                   {/*                disableElevation style={{color:'white', textTransform:'capitalize'}}*/}
+                   {/*            variant='outlined'*/}
+                   {/*        >add</Button>*/}
+                   {/*    </div>*/}
+                   {/*</div>*/}
                     {typeof this.state.selectedCommunity.communityID === 'undefined' ?
                         <div>
                             <div style={{marginBottom: '1vh'}}>
