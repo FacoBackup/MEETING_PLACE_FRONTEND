@@ -160,7 +160,7 @@ class Profile extends React.Component {
                                 </div>
                                 <div style={{margin:'auto'}}>
                                     <ButtonGroup size="large" variant="text">
-                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px', width:'7.666666667vw',textTransform:'capitalize',color:(this.state.topics === true? "#39adf6": "#aaadb1")}}
+                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px', width:'7vw',textTransform:'capitalize',color:(this.state.topics === true? "#39adf6": "#aaadb1")}}
 
                                                 disableElevation
                                                 onClick={() => this.setState({
@@ -172,7 +172,7 @@ class Profile extends React.Component {
                                                 })}
                                         >Topics <p style={{color: 'white'}}>{this.state.profile.topics}</p></Button>
 
-                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px',width:'7.666666667vw',textTransform:'capitalize',color:(this.state.followers === true? "#39adf6": "#aaadb1")}}
+                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px',width:'7vw',textTransform:'capitalize',color:(this.state.followers === true? "#39adf6": "#aaadb1")}}
 
                                                 disableElevation
                                                 onClick={() => this.setState({
@@ -185,7 +185,7 @@ class Profile extends React.Component {
                                         >Followers <p style={{color: 'white'}}>{this.state.profile.followers}</p>
                                         </Button>
 
-                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px',width:'7.666666667vw',textTransform:'capitalize',color:(this.state.following === true? "#39adf6": "#aaadb1")}}
+                                        <Button style={{display: 'grid', lineHeight: '7px', fontSize: '15px',width:'7vw',textTransform:'capitalize',color:(this.state.following === true? "#39adf6": "#aaadb1")}}
                                                 disableElevation
                                                 onClick={() => this.setState({
                                                     topics: false,
@@ -210,8 +210,8 @@ class Profile extends React.Component {
                                     <Button
                                         disableElevation
                                         variant={"contained"}
-                                        style={{backgroundColor: (!this.state.profile.isFollower ?"" : "red"),
-                                            color:(!this.state.profile.isFollower ?"" : "white"),
+                                        style={{backgroundColor: (!this.state.profile.isFollower ?"#39adf6" : "#e34f50"),
+                                            color:("white"),
                                             gridColumn: '1',
                                             gridRow: '2',
                                             textTransform:'capitalize',
@@ -220,7 +220,7 @@ class Profile extends React.Component {
                                         className='option_content'
                                         onClick={() => (this.state.profile.isFollower? this.unfollow():this.follow())}>
 
-                                        {this.state.profile.isFollower === true ? "UNFOLLOW" : "FOLLOW"}
+                                        {this.state.profile.isFollower === true ? "Unfollow" : "Follow"}
                                     </Button>
                                     : <Button
                                             disableElevation

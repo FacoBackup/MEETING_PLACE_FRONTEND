@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {FontSizes, FontWeights} from '@fluentui/theme';
 import React from 'react'
 import "../../styles/SocialStyle.css"
 import Avatar from '@material-ui/core/Avatar'
@@ -22,7 +21,7 @@ class UserCommunitiesComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchData();
+        this.fetchData().catch(r => console.log(r))
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -62,12 +61,8 @@ class UserCommunitiesComponent extends React.Component {
             <div>
                 <p style={{fontSize: '20px', fontWeight: '500', textAlign: 'center'}}>Communities</p>
                 {(this.state.communities.length === 0 && this.state.userID === (new Cookies()).get("ID")) ?
-
-                    <p style={{fontSize: FontSizes.size16, fontWeight: FontWeights.regular, textAlign: 'center'}}>Looks
-                        like you are not a member of any community, try searching by one.</p>
-
-                    : this.state.communities.map((community) =>
-
+                    <p style={{textAlign: 'center'}}>Looks like you are not a member of any community, try searching by one.</p>
+                    : this.state.communities.map((community) =>(
                         <div style={{
                             marginTop:'1vh',
                             width: '20vw',
@@ -97,13 +92,14 @@ class UserCommunitiesComponent extends React.Component {
                                     </li>
                                 </ul>
                             </div>
-                            <Button style={{marginLeft: '10px'}} variant="contained" disableElevation color="default"
-                                    href={"/component/" + community.communityID}>See</Button>
+                            <Button style={{marginLeft: '10px', textTransform:'capitalize'}} variant="outlined" disableElevation color="default"
+                                    href={"/community/" + community.communityID}>See</Button>
                         </div>
+                        )
                     )}
             </div>
         );
     }
 }
 
-export default UserCommunitiesComponent
+export default UserCommunitiesComponent;

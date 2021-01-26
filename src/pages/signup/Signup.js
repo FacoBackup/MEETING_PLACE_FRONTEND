@@ -55,7 +55,7 @@ class SignUp extends Component {
                     email: this.state.email,
                     password: this.state.password,
                     name: this.state.name.toLowerCase(),
-                    userName: "#"+this.state.userName.replace(" ", '').toLowerCase() + "_" + this.state.randomNumber,
+                    userName: "@"+this.state.userName.replace(" ", '').toLowerCase() + this.state.randomNumber,
                     gender: this.state.gender,
                     birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
                     phoneNumber: (this.state.phone).replace(" ", ""),
@@ -110,7 +110,7 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
 
                                 />
-                                <div sytle={{display: 'grid', justifyContent: 'center', lineBreak:'auto'}}>
+                                <div >
                                     <TextField
                                     style={{width:'100%'}}
                                         label="User name"
@@ -168,10 +168,16 @@ class SignUp extends Component {
                             </div>
 
                             <div className="sign_up_buttons_container">
-                                <Button disableElevation style={{fontWeight: 'bold'}} color="default "
-                                        variant='contained' href="/authenticate"> Sign in</Button>
-                                <Button disableElevation style={{fontWeight: 'bold', float: 'right'}} color="primary"
-                                        variant='contained' onClick={this.handleSubmit}>Create Account</Button>
+                                <Button disableElevation style={{color:'white', textTransform:'capitalize'}}
+                                        variant='outlined'
+                                        href="/authenticate">Sign in</Button>
+                                <Button
+                                    disableElevation
+                                    style={{border:'#39adf6 2px solid', color:'white', textTransform:'capitalize', float:'right'}}
+                                    variant='outlined'
+                                    onClick={this.handleSubmit}
+                                    >Create Account</Button>
+
                             </div>
 
                         </div>

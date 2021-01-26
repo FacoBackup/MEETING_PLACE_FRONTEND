@@ -109,7 +109,9 @@ class FollowersComponent extends React.Component {
             return (
                 <div>
                 <ThemeProvider theme={theme}>
-                    <p style={{fontSize: '20px', fontWeight: '500', textAlign: 'center'}}>Followers</p>
+                    <div className={"component_title_container"} style={{width:'100%', justifyContent:'center', marginBottom:'2vh'}}>
+                        <p style={{textAlign: 'center'}}>Followers</p>
+                    </div>
                     {(this.state.followers.length === 0 && this.state.userID === (new Cookies()).get("ID")) ?
                         <div>
                             <p style={{
@@ -119,37 +121,36 @@ class FollowersComponent extends React.Component {
                         </div>
                         : this.state.followers.map((follower) =>
 
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    alignContent: 'center',
-                                    backgroundColor: '#3b424c',
-                                    borderRadius: '8px',
-                                    paddingRight: '10px',
-                                    paddingLeft: '10px'
-                                }}>
-                                    <Avatar
-                                        style={{height: '55px', width: '55px'}}
-                                        src={follower.imageURL}
-                                        alt="user"
+                            <div className={"social_content_container"}>
+                                <Avatar
+                                    style={{height: '55px', width: '55px'}}
+                                    src={follower.imageURL}
+                                    alt="user"
 
-                                    />
-                                    <ul>
-                                        <li style={{fontSize: '17px', fontWeight: '400'}}>
-                                            {follower.name}
-                                        </li>
-                                        <li style={{fontSize: '17px', fontWeight: '400', color: '#aaadb1'}}>
-                                            {follower.userName}
-                                        </li>
-                                    </ul>
-                                    {parseInt((new Cookies()).get("ID")) !== follower.userID?
-                                        <Button variant={"contained"} href={"/profile/" + follower.userID} disableElevation
-                                             style={{marginLeft: '15px'}}>SEE</Button>: null}
-                                    {parseInt((new Cookies()).get("ID")) !== follower.userID?
-                                        <Button variant={"contained"} color={"primary"} href={"/chat/" + follower.userID+"/false/null"} disableElevation
-                                                style={{marginLeft: '15px'}}><ChatRoundedIcon/></Button>: null}
-                                </div>
+                                />
+                                <ul>
+                                    <li style={{fontSize: '17px', fontWeight: '400'}}>
+                                        {follower.name}
+                                    </li>
+                                    <li style={{fontSize: '17px', fontWeight: '400', color: '#aaadb1'}}>
+                                        {follower.userName}
+                                    </li>
+                                </ul>
+                                {parseInt((new Cookies()).get("ID")) !== follower.userID?
+                                    <Button
+                                        disableElevation
+                                        style={{ color:'white', textTransform:'capitalize',marginLeft: '15px'}}
+                                        variant='outlined'
+                                        href={"/profile/" + follower.userID}
+                                    >See</Button>: null}
+                                {parseInt((new Cookies()).get("ID")) !== follower.userID?
+                                    <Button
+                                        disableElevation
+                                        style={{border:'#39adf6 2px solid', color:'white', textTransform:'capitalize',marginLeft: '15px'}}
+                                        variant='outlined'
+                                        href={"/chat/" + follower.userID+"/false/null"}
+                                    ><ChatRoundedIcon/></Button>: null}
+                            </div>
 
                         )}
                 </ThemeProvider>

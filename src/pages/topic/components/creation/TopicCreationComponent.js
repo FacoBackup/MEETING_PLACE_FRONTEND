@@ -219,9 +219,8 @@ class TopicCreationComponent extends React.Component {
                 <div className="topic_creation_top_buttons">
 
                     <Button
-                        variant="contained"
-                        color="default"
-                        disableElevation
+                        disableElevation style={{color:'white', textTransform:'capitalize'}}
+                        variant='outlined'
                         onClick={() =>
                             this.setState({
                                 openModal: true,
@@ -238,9 +237,8 @@ class TopicCreationComponent extends React.Component {
 
                         <Button
                             component="span"
-                            variant="contained"
-                            color="default"
-                            disableElevation
+                            disableElevation style={{color:'white', textTransform:'capitalize'}}
+                            variant='outlined'
                         >
 
                             Upload image
@@ -297,18 +295,21 @@ class TopicCreationComponent extends React.Component {
                                    }
                                }}
                                onChange={this.handleChange}/>
-                           <Button disabled disableElevation variant={"contained"} color={"primary"}>Select</Button>
+                           <Button disabled
+                                   disableElevation style={{color:'white', textTransform:'capitalize'}}
+                               variant='outlined'
+                           >add</Button>
                        </div>
-                       <div className={"tag_content_container"}>
+                       {/*<div className={"tag_content_container"}>*/}
 
-                           <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>
-                           <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>
-                           <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>
-                           <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>
-                           <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>
-                           <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>
+                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
+                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
+                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
+                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
+                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
+                       {/*    <Button variant={"contained"} color={"secondary"} disabled disableElevation style={{color:'white'}}>example<DeleteRounded/></Button>*/}
 
-                       </div>
+                       {/*</div>*/}
                    </div>
                     {typeof this.state.selectedCommunity.communityID === 'undefined' ?
                         <div>
@@ -330,9 +331,9 @@ class TopicCreationComponent extends React.Component {
                 <div className="topic_creation_bottom_buttons">
                     <Button
                         disableElevation
-                        style={{}}
-                        variant='contained'
-                        color="primary"
+                        style={{border:'#39adf6 2px solid', color:'white', textTransform:'capitalize'}}
+                        variant='outlined'
+
                         onClick={() => this.createTopic()}>Create</Button>
                 </div>
                 <Snackbar open={this.state.error !== null} autoHideDuration={4000} onClose={() =>this.finishProcedure()}>

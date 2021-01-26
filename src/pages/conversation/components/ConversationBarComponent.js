@@ -7,7 +7,8 @@ import {Link} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar'
 import {getTheme} from '@fluentui/react';
 import Host from '../../../Host'
-import {MailRounded} from '@material-ui/icons';
+import {MailRounded, SettingsRounded} from '@material-ui/icons';
+import Button from "@material-ui/core/Button";
 
 class ConversationBarComponent extends Component {
     unreadMessages;
@@ -17,7 +18,7 @@ class ConversationBarComponent extends Component {
             cookies: new Cookies(),
             conversations: [],
             theme: getTheme(),
-
+            newest: true,
             profiles: [],
             lastPage: null
         }
@@ -27,7 +28,7 @@ class ConversationBarComponent extends Component {
         this.fetchConversations().catch(r => console.log(r))
         this.timerID = setInterval(
             () => this.tick(),
-            60000
+            10000
         );
     }
 
@@ -129,17 +130,28 @@ class ConversationBarComponent extends Component {
             }
         }
     }
-
+    sortConversation(){
+        this.setState({
+            newest: !this.state.newest
+        })
+        // this.state.conversations.sort((a,b) => {
+        //
+        // })
+    }
     render() {
         return (
             <div className="right_top_half_container">
-                <div className="conversation_title_container">
+                <div className="component_title_container" style={{width:'15vw'}}>
                     <p style={{
                         marginLeft: '1vw',
                         fontWeight: '400',
                         color:'#ededed',
                         textTransform: 'capitalize'
                     }}>Conversations</p>
+                    <Button
+                        style={{textTransform: 'capitalize'}}
+                        variant={"outlined"}
+                        onClick={() => this.sortConversation()}>{this.state.newest === true ? "Newest" : "Unseen"}</Button>
                 </div>
                 <div className="conversation_personas">
                     {this.state.conversations.map((chat) =>

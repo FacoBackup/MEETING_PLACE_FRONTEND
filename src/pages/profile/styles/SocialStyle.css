@@ -8,15 +8,13 @@
     margin-top: 5px;
 }
 
-.personas_container {
-    width: 65%;
-    background-color: #3b424c;
-    padding: 1vh;
-    border-radius: 8px;
-    margin-left: auto;
-    margin-right: auto;
+.social_content_container {
     display: flex;
-    margin-top: 2vh;
+    justify-content: space-between;
     align-items: center;
-    justify-content: space-around;
+    align-content: center;
+    background-color: #3b424c;
+    border-radius: 8px;
+    padding-right: 10px;
+    padding-left: 10px;
 }

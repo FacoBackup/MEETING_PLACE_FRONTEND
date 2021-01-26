@@ -1,4 +1,10 @@
-
+.component_title_container{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    border-bottom: #262d37 2px solid;
+}
 .center_component {
     margin: 1vh auto;
     width: 45vw;
@@ -11,7 +17,7 @@
     bottom: 1vh;
     left: 0;
     background-color: #303741;
-    box-shadow: 0 5px 5px #23282e;
+    box-shadow: -1px 5px 5px #23282e;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     height: 98vh;
@@ -39,19 +45,17 @@
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     background-color: #303741;
-    box-shadow: 0 5px 5px #23282e;
     margin: 1vh auto;
     align-items: flex-start;
     overflow: hidden;
 
 }
 .right_bottom_half_container{
-    height: 40vh;
-    /*margin-bottom: vh;*/
+    height: 41vh;
+    box-shadow: 0 5px 5px #23282e;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     background-color: #303741;
-    box-shadow: 0 5px 5px #23282e;
 }
 
 .modal_container {

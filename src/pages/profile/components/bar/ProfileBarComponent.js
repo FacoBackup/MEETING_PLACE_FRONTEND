@@ -6,8 +6,7 @@ import Button from '@material-ui/core/Button';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import GroupAddRoundedIcon from '@material-ui/icons/GroupAddRounded';
 import Host from '../../../../Host'
-import {Avatar, Badge, Modal} from '@material-ui/core';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import {Avatar, Modal} from '@material-ui/core';
 import {ThemeProvider} from "@material-ui/styles";
 import {createMuiTheme} from "@material-ui/core/styles";
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
@@ -226,7 +225,7 @@ class ProfileBarComponent extends Component {
                                 </Button>
                             </div>
                             <div >
-                                <Button style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}> <ExitToAppRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>sign out</Button>
+                                <Button href={"/authenticate"} style={{textTransform:"capitalize",  color:'#ededed',fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}> <ExitToAppRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:'#62666f'}}/>sign out</Button>
                             </div>
 
 

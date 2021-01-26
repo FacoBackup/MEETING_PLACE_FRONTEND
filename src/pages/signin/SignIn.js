@@ -156,15 +156,16 @@ class SignIn extends Component {
                             <div className="sign_button_container">
                                 <Button
                                     disableElevation
-
-                                    variant='contained'
-                                    style={{backgroundColor:"#39adf6",color:'white', fontWeight:'600'}} onClick={() => this.handleSubmit()}>SIGN IN</Button>
-                                <Button disableElevation style={{fontWeight: 'bold'}} variant='contained'
-                                        color="default" href="/creation">CREATE AN ACCOUNT</Button>
+                                    style={{border:'#39adf6 2px solid', color:'white', textTransform:'capitalize'}}
+                                    variant='outlined'
+                                    onClick={() => this.handleSubmit()}>Sign in</Button>
+                                <Button disableElevation style={{color:'white', textTransform:'capitalize'}}
+                                        variant='outlined'
+                                        href="/creation">Create an account</Button>
                             </div>
                             <Snackbar open={this.state.error === true} autoHideDuration={6000}
                                       onClose={() => this.setState({error: false, errorMessage: null})}>
-                                <this.Alert severity="error">Some error occurred ({this.state.errorMessage})</this.Alert>
+                                <this.Alert severity="error">Some error occurred ({this.state.errorMessage}).</this.Alert>
                             </Snackbar>
                         </div>
                     </ThemeProvider>

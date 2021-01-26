@@ -110,8 +110,9 @@ class FollowingComponent extends React.Component {
 
                 <div>
                 <ThemeProvider theme={theme}>
-                    <p style={{fontSize: '20px', fontWeight: '500', textAlign: 'center'}}>Following</p>
-
+                    <div className={"component_title_container"} style={{width:'100%', justifyContent:'center', marginBottom:'2vh'}}>
+                        <p style={{textAlign: 'center'}}>People you follow</p>
+                    </div>
                     {(this.state.following.length === 0 && this.state.userID === (new Cookies()).get("ID")) ?
                         <div>
                             <p style={{
@@ -122,22 +123,14 @@ class FollowingComponent extends React.Component {
                         </div>
                         : this.state.following.map((flw) =>
 
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    alignContent: 'center',
-                                    backgroundColor: '#3b424c',
-                                    borderRadius: '8px',
-                                    paddingRight: '10px',
-                                    paddingLeft: '10px'
-                                }}>
+                                <div className={"social_content_container"}>
                                     <Avatar
                                         style={{height: '55px', width: '55px'}}
                                         src={flw.imageURL}
                                         alt="user"
 
                                     />
+
                                     <ul>
                                         <li style={{fontSize: '17px', fontWeight: '400'}}>
                                             {flw.name}

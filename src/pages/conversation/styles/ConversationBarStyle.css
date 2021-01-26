@@ -1,15 +1,3 @@
-
-.conversation_bar_component_container {
-
-}
-
-.conversation_title_container {
-    grid-row: 1;
-    text-align: left;
-    border-bottom: #262d37 2px solid;
-    width: 15vw;
-}
-
 .conversation_box_container {
     display: flex;
     justify-content: center;
@@ -24,15 +12,12 @@
 }
 
 div.conversation_box_container:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 5px #23282e;
+    border:#39adf6 2px solid;
 }
 
 .conversation_box_content {
-    /* text-align: center; */
     display: flex;
     justify-content: space-between;
-    /*justify-items: space-between;*/
     align-content: center;
     align-items: center;
 
