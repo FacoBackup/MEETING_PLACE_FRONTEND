@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "../../../shared/styles/TopicStyles.css"
 import "../../../shared/styles/DedicatedPagesStyle.css"
 import Modal from "@material-ui/core/Modal"
@@ -27,7 +27,10 @@ class TopicCreationComponent extends React.Component {
             date: new Date(),
             selectedCommunity: {},
             error: null,
-            errorMessage: null
+            errorMessage: null,
+            hashes: [],
+            hashedText: []
+
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -94,6 +97,8 @@ class TopicCreationComponent extends React.Component {
     async createTopic() {
         try {
             if(this.state.body.length > 0 && this.state.title.length>0){
+                const hashtags = this.state.body.match(/#[a-z,0-9]+/gi)
+                console.log(hashtags)
                 await axios({
                     method: 'post',
                     url: Host() + 'api/topic',
@@ -103,7 +108,8 @@ class TopicCreationComponent extends React.Component {
                         body: this.state.body,
                         imageURL: this.state.imageURL,
                         communityID: this.state.selectedCommunity.communityID,
-                        mainTopicID: null
+                        mainTopicID: null,
+                        hashTags: hashtags
                     }
                 }).then(() => {
                     this.setState({
