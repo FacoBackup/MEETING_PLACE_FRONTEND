@@ -1,6 +1,5 @@
 import React from 'react';
 import "../../../shared/styles/TopicStyles.css"
-
 import Cookies from 'universal-cookie';
 import DeleteTopic from '../../../shared/functions/topics/DeleteTopic'
 import UpdateTopic from '../../../shared/functions/topics/UpdateTopic'
@@ -22,8 +21,8 @@ class TopicBoxComponent extends React.Component {
         this.state = {
             topic: params.topic,
             editMode: false,
-            headerInput: null,
-            bodyInput: null,
+            headerInput: params.topic.header,
+            bodyInput: params.topic.body,
             liked: params.topic.liked,
             disliked: params.topic.disliked,
             archived: params.topic.archived,
@@ -39,7 +38,14 @@ class TopicBoxComponent extends React.Component {
     componentDidMount() {
         this.fetchDislikes(this.state.topic.id).catch(r => console.log(r))
         this.fetchLikes(this.state.topic.id).catch(r => console.log(r))
+
+        const hashtags = this.state.topic.body.match(/#[a-z,0-9]+/gi)
+        for(let i = 0; i< hashtags.length; i++){
+            this.highlightHashtags(hashtags[i])
+        }
+
     }
+
 
     //UPDATES
     async deleteTopic(topicID) {
@@ -54,11 +60,15 @@ class TopicBoxComponent extends React.Component {
 
     async updateTopic(topicID) {
         try {
-            await UpdateTopic(topicID, this.state.headerInput, this.state.bodyInput);
+
+            const hashtags = this.state.bodyInput.match(/#[a-z,0-9]+/gi)
+            const users = this.state.bodyInput.match(/@[a-z,0-9]+/gi)
+            await UpdateTopic(topicID, this.state.headerInput, this.state.bodyInput, users, hashtags);
             this.setState({
                 editMode: false
             })
             window.location.reload()
+
         } catch (error) {
             console.log(error)
         }
@@ -79,6 +89,7 @@ class TopicBoxComponent extends React.Component {
                 }
             }).then(() => {
                 this.fetchLikes(this.state.topic.id).catch(r => console.log(r))
+                this.fetchDislikes(this.state.topic.id).catch(r => console.log(r))
             }).catch(error => console.log(error))
         } catch (error) {
             console.log(error)
@@ -139,6 +150,7 @@ class TopicBoxComponent extends React.Component {
                     topicID: topicID
                 }
             }).then(() => {
+                this.fetchLikes(this.state.topic.id).catch(r => console.log(r))
                 this.fetchDislikes(this.state.topic.id).catch(r => console.log(r))
             }).catch(error => {
                 console.log(error)
@@ -168,7 +180,15 @@ class TopicBoxComponent extends React.Component {
     }
 
     //UPDATES
-
+    highlightHashtags(text) {
+        const inputText = document.getElementById(this.state.topic.id);
+        let innerHTML = inputText.innerHTML;
+        const index = innerHTML.indexOf(text);
+        if (index >= 0) {
+            innerHTML = innerHTML.substring(0,index) + "<span style='color:#39adf6'>" + innerHTML.substring(index,index+text.length) + "</span>" + innerHTML.substring(index + text.length);
+            inputText.innerHTML = innerHTML;
+        }
+    }
     //RENDER
     creatorName;
     communityImageURL;
@@ -186,7 +206,7 @@ class TopicBoxComponent extends React.Component {
         if (creator.toString() === (new Cookies()).get("ID")) {
             return (
 
-                <Button onClick={() => this.setState({editMode: true})}><EditIcon/>Edit</Button>
+                <Button onClick={() => this.setState({editMode: true})} variant={"outlined"} style={{marginRight:'10px',color: "white", border:'#39adf6 2px solid'}} ><EditIcon/>Edit</Button>
 
             )
         }
@@ -196,7 +216,7 @@ class TopicBoxComponent extends React.Component {
 
         if (creator.toString() === (new Cookies()).get("ID"))
             return (
-                <Button style={{marginLeft:'8px',backgroundColor: 'red', color: 'white'}} disableElevation variant="contained"
+                <Button variant={"outlined"} style={{color: "white", border:'#e34f50 2px solid'}} disableElevation
                         onClick={() => this.deleteTopic(this.state.topic.id)}><DeleteIcon/>Delete</Button>
             )
     }
@@ -211,13 +231,13 @@ class TopicBoxComponent extends React.Component {
                     <div className="topic_container">
                         <div className="topic_creator_info_container">
                             <Avatar
-                                style={{margin: 'auto', height: '85px', width: '85px'}}
+                                style={{margin: 'auto', height: '75px', width: '75px'}}
                                 src={(typeof this.state.topic.communityImageURL !== 'undefined') ? this.state.topic.communityImageURL : (typeof this.state.topic.creatorImageURL !== 'undefined') ? this.state.topic.creatorImageURL : null}
                                 alt="user"
                             />
-                            <h4 style={{fontWeight: '500'}}>{(typeof this.state.topic.communityName !== 'undefined') ? this.state.topic.communityName : this.state.topic.creatorName}</h4>
-                            <h5 style={{fontWeight: '500', color: '#aaadb1'}}>Created
-                                on: {(new Date(this.state.topic.creationDate)).toLocaleString()}</h5>
+                            <p style={{fontWeight: '500'}}>{(typeof this.state.topic.communityName !== 'undefined') ? this.state.topic.communityName : this.state.topic.creatorName}</p>
+                            <p style={{fontWeight: '350', color: '#aaadb1'}}>Created
+                                on: {(new Date(this.state.topic.creationDate)).toLocaleString()}</p>
 
                         </div>
                         <div className="topic_fields_container">
@@ -259,17 +279,18 @@ class TopicBoxComponent extends React.Component {
                         <div className="topic_buttons_container">
 
                             <Button
-                                variant="contained" color="default"
+                                variant="outlined"
                                 disableElevation
                                 onClick={() =>
                                     this.setState({
                                         editMode: false
                                     })
                                 }
-                                style={{marginRight: '5vw'}}
+                                style={{marginRight: '5vw', color:'white'}}
                             >Cancel</Button>
 
-                            <Button variant="contained" disableElevation color="primary"
+                            <Button variant="outlined" disableElevation
+                                style={{color: "white", border:'#39adf6 2px solid'}}
                                     onClick={() => this.updateTopic(this.state.topic.id)}>Save Changes</Button>
                         </div>
                     </div>
@@ -288,6 +309,7 @@ class TopicBoxComponent extends React.Component {
     }
 
     renderTopic() {
+
         if (this.state.editMode === false)
             return (
                 <div className="profile_topics_container">
@@ -299,18 +321,18 @@ class TopicBoxComponent extends React.Component {
                                 src={(typeof this.state.topic.communityImageURL !== 'undefined') ? this.state.topic.communityImageURL : (typeof this.state.topic.creatorImageURL !== 'undefined') ? this.state.topic.creatorImageURL : null}
                                 alt="user"
                             />
-                            <h4 style={{
-                                fontWeight: '450',
+                            <p style={{
+                                fontWeight: '400',
                                 fontSize: '18px',
                                 textTransform: 'capitalize'
-                            }}>{(typeof this.state.topic.communityName !== 'undefined') ? this.state.topic.communityName : this.state.topic.creatorName}</h4>
-                            <h5 style={{fontWeight: '500', color: '#aaadb1'}}>Created
-                                on: {(new Date(this.state.topic.creationDate)).toLocaleString()}</h5>
+                            }}>{(typeof this.state.topic.communityName !== 'undefined') ? this.state.topic.communityName : this.state.topic.creatorName}</p>
+                            <p style={{fontSize:'15px',fontWeight: '350', color: '#aaadb1'}}>Created
+                                on: {(new Date(this.state.topic.creationDate)).toLocaleString()}</p>
                         </div>
                         <div className="topic_fields_container">
 
-                            <h3 style={{fontWeight: '500'}}>{this.state.topic.header}</h3>
-                            <h4 style={{fontWeight: '500', color: '#aaadb1'}}>{this.state.topic.body}</h4>
+                            <p style={{fontWeight: '550', fontSize:'18px'}}>{this.state.topic.header}</p>
+                            <p id={this.state.topic.id} style={{fontWeight: '400', color: '#aaadb1'}}>{this.state.topic.body}</p>
 
                         </div>
 
@@ -318,7 +340,7 @@ class TopicBoxComponent extends React.Component {
                         <div className="topic_buttons_container">
 
                             <Button style={{
-                                color: (this.state.liked === true ? "#39adf6" : "white"),
+                                color: (this.state.liked === true ? "#39adf6" : "#aaadb1"),
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
@@ -331,7 +353,7 @@ class TopicBoxComponent extends React.Component {
 
                             <Button
                                 style={{
-                                    color: (this.state.disliked === true ? "red" : "white"),
+                                    color: (this.state.disliked === true ? "#e34f50" : "#aaadb1"),
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
@@ -345,10 +367,14 @@ class TopicBoxComponent extends React.Component {
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                alignContent: 'center'
-                            }}> <ChatBubbleIcon/>{this.state.topic.comments}</Button>
+                                alignContent: 'center',
+                                color:"#aaadb1"
 
-                            <Button style={{color: (this.state.archived === true ? "#39adf6" : "white")}}
+                            }}
+                                disabled
+                            > <ChatBubbleIcon/>{this.state.topic.comments}</Button>
+
+                            <Button style={{color: (this.state.archived === true ? "#39adf6" : "#aaadb1")}}
                                     onClick={() => this.archiveTopic(this.state.topic.id)}>
                                 <ArchiveIcon/>
                             </Button>
@@ -362,6 +388,7 @@ class TopicBoxComponent extends React.Component {
     }
 
     render() {
+
         return (
             <>
                 {this.renderEditMode()}

@@ -55,7 +55,7 @@ class SignUp extends Component {
                     email: this.state.email,
                     password: this.state.password,
                     name: this.state.name.toLowerCase(),
-                    userName: "@"+this.state.userName.replace(" ", '').toLowerCase() + this.state.randomNumber,
+                    userName: "@"+this.state.name.replace(" ", '').toLowerCase() + this.state.randomNumber,
                     gender: this.state.gender,
                     birthDate: Date.parse(Moment(this.state.birth.replace("_", "")).format('DD/MM/yyyy')),
                     phoneNumber: (this.state.phone).replace(" ", ""),
@@ -110,16 +110,6 @@ class SignUp extends Component {
                                     onChange={this.handleChange}
 
                                 />
-                                <div >
-                                    <TextField
-                                    style={{width:'100%'}}
-                                        label="User name"
-                                        name="userName"
-                                        variant="outlined"
-                                        onChange={this.handleChange}
-                                    />
-                                    {this.state.userName !== '' ? <p style={{wordBreak:'break-all', color:'#aaadb1', textAlign: 'center'}}>#{this.state.userName.replace(" ", '').toLowerCase() + "_" + this.state.randomNumber}</p> : null}
-                                </div>
                                 <TextField
                                     type="password"
                                     label="Password"

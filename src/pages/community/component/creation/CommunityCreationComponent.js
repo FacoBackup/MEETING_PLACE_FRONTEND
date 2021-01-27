@@ -201,12 +201,11 @@ class CommunityCreationComponent extends React.Component {
                 <div className="community_creation_buttons">
                     {this.modalRender()}
                     {(typeof this.state.relatedCommunity.communityID === 'undefined') ?
-                        <Button  variant="contained" disableElevation onClick={() => this.setState({
-
+                        <Button variant="outlined"  style={{color:'white'}} onClick={() => this.setState({
                             imageModal: false,
                             communityModal: true
                         })}>Set Main Community</Button> :
-                        <Button variant="contained" disableElevation style={{color:'white', backgroundColor:'red'}} onClick={() => this.setState({
+                        <Button variant="outlined"  style={{border:'#e34f50 2px solid', color:'white'}} onClick={() => this.setState({
                             relatedCommunity: {}
                         })}>Remove Community</Button>
                     }
@@ -218,20 +217,18 @@ class CommunityCreationComponent extends React.Component {
 
                                 <Button
                                     component="span"
-                                    variant="contained"
-                                    color="default"
-                                    disableElevation
+                                    variant="outlined"  style={{ color:'white'}}
                                 >
 
                                     Upload image
                                 </Button>
                             </label>
                         </div>:
-                        <Button variant="contained" disableElevation style={{color:'white', backgroundColor:'red'}} onClick={() => this.setState({
+                        <Button variant="outlined"  style={{border:'#e34f50 2px solid', color:'white'}} onClick={() => this.setState({
                             communityPic: null
                         })}>Remove Image</Button>
                     }
-                    <Button variant="contained" disableElevation color="primary" onClick={this.createCommunity}>Create</Button>
+                    <Button variant="outlined"  style={{border:'#39adf6 2px solid', color:'white'}} onClick={this.createCommunity}>Create</Button>
                 </div>
                 <Snackbar open={this.state.created !== null} autoHideDuration={4000} onClose={() => this.setState({
                     created: null,

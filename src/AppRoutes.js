@@ -8,16 +8,17 @@ import Conversation from "./pages/conversation/Conversation";
 import SignIn from "./pages/signin/SignIn"
 import Profile from "./pages/profile/Profile"
 import Dashboard from './pages/dashboard/Dashboard'
-
+import Topic from './pages/topic/Topic'
 function AppRoutes() {
     return (
         <div>
             <Router>
                 <Switch>
-                    <Route path="/topic/:topicID/:likes" exact component={Profile}/>
+                    <Route path="/topic/:topicID" exact component={Topic}/>
                     <Route path="/profile/:userID" exact component={Profile}/>
                     <Route path="/community/:id" exact component={Community}/>
                     <Route path="/" exact component={Home}/>
+                    <Route path="/:tagID" exact component={Home}/>
                     <Route path="/dashboard" exact component={Dashboard}/>
                     <Route path="/chat/:subjectID/:isGroup/:conversationID" exact component={Conversation}/>
                     <Route path="/search_user" exact component={Search}/>

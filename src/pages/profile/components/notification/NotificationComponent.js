@@ -67,9 +67,8 @@ class NotificationComponent extends React.Component {
         return (
             <div>
                 <div className="notification_buttons_modal_container">
-                    <Button color={this.state.messageOption === true ? "primary" : "default"}
-                            variant="contained"
-                            disableElevation
+                    <Button variant={"outlined"}
+                            style={{border:(this.state.messageOption === true ?'#39adf6 2px solid': null), color:'white'}}
                             onClick={() => this.setState({
                                 messageOption: true,
                                 topicsOption: false,
@@ -79,9 +78,8 @@ class NotificationComponent extends React.Component {
                             })}>
                         Messages
                     </Button>
-                    <Button color={this.state.topicsOption === true ? "primary" : "default"}
-                            variant="contained"
-                            disableElevation
+                    <Button variant={"outlined"}
+                            style={{border:(this.state.topicsOption === true ?'#39adf6 2px solid': null), color:'white'}}
                             onClick={() => this.setState({
                                 messageOption: false,
                                 topicsOption: true,
@@ -91,9 +89,8 @@ class NotificationComponent extends React.Component {
                             })}>
                         Topics
                     </Button>
-                    <Button color={this.state.communitiesOption === true ? "primary" : "default"}
-                            variant="contained"
-                            disableElevation
+                    <Button variant={"outlined"}
+                            style={{border:(this.state.communitiesOption === true ?'#39adf6 2px solid': null), color:'white'}}
                             onClick={() => this.setState({
                                 messageOption: false,
                                 topicsOption: false,

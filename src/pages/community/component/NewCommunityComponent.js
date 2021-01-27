@@ -12,10 +12,9 @@ import Button from '@material-ui/core/Button'
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import HelpIcon from '@material-ui/icons/Help';
-import TopicComponent from '../../topic/components/TopicComponent'
+import SubjectTopicsComponent from '../../topic/components/SubjectTopicsComponent'
 import Host from '../../../Host'
 import CommunityUsersComponent from './users/CommunityUsersComponent'
-import CommunityAboutComponent from './about/CommunityAboutComponent'
 import CommunityRelatedComponent from './related/CommunityRelatedComponent'
 import SubjectRoundedIcon from '@material-ui/icons/SubjectRounded';
 import CommunitySettingsComponent from "./settings/CommunitySettingsComponent";
@@ -118,8 +117,8 @@ class CommunityComponent extends React.Component {
             case this.state.topic: {
                 return (
 
-                    <TopicComponent community={true} token={this.state.token} timeline={false}
-                                    subjectID={this.state.communityID}/>
+                    <SubjectTopicsComponent community={true} token={this.state.token} timeline={false}
+                                            subjectID={this.state.communityID} subjectTopics={true} />
 
                 )
             }
@@ -134,8 +133,8 @@ class CommunityComponent extends React.Component {
 
             default: {
                 return (
-                    <TopicComponent community={true} token={this.state.token} timeline={false}
-                                    subjectID={this.state.communityID}/>
+                    <SubjectTopicsComponent community={true} token={this.state.token} subjectTopics={true} timeline={false}
+                                            subjectID={this.state.communityID}/>
                 )
             }
         }

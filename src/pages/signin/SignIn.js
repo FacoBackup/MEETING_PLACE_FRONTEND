@@ -11,7 +11,7 @@ import MuiAlert from '@material-ui/lab/Alert'
 import {createMuiTheme} from "@material-ui/core/styles";
 import {ThemeProvider} from "@material-ui/styles";
 import Snackbar from '@material-ui/core/Snackbar'
-
+import { useTranslation } from 'react-i18next';
 const theme = createMuiTheme({
     palette: {
         type: "dark"
@@ -19,7 +19,6 @@ const theme = createMuiTheme({
 });
 
 const cookies = new Cookies()
-
 class SignIn extends Component {
     constructor() {
         super(null)
@@ -122,7 +121,6 @@ class SignIn extends Component {
         }
     }
     render() {
-
         if (this.state.accepted === true)
             return (
                 <Redirect to='/'/>

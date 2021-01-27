@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import "../../../shared/styles/TopicStyles.css"
 import "../../../shared/styles/DedicatedPagesStyle.css"
 import Modal from "@material-ui/core/Modal"
@@ -97,8 +97,19 @@ class TopicCreationComponent extends React.Component {
     async createTopic() {
         try {
             if(this.state.body.length > 0 && this.state.title.length>0){
-                const hashtags = this.state.body.match(/#[a-z,0-9]+/gi)
-                console.log(hashtags)
+
+                function removeDuplicated(names) {
+                    let unique = {};
+                    names.forEach(function(i) {
+                        if(!unique[i]) {
+                            unique[i] = true;
+                        }
+                    });
+                    return Object.keys(unique);
+                }
+                const hashtags = removeDuplicated(this.state.body.match(/#[a-z,0-9]+/gi))
+                const users = this.state.body.match(/@[a-z,0-9]+/gi)
+
                 await axios({
                     method: 'post',
                     url: Host() + 'api/topic',
@@ -109,7 +120,8 @@ class TopicCreationComponent extends React.Component {
                         imageURL: this.state.imageURL,
                         communityID: this.state.selectedCommunity.communityID,
                         mainTopicID: null,
-                        hashTags: hashtags
+                        hashTags: hashtags,
+                        mentionedUsers: users
                     }
                 }).then(() => {
                     this.setState({
@@ -287,26 +299,6 @@ class TopicCreationComponent extends React.Component {
                         }}
                         name='body'
                         onChange={this.handleChange}/>
-                   {/*<div className={"tags_container"}>*/}
-                   {/*    <div className={"tag_selection_container"}>*/}
-                   {/*        <TextField*/}
-                   {/*            placeholder="Tag"*/}
-                   {/*            disabled*/}
-                   {/*            name='tag'*/}
-                   {/*            variant={"outlined"}*/}
-                   {/*            style={{width:"81.5%"}}*/}
-                   {/*            InputProps={{*/}
-                   {/*                style: {*/}
-                   {/*                    color: 'white'*/}
-                   {/*                }*/}
-                   {/*            }}*/}
-                   {/*            onChange={this.handleChange}/>*/}
-                   {/*        <Button disabled*/}
-                   {/*                disableElevation style={{color:'white', textTransform:'capitalize'}}*/}
-                   {/*            variant='outlined'*/}
-                   {/*        >add</Button>*/}
-                   {/*    </div>*/}
-                   {/*</div>*/}
                     {typeof this.state.selectedCommunity.communityID === 'undefined' ?
                         <div>
                             <div style={{marginBottom: '1vh'}}>
@@ -332,7 +324,7 @@ class TopicCreationComponent extends React.Component {
 
                         onClick={() => this.createTopic()}>Create</Button>
                 </div>
-                <Snackbar open={this.state.error !== null} autoHideDuration={4000} onClose={() =>this.finishProcedure()}>
+                <Snackbar open={this.state.error !== null} autoHideDuration={2500} onClose={() =>this.finishProcedure()}>
                     <this.Alert
                         severity={!this.state.error? "success":"error"}>{this.state.error ? ("Some error occurred ("+this.state.errorMessage+")") : "Created With Success"}</this.Alert>
                 </Snackbar>

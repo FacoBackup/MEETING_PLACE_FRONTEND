@@ -1,9 +1,9 @@
 import React from 'react'
 import ProfileBarComponent from '../profile/components/bar/ProfileBarComponent'
 import ConversationBarComponent from '../conversation/components/ConversationBarComponent'
-import TopicOpinionsComponent from './components/opinions/TopicOpinionsComponent'
+import TopicComponent from "./components/page/TopicComponent";
 
-class TopicOpinions extends React.Component {
+class Topic extends React.Component {
     constructor({match}) {
         super({match})
         this.state = {
@@ -16,7 +16,7 @@ class TopicOpinions extends React.Component {
         return (
             <div>
                 <div className="center_component">
-                    <TopicOpinionsComponent topicID={this.state.topicID} likes={this.state.likes}/>
+                    <TopicComponent topicID={this.state.topicID} likes={this.state.likes}/>
                 </div>
                 <div className="left_components">
                     <ProfileBarComponent/>
@@ -29,4 +29,4 @@ class TopicOpinions extends React.Component {
     }
 }
 
-export default TopicOpinions
+export default Topic

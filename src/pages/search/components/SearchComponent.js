@@ -11,7 +11,6 @@ import Host from '../../../Host'
 import followUser from '../../shared/functions/social/FollowUser'
 import UnfollowUser from '../../shared/functions/social/UnfollowUser'
 import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
-import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import Radio from '@material-ui/core/Radio';
@@ -191,11 +190,12 @@ class SearchComponent extends React.Component {
                        marginBottom:'1vh'
 
                    }}>
-                       <Button text="See Profile" href={"/components/" + subject.userID } variant="outlined" style={{color:'white'}} disableElevation><PersonRoundedIcon/> Profile</Button>
-                       <Button href={"/chat/"+subject.userID+"/false/null"} variant="outlined" style={{color:'white'}} disableElevation><ChatRoundedIcon/></Button>
+                       <Button href={"/profile/" + subject.userID } variant="outlined" style={{color:'white'}} disableElevation>See</Button>
+
                        {subject.isFollowing === true ?
-                           <Button onClick={() => this.unfollow(subject.userID)} variant="contained" style={{backgroundColor:'red', color:'white', display:'flex', alignContent:'center', alignItems:'center', justifyContent:'space-between', fontWeight:'500'}} disableElevation><RemoveCircleRoundedIcon/> Unfollow</Button> :
-                           <Button onClick={() => this.follow(subject.userID)} variant="contained" color="primary" disableElevation><AddCircleRoundedIcon/></Button>}
+                           <Button onClick={() => this.unfollow(subject.userID)} variant="outlined" style={{border:'#e34f50 2px solid', color:'white', textTransform:'capitalize'}} ><RemoveCircleRoundedIcon/> Unfollow</Button> :
+                           <Button onClick={() => this.follow(subject.userID)} variant="outlined" style={{border:'#39adf6 2px solid', color:'white', textTransform:'capitalize'}}  >Follow</Button>}
+                       <Button href={"/chat/"+subject.userID+"/false/null"} variant="outlined" style={{color:'white'}} disableElevation><ChatRoundedIcon/></Button>
                    </div>
                </div>
            )
@@ -241,8 +241,8 @@ class SearchComponent extends React.Component {
                     }}>
                         <Button href={"/component/" + subject.communityID } variant="contained" disableElevation >SEE</Button>
                         {typeof subject.role !== 'undefined' && subject.role !== null  ?
-                            <Button disabled variant="contained" style={{backgroundColor:'red', color:'white', display:'flex', alignContent:'center', alignItems:'center', justifyContent:'space-between', fontWeight:'500'}} disableElevation><RemoveCircleRoundedIcon/> {subject.role === "FOLLOWER" ? "Unfollow": "Leave"}</Button> :
-                            <Button onClick={() => this.followCommunity(subject.communityID)} variant="contained" color="primary" disableElevation><AddCircleRoundedIcon/></Button>}
+                            <Button disabled variant="outlined" style={{border:'#e34f50 2px solid', color:'white', textTransform:'capitalize'}}><RemoveCircleRoundedIcon/> {subject.role === "FOLLOWER" ? "Unfollow": "Leave"}</Button> :
+                            <Button onClick={() => this.followCommunity(subject.communityID)} variant="outlined"  style={{border:'#39adf6 2px solid', color:'white'}} disableElevation><AddCircleRoundedIcon/></Button>}
                     </div>
                 </div>
             )

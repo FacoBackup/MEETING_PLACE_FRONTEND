@@ -6,7 +6,7 @@ import "../shared/styles/DedicatedPagesStyle.css"
 import Conversations from "../conversation/components/ConversationBarComponent"
 import axios from 'axios';
 import SettingsIcon from '@material-ui/icons/Settings';
-import TopicComponent from '../topic/components/TopicComponent'
+import SubjectTopicsComponent from '../topic/components/SubjectTopicsComponent'
 import AboutComponent from './components/options/UserAboutComponent'
 import AboutProfileComponent from './components/options/UserAboutComponent'
 import Followers from './components/followers/FollowersComponent'
@@ -81,8 +81,8 @@ class Profile extends React.Component {
             case this.state.topics: {
                 return (
 
-                    <TopicComponent community={false} timeline={false} subjectID={this.state.userID} topics={true}
-                                    token={(new Cookies()).get('JWT')}/>
+                    <SubjectTopicsComponent community={false} subjectTopics={true} timeline={false}  subjectID={this.state.userID} topics={true}
+                                            token={(new Cookies()).get('JWT')}/>
                 )
             }
             case this.state.aboutOption: {
@@ -107,8 +107,8 @@ class Profile extends React.Component {
             }
             default: {
                 return (
-                    <TopicComponent community={false} timeline={false} subjectID={this.state.userID} topics={true}
-                                    token={(new Cookies()).get('JWT')}/>
+                    <SubjectTopicsComponent community={false} subjectTopics={true} timeline={false} subjectID={this.state.userID} topics={true}
+                                            token={(new Cookies()).get('JWT')}/>
 
                 )
             }

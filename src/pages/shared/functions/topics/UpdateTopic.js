@@ -2,7 +2,7 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 import Host from '../../../../Host'
 
-async function UpdateTopic(topicID, header, body) {
+async function UpdateTopic(topicID, header, body, users, hashtags) {
     try{
         await axios({
             method: 'put',
@@ -11,7 +11,9 @@ async function UpdateTopic(topicID, header, body) {
             data: {
                 topicID: topicID,
                 header: header,
-                body: body
+                body: body,
+                hashTags: hashtags,
+                mentionedUsers: users
             }
         }).then(() =>
             alert("Changes Saved")

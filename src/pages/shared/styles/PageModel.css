@@ -10,7 +10,34 @@
     width: 45vw;
 
 }
+.content_bar_selected_item_box_container{
+    display: flex;
+    justify-content: space-evenly;
+    width: 10vw;
 
+    overflow: hidden;
+    margin:  1vh auto;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #3b424c;
+    border:#39adf6 2px solid;
+}
+.content_bar_box_container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 10vw;
+
+    overflow: hidden;
+    margin:  1vh auto;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #3b424c;
+
+}
+
+div.content_bar_box_container:hover {
+    border:#39adf6 2px solid;
+}
 .left_components {
 
     position: fixed;

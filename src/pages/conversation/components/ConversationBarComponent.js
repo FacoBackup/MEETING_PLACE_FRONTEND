@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar'
 import {getTheme} from '@fluentui/react';
 import Host from '../../../Host'
-import {MailRounded, SettingsRounded} from '@material-ui/icons';
+import {MailRounded} from '@material-ui/icons';
 import Button from "@material-ui/core/Button";
 
 class ConversationBarComponent extends Component {
@@ -67,7 +67,7 @@ class ConversationBarComponent extends Component {
             case true: {
 
                 return (
-                    <div className="conversation_box_container " key={data.conversationID}>
+                    <div className="content_bar_box_container " key={data.conversationID}>
 
                         <Link className="conversation_box_content" key={data.conversationID}
                               style={{textDecoration: 'none', color: 'white'}}
@@ -98,7 +98,7 @@ class ConversationBarComponent extends Component {
             case false: {
 
                 return (
-                    <div className="conversation_box_container" key={data.conversationID}>
+                    <div className="content_bar_box_container" key={data.conversationID}>
 
                         <Link className="conversation_box_content" key={data.conversationID}
                               style={{textDecoration: 'none', color: 'white'}}

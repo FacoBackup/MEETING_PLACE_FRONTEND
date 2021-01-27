@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../shared/styles/TopicStyles.css"
-import {FontSizes, FontWeights} from '@fluentui/theme';
+// import {FontSizes, FontWeights} from '@fluentui/theme';
 import axios from 'axios';
 import Dexie from "dexie";
 import Host from '../../../Host'
@@ -9,16 +9,19 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 
 import Skeleton from '@material-ui/lab/Skeleton'
 
-class TopicComponent extends React.Component {
+class SubjectTopicsComponent extends React.Component {
+    subjectTopics;
 
     constructor(params) {
         super(params)
         this.state = {
+            tagID: params.tagID,
             token: params.token,
             db: new Dexie('api_web_db'),
             community: params.community,
             subjectID: params.subjectID,
             timeline: params.timeline,
+            subject: params.subjectTopics,
             hasMore: true,
             topics: [],
             isLoading: true,
@@ -28,10 +31,28 @@ class TopicComponent extends React.Component {
 
     componentDidMount() { //here
 
-        if (this.state.timeline === false)
-            this.fetchSubjectTopics().then(r => console.log(r))
+        if (this.state.subject === true)
+            this.fetchSubjectTopics().catch(r => console.log(r))
+        else if(this.state.timeline === true)
+            this.fetchTimeline().catch(r => console.log(r))
         else
-            this.fetchTimeline().then(r => console.log(r))
+            this.fetchTopicsByTag().catch(r => console.log(r))
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevState.tagID !== this.state.tagID){
+            window.scrollTo(0,0)
+
+            this.setState({
+                topics:[]
+            })
+
+            if (this.state.subject === true)
+                this.fetchSubjectTopics().catch(r => console.log(r))
+            else if(this.state.timeline === true)
+                this.fetchTimeline().catch(r => console.log(r))
+            else
+                this.fetchTopicsByTag().catch(r => console.log(r))
+        }
     }
 
     async fetchTimeline() {
@@ -71,6 +92,39 @@ class TopicComponent extends React.Component {
         }
     }
 
+    async fetchTopicsByTag(){
+        try{
+            this.setState({
+                isLoading: true
+            })
+            await axios({
+                method: 'patch',
+                url: Host() + "api/fetch/by/tag",
+                headers: {"Authorization": 'Bearer ' + this.state.token},
+                data: {
+                    maxID: this.state.maxID,
+                    tagID: parseInt(this.state.tagID)
+                }
+
+            }).then(res => {
+                const size = res.data.length
+
+                if (size !== 'undefined' && size > 0)
+                    this.setState({
+                        topics: [...this.state.topics, ...res.data],
+                        maxID: res.data[size - 1].id,
+                        hasMore: size >= 5
+                    })
+            }).catch(error => {
+                console.log(error)
+            });
+            this.setState({
+                isLoading: false
+            })
+        }catch (e) {
+            console.log(e)
+        }
+    }
     async fetchSubjectTopics() {
        try{
            this.setState({
@@ -93,7 +147,7 @@ class TopicComponent extends React.Component {
                    this.setState({
                        topics: [...this.state.topics, ...res.data],
                        maxID: res.data[size - 1].id,
-                       hasMore: size >= 10
+                       hasMore: size >= 5
                    })
            }).catch(error => {
                console.log(error)
@@ -113,7 +167,14 @@ class TopicComponent extends React.Component {
             <>
                 <InfiniteScroll
                     dataLength={this.state.topics.length}
-                    next={() => this.state.timeline === true ? this.fetchTimeline() : this.fetchSubjectTopics()}
+                    next={() =>{
+                        if(this.state.timeline === true)
+                            this.fetchTimeline().catch(e => console.log(e))
+                        else if(this.state.subject === true)
+                            this.fetchSubjectTopics().catch(e => console.log(e))
+                        else if(this.state.topics === [])
+                            this.fetchTopicsByTag().catch(e => console.log(e))
+                    }}
                     loader={console.log("LOADING")}
                     inverse={false}
                     hasMore={this.state.hasMore}
@@ -139,8 +200,7 @@ class TopicComponent extends React.Component {
                     </div>
                     : null}
                 <div className="timeline_end_container topic_container">
-                    <p style={{fontSize: FontSizes.size18, fontWeight: FontWeights.regular}}>You are all caught up for
-                        now</p>
+                    <p>You are all caught up for now</p>
                 </div>
             </>
         )
@@ -156,4 +216,4 @@ class TopicComponent extends React.Component {
     }
 }
 
-export default TopicComponent
+export default SubjectTopicsComponent
