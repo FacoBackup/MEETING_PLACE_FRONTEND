@@ -11,7 +11,7 @@ import MuiAlert from '@material-ui/lab/Alert'
 import {createMuiTheme} from "@material-ui/core/styles";
 import {ThemeProvider} from "@material-ui/styles";
 import Snackbar from '@material-ui/core/Snackbar'
-import { useTranslation } from 'react-i18next';
+
 const theme = createMuiTheme({
     palette: {
         type: "dark"
@@ -39,10 +39,9 @@ class SignIn extends Component {
     }
 
     componentDidMount() {
-        Object.keys((cookies).getAll()).forEach(name => (cookies).remove(name))
-        localStorage.clear()
+        cookies.remove("JWT")
+        cookies.remove("ID")
     }
-
 
     handleChangeInput(event) {
 
@@ -123,7 +122,7 @@ class SignIn extends Component {
     render() {
         if (this.state.accepted === true)
             return (
-                <Redirect to='/'/>
+                <Redirect to='/home'/>
             );
         else {
             return (
@@ -132,7 +131,6 @@ class SignIn extends Component {
                         <div className="sign_in_component">
                             <div className="sign_in_title_container">
                                 <h2>Sign In</h2>
-                                {/* <p style={{ fontSize: FontSizes.size24, fontWeight:FontWeights.semibold }}>Sign in</p> */}
                             </div>
                             <div className="sign_input_container">
                                 <TextField

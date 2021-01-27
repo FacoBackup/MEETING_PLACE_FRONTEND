@@ -190,7 +190,7 @@ class ProfileBarComponent extends Component {
 
                         <div className="profile_bar_buttons_container">
                             <div className={this.state.timeline === true ? "clicked_button_style" : null} >
-                                <Button href={"/"} style={{textTransform:"capitalize",   color:(this.state.timeline === true ? "#39adf6":'#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}>
+                                <Button href={"/home"} style={{textTransform:"capitalize",   color:(this.state.timeline === true ? "#39adf6":'#ededed'),fontSize:'16px', width:'14vw',marginLeft:'1vw', justifyContent:'flex-start'}}>
                                     <HomeRoundedIcon style={{marginRight:'10px', fontSize:'27px',color:(this.state.timeline === true ? "#39adf6":'#62666f')}}/> home</Button>
                             </div>
 

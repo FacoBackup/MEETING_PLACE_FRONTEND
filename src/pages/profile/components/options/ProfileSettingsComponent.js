@@ -122,7 +122,7 @@ class ProfileSettingsComponent extends React.Component {
                     </div>
                     <div>
                         <TextField variant="outlined" multiline defaultValue={this.state.category}
-                                   style={{width: '30vw'}} label="Where you work" name="category"
+                                   style={{width: '30vw'}} label="Where you work at" name="category"
                                    onChange={this.handleChange}/>
 
                     </div>
@@ -133,7 +133,7 @@ class ProfileSettingsComponent extends React.Component {
 
                             <Button
                                 component="span"
-                                variant="contained"
+                                variant="outlined"
                                 color="default"
                                 disableElevation
                             >
@@ -147,10 +147,10 @@ class ProfileSettingsComponent extends React.Component {
 
                             <Button
                                 component="span"
-                                variant="contained"
-                                color="default"
+                                variant="outlined"
+
                                 disableElevation
-                                style={{marginLeft: '10px'}}
+                                style={{marginLeft: '10px', color:"white"}}
                             >
 
                                 Background

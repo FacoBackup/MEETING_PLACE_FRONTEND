@@ -17,8 +17,8 @@ function AppRoutes() {
                     <Route path="/topic/:topicID" exact component={Topic}/>
                     <Route path="/profile/:userID" exact component={Profile}/>
                     <Route path="/community/:id" exact component={Community}/>
-                    <Route path="/" exact component={Home}/>
-                    <Route path="/:tagID" exact component={Home}/>
+                    <Route path="/home" exact component={Home}/>
+                    <Route path="/home/:tagID" exact component={Home}/>
                     <Route path="/dashboard" exact component={Dashboard}/>
                     <Route path="/chat/:subjectID/:isGroup/:conversationID" exact component={Conversation}/>
                     <Route path="/search_user" exact component={Search}/>

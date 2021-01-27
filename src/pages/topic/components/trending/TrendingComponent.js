@@ -52,7 +52,7 @@ export default class TrendingComponent extends React.Component{
                 </div>
                 <div>
                     {this.state.trending.map(tag => (
-                        <Link to={"/"+tag.tagID} style={{textDecoration:'none', color:'white'}}>
+                        <Link to={"/home/"+tag.tagID} style={{textDecoration:'none', color:'white'}}>
                             <div className={parseInt(this.state.selectedTag) !== tag.tagID ?"content_bar_box_container" : "content_bar_selected_item_box_container"}>
                                 <div>
                                     <p>{tag.tagValue}</p>
