@@ -71,7 +71,7 @@ class SignIn extends Component {
               }
           })
           .then(response => {
-              cookies.set('JWT', response.data, {path: '/'});
+              cookies.set('JWT', response.data, {path: '/', expires:604800000});
               this.getID()
           })
           .catch(error => {
@@ -100,7 +100,7 @@ class SignIn extends Component {
                 }
             })
                 .then(response => {
-                    cookies.set('ID', response.data, {path: '/'});
+                    cookies.set('ID', response.data, {path: '/', expires:604800000});
                     this.setState({
                         accepted: true
                     })
